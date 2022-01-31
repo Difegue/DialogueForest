@@ -1,0 +1,51 @@
+﻿<Page
+    x:Class="DialogueForest.Views.OpenedNodesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:models="using:DialogueForest.Models"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:system="using:System"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
+    mc:Ignorable="d">
+
+    <muxc:TabView
+        AllowDropTabs="True"
+        TabItemsSource="{x:Bind ViewModel.Tabs}"
+        AddTabButtonCommand="{x:Bind ViewModel.AddTabCommand}">
+        <i:Interaction.Behaviors>
+            <ic:EventTriggerBehavior EventName="TabCloseRequested">
+                <ic:InvokeCommandAction Command="{x:Bind ViewModel.CloseTabCommand}" />
+            </ic:EventTriggerBehavior>
+        </i:Interaction.Behaviors>
+        <muxc:TabView.TabStripHeader>
+            <Grid Width="16"/>
+        </muxc:TabView.TabStripHeader>
+        <muxc:TabView.TabStripFooter>
+            <Grid Width="160"/>
+        </muxc:TabView.TabStripFooter>
+        <muxc:TabView.TabItemTemplate>
+            <DataTemplate x:DataType="models:TabViewItemData">
+                <muxc:TabViewItem
+                    Header="{x:Bind Header}"
+                    AutomationProperties.Name="{x:Bind Header}"
+                    Content="{x:Bind Content}">
+                    <muxc:TabViewItem.ContentTemplate>
+                        <DataTemplate x:DataType="system:String">
+
+                            <Grid Padding="{StaticResource MediumLeftTopRightBottomMargin}" 
+                                  Background="{ThemeResource LayerFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                  BorderThickness="1,0,0,1" CornerRadius="8,0,0,0" Height="1000">
+                                <TextBlock Text="{x:Bind}" />
+                            </Grid>
+                        </DataTemplate>
+                    </muxc:TabViewItem.ContentTemplate>
+                </muxc:TabViewItem>
+            </DataTemplate>
+        </muxc:TabView.TabItemTemplate>
+    </muxc:TabView>
+
+</Page>

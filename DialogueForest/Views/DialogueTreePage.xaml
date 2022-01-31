@@ -1,0 +1,32 @@
+﻿<Page
+    x:Class="DialogueForest.Views.DialogueTreePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
+        <StackPanel Margin="0,20">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="FontSize" Value="18" />
+                    <Setter Property="TextWrapping" Value="WrapWholeWords" />
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock xml:space="default">
+                <Run>This app was created with a preview version of</Run>
+                <Run FontWeight="SemiBold">Template Studio for UWP</Run>
+                <Run>.</Run>
+            </TextBlock>
+
+            <TextBlock>During this preview period, any feedback, suggestions, or bug reports are particularly helpful.</TextBlock>
+
+            <TextBlock>Please leave you comments, etc. on the GitHub repo:</TextBlock>
+
+
+            <HyperlinkButton Content="github.com/mrlacey/TemplateStudio" NavigateUri="https://github.com/mrlacey/TemplateStudio" FontSize="24" />
+
+            <TextBlock FontSize="12" Margin="0,12">And, of course, feel free to delete this page 😉</TextBlock>
+        </StackPanel>
+    </Grid>
+</Page>

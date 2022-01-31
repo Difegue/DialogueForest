@@ -1,0 +1,54 @@
+﻿<Page
+    x:Class="DialogueForest.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helper="using:DialogueForest.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:DialogueForest.Converters"
+    xmlns:local="using:DialogueForest.Controls"
+    xmlns:strings="using:DialogueForest.Localization.Strings"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d">
+    <Page.Resources>
+
+        
+    </Page.Resources>
+
+    <ScrollViewer>
+        <StackPanel x:Name="ContentArea" Margin="{StaticResource SmallLeftRightMargin}">
+            <TextBlock
+                Margin="{StaticResource MediumTopMargin}"
+                Style="{ThemeResource BaseTextBlockStyle}"
+                Text="{x:Bind strings:Resources.SettingsAbout}" />
+
+    <local:SettingsBlockControl
+                Title="{x:Bind ViewModel.VersionDescription, Mode=OneWay}"
+                Margin="{StaticResource SmallTopMargin}"
+                Description="{x:Bind strings:Resources.SettingsAboutText}">
+
+        <local:SettingsBlockControl.Icon>
+            <controls:ImageIcon
+                        Width="48"
+                        Height="48"
+                        Source="ms-appx:///Assets/Square44x44Logo.altform-unplated_targetsize-256.png" />
+        </local:SettingsBlockControl.Icon>
+
+        <local:SettingsBlockControl.ExpandableContent>
+            <StackPanel
+                        Margin="8"
+                        Orientation="Vertical"
+                        Spacing="4">
+                <HyperlinkButton Content="{x:Bind strings:Resources.SettingsGithub}" NavigateUri="{x:Bind strings:Resources.SettingsGithubLink}" />
+                <HyperlinkButton Command="{x:Bind ViewModel.RateAppCommand}" Content="{x:Bind strings:Resources.RateAppPromptTitle}" />
+            </StackPanel>
+
+        </local:SettingsBlockControl.ExpandableContent>
+
+    </local:SettingsBlockControl>
+
+    <Border Height="64" />
+
+    </StackPanel>
+    </ScrollViewer>
+</Page>

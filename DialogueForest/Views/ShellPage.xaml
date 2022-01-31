@@ -1,0 +1,196 @@
+﻿<Page
+    x:Class="DialogueForest.Views.ShellPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:strings="using:DialogueForest.Localization.Strings"
+    xmlns:helpers="using:DialogueForest.Helpers"
+    xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
+    xmlns:views="using:DialogueForest.Views"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Microsoft.Toolkit.Uwp.UI.Controls.Core/InAppNotification/InAppNotification.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:StringVisibilityConverter x:Key="StringToVisibilityConverter" />
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+
+            <Style
+                x:Key="CustomInAppNotificationStyle"
+                BasedOn="{StaticResource BaseInAppNotificationsStyle}"
+                TargetType="controls:InAppNotification">
+
+                <Setter Property="Background" Value="{ThemeResource SystemControlAcrylicElementBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+            </Style>
+
+            <!--  This top margin is the height of the custom TitleBar  -->
+            <Thickness x:Key="NavigationViewContentGridBorderThickness">0</Thickness>
+            <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
+
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <i:Interaction.Behaviors>
+        <ic:EventTriggerBehavior EventName="Loaded">
+            <ic:InvokeCommandAction Command="{x:Bind ViewModel.LoadedCommand}" />
+        </ic:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+
+    <Grid>
+
+        <Border
+            x:Name="AppTitleBar"
+            Height="40"
+            Width="400"
+            Margin="48,4,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Background="Transparent"
+            Canvas.ZIndex="1"
+            IsHitTestVisible="True">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <Image VerticalAlignment="Center"
+                        Margin="0,8,0,0"
+                        Width="16"
+                        Height="16"
+                        Source="ms-appx:///Assets/Square44x44Logo.targetsize-24_altform-unplated.png" />
+                <TextBlock
+                    x:Name="AppTitle"
+                    Margin="4,8,0,0"
+                    VerticalAlignment="Center"
+                    FontFamily="Segoe UI Variable Display"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind strings:Resources.AppDisplayName}" />
+            </StackPanel>
+        </Border>
+
+        <muxc:NavigationView
+            x:Name="navigationView"
+            Canvas.ZIndex="0"
+            DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
+            ExpandedModeThresholdWidth="900"
+            IsBackButtonVisible="Visible"
+            IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
+            IsSettingsVisible="True"
+            IsTitleBarAutoPaddingEnabled="False">
+            <muxc:NavigationView.MenuItems>
+                <muxc:NavigationViewItem
+                    SelectsOnInvoked="False"
+                    Content="{x:Bind strings:Resources.NavigationFile}"
+                    Icon="Home" >
+
+                    <muxc:NavigationViewItem.MenuItems>
+
+                        <muxc:NavigationViewItem
+                            SelectsOnInvoked="False"
+                            helpers:NavHelper.Command="{x:Bind ViewModel.NewFileCommand}" 
+                            Content="{x:Bind strings:Resources.NavigationNew}"
+                            Icon="Document" />
+                        <muxc:NavigationViewItem
+                            SelectsOnInvoked="False"
+                            helpers:NavHelper.Command="{x:Bind ViewModel.OpenFileCommand}" 
+                            Content="{x:Bind strings:Resources.NavigationOpen}">
+                            <muxc:NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE838;"/>
+                            </muxc:NavigationViewItem.Icon>
+                        </muxc:NavigationViewItem>
+                        <muxc:NavigationViewItem
+                            SelectsOnInvoked="False"
+                            helpers:NavHelper.Command="{x:Bind ViewModel.SaveCommand}"                
+                            Content="{x:Bind strings:Resources.NavigationSave}"
+                            Icon="Save" />
+
+                    </muxc:NavigationViewItem.MenuItems>
+
+                </muxc:NavigationViewItem>
+
+                <muxc:NavigationViewItem
+                    helpers:NavHelper.NavigateTo="viewmodels:ExportViewModel"
+                    Content="{x:Bind strings:Resources.NavigationExport}">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xEA5E;"/>
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+
+                <muxc:NavigationViewItemSeparator />
+
+                <!--  This menuitem is filled in viewmodel (E8BE) (EC0A)  -->
+                <muxc:NavigationViewItem
+                    x:Name="treeContainer"
+                    SelectsOnInvoked="False"
+                    Content="{x:Bind strings:Resources.NavigationTrees}">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE1C3;"/>
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+
+                <muxc:NavigationViewItem 
+                    helpers:NavHelper.NavigateTo="viewmodels:PinsViewModel"
+                    Content="{x:Bind strings:Resources.NavigationPins}"
+                    Icon="Pin" />
+                <muxc:NavigationViewItem 
+                    helpers:NavHelper.NavigateTo="viewmodels:NotesViewModel"
+                    Content="{x:Bind strings:Resources.NavigationNotes}">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE70B;"/>
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem 
+                    helpers:NavHelper.NavigateTo="viewmodels:TrashViewModel"
+                    Content="{x:Bind strings:Resources.NavigationTrash}"
+                    Icon="Delete" />
+
+            </muxc:NavigationView.MenuItems>
+
+            <i:Interaction.Behaviors>
+                <ic:EventTriggerBehavior EventName="ItemInvoked">
+                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.ItemInvokedCommand}" />
+                </ic:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+
+            <Grid x:Name="contentContainer">
+                <muxc:TwoPaneView
+                    x:Name="twoPaneView"
+                    TallModeConfiguration="SinglePane"
+                    MinWideModeWidth="740"
+                    MinTallModeHeight="863">
+
+                    <muxc:TwoPaneView.Pane1>
+                        <Grid
+                            Margin="4,40,8,0"
+                            Background="{ThemeResource LayerFillColorDefaultBrush}"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1"
+                            CornerRadius="8,8,0,0">
+                            <Frame x:Name="shellFrame"/>
+                        </Grid>
+                    </muxc:TwoPaneView.Pane1>
+
+                    <muxc:TwoPaneView.Pane2>
+                        <views:OpenedNodesPage x:Name="tabsView"/>
+                    </muxc:TwoPaneView.Pane2>
+                </muxc:TwoPaneView>
+
+                <!--  InAppNotifications go here  -->
+                <controls:InAppNotification
+                    x:Name="notificationHolder"
+                    Grid.Row="1"
+                    Style="{StaticResource CustomInAppNotificationStyle}" />
+            </Grid>
+        </muxc:NavigationView>
+    </Grid>
+
+</Page>
