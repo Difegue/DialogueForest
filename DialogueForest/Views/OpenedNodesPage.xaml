@@ -12,40 +12,66 @@
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d">
 
-    <muxc:TabView
+    <Grid>
+
+        <Grid Padding="{StaticResource MediumLeftTopRightBottomMargin}"
+              Margin="0,40,0,-4"
+          Background="{ThemeResource LayerFillColorDefaultBrush}"
+          BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                  BorderThickness="1,0,0,1" CornerRadius="8,0,0,0">
+
+
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <SymbolIcon
+                    Height="86"
+                    RenderTransformOrigin="0.5,0.5"
+                    Symbol="Zoom">
+                    <SymbolIcon.RenderTransform>
+                        <CompositeTransform ScaleX="5" ScaleY="5" />
+                    </SymbolIcon.RenderTransform>
+                </SymbolIcon>
+                <TextBlock
+                    Margin="{StaticResource SmallTopMargin}"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource SubtitleTextBlockStyle}"
+                    Text="nothing" />
+                <TextBlock HorizontalAlignment="Center" Text="yup, nothing" />
+            </StackPanel>
+            
+
+        </Grid>
+
+        <muxc:TabView
         AllowDropTabs="True"
         TabItemsSource="{x:Bind ViewModel.Tabs}"
         AddTabButtonCommand="{x:Bind ViewModel.AddTabCommand}">
-        <i:Interaction.Behaviors>
-            <ic:EventTriggerBehavior EventName="TabCloseRequested">
-                <ic:InvokeCommandAction Command="{x:Bind ViewModel.CloseTabCommand}" />
-            </ic:EventTriggerBehavior>
-        </i:Interaction.Behaviors>
-        <muxc:TabView.TabStripHeader>
-            <Grid Width="16"/>
-        </muxc:TabView.TabStripHeader>
-        <muxc:TabView.TabStripFooter>
-            <Grid Width="160"/>
-        </muxc:TabView.TabStripFooter>
-        <muxc:TabView.TabItemTemplate>
-            <DataTemplate x:DataType="models:TabViewItemData">
-                <muxc:TabViewItem
+            <i:Interaction.Behaviors>
+                <ic:EventTriggerBehavior EventName="TabCloseRequested">
+                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.CloseTabCommand}" />
+                </ic:EventTriggerBehavior>
+            </i:Interaction.Behaviors>
+            <muxc:TabView.TabStripHeader>
+                <Grid Width="16"/>
+            </muxc:TabView.TabStripHeader>
+            <muxc:TabView.TabStripFooter>
+                <Grid Width="160"/>
+            </muxc:TabView.TabStripFooter>
+            <muxc:TabView.TabItemTemplate>
+                <DataTemplate x:DataType="models:TabViewItemData">
+                    <muxc:TabViewItem
                     Header="{x:Bind Header}"
                     AutomationProperties.Name="{x:Bind Header}"
                     Content="{x:Bind Content}">
-                    <muxc:TabViewItem.ContentTemplate>
-                        <DataTemplate x:DataType="system:String">
-
-                            <Grid Padding="{StaticResource MediumLeftTopRightBottomMargin}" 
-                                  Background="{ThemeResource LayerFillColorDefaultBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                  BorderThickness="1,0,0,1" CornerRadius="8,0,0,0" Height="1000">
+                        <muxc:TabViewItem.ContentTemplate>
+                            <DataTemplate x:DataType="system:String">
                                 <TextBlock Text="{x:Bind}" />
-                            </Grid>
-                        </DataTemplate>
-                    </muxc:TabViewItem.ContentTemplate>
-                </muxc:TabViewItem>
-            </DataTemplate>
-        </muxc:TabView.TabItemTemplate>
-    </muxc:TabView>
-
+                            </DataTemplate>
+                        </muxc:TabViewItem.ContentTemplate>
+                    </muxc:TabViewItem>
+                </DataTemplate>
+            </muxc:TabView.TabItemTemplate>
+        </muxc:TabView>
+    </Grid>
 </Page>

@@ -82,6 +82,7 @@
             Canvas.ZIndex="0"
             DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
             ExpandedModeThresholdWidth="900"
+            OpenPaneLength="240"
             IsBackButtonVisible="Visible"
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
             IsSettingsVisible="True"
@@ -170,10 +171,11 @@
 
                     <muxc:TwoPaneView.Pane1>
                         <Grid
-                            Margin="4,40,8,0"
+                            Margin="4,40,8,-4"
                             Background="{ThemeResource LayerFillColorDefaultBrush}"
                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                             BorderThickness="1"
+                            Width="320"
                             CornerRadius="8,8,0,0">
                             <Frame x:Name="shellFrame"/>
                         </Grid>
