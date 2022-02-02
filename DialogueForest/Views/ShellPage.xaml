@@ -82,11 +82,13 @@
             Canvas.ZIndex="0"
             DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
             ExpandedModeThresholdWidth="900"
+            CompactModeThresholdWidth="400"
             OpenPaneLength="240"
             IsBackButtonVisible="Visible"
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
             IsSettingsVisible="True"
             IsTitleBarAutoPaddingEnabled="False">
+
             <muxc:NavigationView.MenuItems>
                 <muxc:NavigationViewItem
                     SelectsOnInvoked="False"
@@ -112,7 +114,11 @@
                             SelectsOnInvoked="False"
                             helpers:NavHelper.Command="{x:Bind ViewModel.SaveCommand}"                
                             Content="{x:Bind strings:Resources.NavigationSave}"
-                            Icon="Save" />
+                            Icon="Save" >
+                            <muxc:NavigationViewItem.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="S" Modifiers="Control"/>
+                            </muxc:NavigationViewItem.KeyboardAccelerators>
+                        </muxc:NavigationViewItem>
 
                     </muxc:NavigationViewItem.MenuItems>
 
@@ -166,16 +172,17 @@
                 <muxc:TwoPaneView
                     x:Name="twoPaneView"
                     TallModeConfiguration="SinglePane"
-                    MinWideModeWidth="740"
+                    MinWideModeWidth="640"
                     MinTallModeHeight="863">
 
                     <muxc:TwoPaneView.Pane1>
                         <Grid
+                            x:Name="Pane1"
                             Margin="4,40,8,-4"
                             Background="{ThemeResource LayerFillColorDefaultBrush}"
                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                             BorderThickness="1"
-                            Width="320"
+                            Width="300"
                             CornerRadius="8,8,0,0">
                             <Frame x:Name="shellFrame"/>
                         </Grid>

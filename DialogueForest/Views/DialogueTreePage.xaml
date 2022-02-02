@@ -5,28 +5,72 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
-        <StackPanel Margin="0,20">
-            <StackPanel.Resources>
-                <Style TargetType="TextBlock">
-                    <Setter Property="FontSize" Value="18" />
-                    <Setter Property="TextWrapping" Value="WrapWholeWords" />
-                </Style>
-            </StackPanel.Resources>
-            <TextBlock xml:space="default">
-                <Run>This app was created with a preview version of</Run>
-                <Run FontWeight="SemiBold">Template Studio for UWP</Run>
-                <Run>.</Run>
-            </TextBlock>
+    <Grid x:Name="ContentArea" Margin="{StaticResource SmallLeftTopRightBottomMargin}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="124" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <TextBlock>During this preview period, any feedback, suggestions, or bug reports are particularly helpful.</TextBlock>
+        <StackPanel Grid.Row="0" Spacing="8">
+            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="My Tree 1" HorizontalAlignment="Center"/>
+            <AutoSuggestBox PlaceholderText="Search Nodes..." QueryIcon="Globe"/>
+            <CommandBar DefaultLabelPosition="Collapsed" HorizontalAlignment="Left">
+                <CommandBar.PrimaryCommands>
+                    <AppBarButton Icon="Add" Label="Add Node"/>
+                    <AppBarSeparator />
+                    <AppBarButton Icon="Pictures" Label="Add Node"/>
+                    <AppBarButton Icon="Sort" IsCompact="True" Label="Sort by" ToolTipService.ToolTip="Sort" AutomationProperties.Name="Sort">
+                        <AppBarButton.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="By rating" Tag="rating"/>
+                                <MenuFlyoutItem Text="By match"  Tag="match"/>
+                                <MenuFlyoutItem Text="By distance"  Tag="distance"/>
+                            </MenuFlyout>
+                        </AppBarButton.Flyout>
+                    </AppBarButton>
+                    <AppBarSeparator />
+                    <AppBarButton Icon="Delete" Label="Delete" Foreground="Red"/>
+                </CommandBar.PrimaryCommands>
+            </CommandBar>
 
-            <TextBlock>Please leave you comments, etc. on the GitHub repo:</TextBlock>
+            <NavigationViewItemSeparator/>
+        </StackPanel>
+        
 
+        <StackPanel Grid.Row="1" Spacing="4">
 
-            <HyperlinkButton Content="github.com/mrlacey/TemplateStudio" NavigateUri="https://github.com/mrlacey/TemplateStudio" FontSize="24" />
+            <Grid Style="{StaticResource CardGrid}" Background="{ThemeResource SystemColorControlAccentBrush}" >
 
-            <TextBlock FontSize="12" Margin="0,12">And, of course, feel free to delete this page 😉</TextBlock>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="24" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}"
+                           Text="Dialogue n°1" TextTrimming="CharacterEllipsis"/>
+
+                <AppBarButton Grid.Row="0" Grid.Column="1" Padding="0" Margin="-12,-12" 
+                    Icon="More" IsCompact="True" ToolTipService.ToolTip="Sort"
+                              HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <AppBarButton.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="By rating"  Tag="rating"/>
+                            <MenuFlyoutItem Text="By match"  Tag="match"/>
+                            <MenuFlyoutItem Text="By distance"  Tag="distance"/>
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+
+                <TextBlock Grid.Row="2" Grid.ColumnSpan="2" TextWrapping="Wrap" MaxLines="3" TextTrimming="CharacterEllipsis"
+                    Text="Sea feugiat justo in zzril assum kasd ipsum sit sit duo suscipit aliquyam. Consectetuer ea in molestie dignissim elitr eos tempor et. Ea takimata accusam justo qui. Dolor nihil stet nulla. Sed diam eirmod ipsum diam no in sit vulputate sanctus diam te nihil zzril sed. Amet ex dolore dolores accusam dolor vero sanctus eos eu nonumy dolore hendrerit et diam elitr dolore labore et. Vulputate dolore nulla. Dolor dolor diam labore magna magna elitr nulla nibh et sanctus ipsum consequat gubergren tempor."/>
+
+            </Grid>
+            
         </StackPanel>
     </Grid>
 </Page>

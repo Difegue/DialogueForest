@@ -1,28 +1,149 @@
 ﻿<Page
-    x:Class="DialogueForest.Views.MainPage"
+    x:Class="DialogueForest.Views.DialogueNodePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Style="{StaticResource PageStyle}"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:local="using:DialogueForest.Controls"
     mc:Ignorable="d">
-    <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
+    <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48" />
+            <RowDefinition Height="112" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock
-            Grid.Row="0"
-            x:Uid="Main_Title"
-            Style="{StaticResource PageTitleStyle}" />
-        <Grid
-            Grid.Row="1" 
-            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-            <!--
-                The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
-                Place your content here.
-            -->
-        </Grid>
+        <StackPanel Grid.Row="0" Spacing="4" Margin="{StaticResource SmallLeftTopMargin}" >
+
+            <muxc:BreadcrumbBar Height="24"/>
+
+            <TextBox Text="My Dialogue1" FontSize="32" FontWeight="SemiBold" Margin="{StaticResource MediumRightMargin}"
+                     FontFamily="Segoe UI Variable Display" Background="Transparent" BorderThickness="0"/>
+        </StackPanel>
+
+
+        <ScrollViewer Grid.Row="1">
+
+            <StackPanel Spacing="8" Margin="{StaticResource MediumLeftRightMargin}">
+
+                <controls:HeaderedContentControl
+                                     HorizontalContentAlignment="Stretch"
+                                     VerticalContentAlignment="Stretch"
+                                     Margin="6">
+                    <controls:HeaderedContentControl.Header>
+                        <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,8">
+                            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="Dialogue"/>
+                            <Button Style="{StaticResource AccentButtonStyle}" Padding="8,4">
+                                <SymbolIcon Symbol="Add"/>
+                            </Button>
+                        </StackPanel>
+                    </controls:HeaderedContentControl.Header>
+
+                    <StackPanel Spacing="2">
+
+                        <Grid Style="{StaticResource CardGrid}">
+                            <TextBlock MaxLines="3" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"
+                                Text="Sea sadipscing ut gubergren nonummy sed. Amet diam rebum sed sed ea at consequat dolor justo. Dolores feugait at vero exerci option takimata qui diam elitr consetetur kasd ipsum diam et diam diam ullamcorper dolor. Diam et duo invidunt sed amet praesent ea eos dolor sit sit sed. "/>
+                        </Grid>
+
+                        <Grid Style="{StaticResource CardGrid}">
+                            <TextBlock Text="Lorem ipsum "/>
+                        </Grid>
+
+                        <StackPanel Margin="2,2">
+                            <controls:TextToolbar x:Name="Toolbar" Editor="{x:Bind Editor}"  />
+                            <RichEditBox x:Name="Editor" PlaceholderText="Enter Text Here" Height="180"/>
+                        </StackPanel>
+
+                    </StackPanel>
+                </controls:HeaderedContentControl>
+
+                <controls:HeaderedContentControl
+                                     HorizontalContentAlignment="Stretch"
+                                     VerticalContentAlignment="Stretch"
+                                     Margin="6">
+                    <controls:HeaderedContentControl.Header>
+                        <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,8">
+                            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="Prompts"/>
+                            <Button Style="{StaticResource AccentButtonStyle}" Padding="8,4">
+                                <SymbolIcon Symbol="Add"/>
+                            </Button>
+                        </StackPanel>
+                    </controls:HeaderedContentControl.Header>
+
+                    <local:SettingsBlockControl
+                        Title="I can't believe he'd done dis">
+
+                        <local:SettingsBlockControl.SettingsActionableElement>
+                            <Button Content="Linked to #16"/>
+                        </local:SettingsBlockControl.SettingsActionableElement>
+
+                        <local:SettingsBlockControl.ExpandableContent>
+
+                            <TextBox/>
+                        </local:SettingsBlockControl.ExpandableContent>
+                    </local:SettingsBlockControl>
+
+                </controls:HeaderedContentControl>
+
+                <controls:HeaderedContentControl
+                                     HorizontalContentAlignment="Stretch"
+                                     VerticalContentAlignment="Stretch"
+                                     Margin="6">
+                    <controls:HeaderedContentControl.Header>
+                        <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,8">
+                            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="Metadata"/>
+                        </StackPanel>
+                    </controls:HeaderedContentControl.Header>
+
+                    <StackPanel Spacing="2">
+                        <local:SettingsBlockControl
+                        Icon="SwitchApps"
+                        Title="MyMetadataKey1">
+
+                            <local:SettingsBlockControl.SettingsActionableElement>
+                                <ToggleSwitch IsOn="False" OffContent="" OnContent="" Margin="0,0,-112,0"/>
+                            </local:SettingsBlockControl.SettingsActionableElement>
+
+                        </local:SettingsBlockControl>
+                        <local:SettingsBlockControl
+                        Icon="Tag"
+                        Title="MyMetadataKey2">
+
+                            <local:SettingsBlockControl.SettingsActionableElement>
+                                <TextBox Width="180"/>
+                            </local:SettingsBlockControl.SettingsActionableElement>
+
+                        </local:SettingsBlockControl>
+                        <local:SettingsBlockControl
+                        Icon="Highlight"
+                        Title="MyMetadataKey3">
+
+                            <local:SettingsBlockControl.SettingsActionableElement>
+                                <controls:ColorPickerButton x:Name="ColorPickerButton5"
+                                  SelectedColor="Teal">
+                                    <controls:ColorPickerButton.ColorPickerStyle>
+                                        <Style TargetType="controls:ColorPicker">
+                                            <Setter Property="ColorSpectrumShape" Value="Ring"/>
+                                            <Setter Property="IsAlphaEnabled" Value="True"/>
+                                            <Setter Property="IsHexInputVisible" Value="True"/>
+                                            <Setter Property="IsColorSpectrumVisible" Value="False"/>
+                                            <Setter Property="IsColorPaletteVisible" Value="True"/>
+                                            <Setter Property="IsColorChannelTextInputVisible" Value="False"/>
+                                        </Style>
+                                    </controls:ColorPickerButton.ColorPickerStyle>
+                                </controls:ColorPickerButton>
+                            </local:SettingsBlockControl.SettingsActionableElement>
+
+                        </local:SettingsBlockControl>
+                    </StackPanel>
+
+                </controls:HeaderedContentControl>
+                
+                <Border Height="64" />
+            </StackPanel>
+
+        </ScrollViewer>
+
     </Grid>
 </Page>

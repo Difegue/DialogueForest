@@ -8,7 +8,7 @@
     xmlns:models="using:DialogueForest.Models"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:system="using:System"
+    xmlns:views="using:DialogueForest.Views"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d">
 
@@ -62,13 +62,10 @@
                 <DataTemplate x:DataType="models:TabViewItemData">
                     <muxc:TabViewItem
                     Header="{x:Bind Header}"
-                    AutomationProperties.Name="{x:Bind Header}"
-                    Content="{x:Bind Content}">
-                        <muxc:TabViewItem.ContentTemplate>
-                            <DataTemplate x:DataType="system:String">
-                                <TextBlock Text="{x:Bind}" />
-                            </DataTemplate>
-                        </muxc:TabViewItem.ContentTemplate>
+                    AutomationProperties.Name="{x:Bind Header}">
+                        <muxc:TabViewItem.Content>
+                            <views:DialogueNodePage DataContext="{x:Bind Content}"/>
+                        </muxc:TabViewItem.Content>
                     </muxc:TabViewItem>
                 </DataTemplate>
             </muxc:TabView.TabItemTemplate>

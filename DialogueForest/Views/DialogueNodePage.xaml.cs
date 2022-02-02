@@ -6,11 +6,11 @@ using Windows.UI.Xaml.Controls;
 
 namespace DialogueForest.Views
 {
-    public sealed partial class MainPage : Page
+    public sealed partial class DialogueNodePage : Page
     {
         public DialogueNodeViewModel ViewModel { get; } = new DialogueNodeViewModel();
 
-        public MainPage()
+        public DialogueNodePage()
         {
             InitializeComponent();
         }
