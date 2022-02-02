@@ -8,6 +8,8 @@ namespace DialogueForest.Core.Models
 
         public string Title { get; set; }
 
+        public string Character { get; set; }
+
         public List<string> DialogueLines { get; set; }
 
         public Dictionary<string, long> Prompts { get; set; }

@@ -17,5 +17,7 @@ namespace DialogueForest.Core.Models
 
         public Dictionary<string, MetadataKind> MetadataDefinitions { get; set; }
 
+        public Dictionary<string, string> CharacterDefinitions { get; set; }
+
     }
 }

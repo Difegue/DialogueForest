@@ -51,8 +51,9 @@
                         </Grid>
 
                         <StackPanel Margin="2,2">
-                            <controls:TextToolbar x:Name="Toolbar" Editor="{x:Bind Editor}"  />
-                            <RichEditBox x:Name="Editor" PlaceholderText="Enter Text Here" Height="180"/>
+                            <controls:TextToolbar x:Name="Toolbar" Editor="{x:Bind Editor}" CornerRadius="4,4,0,0"
+                                                  Background="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
+                            <RichEditBox x:Name="Editor" PlaceholderText="Enter Text Here" Height="180" CornerRadius="0,0,4,4" />
                         </StackPanel>
 
                     </StackPanel>
