@@ -15,7 +15,7 @@ namespace DialogueForest.Services
     {
         private Dictionary<Type, Type> _viewModelToPageDictionary = new Dictionary<Type, Type>()
         {
-            { typeof(DialogueNodeViewModel), typeof(MainPage) },
+            { typeof(DialogueNodeViewModel), typeof(DialogueNodePage) },
             { typeof(SettingsViewModel), typeof(SettingsPage) },
             { typeof(GraphViewViewModel), typeof(GraphViewPage) },
 

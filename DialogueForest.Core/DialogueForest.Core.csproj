@@ -16,8 +16,4 @@
    <ItemGroup>
      <ProjectReference Include="..\DialogueForest.Localization\DialogueForest.Localization.csproj" />
    </ItemGroup>
-
-   <ItemGroup>
-     <Folder Include="Services\" />
-   </ItemGroup>
 </Project>
