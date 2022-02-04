@@ -17,6 +17,7 @@ using Windows.Foundation;
 using Windows.UI;
 using DialogueForest.ViewModels;
 using DialogueForest.Services;
+using DialogueForest.Core.Services;
 
 namespace DialogueForest
 {
@@ -134,6 +135,7 @@ namespace DialogueForest
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<INotificationService, NotificationService>();
             services.AddSingleton<IInteropService, InteropService>();
+            services.AddSingleton<ForestDataService>();
 
             // Viewmodel Factories
             //services.AddSingleton<AlbumViewModelFactory>();
@@ -143,7 +145,7 @@ namespace DialogueForest
             // Viewmodels
             services.AddSingleton<ShellViewModel>();
             services.AddSingleton<SettingsViewModel>();
-            //services.AddSingleton<LibraryViewModel>();
+            
             //services.AddSingleton<AlbumDetailViewModel>();
             //services.AddSingleton<FoldersViewModel>();
             //services.AddSingleton<PlaylistViewModel>();
@@ -151,7 +153,7 @@ namespace DialogueForest
             //services.AddSingleton<SearchResultsViewModel>();
             //services.AddSingleton<LocalPlaybackViewModel>();
 
-            //services.AddTransient<PlaybackViewModel>();
+            services.AddTransient<DialogueNodeViewModel>();
 
             return services.BuildServiceProvider();
         }

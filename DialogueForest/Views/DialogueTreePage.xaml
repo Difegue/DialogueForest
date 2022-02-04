@@ -69,22 +69,22 @@
         </Style>
     </Page.Resources>
 
-    <Grid x:Name="ContentArea" Margin="{StaticResource SmallLeftTopRightBottomMargin}">
+    <Grid x:Name="ContentArea" >
         <Grid.RowDefinitions>
-            <RowDefinition Height="132" />
+            <RowDefinition Height="144" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
 
-        <StackPanel Grid.Row="0" Spacing="8">
+        <StackPanel Grid.Row="0" Spacing="8" Margin="{StaticResource SmallLeftTopRightMargin}">
             <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="My Tree 1" HorizontalAlignment="Center"/>
-            <AutoSuggestBox PlaceholderText="Search Nodes..." QueryIcon="Globe"/>
+            <AutoSuggestBox PlaceholderText="Search Nodes..." QueryIcon="GlobalNavigationButton"/>
 
-            <CommandBar DefaultLabelPosition="Collapsed" HorizontalAlignment="Left">
+            <CommandBar DefaultLabelPosition="Bottom" >
                 <CommandBar.PrimaryCommands>
                     <AppBarButton Icon="Add" Label="Add Node"/>
                     <AppBarSeparator />
-                    <AppBarButton Label="Add Node">
+                    <AppBarButton Label="Graph View">
                         <AppBarButton.Icon>
                             <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEC26;" />
                         </AppBarButton.Icon>
@@ -103,13 +103,13 @@
                 </CommandBar.PrimaryCommands>
             </CommandBar>
 
-            <Border Height="1" Background="{ThemeResource SystemControlBackgroundBaseLowBrush}" Margin="0,-8,0,0"/>
+            <Border Height="1" Background="{ThemeResource SystemControlBackgroundBaseLowBrush}" Margin="0,-16,0,0"/>
         </StackPanel>
 
         <ScrollViewer Grid.Row="1">
             <StackPanel Spacing="4" Margin="{StaticResource XSmallTopMargin}" >
 
-                <GridViewItem  MaxWidth="264" Margin="2,0,0,0">
+                <GridViewItem  MaxWidth="270" >
                     <Grid Style="{StaticResource CardGrid}" >
 
                         <Grid.RowDefinitions>
@@ -127,17 +127,19 @@
                         <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}"
                                Text="Dialogue n°1" TextTrimming="CharacterEllipsis"/>
 
-                        <AppBarButton Grid.Row="0" Grid.Column="1" Padding="0" Margin="-12,-12" 
-                        Icon="More" IsCompact="True" ToolTipService.ToolTip="Sort"
+                        <Button Grid.Row="0" Grid.Column="1" Padding="4,0" ToolTipService.ToolTip="Sort" Margin="0,-8,-8,8"
                                   HorizontalAlignment="Right" VerticalAlignment="Top">
-                            <AppBarButton.Flyout>
+                            <Button.Content>
+                                <SymbolIcon Symbol="More"/>
+                            </Button.Content>
+                            <Button.Flyout>
                                 <MenuFlyout>
                                     <MenuFlyoutItem Text="By rating"  Tag="rating"/>
                                     <MenuFlyoutItem Text="By match"  Tag="match"/>
                                     <MenuFlyoutItem Text="By distance"  Tag="distance"/>
                                 </MenuFlyout>
-                            </AppBarButton.Flyout>
-                        </AppBarButton>
+                            </Button.Flyout>
+                        </Button>
 
                         <TextBlock Grid.Row="2" Grid.ColumnSpan="2" TextWrapping="Wrap" MaxLines="3" TextTrimming="CharacterEllipsis"
                         Text="Sea feugiat justo in zzril assum kasd ipsum sit sit duo suscipit aliquyam. Consectetuer ea in molestie dignissim elitr eos tempor et. Ea takimata accusam justo qui. Dolor nihil stet nulla. Sed diam eirmod ipsum diam no in sit vulputate sanctus diam te nihil zzril sed. Amet ex dolore dolores accusam dolor vero sanctus eos eu nonumy dolore hendrerit et diam elitr dolore labore et. Vulputate dolore nulla. Dolor dolor diam labore magna magna elitr nulla nibh et sanctus ipsum consequat gubergren tempor."/>

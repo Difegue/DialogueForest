@@ -72,19 +72,24 @@
                         </StackPanel>
                     </controls:HeaderedContentControl.Header>
 
-                    <local:SettingsBlockControl
-                        Title="I can't believe he'd done dis">
-
-                        <local:SettingsBlockControl.SettingsActionableElement>
-                            <Button Content="Linked to #16"/>
-                        </local:SettingsBlockControl.SettingsActionableElement>
-
-                        <local:SettingsBlockControl.ExpandableContent>
-
-                            <TextBox/>
-                        </local:SettingsBlockControl.ExpandableContent>
-                    </local:SettingsBlockControl>
-
+                    <StackPanel Spacing="2">
+                        
+                    <Grid Style="{StaticResource CardGrid}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.9*"/>
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" TextWrapping="Wrap" AcceptsReturn="True" 
+                                      Margin="0,0,16,0" Background="Transparent" BorderThickness="0"
+                                    Text="This is a ToggleButton in the header" />
+                        <AppBarButton Label="Go to Linked Dialogue" Grid.Column="1" Width="80">
+                            <AppBarButton.Icon>
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE71B;" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </Grid>
+                    
+                    </StackPanel>
                 </controls:HeaderedContentControl>
 
                 <controls:HeaderedContentControl

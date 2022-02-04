@@ -10,7 +10,7 @@ using DialogueForest.Core.Services;
 namespace DialogueForest.ViewModels
 {
 
-    public class DialogViewModel : ObservableObject
+    public partial class DialogViewModel : ObservableObject
     {
         [ObservableProperty]
         private string _text;
@@ -19,7 +19,7 @@ namespace DialogueForest.ViewModels
         private bool _isActive;
     }
 
-    public class MetadataViewModel : ObservableObject
+    public partial class MetadataViewModel : ObservableObject
     {
 
         [ObservableProperty]
@@ -33,7 +33,7 @@ namespace DialogueForest.ViewModels
 
     }
 
-    public class ReplyPromptViewModel: ObservableObject
+    public partial class ReplyPromptViewModel: ObservableObject
     {
         [ObservableProperty]
         private string _replyText;
@@ -42,7 +42,7 @@ namespace DialogueForest.ViewModels
         private long _linkedID;
     }
 
-    public class DialogueNodeViewModel : ObservableObject
+    public partial class DialogueNodeViewModel : ObservableObject
     {
         private IDialogService _dialogService;
         private INotificationService _notificationService;
