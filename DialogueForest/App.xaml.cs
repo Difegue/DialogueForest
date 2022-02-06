@@ -145,13 +145,16 @@ namespace DialogueForest
             // Viewmodels
             services.AddSingleton<ShellViewModel>();
             services.AddSingleton<SettingsViewModel>();
-            
+
             //services.AddSingleton<AlbumDetailViewModel>();
             //services.AddSingleton<FoldersViewModel>();
             //services.AddSingleton<PlaylistViewModel>();
             //services.AddSingleton<QueueViewModel>();
             //services.AddSingleton<SearchResultsViewModel>();
             //services.AddSingleton<LocalPlaybackViewModel>();
+
+            // TODO TEMPORARY
+            services.AddTransient<TreeViewModelBase>();
 
             services.AddTransient<DialogueNodeViewModel>();
             services.AddTransient<DialoguePartViewModel>();

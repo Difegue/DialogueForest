@@ -1,12 +1,14 @@
 ﻿using System;
-
+using DialogueForest.Core.Interfaces;
+using DialogueForest.Core.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace DialogueForest.Core.ViewModels
 {
     public class DialogueTreeViewModel : TreeViewModelBase
     {
-        public DialogueTreeViewModel()
+        public DialogueTreeViewModel(IDialogService dialogService, IInteropService interopService, INotificationService notificationService, ForestDataService forestService) :
+            base(dialogService, interopService, notificationService, forestService)
         {
         }
     }

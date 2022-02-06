@@ -56,6 +56,12 @@ namespace DialogueForest.Core.ViewModels
 
         }
 
+        [ICommand]
+        private void NewTree()
+        {
+
+        }
+
 
         [ICommand]
         protected abstract void Loaded();

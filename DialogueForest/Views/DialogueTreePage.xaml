@@ -5,7 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
-    xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media" xmlns:ani="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
+    xmlns:ani="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:strings="using:DialogueForest.Localization.Strings" xmlns:viewmodels="using:DialogueForest.ViewModels" xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -13,6 +15,8 @@
 
         <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Width" Value="270"/>
+            <Setter Property="Margin" Value="12,14,0,0"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
@@ -24,7 +28,6 @@
                                     <VisualState x:Name="Normal" />
                                     <VisualState x:Name="Pressed">
                                         <Storyboard>
-
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemContent" Storyboard.TargetProperty="Margin">
                                                 <DiscreteObjectKeyFrame KeyTime="0:0:0.02" Value="0,-3,0,3" />
                                                 <DiscreteObjectKeyFrame KeyTime="0:0:0.05" Value="0,-1,0,1" />
@@ -41,8 +44,8 @@
                                     <VisualState x:Name="PointerOver">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemContent" Storyboard.TargetProperty="Margin">
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.02" Value="0,0,0,0" />
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.07" Value="0,-2,0,2" />
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.01" Value="0,0,0,0" />
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.03" Value="0,-2,0,2" />
                                                 <DiscreteObjectKeyFrame KeyTime="0:0:0.12" Value="0,-3,0,3" />
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
@@ -67,89 +70,129 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <DataTemplate x:Key="NodeCardTemplate" x:DataType="viewmodels:DialogueNodeViewModel">
+            <Grid Style="{StaticResource CardGrid}" Margin="-1">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="24" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                </Grid.ColumnDefinitions>
+
+                <Border Background="{ThemeResource SystemAccentColor}" Grid.RowSpan="2" Width="4" HorizontalAlignment="Left" Margin="-17" CornerRadius="4,0,0,4"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}"
+                               Text="{x:Bind NodeTitle, Mode=OneWay}" TextTrimming="CharacterEllipsis"/>
+
+                <Button Grid.Row="0" Grid.Column="1" Padding="4,0" ToolTipService.ToolTip="Sort" Margin="0,-8,-8,8"
+                                  HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <Button.Content>
+                        <SymbolIcon Symbol="More"/>
+                    </Button.Content>
+                    <Button.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="By rating"  Tag="rating"/>
+                            <MenuFlyoutItem Text="By match"  Tag="match"/>
+                            <MenuFlyoutItem Text="By distance"  Tag="distance"/>
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
+
+                <TextBlock Grid.Row="2" Grid.ColumnSpan="2" TextWrapping="Wrap" MaxLines="3" TextTrimming="CharacterEllipsis"
+                        Text="{x:Bind NodeTitle, Mode=OneWay}"/>
+            </Grid>
+        </DataTemplate>
     </Page.Resources>
 
     <Grid x:Name="ContentArea" >
         <Grid.RowDefinitions>
-            <RowDefinition Height="144" />
+            <RowDefinition Height="136" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
 
-        <StackPanel Grid.Row="0" Spacing="8" Margin="{StaticResource SmallLeftTopRightMargin}">
-            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="My Tree 1" HorizontalAlignment="Center"/>
-            <AutoSuggestBox PlaceholderText="Search Nodes..." QueryIcon="GlobalNavigationButton"/>
+        <StackPanel Grid.Row="0" Spacing="12" Margin="{StaticResource SmallLeftTopRightMargin}">
+            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind ViewModel.Title}" HorizontalAlignment="Center"/>
+            <AutoSuggestBox PlaceholderText="Search Nodes..." QueryIcon="Zoom"/>
 
-            <CommandBar DefaultLabelPosition="Bottom" >
-                <CommandBar.PrimaryCommands>
-                    <AppBarButton Icon="Add" Label="Add Node"/>
-                    <AppBarSeparator />
-                    <AppBarButton Label="Graph View">
-                        <AppBarButton.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEC26;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                    <AppBarButton Icon="Sort" IsCompact="True" Label="Sort by" ToolTipService.ToolTip="Sort" AutomationProperties.Name="Sort">
-                        <AppBarButton.Flyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem Text="By rating" Tag="rating"/>
-                                <MenuFlyoutItem Text="By match"  Tag="match"/>
-                                <MenuFlyoutItem Text="By distance"  Tag="distance"/>
+            <Grid HorizontalAlignment="Stretch" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Command="{x:Bind ViewModel.AddNodeCommand}" Style="{ThemeResource AccentButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind strings:Resources.EditorAddDialogue}">
+                    <StackPanel Spacing="4" Orientation="Horizontal">
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE109;" FontSize="18" />
+                    </StackPanel>
+
+                </Button>
+
+                <StackPanel Orientation="Horizontal" Spacing="8" Grid.Column="2" HorizontalAlignment="Right">
+                    <Button Command="{x:Bind ViewModel.AddNodeCommand}"
+                                    ToolTipService.ToolTip="{x:Bind strings:Resources.EditorAddDialogue}">
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEC26;" FontSize="18" />
+                    </Button>
+
+                    <muxc:DropDownButton AutomationProperties.Name="Email">
+                        <muxc:DropDownButton.Content>
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE174;" FontSize="18"/>
+                        </muxc:DropDownButton.Content>
+                        <muxc:DropDownButton.Flyout>
+                            <MenuFlyout Placement="Bottom">
+                                <MenuFlyoutItem Text="Send">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE725;"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Text="Reply">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8CA;"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem Text="Reply All">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8C2;"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
                             </MenuFlyout>
-                        </AppBarButton.Flyout>
-                    </AppBarButton>
-                    <AppBarSeparator />
-                    <AppBarButton Icon="Delete" Label="Delete" Foreground="Red"/>
-                </CommandBar.PrimaryCommands>
-            </CommandBar>
+                        </muxc:DropDownButton.Flyout>
+                    </muxc:DropDownButton>
 
-            <Border Height="1" Background="{ThemeResource SystemControlBackgroundBaseLowBrush}" Margin="0,-16,0,0"/>
+                    <AppBarSeparator Padding="0"/>
+
+                    <Button Command="{x:Bind ViewModel.DeleteCommand}"
+                                    ToolTipService.ToolTip="{x:Bind strings:Resources.EditorAddDialogue}">
+                        <FontIcon Foreground="Red" FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" FontSize="18"/>
+                    </Button>
+                </StackPanel>
+
+                
+
+            </Grid>
+
         </StackPanel>
 
-        <ScrollViewer Grid.Row="1">
-            <StackPanel Spacing="4" Margin="{StaticResource XSmallTopMargin}" >
+        <ScrollViewer Grid.Row="1" >
 
-                <GridViewItem MaxWidth="270" >
-                    <Grid Style="{StaticResource CardGrid}" Margin="-1">
+            <GridView
+                    ItemsSource="{x:Bind ViewModel.Nodes}"
+                    ItemTemplate="{StaticResource NodeCardTemplate}"
+                    IsItemClickEnabled="True"
+                    SelectionMode="None"/>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="24" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="40" />
-                        </Grid.ColumnDefinitions>
-
-                        <Border Background="{ThemeResource SystemAccentColor}" Grid.RowSpan="2" Width="4" HorizontalAlignment="Left" Margin="-17" CornerRadius="4,0,0,4"/>
-
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}"
-                               Text="Dialogue n°1" TextTrimming="CharacterEllipsis"/>
-
-                        <Button Grid.Row="0" Grid.Column="1" Padding="4,0" ToolTipService.ToolTip="Sort" Margin="0,-8,-8,8"
-                                  HorizontalAlignment="Right" VerticalAlignment="Top">
-                            <Button.Content>
-                                <SymbolIcon Symbol="More"/>
-                            </Button.Content>
-                            <Button.Flyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Text="By rating"  Tag="rating"/>
-                                    <MenuFlyoutItem Text="By match"  Tag="match"/>
-                                    <MenuFlyoutItem Text="By distance"  Tag="distance"/>
-                                </MenuFlyout>
-                            </Button.Flyout>
-                        </Button>
-
-                        <TextBlock Grid.Row="2" Grid.ColumnSpan="2" TextWrapping="Wrap" MaxLines="3" TextTrimming="CharacterEllipsis"
-                        Text="Sea feugiat justo in zzril assum kasd ipsum sit sit duo suscipit aliquyam. Consectetuer ea in molestie dignissim elitr eos tempor et. Ea takimata accusam justo qui. Dolor nihil stet nulla. Sed diam eirmod ipsum diam no in sit vulputate sanctus diam te nihil zzril sed. Amet ex dolore dolores accusam dolor vero sanctus eos eu nonumy dolore hendrerit et diam elitr dolore labore et. Vulputate dolore nulla. Dolor dolor diam labore magna magna elitr nulla nibh et sanctus ipsum consequat gubergren tempor."/>
-
-                    </Grid>
-                </GridViewItem>
-            </StackPanel>
         </ScrollViewer>
 
-        <StackPanel Grid.Row="1" 
+        <StackPanel Grid.Row="1"
+                    Visibility="{x:Bind ViewModel.IsNodesEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
 
@@ -197,14 +240,13 @@
                 </Path>
             </Canvas>
 
-
-
             <TextBlock
                     Margin="{StaticResource SmallTopMargin}"
                     HorizontalAlignment="Center"
                     Style="{StaticResource SubtitleTextBlockStyle}"
-                    Text="No Talkin' yet." />
-            <TextBlock HorizontalAlignment="Center" Text="Your Dialogue will appear here." />
+                    Text="{x:Bind strings:Resources.EmptyViewTreeTitle}" />
+            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Margin="{StaticResource SmallTopMargin}"
+                       Text="{x:Bind strings:Resources.EmptyViewTreeDesc}" />
         </StackPanel>
     </Grid>
 </Page>

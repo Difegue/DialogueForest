@@ -48,7 +48,6 @@ namespace DialogueForest.ViewModels
             _dataService = dataService;
             _navigationService = navigationService;
             _dialogService = dialogService;
-            _replyText = Resources.ActionCompactOverlay;
         }
 
     }

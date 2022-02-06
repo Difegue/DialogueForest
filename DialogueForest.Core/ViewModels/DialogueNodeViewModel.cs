@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using DialogueForest.Core.Interfaces;
 using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
+using DialogueForest.Core.ViewModels;
 
 namespace DialogueForest.ViewModels
 {
@@ -18,6 +19,7 @@ namespace DialogueForest.ViewModels
         private INotificationService _notificationService;
         private ForestDataService _dataService;
 
+        private TreeViewModelBase _parentVm;
         private DialogueNode _node;
 
         public DialogueNodeViewModel(IDialogService dialogService, IInteropService interopService, INotificationService notificationService, ForestDataService forestService)
@@ -29,7 +31,8 @@ namespace DialogueForest.ViewModels
 
 
             AddDialog();
-            //Source.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsSourceEmpty));
+            Prompts.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsPromptsEmpty));
+            MetaValues.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsMetaDataEmpty));
         }
 
         internal void ActivateDialogue(DialoguePartViewModel dialogVm)
@@ -46,7 +49,15 @@ namespace DialogueForest.ViewModels
         public ObservableCollection<ReplyPromptViewModel> Prompts { get; } = new ObservableCollection<ReplyPromptViewModel>();
         public ObservableCollection<MetadataViewModel> MetaValues { get; } = new ObservableCollection<MetadataViewModel>();
 
+        internal void SetParentVm(TreeViewModelBase treeViewModel)
+        {
+            _parentVm = treeViewModel;
+        }
+
         public long ID => _node.ID;
+
+        public bool IsPromptsEmpty => Prompts.Count == 0;
+        public bool IsMetaDataEmpty => MetaValues.Count == 0;
 
         [ObservableProperty]
         private string _nodeTitle;
