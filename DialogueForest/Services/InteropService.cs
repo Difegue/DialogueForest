@@ -13,6 +13,7 @@ using DialogueForest.Core.ViewModels;
 using System.IO;
 using Windows.ApplicationModel;
 using Microsoft.Toolkit.Uwp.Helpers;
+using DialogueForest.Helpers;
 
 namespace DialogueForest.Services
 {
@@ -121,5 +122,7 @@ namespace DialogueForest.Services
         {
             await CoreApplication.GetCurrentView().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SystemInformation.LaunchStoreForReviewAsync());
         }
+
+        public string ConvertRtf(string rtf, OutputFormat format) => RtfHelper.Convert(rtf, format);
     }
 }

@@ -171,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activation\ActivationHandler.cs" />
+    <Compile Include="Controls\BindableRichEditBox.cs" />
     <Compile Include="Controls\SettingsBlockControl.xaml.cs">
       <DependentUpon>SettingsBlockControl.xaml</DependentUpon>
     </Compile>
@@ -185,6 +186,7 @@
     <Compile Include="EventHandlers\Ink\MoveStrokesEventArgs.cs" />
     <Compile Include="EventHandlers\Ink\RemoveEventArgs.cs" />
     <Compile Include="Helpers\NavHelper.cs" />
+    <Compile Include="Helpers\RtfHelper.cs" />
     <Compile Include="Helpers\SettingsStorageExtensions.cs" />
     <Compile Include="Helpers\MiscHelpers.cs" />
     <Compile Include="Services\ActivationService.cs" />
