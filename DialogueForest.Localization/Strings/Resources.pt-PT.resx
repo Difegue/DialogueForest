@@ -170,8 +170,8 @@
   <data name="SearchGoToDetail" xml:space="preserve">
     <value>Procurar por "{0}" no servidor...</value>
   </data>
-  <data name="SearchResultsFor" xml:space="preserve">
-    <value>Resultados da Pesquisa por "{0}"</value>
+  <data name="SearchTreePlaceholderText" xml:space="preserve">
+    <value>Procurar </value>
   </data>
   <data name="ButtonOKText" xml:space="preserve">
     <value>OK</value>
@@ -343,18 +343,6 @@ Espero que goste de utilizar a aplicação!
   <data name="ContextMenuDeletePlaylist" xml:space="preserve">
     <value>Eliminar Lista de reprodução</value>
   </data>
-  <data name="EmptyFoldersDesc" xml:space="preserve">
-    <value>O seu servidor MPD está ligado?</value>
-  </data>
-  <data name="EmptyFoldersTitle" xml:space="preserve">
-    <value>Não se encontram pastas no servidor.</value>
-  </data>
-  <data name="EmptyLibraryTitle" xml:space="preserve">
-    <value>Não há nada como uma biblioteca vazia.</value>
-  </data>
-  <data name="EmptyPlaylistDesc" xml:space="preserve">
-    <value>Arranje algumas faixas lá!</value>
-  </data>
   <data name="EmptyPlaylistTitle" xml:space="preserve">
     <value>Não posso interferir com isto.</value>
   </data>
@@ -370,62 +358,17 @@ Espero que goste de utilizar a aplicação!
   <data name="EmptySearchDesc" xml:space="preserve">
     <value>Nenhuma faixa encontrada no Servidor.</value>
   </data>
-  <data name="LibrarySearchPlaceholder" xml:space="preserve">
-    <value>Pesquisar</value>
+  <data name="NavigationNewTree" xml:space="preserve">
+    <value>Novo </value>
   </data>
-  <data name="FoldersRoot" xml:space="preserve">
-    <value>Sistema de Ficheiros MPD</value>
+  <data name="EditorPlaceholderText" xml:space="preserve">
+    <value>Accusam consetetur ut accusam et gubergren augue diam enim dolor at nulla ea ipsum diam et lobortis. Et no rebum odio takimata nulla nisl takimata iriure sit aliquyam eirmod nulla sit. Magna justo consetetur takimata.</value>
   </data>
-  <data name="FoldersLoadingTreeItem" xml:space="preserve">
-    <value>A carregar...</value>
+  <data name="EditorEmptyDialogue" xml:space="preserve">
+    <value>UNUSED</value>
   </data>
-  <data name="FoldersCollapseAll" xml:space="preserve">
-    <value>Fechar todas as pastas abertas</value>
-  </data>
-  <data name="PlaybackUpNext" xml:space="preserve">
-    <value>A seguir:</value>
-  </data>
-  <data name="ActionToggleShuffle" xml:space="preserve">
-    <value>Ativar/Desativar Aleatório</value>
-  </data>
-  <data name="ActionPlayPause" xml:space="preserve">
-    <value>Reproduzir/Pausa</value>
-  </data>
-  <data name="ActionSkipPrevious" xml:space="preserve">
-    <value>Faixa Anterior</value>
-  </data>
-  <data name="ActionToggleRepeat" xml:space="preserve">
-    <value>Ativar/Desativar Repetição</value>
-  </data>
-  <data name="ActionSkipNext" xml:space="preserve">
-    <value>Próxima Faixa</value>
-  </data>
-  <data name="ActionChangeVolume" xml:space="preserve">
-    <value>Mudar Volume</value>
-  </data>
-  <data name="ActionCompactOverlay" xml:space="preserve">
-    <value>Mostrar Mini Leitor</value>
-  </data>
-  <data name="ActionMore" xml:space="preserve">
-    <value>Mais Ações</value>
-  </data>
-  <data name="AddToPlaylistTitle" xml:space="preserve">
-    <value>Adicionar à Lista de reprodução</value>
-  </data>
-  <data name="AddToPlaylistText" xml:space="preserve">
-    <value>Adicionar faixa(s) para a seguinte Lista de reprodução:</value>
-  </data>
-  <data name="AddToPlaylistPlaceholder" xml:space="preserve">
-    <value>Selecione uma Lista de reprodução</value>
-  </data>
-  <data name="AddToPlaylistPrimaryButtonText" xml:space="preserve">
-    <value>Adicionar</value>
-  </data>
-  <data name="AddToPlaylistCreateNewPlaylist" xml:space="preserve">
-    <value>Criar Nova Lista de reprodução</value>
-  </data>
-  <data name="AddToPlaylistNewPlaylistName" xml:space="preserve">
-    <value>Nome da Lista de reprodução</value>
+  <data name="EditorReplyPlaceholderText" xml:space="preserve">
+    <value>Magna ea feugiat labore diam diam assum amet nibh vero sea eirmod magna takimata eum illum. Labore et nonumy vulputate lorem zzril erat kasd eu no sed laoreet duo labore et diam eos.</value>
   </data>
   <data name="SettingsServerPassword" xml:space="preserve">
     <value>Palavra-passe</value>

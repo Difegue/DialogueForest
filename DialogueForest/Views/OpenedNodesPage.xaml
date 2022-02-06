@@ -8,7 +8,7 @@
     xmlns:models="using:DialogueForest.Models"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:views="using:DialogueForest.Views"
+    xmlns:views="using:DialogueForest.Views" xmlns:strings="using:DialogueForest.Localization.Strings"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d">
 
@@ -24,20 +24,20 @@
             <StackPanel
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
-                <SymbolIcon
+                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEDFB;" 
                     Height="86"
-                    RenderTransformOrigin="0.5,0.5"
-                    Symbol="Zoom">
-                    <SymbolIcon.RenderTransform>
+                    RenderTransformOrigin="0.5,0.5">
+                    <FontIcon.RenderTransform>
                         <CompositeTransform ScaleX="5" ScaleY="5" />
-                    </SymbolIcon.RenderTransform>
-                </SymbolIcon>
+                    </FontIcon.RenderTransform>
+                </FontIcon>
                 <TextBlock
                     Margin="{StaticResource SmallTopMargin}"
                     HorizontalAlignment="Center"
                     Style="{StaticResource SubtitleTextBlockStyle}"
-                    Text="nothing" />
-                <TextBlock HorizontalAlignment="Center" Text="yup, nothing" />
+                    Text="{x:Bind strings:Resources.EmptyViewDocumentsTitle}" />
+                <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Margin="{StaticResource SmallTopMargin}"
+                           Text="{x:Bind strings:Resources.EmptyViewDocumentsDesc}" />
             </StackPanel>
             
 
@@ -63,6 +63,9 @@
                     <muxc:TabViewItem
                     Header="{x:Bind Header}"
                     AutomationProperties.Name="{x:Bind Header}">
+                        <muxc:TabViewItem.IconSource>
+                            <muxc:FontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE8BE;"/>
+                        </muxc:TabViewItem.IconSource>
                         <muxc:TabViewItem.Content>
                             <views:DialogueNodePage />
                             <!--DataContext=""-->

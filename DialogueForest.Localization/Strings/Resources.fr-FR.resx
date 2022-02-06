@@ -223,8 +223,8 @@
   <data name="SearchGoToDetail" xml:space="preserve">
     <value>Rechercher "{0}" sur le serveur...</value>
   </data>
-  <data name="SearchResultsFor" xml:space="preserve">
-    <value>Résultats de la recherche pour "{0}"</value>
+  <data name="SearchTreePlaceholderText" xml:space="preserve">
+    <value>Rechercher des noeuds...</value>
   </data>
   <data name="ButtonOKText" xml:space="preserve">
     <value>OK</value>
@@ -349,17 +349,19 @@ J'espère que vous apprécierez l'application!
   <data name="ContextMenuDeletePlaylist" xml:space="preserve">
     <value>Supprimer la Playlist</value>
   </data>
-  <data name="EmptyFoldersDesc" xml:space="preserve">
-    <value>Votre serveur MPD est-il disponible ?</value>
+  <data name="EmptyViewDocumentsTitle" xml:space="preserve">
+    <value>Mettons-nous à écrire !</value>
   </data>
-  <data name="EmptyFoldersTitle" xml:space="preserve">
-    <value>Aucun dossier trouvé sur le serveur.</value>
+  <data name="EmptyViewDocumentsDesc" xml:space="preserve">
+    <value>Vos noeuds de Dialogue apparaîtront ici. 
+Vous pouvez créer des Dialogues dans les Arbres sur la gauche.</value>
   </data>
-  <data name="EmptyLibraryTitle" xml:space="preserve">
-    <value>Aussi vide que la bibliothèque d'Alexandrie.</value>
+  <data name="EmptyViewTreeTitle" xml:space="preserve">
+    <value>Ca ne parle pas beaucoup.</value>
   </data>
-  <data name="EmptyPlaylistDesc" xml:space="preserve">
-    <value>Ajoutez quelques morceaux !</value>
+  <data name="EmptyViewTreeDesc" xml:space="preserve">
+    <value>Votre Dialogue apparaîtra ici.
+Cliquez sur le bouton "+" pour en ajouter !</value>
   </data>
   <data name="EmptyPlaylistTitle" xml:space="preserve">
     <value>Cette Playlist est bien vide.</value>
@@ -376,62 +378,62 @@ J'espère que vous apprécierez l'application!
   <data name="EmptySearchDesc" xml:space="preserve">
     <value>Pas de morceaux trouvés sur le serveur.</value>
   </data>
-  <data name="LibrarySearchPlaceholder" xml:space="preserve">
-    <value>Rechercher</value>
+  <data name="NavigationNewTree" xml:space="preserve">
+    <value>Nouvel Arbre</value>
   </data>
-  <data name="FoldersRoot" xml:space="preserve">
-    <value>Serveur MPD</value>
+  <data name="EditorBold" xml:space="preserve">
+    <value>Gras</value>
   </data>
-  <data name="FoldersLoadingTreeItem" xml:space="preserve">
-    <value>Chargement...</value>
+  <data name="EditorItalic" xml:space="preserve">
+    <value>Italique</value>
   </data>
-  <data name="FoldersCollapseAll" xml:space="preserve">
-    <value>Fermer tous les dossiers ouverts</value>
+  <data name="EditorUnderline" xml:space="preserve">
+    <value>Souligné</value>
   </data>
-  <data name="PlaybackUpNext" xml:space="preserve">
-    <value>À suivre:</value>
+  <data name="EditorFontColor" xml:space="preserve">
+    <value>Couleur du texte</value>
   </data>
-  <data name="ActionToggleShuffle" xml:space="preserve">
-    <value>Activer/Désactiver le Random</value>
+  <data name="EditorDeleteDialogue" xml:space="preserve">
+    <value>Supprimer ce morceau de dialogue</value>
   </data>
-  <data name="ActionPlayPause" xml:space="preserve">
-    <value>Lire/Pause</value>
+  <data name="EditorPlaceholderText" xml:space="preserve">
+    <value>Accusam consetetur ut accusam et gubergren augue diam enim dolor at nulla ea ipsum diam et lobortis. Et no rebum odio takimata nulla nisl takimata iriure sit aliquyam eirmod nulla sit. Magna justo consetetur takimata.</value>
   </data>
-  <data name="ActionSkipPrevious" xml:space="preserve">
-    <value>Piste précédente</value>
+  <data name="EditorReplyLinkedTo" xml:space="preserve">
+    <value>Relié à:</value>
   </data>
-  <data name="ActionToggleRepeat" xml:space="preserve">
-    <value>Activer/Désactiver la répétition</value>
+  <data name="EditorReplyGoToLinked" xml:space="preserve">
+    <value>Aller au dialogue lié</value>
   </data>
-  <data name="ActionSkipNext" xml:space="preserve">
-    <value>Piste suivante</value>
+  <data name="EditorDeleteReply" xml:space="preserve">
+    <value>Supprimer cette réponse</value>
   </data>
-  <data name="ActionChangeVolume" xml:space="preserve">
-    <value>Changer le volume</value>
+  <data name="EditorShowInTree" xml:space="preserve">
+    <value>Montrer dans l'arbre</value>
   </data>
-  <data name="ActionCompactOverlay" xml:space="preserve">
-    <value>Lecteur Miniature</value>
+  <data name="EditorHeaderDialogue" xml:space="preserve">
+    <value>Dialogue</value>
   </data>
-  <data name="ActionMore" xml:space="preserve">
-    <value>Autres actions</value>
+  <data name="EditorHeaderReply" xml:space="preserve">
+    <value>Réponses</value>
   </data>
-  <data name="AddToPlaylistTitle" xml:space="preserve">
-    <value>Ajouter à une Playlist</value>
+  <data name="EditorAddDialogue" xml:space="preserve">
+    <value>Ajouter un morceau de dialogue</value>
   </data>
-  <data name="AddToPlaylistText" xml:space="preserve">
-    <value>Ajouter à la Playlist suivante:</value>
+  <data name="EditorAddReply" xml:space="preserve">
+    <value>Ajouter une réponse</value>
   </data>
-  <data name="AddToPlaylistPlaceholder" xml:space="preserve">
-    <value>Choisissez une Playlist</value>
+  <data name="EditorHeaderMetadata" xml:space="preserve">
+    <value>Métadonnées</value>
   </data>
-  <data name="AddToPlaylistPrimaryButtonText" xml:space="preserve">
-    <value>Ajouter</value>
+  <data name="EditorEmptyDialogue" xml:space="preserve">
+    <value>UNUSED</value>
   </data>
-  <data name="AddToPlaylistCreateNewPlaylist" xml:space="preserve">
-    <value>Créer une nouvelle Playlist</value>
+  <data name="EditorEmptyReplies" xml:space="preserve">
+    <value>Les réponses à ce dialogue apparaîtront ici, si vous en ajoutez.</value>
   </data>
-  <data name="AddToPlaylistNewPlaylistName" xml:space="preserve">
-    <value>Nom de la Playlist</value>
+  <data name="EditorReplyPlaceholderText" xml:space="preserve">
+    <value>Magna ea feugiat labore diam diam assum amet nibh vero sea eirmod magna takimata eum illum. Labore et nonumy vulputate lorem zzril erat kasd eu no sed laoreet duo labore et diam eos.</value>
   </data>
   <data name="SettingsServerPassword" xml:space="preserve">
     <value>Mot de passe</value>

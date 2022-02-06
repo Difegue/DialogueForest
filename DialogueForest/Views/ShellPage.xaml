@@ -134,6 +134,15 @@
 
                 <muxc:NavigationViewItemSeparator />
 
+                <muxc:NavigationViewItem 
+                    SelectsOnInvoked="False"
+                    helpers:NavHelper.Command="{x:Bind ViewModel.NewTreeCommand}"                
+                    Content="{x:Bind strings:Resources.NavigationNewTree}">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE8BE;"/>
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                
                 <!--  This menuitem is filled in viewmodel (E8BE) (EC0A)  -->
                 <muxc:NavigationViewItem
                     x:Name="treeContainer"

@@ -179,8 +179,8 @@
   <data name="SearchGoToDetail" xml:space="preserve">
     <value>Search for "{0}" on the server...</value>
   </data>
-  <data name="SearchResultsFor" xml:space="preserve">
-    <value>Search Results for "{0}"</value>
+  <data name="SearchTreePlaceholderText" xml:space="preserve">
+    <value>Search Nodes...</value>
   </data>
   <data name="ButtonOKText" xml:space="preserve">
     <value>OK</value>
@@ -352,17 +352,23 @@ Hope you enjoy using the application!
   <data name="ContextMenuDeletePlaylist" xml:space="preserve">
     <value>Delete Playlist</value>
   </data>
-  <data name="EmptyFoldersDesc" xml:space="preserve">
-    <value>Is your MPD server connected?</value>
+  <data name="EmptyViewDocumentsTitle" xml:space="preserve">
+    <value>Let's get writing!</value>
+    <comment>Title for tab/doc view with no nodes open</comment>
   </data>
-  <data name="EmptyFoldersTitle" xml:space="preserve">
-    <value>No folders found on server.</value>
+  <data name="EmptyViewDocumentsDesc" xml:space="preserve">
+    <value>Your Dialogue Nodes will show up here. 
+You can create Nodes in the Dialogue Trees on the left side.</value>
+    <comment>Desc for tab/doc view with no nodes open</comment>
   </data>
-  <data name="EmptyLibraryTitle" xml:space="preserve">
-    <value>Ain't nothin' like an empty library.</value>
+  <data name="EmptyViewTreeTitle" xml:space="preserve">
+    <value>No Talkin' yet.</value>
+    <comment>Title for tree view with no nodes</comment>
   </data>
-  <data name="EmptyPlaylistDesc" xml:space="preserve">
-    <value>Get some tracks in there!</value>
+  <data name="EmptyViewTreeDesc" xml:space="preserve">
+    <value>Your Dialogue will show up here.
+Click on the "+" button to add some!</value>
+    <comment>Desc for tree view with no nodes</comment>
   </data>
   <data name="EmptyPlaylistTitle" xml:space="preserve">
     <value>I can't jam to this.</value>
@@ -379,62 +385,81 @@ Hope you enjoy using the application!
   <data name="EmptySearchDesc" xml:space="preserve">
     <value>No Tracks found on Server.</value>
   </data>
-  <data name="LibrarySearchPlaceholder" xml:space="preserve">
-    <value>Search</value>
+  <data name="NavigationNewTree" xml:space="preserve">
+    <value>New Tree</value>
+    <comment>Navigation view item name for New Tree</comment>
   </data>
-  <data name="FoldersRoot" xml:space="preserve">
-    <value>MPD Filesystem</value>
+  <data name="EditorBold" xml:space="preserve">
+    <value>Bold</value>
+    <comment>Dialogue editor toolbar</comment>
   </data>
-  <data name="FoldersLoadingTreeItem" xml:space="preserve">
-    <value>Loading...</value>
+  <data name="EditorItalic" xml:space="preserve">
+    <value>Italic</value>
+    <comment>Dialogue editor toolbar</comment>
   </data>
-  <data name="FoldersCollapseAll" xml:space="preserve">
-    <value>Close all open folders</value>
+  <data name="EditorUnderline" xml:space="preserve">
+    <value>Underline</value>
+    <comment>Dialogue editor toolbar</comment>
   </data>
-  <data name="PlaybackUpNext" xml:space="preserve">
-    <value>Up Next:</value>
+  <data name="EditorFontColor" xml:space="preserve">
+    <value>Text Color</value>
+    <comment>Dialogue editor toolbar</comment>
   </data>
-  <data name="ActionToggleShuffle" xml:space="preserve">
-    <value>Toggle Shuffle</value>
+  <data name="EditorDeleteDialogue" xml:space="preserve">
+    <value>Delete Dialogue portion</value>
+    <comment>Dialogue editor toolbar</comment>
   </data>
-  <data name="ActionPlayPause" xml:space="preserve">
-    <value>Play/Pause</value>
+  <data name="EditorPlaceholderText" xml:space="preserve">
+    <value>Accusam consetetur ut accusam et gubergren augue diam enim dolor at nulla ea ipsum diam et lobortis. Et no rebum odio takimata nulla nisl takimata iriure sit aliquyam eirmod nulla sit. Magna justo consetetur takimata.</value>
+    <comment>Dialogue editor placeholder</comment>
   </data>
-  <data name="ActionSkipPrevious" xml:space="preserve">
-    <value>Previous Track</value>
+  <data name="EditorReplyLinkedTo" xml:space="preserve">
+    <value>Linked to:</value>
+    <comment>Reply prompt editor linked dialogue</comment>
   </data>
-  <data name="ActionToggleRepeat" xml:space="preserve">
-    <value>Toggle Repeat</value>
+  <data name="EditorReplyGoToLinked" xml:space="preserve">
+    <value>Go to Linked Dialogue</value>
+    <comment>Reply prompt goto button</comment>
   </data>
-  <data name="ActionSkipNext" xml:space="preserve">
-    <value>Next Track</value>
+  <data name="EditorDeleteReply" xml:space="preserve">
+    <value>Delete Reply</value>
+    <comment>Reply prompt delete button</comment>
   </data>
-  <data name="ActionChangeVolume" xml:space="preserve">
-    <value>Change Volume</value>
+  <data name="EditorShowInTree" xml:space="preserve">
+    <value>Show in Tree</value>
+    <comment>Dialogue editor show in tree </comment>
   </data>
-  <data name="ActionCompactOverlay" xml:space="preserve">
-    <value>Show Mini Player</value>
+  <data name="EditorHeaderDialogue" xml:space="preserve">
+    <value>Dialogue</value>
+    <comment>Dialogue editor header</comment>
   </data>
-  <data name="ActionMore" xml:space="preserve">
-    <value>More Actions</value>
+  <data name="EditorHeaderReply" xml:space="preserve">
+    <value>Prompts</value>
+    <comment>Reply prompt editor header</comment>
   </data>
-  <data name="AddToPlaylistTitle" xml:space="preserve">
-    <value>Add to Playlist</value>
+  <data name="EditorAddDialogue" xml:space="preserve">
+    <value>Add a piece of Dialogue</value>
+    <comment>Dialogue editor add dialogue</comment>
   </data>
-  <data name="AddToPlaylistText" xml:space="preserve">
-    <value>Add track(s) to the following Playlist:</value>
+  <data name="EditorAddReply" xml:space="preserve">
+    <value>Add a reply Prompt</value>
+    <comment>Reply prompt editor add reply</comment>
   </data>
-  <data name="AddToPlaylistPlaceholder" xml:space="preserve">
-    <value>Select a Playlist</value>
+  <data name="EditorHeaderMetadata" xml:space="preserve">
+    <value>Metadata</value>
+    <comment>Dialogue metadata header</comment>
   </data>
-  <data name="AddToPlaylistPrimaryButtonText" xml:space="preserve">
-    <value>Add</value>
+  <data name="EditorEmptyDialogue" xml:space="preserve">
+    <value>UNUSEDD</value>
+    <comment>Dialogue editor no parts</comment>
   </data>
-  <data name="AddToPlaylistCreateNewPlaylist" xml:space="preserve">
-    <value>Create New Playlist</value>
+  <data name="EditorEmptyReplies" xml:space="preserve">
+    <value>Replies to this dialogue will show up here, if you add any.</value>
+    <comment>Reply prompt editor no replies</comment>
   </data>
-  <data name="AddToPlaylistNewPlaylistName" xml:space="preserve">
-    <value>Playlist Name</value>
+  <data name="EditorReplyPlaceholderText" xml:space="preserve">
+    <value>Magna ea feugiat labore diam diam assum amet nibh vero sea eirmod magna takimata eum illum. Labore et nonumy vulputate lorem zzril erat kasd eu no sed laoreet duo labore et diam eos.</value>
+    <comment>Reply prompt placeholder text</comment>
   </data>
   <data name="SettingsServerPassword" xml:space="preserve">
     <value>Password</value>

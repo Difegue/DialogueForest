@@ -11,7 +11,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:strings="using:DialogueForest.Localization.Strings" 
     xmlns:local="using:DialogueForest.Controls"
-    xmlns:viewmodels="using:DialogueForest.ViewModels" xmlns:buttons="using:Microsoft.Toolkit.Uwp.UI.Controls.TextToolbarButtons"
+    xmlns:viewmodels="using:DialogueForest.ViewModels"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -41,17 +41,17 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Orientation="Horizontal" Spacing="8" Grid.Column="0" Margin="{StaticResource SmallLeftMargin}">
-                            <ToggleButton ToolTipService.ToolTip="Bold" >
+                            <ToggleButton ToolTipService.ToolTip="{x:Bind strings:Resources.EditorBold}" >
                                 <ToggleButton.Content>
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8DD;" FontSize="14"/>
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton ToolTipService.ToolTip="Italic">
+                            <ToggleButton ToolTipService.ToolTip="{x:Bind strings:Resources.EditorItalic}">
                                 <ToggleButton.Content>
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8DB;" FontSize="14"/>
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton ToolTipService.ToolTip="Underline">
+                            <ToggleButton ToolTipService.ToolTip="{x:Bind strings:Resources.EditorUnderline}">
                                 <ToggleButton.Content>
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19A;" FontSize="14"/>
                                 </ToggleButton.Content>
@@ -59,7 +59,7 @@
 
                             <AppBarSeparator />
 
-                            <controls:ColorPickerButton 
+                            <controls:ColorPickerButton ToolTipService.ToolTip="{x:Bind strings:Resources.EditorFontColor}"
                                   SelectedColor="Navy">
                                 <controls:ColorPickerButton.ColorPickerStyle>
                                     <Style TargetType="controls:ColorPicker">
@@ -75,7 +75,7 @@
 
                         <StackPanel Orientation="Horizontal" Spacing="8" Grid.Column="2" HorizontalAlignment="Right" Margin="{StaticResource SmallRightMargin}">
                             <Button Command="{x:Bind RemoveCommand}"
-                                ToolTipService.ToolTip="{x:Bind strings:Resources.ContextMenuDeletePlaylist}">
+                                ToolTipService.ToolTip="{x:Bind strings:Resources.EditorDeleteDialogue}">
                                 <Button.Content>
                                     <FontIcon Foreground="Red" FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" FontSize="14"/>
                                 </Button.Content>
@@ -83,7 +83,8 @@
                         </StackPanel>
                     </Grid>
 
-                    <local:BindableRichEditBox x:Name="Editor" PlaceholderText="Enter Text Here" Height="180" CornerRadius="0,0,4,4"
+                    <local:BindableRichEditBox x:Name="Editor" PlaceholderText="{x:Bind strings:Resources.EditorPlaceholderText}"
+                                               Height="180" CornerRadius="0,0,4,4"
                                                RtfText="{x:Bind RtfDialogueText, Mode=TwoWay}" />
                 </StackPanel>
             </Grid>
@@ -96,14 +97,14 @@
                     <ColumnDefinition Width="120"/>
                 </Grid.ColumnDefinitions>
                 <TextBox Grid.Column="0" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,16,0"
-                         Background="Transparent" BorderThickness="0"
+                         Background="Transparent" BorderThickness="0" PlaceholderText="{x:Bind strings:Resources.EditorReplyPlaceholderText}"
                          Text="{x:Bind ReplyText}" />
 
                 <StackPanel Orientation="Vertical" Grid.Column="1" Spacing="4">
-                    <TextBlock Text="Linked to:"/>
+                    <TextBlock Text="{x:Bind strings:Resources.EditorReplyLinkedTo}"/>
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <ComboBox />
-                        <Button ToolTipService.ToolTip="Go to Dialogue" IsEnabled="False"
+                        <Button ToolTipService.ToolTip="{x:Bind strings:Resources.EditorReplyGoToLinked}" IsEnabled="False"
                             Command="{x:Bind GoToLinkedDialogueCommand}">
                             <Button.Content>
                                 <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF716;" FontSize="18"/>
@@ -112,6 +113,7 @@
                     </StackPanel>
 
                     <Button Content="Delete" Margin="{StaticResource XSmallTopMargin}" Width="114"
+                            ToolTipService.ToolTip="{x:Bind strings:Resources.EditorDeleteReply}"
                             Command="{x:Bind RemoveCommand}"/>
 
                 </StackPanel>
@@ -126,7 +128,12 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Spacing="4" Margin="{StaticResource SmallLeftTopMargin}" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="80"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel  Grid.Column="0" Spacing="4" Margin="{StaticResource SmallLeftTopMargin}" >
 
             <muxc:BreadcrumbBar Height="24"/>
 
@@ -135,8 +142,14 @@
                      FontFamily="Segoe UI Variable Display" Background="Transparent" BorderThickness="0"/>
         </StackPanel>
 
+        <AppBarButton Label="{x:Bind strings:Resources.EditorShowInTree}" Width="80" Grid.Row="0"
+                      Grid.Column="1" Margin="-16,36,16,0">
+            <AppBarButton.Icon>
+                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEC0A;" />
+            </AppBarButton.Icon>
+        </AppBarButton>
 
-        <ScrollViewer Grid.Row="1">
+        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2">
 
             <StackPanel Spacing="8" Margin="{StaticResource MediumLeftRightMargin}">
 
@@ -147,9 +160,9 @@
                     <controls:HeaderedContentControl.Header>
                         <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,8">
                             <TextBlock Style="{StaticResource SubtitleTextBlockStyle}"
-                                       Text="Dialogue"/>
+                                       Text="{x:Bind strings:Resources.EditorHeaderDialogue}"/>
                             <Button Command="{x:Bind ViewModel.AddDialogCommand}"
-                                    ToolTipService.ToolTip="{x:Bind strings:Resources.ActionChangeVolume}">
+                                    ToolTipService.ToolTip="{x:Bind strings:Resources.EditorAddDialogue}">
                                 <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE109;" FontSize="16" />
                             </Button>
                         </StackPanel>
@@ -168,9 +181,9 @@
                     <controls:HeaderedContentControl.Header>
                         <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,8">
                             <TextBlock Style="{StaticResource SubtitleTextBlockStyle}"
-                                       Text="Prompts"/>
+                                       Text="{x:Bind strings:Resources.EditorHeaderReply}"/>
                             <Button Command="{x:Bind ViewModel.AddPromptCommand}"
-                                    ToolTipService.ToolTip="{x:Bind strings:Resources.ActionChangeVolume}">
+                                    ToolTipService.ToolTip="{x:Bind strings:Resources.EditorAddReply}">
                                 <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE109;" FontSize="16" />
                             </Button>
                         </StackPanel>
@@ -189,7 +202,7 @@
                                      Margin="6">
                     <controls:HeaderedContentControl.Header>
                         <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,8">
-                            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="Metadata"/>
+                            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind strings:Resources.EditorHeaderMetadata}"/>
                         </StackPanel>
                     </controls:HeaderedContentControl.Header>
 

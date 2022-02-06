@@ -12,6 +12,8 @@ namespace DialogueForest.Helpers
     {
         internal static string Convert(string rtf, OutputFormat format)
         {
+            if (rtf == null) return "";
+
             var box = new RichEditBox();
             box.Document.SetText(TextSetOptions.FormatRtf, rtf);
 
