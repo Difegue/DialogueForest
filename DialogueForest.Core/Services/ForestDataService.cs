@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DialogueForest.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -23,5 +24,9 @@ namespace DialogueForest.Core.Services
 
         }
 
+        public DialogueNode GetNode(long id)
+        {
+            return new DialogueNode();
+        }
     }
 }

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using DialogueForest.Core.Models;
 
 namespace DialogueForest.Services
 {
@@ -55,6 +56,11 @@ namespace DialogueForest.Services
         }
 
         public override void SetItemForNextConnectedAnimation(object item) => Frame.SetListDataItemForNextConnectedAnimation(item);
+
+        public override void OpenDialogueNode(DialogueNode node)
+        {
+            throw new NotImplementedException();
+        }
 
         public override bool GoBackImplementation()
         {

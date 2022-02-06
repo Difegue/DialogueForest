@@ -154,6 +154,8 @@ namespace DialogueForest
             //services.AddSingleton<LocalPlaybackViewModel>();
 
             services.AddTransient<DialogueNodeViewModel>();
+            services.AddTransient<DialoguePartViewModel>();
+            services.AddTransient<ReplyPromptViewModel>();
 
             return services.BuildServiceProvider();
         }

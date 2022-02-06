@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using DialogueForest.Core.Models;
 using System;
 
 namespace DialogueForest.Core.Interfaces
@@ -14,7 +15,7 @@ namespace DialogueForest.Core.Interfaces
         void Navigate(Type viewmodel, object parameter = null);
         void Navigate<T>(object parameter = null) where T : ObservableObject;
         void SetItemForNextConnectedAnimation(object item);
-
+        void OpenDialogueNode(DialogueNode node);
     }
 
     public abstract class NavigationServiceBase: INavigationService
@@ -47,5 +48,6 @@ namespace DialogueForest.Core.Interfaces
         public abstract Type CurrentPageViewModelType { get; }
         public abstract bool CanGoBack { get; }
         public abstract void SetItemForNextConnectedAnimation(object item);
+        public abstract void OpenDialogueNode(DialogueNode node);
     }
 }
