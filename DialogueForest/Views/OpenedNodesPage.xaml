@@ -64,7 +64,8 @@
                     Header="{x:Bind Header}"
                     AutomationProperties.Name="{x:Bind Header}">
                         <muxc:TabViewItem.Content>
-                            <views:DialogueNodePage DataContext=""/>
+                            <views:DialogueNodePage />
+                            <!--DataContext=""-->
                         </muxc:TabViewItem.Content>
                     </muxc:TabViewItem>
                 </DataTemplate>

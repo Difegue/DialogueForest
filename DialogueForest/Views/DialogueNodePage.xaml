@@ -5,8 +5,121 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:local="using:DialogueForest.Controls"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:strings="using:DialogueForest.Localization.Strings" 
+    xmlns:local="using:DialogueForest.Controls"
+    xmlns:viewmodels="using:DialogueForest.ViewModels" xmlns:buttons="using:Microsoft.Toolkit.Uwp.UI.Controls.TextToolbarButtons"
     mc:Ignorable="d">
+
+    <Page.Resources>
+
+        <DataTemplate x:Key="DialogPartTemplate" x:DataType="viewmodels:DialoguePartViewModel">
+            <Grid>
+                <Grid Style="{StaticResource CardGrid}" ui:FrameworkElementExtensions.Cursor="IBeam" 
+                      Visibility="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
+                    <TextBlock TextWrapping="Wrap" TextTrimming="CharacterEllipsis" 
+                               Text="{x:Bind GetPlainText(), Mode=OneWay}"/>
+                    <i:Interaction.Behaviors>
+                        <ic:EventTriggerBehavior EventName="Tapped">
+                            <ic:InvokeCommandAction Command="{x:Bind ActivateCommand}"></ic:InvokeCommandAction>
+                        </ic:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                </Grid>
+
+                <StackPanel Margin="2,2" Visibility="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                    
+                    <Grid HorizontalAlignment="Stretch" Height="40" 
+                                   Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" CornerRadius="4,4,0,0" >
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="240"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Orientation="Horizontal" Spacing="8" Grid.Column="0" Margin="{StaticResource SmallLeftMargin}">
+                            <ToggleButton ToolTipService.ToolTip="Bold" >
+                                <ToggleButton.Content>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8DD;" FontSize="14"/>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton ToolTipService.ToolTip="Italic">
+                                <ToggleButton.Content>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8DB;" FontSize="14"/>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                            <ToggleButton ToolTipService.ToolTip="Underline">
+                                <ToggleButton.Content>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19A;" FontSize="14"/>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+
+                            <AppBarSeparator />
+
+                            <controls:ColorPickerButton 
+                                  SelectedColor="Navy">
+                                <controls:ColorPickerButton.ColorPickerStyle>
+                                    <Style TargetType="controls:ColorPicker">
+                                        <Setter Property="ColorSpectrumShape" Value="Ring"/>
+                                        <Setter Property="IsAlphaEnabled" Value="False"/>
+                                        <Setter Property="IsHexInputVisible" Value="True"/>
+                                    </Style>
+                                </controls:ColorPickerButton.ColorPickerStyle>
+                            </controls:ColorPickerButton>
+
+                            
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="8" Grid.Column="2" HorizontalAlignment="Right" Margin="{StaticResource SmallRightMargin}">
+                            <Button Command="{x:Bind RemoveCommand}"
+                                ToolTipService.ToolTip="{x:Bind strings:Resources.ContextMenuDeletePlaylist}">
+                                <Button.Content>
+                                    <FontIcon Foreground="Red" FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" FontSize="14"/>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+
+                    <local:BindableRichEditBox x:Name="Editor" PlaceholderText="Enter Text Here" Height="180" CornerRadius="0,0,4,4"
+                                               RtfText="{x:Bind RtfDialogueText, Mode=TwoWay}" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="DialogPromptTemplate" x:DataType="viewmodels:ReplyPromptViewModel">
+            <Grid Style="{StaticResource CardGrid}" Margin="0,0,0,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.9*"/>
+                    <ColumnDefinition Width="120"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,16,0"
+                         Background="Transparent" BorderThickness="0"
+                         Text="{x:Bind ReplyText}" />
+
+                <StackPanel Orientation="Vertical" Grid.Column="1" Spacing="4">
+                    <TextBlock Text="Linked to:"/>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <ComboBox />
+                        <Button ToolTipService.ToolTip="Go to Dialogue" IsEnabled="False"
+                            Command="{x:Bind GoToLinkedDialogueCommand}">
+                            <Button.Content>
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF716;" FontSize="18"/>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+
+                    <Button Content="Delete" Margin="{StaticResource XSmallTopMargin}" Width="114"
+                            Command="{x:Bind RemoveCommand}"/>
+
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+
+    </Page.Resources>
+    
     <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>
             <RowDefinition Height="112" />
@@ -17,7 +130,8 @@
 
             <muxc:BreadcrumbBar Height="24"/>
 
-            <TextBox Text="My Dialogue1" FontSize="32" FontWeight="SemiBold" Margin="{StaticResource MediumRightMargin}"
+            <TextBox Text="{x:Bind ViewModel.NodeTitle}"
+                     FontSize="32" FontWeight="SemiBold" Margin="{StaticResource MediumRightMargin}"
                      FontFamily="Segoe UI Variable Display" Background="Transparent" BorderThickness="0"/>
         </StackPanel>
 
@@ -32,31 +146,19 @@
                                      Margin="6">
                     <controls:HeaderedContentControl.Header>
                         <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,8">
-                            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="Dialogue"/>
-                            <Button Style="{StaticResource AccentButtonStyle}" Padding="8,4">
-                                <SymbolIcon Symbol="Add"/>
+                            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}"
+                                       Text="Dialogue"/>
+                            <Button Command="{x:Bind ViewModel.AddDialogCommand}"
+                                    ToolTipService.ToolTip="{x:Bind strings:Resources.ActionChangeVolume}">
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE109;" FontSize="16" />
                             </Button>
                         </StackPanel>
                     </controls:HeaderedContentControl.Header>
 
-                    <StackPanel Spacing="2">
-
-                        <Grid Style="{StaticResource CardGrid}">
-                            <TextBlock MaxLines="3" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"
-                                Text="Sea sadipscing ut gubergren nonummy sed. Amet diam rebum sed sed ea at consequat dolor justo. Dolores feugait at vero exerci option takimata qui diam elitr consetetur kasd ipsum diam et diam diam ullamcorper dolor. Diam et duo invidunt sed amet praesent ea eos dolor sit sit sed. "/>
-                        </Grid>
-
-                        <Grid Style="{StaticResource CardGrid}">
-                            <TextBlock Text="Lorem ipsum "/>
-                        </Grid>
-
-                        <StackPanel Margin="2,2">
-                            <controls:TextToolbar x:Name="Toolbar" Editor="{x:Bind Editor}" CornerRadius="4,4,0,0"
-                                                  Background="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
-                            <RichEditBox x:Name="Editor" PlaceholderText="Enter Text Here" Height="180" CornerRadius="0,0,4,4" />
-                        </StackPanel>
-
-                    </StackPanel>
+                    <ListView ItemsSource="{x:Bind ViewModel.Dialogs}"
+                    SelectionMode="None" Margin="-16,0,-12,0"
+                    ItemTemplate="{StaticResource DialogPartTemplate}"/>
+                    
                 </controls:HeaderedContentControl>
 
                 <controls:HeaderedContentControl
@@ -64,32 +166,21 @@
                                      VerticalContentAlignment="Stretch"
                                      Margin="6">
                     <controls:HeaderedContentControl.Header>
-                        <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,8">
-                            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="Prompts"/>
-                            <Button Style="{StaticResource AccentButtonStyle}" Padding="8,4">
-                                <SymbolIcon Symbol="Add"/>
+                        <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,8">
+                            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}"
+                                       Text="Prompts"/>
+                            <Button Command="{x:Bind ViewModel.AddPromptCommand}"
+                                    ToolTipService.ToolTip="{x:Bind strings:Resources.ActionChangeVolume}">
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE109;" FontSize="16" />
                             </Button>
                         </StackPanel>
                     </controls:HeaderedContentControl.Header>
 
-                    <StackPanel Spacing="2">
-                        
-                    <Grid Style="{StaticResource CardGrid}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.9*"/>
-                            <ColumnDefinition Width="80"/>
-                        </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0" TextWrapping="Wrap" AcceptsReturn="True" 
-                                      Margin="0,0,16,0" Background="Transparent" BorderThickness="0"
-                                    Text="This is a ToggleButton in the header" />
-                        <AppBarButton Label="Go to Linked Dialogue" Grid.Column="1" Width="80">
-                            <AppBarButton.Icon>
-                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE71B;" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                    </Grid>
-                    
-                    </StackPanel>
+                    <ListView ItemsSource="{x:Bind ViewModel.Prompts}"
+                    SelectionMode="None" Margin="-16,0,-12,0"
+                    ItemTemplate="{StaticResource DialogPromptTemplate}"/>
+
+
                 </controls:HeaderedContentControl>
 
                 <controls:HeaderedContentControl

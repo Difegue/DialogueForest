@@ -9,14 +9,14 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <media:AttachedCardShadow x:Key="CommonShadow" Offset="0,2" Opacity="0.6" Color="Black" BlurRadius="10" />
+        <media:AttachedCardShadow x:Key="CommonShadow" Offset="0,2" Opacity="0.4" Color="Black" BlurRadius="10" />
 
         <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Grid >
+                        <Grid>
                             <ContentPresenter x:Name="itemContent" ui:Effects.Shadow="{StaticResource CommonShadow}"/>
 
                             <VisualStateManager.VisualStateGroups>
@@ -47,7 +47,7 @@
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                         <VisualState.Setters>
-                                            <Setter Target="itemContent.(ui:Effects.Shadow).Opacity" Value="0.4"/>
+                                            <Setter Target="itemContent.(ui:Effects.Shadow).Opacity" Value="0.2"/>
 
                                             <Setter Target="itemContent.BorderBrush" Value="{ThemeResource ButtonBackgroundPointerOver}" />
                                             <Setter Target="itemContent.Foreground" Value="{ThemeResource GridViewItemForegroundPointerOver}" />
@@ -109,8 +109,8 @@
         <ScrollViewer Grid.Row="1">
             <StackPanel Spacing="4" Margin="{StaticResource XSmallTopMargin}" >
 
-                <GridViewItem  MaxWidth="270" >
-                    <Grid Style="{StaticResource CardGrid}" >
+                <GridViewItem MaxWidth="270" >
+                    <Grid Style="{StaticResource CardGrid}" Margin="-1">
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="24" />
@@ -122,7 +122,7 @@
                             <ColumnDefinition Width="40" />
                         </Grid.ColumnDefinitions>
 
-                        <Border Background="{ThemeResource SystemAccentColor}" Grid.RowSpan="2" Width="4" HorizontalAlignment="Left" Margin="-16" CornerRadius="4,0,0,4"/>
+                        <Border Background="{ThemeResource SystemAccentColor}" Grid.RowSpan="2" Width="4" HorizontalAlignment="Left" Margin="-17" CornerRadius="4,0,0,4"/>
 
                         <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}"
                                Text="Dialogue n°1" TextTrimming="CharacterEllipsis"/>
