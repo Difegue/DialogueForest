@@ -128,7 +128,7 @@
                     helpers:NavHelper.NavigateTo="viewmodels:ExportViewModel"
                     Content="{x:Bind strings:Resources.NavigationExport}">
                     <muxc:NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xEA5E;"/>
+                        <FontIcon Glyph="&#xEA5E;" FontStyle="Italic"/>
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
 

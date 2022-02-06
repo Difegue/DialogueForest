@@ -197,7 +197,7 @@
                 VerticalAlignment="Center">
 
 
-            <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg4" Width="90" Height="90"  >
+            <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg4" Width="90" Height="90">
                 <Canvas.RenderTransform>
                     <CompositeTransform ScaleX="0.085" ScaleY="0.085" />
                 </Canvas.RenderTransform>
