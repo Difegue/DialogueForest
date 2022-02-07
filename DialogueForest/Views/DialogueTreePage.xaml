@@ -108,7 +108,7 @@
                 </Button>
 
                 <TextBlock Grid.Row="2" Grid.ColumnSpan="2" TextWrapping="Wrap" MaxLines="3" TextTrimming="CharacterEllipsis"
-                        Text="{x:Bind NodeTitle, Mode=OneWay}"/>
+                        Text="{x:Bind PlainText, Mode=OneWay}"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>

@@ -14,6 +14,9 @@ namespace DialogueForest.ViewModels
         private string _rtfDialogueText;
 
         [ObservableProperty]
+        private string _plainDialogueText;
+
+        [ObservableProperty]
         private bool _isActive;
 
         private DialogueNodeViewModel _parentNodeVm;
@@ -40,6 +43,5 @@ namespace DialogueForest.ViewModels
                 _parentNodeVm.RemoveDialog(this);
         }
 
-        public string GetPlainText() => _interopService.ConvertRtf(_rtfDialogueText, OutputFormat.PlainText);
     }
 }

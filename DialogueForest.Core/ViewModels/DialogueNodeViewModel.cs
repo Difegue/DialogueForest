@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -60,6 +61,9 @@ namespace DialogueForest.ViewModels
         [ObservableProperty]
         private bool _isPinned;
 
+        public string PlainText => Dialogs.FirstOrDefault()?.PlainDialogueText;
+        private void UpdatePlainText(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(nameof(PlainText));
+
         [ICommand]
         private void AddDialog(string text = null)
         {
@@ -70,10 +74,16 @@ namespace DialogueForest.ViewModels
             if (text != null)
                 dialogVm.RtfDialogueText = text;
 
+            dialogVm.PropertyChanged += UpdatePlainText;
+
             Dialogs.Add(dialogVm);
         }
 
-        public void RemoveDialog(DialoguePartViewModel vm) => Dialogs.Remove(vm);
+        public void RemoveDialog(DialoguePartViewModel vm)
+        {
+            vm.PropertyChanged -= UpdatePlainText;
+            Dialogs.Remove(vm);
+        }
 
         [ICommand]
         private void AddPrompt() => AddPrompt(null);

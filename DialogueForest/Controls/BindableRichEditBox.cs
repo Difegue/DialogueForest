@@ -11,6 +11,11 @@ namespace DialogueForest.Controls
             "RtfText", typeof(string), typeof(BindableRichEditBox),
             new PropertyMetadata(default(string), RtfTextPropertyChanged));
 
+        public static readonly DependencyProperty PlainTextProperty =
+            DependencyProperty.Register(
+            "PlainText", typeof(string), typeof(BindableRichEditBox),
+            new PropertyMetadata(default(string)));
+
         private bool _lockChangeExecution;
 
         public BindableRichEditBox()
@@ -24,21 +29,32 @@ namespace DialogueForest.Controls
             set { SetValue(RtfTextProperty, value); }
         }
 
+        /// <summary>
+        /// Read-only Plaintext output.
+        /// </summary>
+        public string PlainText
+        {
+            get { return (string)GetValue(PlainTextProperty); }
+            set { SetValue(PlainTextProperty, value); }
+        }
+
         private void BindableRichEditBox_TextChanged(object sender, RoutedEventArgs e)
         {
             if (!_lockChangeExecution)
             {
                 _lockChangeExecution = true;
-                string text;
-                Document.GetText(TextGetOptions.None, out text);
-                if (string.IsNullOrWhiteSpace(text))
+                string plainText;
+                Document.GetText(TextGetOptions.None, out plainText);
+                if (string.IsNullOrWhiteSpace(plainText))
                 {
                     RtfText = "";
+                    PlainText = "";
                 }
                 else
                 {
-                    Document.GetText(TextGetOptions.FormatRtf, out text);
+                    Document.GetText(TextGetOptions.FormatRtf, out string text);
                     RtfText = text;
+                    PlainText = plainText;
                 }
                 _lockChangeExecution = false;
             }
