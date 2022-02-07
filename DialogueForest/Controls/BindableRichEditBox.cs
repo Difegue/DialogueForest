@@ -16,6 +16,11 @@ namespace DialogueForest.Controls
             "PlainText", typeof(string), typeof(BindableRichEditBox),
             new PropertyMetadata(default(string)));
 
+        public static readonly DependencyProperty IsFocusedProperty =
+            DependencyProperty.Register(
+            "IsFocused", typeof(bool), typeof(BindableRichEditBox),
+            new PropertyMetadata(default(bool), IsFocusedPropertyChanged));
+
         private bool _lockChangeExecution;
 
         public BindableRichEditBox()
@@ -36,6 +41,12 @@ namespace DialogueForest.Controls
         {
             get { return (string)GetValue(PlainTextProperty); }
             set { SetValue(PlainTextProperty, value); }
+        }
+
+        public bool IsFocused
+        {
+            get { return (bool)GetValue(IsFocusedProperty); }
+            set { SetValue(IsFocusedProperty, value); }
         }
 
         private void BindableRichEditBox_TextChanged(object sender, RoutedEventArgs e)
@@ -71,6 +82,15 @@ namespace DialogueForest.Controls
                 rtb.Document.SetText(TextSetOptions.FormatRtf, rtb.RtfText);
                 rtb._lockChangeExecution = false;
             }
+        }
+
+        private static void IsFocusedPropertyChanged(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            var rtb = dependencyObject as BindableRichEditBox;
+            if (rtb == null) return;
+            if (rtb.IsFocused)
+                rtb.Focus(FocusState.Programmatic);
         }
     }
 }

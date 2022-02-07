@@ -155,6 +155,7 @@ namespace DialogueForest
             //services.AddSingleton<LocalPlaybackViewModel>();
 
             // TODO TEMPORARY
+            // Make the sub-VMs transient and remove this
             services.AddTransient<TreeViewModelBase>();
 
             services.AddTransient<DialogueNodeViewModel>();

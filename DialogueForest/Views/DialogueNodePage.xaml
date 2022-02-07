@@ -20,8 +20,9 @@
             <Grid>
                 <Grid Style="{StaticResource CardGrid}" ui:FrameworkElementExtensions.Cursor="IBeam" 
                       Visibility="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
-                    <TextBlock TextWrapping="Wrap" TextTrimming="CharacterEllipsis" 
-                               Text="{x:Bind GetPlainText(), Mode=OneWay}"/>
+                    <local:BindableRichEditBox Background="Transparent" BorderThickness="0" IsHitTestVisible="False" 
+                                               MaxHeight="90" Padding="0" 
+                                               RtfText="{x:Bind RtfDialogueText, Mode=OneWay}" />
                     <i:Interaction.Behaviors>
                         <ic:EventTriggerBehavior EventName="Tapped">
                             <ic:InvokeCommandAction Command="{x:Bind ActivateCommand}"></ic:InvokeCommandAction>
@@ -29,10 +30,11 @@
                     </i:Interaction.Behaviors>
                 </Grid>
 
-                <StackPanel Margin="2,2" Visibility="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel Margin="2,2" 
+                            Visibility="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
 
-                    <Grid HorizontalAlignment="Stretch" Height="40" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1,1,1,0"
-                                   Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" CornerRadius="4,4,0,0" >
+                    <Grid HorizontalAlignment="Stretch" Height="40" BorderBrush="{ThemeResource ControlStrokeColorDefault}"
+                          BorderThickness="1,1,1,0" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" CornerRadius="4,4,0,0" >
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="240"/>
@@ -85,8 +87,10 @@
                     </Grid>
 
                     <local:BindableRichEditBox x:Name="Editor" PlaceholderText="{x:Bind strings:Resources.EditorPlaceholderText}"
-                                               Height="180" CornerRadius="0,0,4,4"
-                                               RtfText="{x:Bind RtfDialogueText, Mode=TwoWay}" />
+                                               Height="180" CornerRadius="0,0,4,4" 
+                                               PlainText="{x:Bind PlainDialogueText, Mode=TwoWay}"
+                                               RtfText="{x:Bind RtfDialogueText, Mode=TwoWay}"
+                                               IsFocused="{x:Bind IsActive, Mode=OneWay}"/>
                 </StackPanel>
             </Grid>
         </DataTemplate>

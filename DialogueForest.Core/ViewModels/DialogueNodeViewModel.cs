@@ -62,6 +62,8 @@ namespace DialogueForest.ViewModels
         private bool _isPinned;
 
         public string PlainText => Dialogs.FirstOrDefault()?.PlainDialogueText;
+
+        // TODO this might be changed so that the plainText only updates when the node is saved
         private void UpdatePlainText(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(nameof(PlainText));
 
         [ICommand]
