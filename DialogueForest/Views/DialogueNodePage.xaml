@@ -30,8 +30,8 @@
                 </Grid>
 
                 <StackPanel Margin="2,2" Visibility="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                    
-                    <Grid HorizontalAlignment="Stretch" Height="40" 
+
+                    <Grid HorizontalAlignment="Stretch" Height="40" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1,1,1,0"
                                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" CornerRadius="4,4,0,0" >
 
                         <Grid.ColumnDefinitions>
@@ -77,7 +77,8 @@
                             <Button Command="{x:Bind RemoveCommand}"
                                 ToolTipService.ToolTip="{x:Bind strings:Resources.EditorDeleteDialogue}">
                                 <Button.Content>
-                                    <FontIcon Foreground="Red" FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" FontSize="14"/>
+                                    <FontIcon Foreground="{ThemeResource DestructiveActionForeground}" FontFamily="Segoe Fluent Icons"
+                                              Glyph="&#xE107;" FontSize="14"/>
                                 </Button.Content>
                             </Button>
                         </StackPanel>
@@ -112,7 +113,7 @@
                         </Button>
                     </StackPanel>
 
-                    <Button Content="Delete" Margin="{StaticResource XSmallTopMargin}" Width="114"
+                    <Button Content="{x:Bind strings:Resources.ButtonDeleteText}" Margin="{StaticResource XSmallTopMargin}" Width="114"
                             ToolTipService.ToolTip="{x:Bind strings:Resources.EditorDeleteReply}"
                             Command="{x:Bind RemoveCommand}"/>
 
@@ -137,7 +138,7 @@
 
             <muxc:BreadcrumbBar Height="24"/>
 
-            <TextBox Text="{x:Bind ViewModel.NodeTitle}"
+            <TextBox Text="{x:Bind ViewModel.NodeTitle, Mode=TwoWay}"
                      FontSize="32" FontWeight="SemiBold" Margin="{StaticResource MediumRightMargin}"
                      FontFamily="Segoe UI Variable Display" Background="Transparent" BorderThickness="0"/>
         </StackPanel>

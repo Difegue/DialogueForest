@@ -7,21 +7,25 @@
     xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
     xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
     xmlns:ani="using:Microsoft.Toolkit.Uwp.UI.Animations"
-    xmlns:strings="using:DialogueForest.Localization.Strings" xmlns:viewmodels="using:DialogueForest.ViewModels" xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:strings="using:DialogueForest.Localization.Strings" xmlns:viewmodels="using:DialogueForest.ViewModels" xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:ic="using:Microsoft.Xaml.Interactions.Core" xmlns:i="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d">
 
     <Page.Resources>
-        <media:AttachedCardShadow x:Key="CommonShadow" Offset="0,2" Opacity="0.4" Color="Black" BlurRadius="10" />
+        <media:AttachedCardShadow x:Key="CommonShadow" Offset="0,-2" Opacity="0.8" Color="Black" BlurRadius="10" />
 
         <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             <Setter Property="Width" Value="270"/>
-            <Setter Property="Margin" Value="12,14,0,0"/>
+            <Setter Property="Margin" Value="12,14,12,0"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
                         <Grid>
-                            <ContentPresenter x:Name="itemContent" ui:Effects.Shadow="{StaticResource CommonShadow}"/>
+                            <ContentPresenter x:Name="itemContent">
+                                <ui:Effects.Shadow>
+                                    <media:AttachedCardShadow Offset="0,2" Opacity="0.4" Color="Black" BlurRadius="10" />
+                                </ui:Effects.Shadow>
+                            </ContentPresenter>
 
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
@@ -113,6 +117,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="136" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
 
@@ -129,7 +134,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="0" Command="{x:Bind ViewModel.AddNodeCommand}" Style="{ThemeResource AccentButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind strings:Resources.EditorAddDialogue}">
+                        ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewAddNode}">
                     <StackPanel Spacing="4" Orientation="Horizontal">
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE109;" FontSize="18" />
                     </StackPanel>
@@ -138,11 +143,11 @@
 
                 <StackPanel Orientation="Horizontal" Spacing="8" Grid.Column="2" HorizontalAlignment="Right">
                     <Button Command="{x:Bind ViewModel.AddNodeCommand}"
-                                    ToolTipService.ToolTip="{x:Bind strings:Resources.EditorAddDialogue}">
+                                    ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewGraphView}">
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEC26;" FontSize="18" />
                     </Button>
 
-                    <muxc:DropDownButton AutomationProperties.Name="Email">
+                    <muxc:DropDownButton ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewSortBy}">
                         <muxc:DropDownButton.Content>
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE174;" FontSize="18"/>
                         </muxc:DropDownButton.Content>
@@ -170,8 +175,9 @@
                     <AppBarSeparator Padding="0"/>
 
                     <Button Command="{x:Bind ViewModel.DeleteCommand}"
-                                    ToolTipService.ToolTip="{x:Bind strings:Resources.EditorAddDialogue}">
-                        <FontIcon Foreground="Red" FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" FontSize="18"/>
+                                    ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewDeleteTree}">
+                        <FontIcon Foreground="{ThemeResource DestructiveActionForeground}"
+                                  FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" FontSize="18"/>
                     </Button>
                 </StackPanel>
 
@@ -183,13 +189,28 @@
 
         <ScrollViewer Grid.Row="1" >
 
-            <GridView
+            <controls:AdaptiveGridView
                     ItemsSource="{x:Bind ViewModel.Nodes}"
                     ItemTemplate="{StaticResource NodeCardTemplate}"
                     IsItemClickEnabled="True"
-                    SelectionMode="None"/>
+                    SelectionMode="None"
+                    StretchContentForSingleRow="True"
+                    DesiredWidth="270"
+                    ItemHeight="96"
+                    ItemClickCommand="{x:Bind ViewModel.ShowNodeCommand}"/>
 
         </ScrollViewer>
+
+        <StackPanel Orientation="Horizontal" Spacing="8" Grid.Row="2" Margin="8, -8">
+            <Grid Background="{ThemeResource SystemAccentColor}" CornerRadius="8" Padding="8,4">
+                <TextBlock Text="1337 words" FontWeight="SemiBold" Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"
+                           FontFamily="Segoe UI Variable Display"/>
+            </Grid>
+            <Grid Background="{ThemeResource SystemAccentColor}" CornerRadius="8" Padding="8,4" ui:Effects.Shadow="{StaticResource CommonShadow}">
+                <TextBlock Text="45 dialogues" FontWeight="SemiBold" Foreground="{ThemeResource SystemControlForegroundAltHighBrush}"
+                           FontFamily="Segoe UI Variable Display"/>
+            </Grid>
+        </StackPanel>
 
         <StackPanel Grid.Row="1"
                     Visibility="{x:Bind ViewModel.IsNodesEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"

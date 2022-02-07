@@ -229,8 +229,8 @@
   <data name="SettingsUpdateDbDesc" xml:space="preserve">
     <value>This operation might take the server some time to complete.</value>
   </data>
-  <data name="SettingsUpdateDbTitle" xml:space="preserve">
-    <value>Update the MPD Server Database</value>
+  <data name="TreeViewDeleteTree" xml:space="preserve">
+    <value>Delete Tree</value>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
     <value>About this application</value>
@@ -509,20 +509,20 @@ Enabling this option will show a second volume slider to control local volume.</
     <value>Open</value>
     <comment>Navigation view item name for File -&gt; Open</comment>
   </data>
-  <data name="RandomTracksInProgress" xml:space="preserve">
-    <value>Shuffling through your library...</value>
+  <data name="TreeViewAddNode" xml:space="preserve">
+    <value>Add Dialogue Node</value>
   </data>
   <data name="FirstRunFlavorText" xml:space="preserve">
     <value>David Bowie is credited with playing the Stylophone on his 1969 debut hit song "Space Oddity" and also for his 2002 album Heathen track titled "Slip Away," as well as on the song "Heathen (The Rays)".</value>
   </data>
-  <data name="SettingsAlbumArt" xml:space="preserve">
-    <value>Download Album Art from the MPD Server</value>
+  <data name="TreeViewGraphView" xml:space="preserve">
+    <value>Open Graph Overview</value>
   </data>
-  <data name="SettingsAlbumArtText" xml:space="preserve">
-    <value>Stylophone stores album art locally to avoid overloading your MPD Server.</value>
+  <data name="TreeViewSortBy" xml:space="preserve">
+    <value>Sort By</value>
   </data>
-  <data name="ActionToggleConsume" xml:space="preserve">
-    <value>Toggle Consume</value>
+  <data name="ButtonDeleteText" xml:space="preserve">
+    <value>Delete</value>
   </data>
   <data name="NavigationTrees" xml:space="preserve">
     <value>Dialogue Trees</value>

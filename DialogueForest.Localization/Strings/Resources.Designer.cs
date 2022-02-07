@@ -61,15 +61,6 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Toggle Consume.
-        /// </summary>
-        public static string ActionToggleConsume {
-            get {
-                return ResourceManager.GetString("ActionToggleConsume", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à DialogueForest.
         /// </summary>
         public static string AppDisplayName {
@@ -84,6 +75,15 @@ namespace DialogueForest.Localization.Strings {
         public static string ButtonCancelText {
             get {
                 return ResourceManager.GetString("ButtonCancelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Delete.
+        /// </summary>
+        public static string ButtonDeleteText {
+            get {
+                return ResourceManager.GetString("ButtonDeleteText", resourceCulture);
             }
         }
         
@@ -778,15 +778,6 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Shuffling through your library....
-        /// </summary>
-        public static string RandomTracksInProgress {
-            get {
-                return ResourceManager.GetString("RandomTracksInProgress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Thanks for using DialogueForest! Would you like to rate the app on the Store? 
         ///(We won&apos;t ask again. 🙏).
         /// </summary>
@@ -883,24 +874,6 @@ namespace DialogueForest.Localization.Strings {
         public static string SettingsAboutText {
             get {
                 return ResourceManager.GetString("SettingsAboutText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Download Album Art from the MPD Server.
-        /// </summary>
-        public static string SettingsAlbumArt {
-            get {
-                return ResourceManager.GetString("SettingsAlbumArt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Stylophone stores album art locally to avoid overloading your MPD Server..
-        /// </summary>
-        public static string SettingsAlbumArtText {
-            get {
-                return ResourceManager.GetString("SettingsAlbumArtText", resourceCulture);
             }
         }
         
@@ -1140,11 +1113,38 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Update the MPD Server Database.
+        ///   Recherche une chaîne localisée semblable à Add Dialogue Node.
         /// </summary>
-        public static string SettingsUpdateDbTitle {
+        public static string TreeViewAddNode {
             get {
-                return ResourceManager.GetString("SettingsUpdateDbTitle", resourceCulture);
+                return ResourceManager.GetString("TreeViewAddNode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Delete Tree.
+        /// </summary>
+        public static string TreeViewDeleteTree {
+            get {
+                return ResourceManager.GetString("TreeViewDeleteTree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Open Graph Overview.
+        /// </summary>
+        public static string TreeViewGraphView {
+            get {
+                return ResourceManager.GetString("TreeViewGraphView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Sort By.
+        /// </summary>
+        public static string TreeViewSortBy {
+            get {
+                return ResourceManager.GetString("TreeViewSortBy", resourceCulture);
             }
         }
     }

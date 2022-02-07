@@ -220,9 +220,6 @@
   <data name="SettingsUpdateDbDesc" xml:space="preserve">
     <value>Esta operação pode levar algum tempo ao servidor completar.</value>
   </data>
-  <data name="SettingsUpdateDbTitle" xml:space="preserve">
-    <value>Atualizar a base de dados do servidor MPD</value>
-  </data>
   <data name="SettingsAbout" xml:space="preserve">
     <value>Acerca desta aplicação</value>
   </data>
@@ -411,19 +408,7 @@ Ativando esta opção mostrará um segundo deslizador de volume para controlar o
   <data name="ButtonNoText" xml:space="preserve">
     <value>Não</value>
   </data>
-  <data name="RandomTracksInProgress" xml:space="preserve">
-    <value>Baralhando através da sua biblioteca...</value>
-  </data>
   <data name="FirstRunFlavorText" xml:space="preserve">
     <value>David Bowie é creditado por ter tocado o Stylophone na sua canção de sucesso de 1969 "Space Oddity" e também pelo seu álbum de 2002 "Heathen track" intitulado "Slip Away", bem como na canção "Heathen (The Rays)".</value>
-  </data>
-  <data name="SettingsAlbumArt" xml:space="preserve">
-    <value>Transferir Arte do Álbum a partir do Servidor MPD</value>
-  </data>
-  <data name="SettingsAlbumArtText" xml:space="preserve">
-    <value>Stylophone armazena a arte do álbum localmente para evitar sobrecarregar o seu MPD Server.</value>
-  </data>
-  <data name="ActionToggleConsume" xml:space="preserve">
-    <value>Ativar/Desativar Consume</value>
   </data>
 </root>
