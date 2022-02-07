@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -22,6 +23,14 @@ namespace DialogueForest.ViewModels
         private TreeViewModelBase _parentVm;
         private DialogueNode _node;
 
+        internal static DialogueNodeViewModel Create(DialogueNode node)
+        {
+            var instance = Ioc.Default.GetRequiredService<DialogueNodeViewModel>();
+            instance.LoadFromNode(node);
+
+            return instance;
+        }
+
         public DialogueNodeViewModel(IDialogService dialogService, IInteropService interopService, INotificationService notificationService, ForestDataService forestService)
         {
             _dialogService = dialogService;
@@ -35,24 +44,9 @@ namespace DialogueForest.ViewModels
             MetaValues.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsMetaDataEmpty));
         }
 
-        internal void ActivateDialogue(DialoguePartViewModel dialogVm)
-        {
-            foreach (var vm in Dialogs)
-            {
-                vm.IsActive = false;
-            }
-
-            dialogVm.IsActive = true;
-        }
-
         public ObservableCollection<DialoguePartViewModel> Dialogs { get; } = new ObservableCollection<DialoguePartViewModel>();
         public ObservableCollection<ReplyPromptViewModel> Prompts { get; } = new ObservableCollection<ReplyPromptViewModel>();
         public ObservableCollection<MetadataViewModel> MetaValues { get; } = new ObservableCollection<MetadataViewModel>();
-
-        internal void SetParentVm(TreeViewModelBase treeViewModel)
-        {
-            _parentVm = treeViewModel;
-        }
 
         public long ID => _node.ID;
 
@@ -67,11 +61,14 @@ namespace DialogueForest.ViewModels
         private bool _isPinned;
 
         [ICommand]
-        private void AddDialog()
+        private void AddDialog(string text = null)
         {
             var dialogVm = Ioc.Default.GetRequiredService<DialoguePartViewModel>();
             dialogVm.SetParentVm(this);
             ActivateDialogue(dialogVm);
+
+            if (text != null)
+                dialogVm.RtfDialogueText = text;
 
             Dialogs.Add(dialogVm);
         }
@@ -79,10 +76,18 @@ namespace DialogueForest.ViewModels
         public void RemoveDialog(DialoguePartViewModel vm) => Dialogs.Remove(vm);
 
         [ICommand]
-        private void AddPrompt()
+        private void AddPrompt() => AddPrompt(null);
+
+        private void AddPrompt(string text = null, long replyID = -1)
         {
             var promptVm = Ioc.Default.GetRequiredService<ReplyPromptViewModel>();
             promptVm.SetParentVm(this);
+
+            if (text != null)
+                promptVm.ReplyText = text;
+
+            if (replyID != -1)
+                promptVm.LinkedID = replyID;
 
             Prompts.Add(promptVm);
         }
@@ -105,6 +110,34 @@ namespace DialogueForest.ViewModels
         private void SaveNode()
         {
 
+        }
+
+        internal void SetParentVm(TreeViewModelBase treeViewModel)
+        {
+            _parentVm = treeViewModel;
+        }
+
+        internal void ActivateDialogue(DialoguePartViewModel dialogVm)
+        {
+            foreach (var vm in Dialogs)
+            {
+                vm.IsActive = false;
+            }
+
+            dialogVm.IsActive = true;
+        }
+        private void LoadFromNode(DialogueNode node)
+        {
+            _node = node;
+            _nodeTitle = node.Title;
+
+            // TODO character/metadata
+
+            foreach (var prompt in node.Prompts) 
+                AddPrompt(prompt.Key, prompt.Value);
+
+            foreach (var dialogue in node.DialogueLines)
+                AddDialog(dialogue);
         }
     }
 }

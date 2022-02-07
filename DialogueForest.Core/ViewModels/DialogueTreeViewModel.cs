@@ -7,7 +7,7 @@ namespace DialogueForest.Core.ViewModels
 {
     public class DialogueTreeViewModel : TreeViewModelBase
     {
-        public DialogueTreeViewModel(IDialogService dialogService, IInteropService interopService, INotificationService notificationService, ForestDataService forestService) :
+        public DialogueTreeViewModel(IDialogService dialogService, IInteropService interopService, INavigationService notificationService, ForestDataService forestService) :
             base(dialogService, interopService, notificationService, forestService)
         {
         }

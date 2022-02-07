@@ -8,7 +8,7 @@ namespace DialogueForest.Core.ViewModels
 {
     public class PinsViewModel : TreeViewModelBase
     {
-        public PinsViewModel(IDialogService dialogService, IInteropService interopService, INotificationService notificationService, ForestDataService forestService) :
+        public PinsViewModel(IDialogService dialogService, IInteropService interopService, INavigationService notificationService, ForestDataService forestService) :
             base(dialogService, interopService, notificationService, forestService)
         {
         }

@@ -9,59 +9,38 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using WinUI = Microsoft.UI.Xaml.Controls;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using DialogueForest.Core.Interfaces;
+using DialogueForest.Services;
 
 namespace DialogueForest.ViewModels
 {
-    public class OpenedNodesViewModel : ObservableObject
+    public partial class OpenedNodesViewModel : ObservableObject
     {
-        private RelayCommand _addTabCommand;
-        private RelayCommand<WinUI.TabViewTabCloseRequestedEventArgs> _closeTabCommand;
 
-        public RelayCommand AddTabCommand => _addTabCommand ?? (_addTabCommand = new RelayCommand(AddTab));
-
-        public RelayCommand<WinUI.TabViewTabCloseRequestedEventArgs> CloseTabCommand => _closeTabCommand ?? (_closeTabCommand = new RelayCommand<WinUI.TabViewTabCloseRequestedEventArgs>(CloseTab));
-
-        public ObservableCollection<TabViewItemData> Tabs { get; } = new ObservableCollection<TabViewItemData>()
-        {
-            new TabViewItemData()
-            {
-                Index = 1,
-                Header = "Item 1",
-                //// In this sample the content shown in the Tab is a string, set the content to the model you want to show
-                Content = "This is the content for Item 1."
-            },
-            new TabViewItemData()
-            {
-                Index = 2,
-                Header = "Item 2",
-                Content = "This is the content for Item 2."
-            },
-            new TabViewItemData()
-            {
-                Index = 3,
-                Header = "Item 3",
-                Content = "This is the content for Item 3."
-            }
-        };
+        public ObservableCollection<DialogueNodeViewModel> Tabs { get; } = new ObservableCollection<DialogueNodeViewModel>();
 
         public OpenedNodesViewModel()
         {
+            // Link with NavigationService
+            var navService = Ioc.Default.GetRequiredService<INavigationService>() as NavigationService;
+            navService.NodeTabContainer = this;
+
+            Tabs.CollectionChanged += (s, e) => OnPropertyChanged(nameof(NoTabsOpen));
         }
 
-        private void AddTab()
+        public bool NoTabsOpen => Tabs.Count == 0;
+
+        public void OpenNode(DialogueNodeViewModel vm)
         {
-            int newIndex = Tabs.Any() ? Tabs.Max(t => t.Index) + 1 : 1;
-            Tabs.Add(new TabViewItemData()
-            {
-                Index = newIndex,
-                Header = $"Item {newIndex}",
-                Content = $"This is the content for Item {newIndex}"
-            });
+            // TODO refine
+            Tabs.Add(vm);
         }
 
+        [ICommand]
         private void CloseTab(WinUI.TabViewTabCloseRequestedEventArgs args)
         {
-            if (args.Item is TabViewItemData item)
+            if (args.Item is DialogueNodeViewModel item)
             {
                 Tabs.Remove(item);
             }

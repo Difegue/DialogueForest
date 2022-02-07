@@ -8,7 +8,7 @@ namespace DialogueForest.Core.ViewModels
 {
     public class TrashViewModel : TreeViewModelBase
     {
-        public TrashViewModel(IDialogService dialogService, IInteropService interopService, INotificationService notificationService, ForestDataService forestService): 
+        public TrashViewModel(IDialogService dialogService, IInteropService interopService, INavigationService notificationService, ForestDataService forestService): 
             base(dialogService, interopService, notificationService, forestService)
         {
         }

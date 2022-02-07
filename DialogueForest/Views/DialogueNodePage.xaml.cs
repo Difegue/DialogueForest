@@ -13,8 +13,6 @@ namespace DialogueForest.Views
         public DialogueNodePage()
         {
             InitializeComponent();
-            // TODO
-            DataContext = Ioc.Default.GetRequiredService<DialogueNodeViewModel>();
         }
 
     }

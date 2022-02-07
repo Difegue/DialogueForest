@@ -113,7 +113,8 @@ namespace DialogueForest
 
         private ActivationService CreateActivationService()
         {
-            return new ActivationService(this, typeof(DialogueNodeViewModel), new Lazy<UIElement>(CreateShell));
+            // TODO
+            return new ActivationService(this, typeof(NotesViewModel), new Lazy<UIElement>(CreateShell));
         }
 
         private UIElement CreateShell()

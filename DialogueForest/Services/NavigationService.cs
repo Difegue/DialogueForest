@@ -57,10 +57,7 @@ namespace DialogueForest.Services
 
         public override void SetItemForNextConnectedAnimation(object item) => Frame.SetListDataItemForNextConnectedAnimation(item);
 
-        public override void OpenDialogueNode(DialogueNode node)
-        {
-            throw new NotImplementedException();
-        }
+        public override void OpenDialogueNode(DialogueNodeViewModel vm) => NodeTabContainer.OpenNode(vm);
 
         public override bool GoBackImplementation()
         {
@@ -72,6 +69,8 @@ namespace DialogueForest.Services
 
             return false;
         }
+
+        public OpenedNodesViewModel NodeTabContainer { get; set; }
 
         private Frame _frame;
         public Frame Frame

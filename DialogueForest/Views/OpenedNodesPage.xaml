@@ -5,10 +5,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:models="using:DialogueForest.Models"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:views="using:DialogueForest.Views" xmlns:strings="using:DialogueForest.Localization.Strings"
+    xmlns:viewmodels="using:DialogueForest.ViewModels"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d">
 
@@ -16,12 +16,12 @@
 
         <Grid Padding="{StaticResource MediumLeftTopRightBottomMargin}"
               Margin="0,40,0,-4"
-          Background="{ThemeResource LayerFillColorDefaultBrush}"
-          BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                  BorderThickness="1,0,0,1" CornerRadius="8,0,0,0">
+              Background="{ThemeResource LayerFillColorDefaultBrush}"
+              BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+              BorderThickness="1,1,0,1" CornerRadius="8,0,0,0">
 
 
-            <StackPanel
+            <StackPanel Visibility="{x:Bind ViewModel.NoTabsOpen, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
                 <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg4" Width="120" Height="120">
@@ -86,10 +86,10 @@
 
         </Grid>
 
-        <muxc:TabView
-        AllowDropTabs="True"
-        TabItemsSource="{x:Bind ViewModel.Tabs}"
-        AddTabButtonCommand="{x:Bind ViewModel.AddTabCommand}">
+        <muxc:TabView 
+            IsAddTabButtonVisible="False"
+            AllowDropTabs="True" 
+            TabItemsSource="{x:Bind ViewModel.Tabs}">
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="TabCloseRequested">
                     <ic:InvokeCommandAction Command="{x:Bind ViewModel.CloseTabCommand}" />
@@ -102,16 +102,15 @@
                 <Grid Width="160"/>
             </muxc:TabView.TabStripFooter>
             <muxc:TabView.TabItemTemplate>
-                <DataTemplate x:DataType="models:TabViewItemData">
-                    <muxc:TabViewItem
-                    Header="{x:Bind Header}"
-                    AutomationProperties.Name="{x:Bind Header}">
+                <DataTemplate x:DataType="viewmodels:DialogueNodeViewModel">
+                    <muxc:TabViewItem Margin="0,1,0,0" BorderThickness="1,1,1,0"
+                    Header="{x:Bind NodeTitle, Mode=OneWay}"
+                    AutomationProperties.Name="{x:Bind NodeTitle, Mode=OneWay}">
                         <muxc:TabViewItem.IconSource>
                             <muxc:FontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE8BE;"/>
                         </muxc:TabViewItem.IconSource>
                         <muxc:TabViewItem.Content>
-                            <views:DialogueNodePage />
-                            <!--DataContext=""-->
+                            <views:DialogueNodePage DataContext="{x:Bind}" />
                         </muxc:TabViewItem.Content>
                     </muxc:TabViewItem>
                 </DataTemplate>

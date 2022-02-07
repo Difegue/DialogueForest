@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using DialogueForest.Core.Models;
+using DialogueForest.ViewModels;
 using System;
 
 namespace DialogueForest.Core.Interfaces
@@ -16,6 +17,7 @@ namespace DialogueForest.Core.Interfaces
         void Navigate<T>(object parameter = null) where T : ObservableObject;
         void SetItemForNextConnectedAnimation(object item);
         void OpenDialogueNode(DialogueNode node);
+        void OpenDialogueNode(DialogueNodeViewModel existingVm);
     }
 
     public abstract class NavigationServiceBase: INavigationService
@@ -43,11 +45,18 @@ namespace DialogueForest.Core.Interfaces
             }
             return result;
         }
+
+        public void OpenDialogueNode(DialogueNode node)
+        {
+            var vm = DialogueNodeViewModel.Create(node);
+            OpenDialogueNode(vm);
+        }
+
         public abstract bool GoBackImplementation();
 
         public abstract Type CurrentPageViewModelType { get; }
         public abstract bool CanGoBack { get; }
         public abstract void SetItemForNextConnectedAnimation(object item);
-        public abstract void OpenDialogueNode(DialogueNode node);
+        public abstract void OpenDialogueNode(DialogueNodeViewModel existingVm);
     }
 }

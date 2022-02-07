@@ -15,6 +15,7 @@ namespace DialogueForest.Views
             InitializeComponent();
             // TODO
             DataContext = Ioc.Default.GetRequiredService<TreeViewModelBase>();
+            ViewModel.Title = "My Tree";
         }
     }
 }
