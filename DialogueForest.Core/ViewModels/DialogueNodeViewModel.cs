@@ -113,7 +113,19 @@ namespace DialogueForest.ViewModels
         }
 
         [ICommand]
+        private void UnpinDialogue()
+        {
+
+        }
+
+        [ICommand]
         private void MoveToTrash()
+        {
+
+        }
+
+        [ICommand]
+        private void Delete()
         {
 
         }
