@@ -26,7 +26,8 @@ namespace DialogueForest.Core.Services
 
         public DialogueNode GetNode(long id)
         {
-            return new DialogueNode();
+            // TODO
+            return new DialogueNode(id);
         }
     }
 }

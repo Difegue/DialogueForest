@@ -88,7 +88,8 @@
 
         <muxc:TabView 
             IsAddTabButtonVisible="False"
-            AllowDropTabs="True" 
+            AllowDropTabs="True"
+            SelectedIndex="{x:Bind ViewModel.SelectedTabIndex, Mode=TwoWay}"
             TabItemsSource="{x:Bind ViewModel.Tabs}">
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="TabCloseRequested">
@@ -99,7 +100,7 @@
                 <Grid Width="16"/>
             </muxc:TabView.TabStripHeader>
             <muxc:TabView.TabStripFooter>
-                <Grid Width="160"/>
+                <Grid x:Name="CustomDragRegion" />
             </muxc:TabView.TabStripFooter>
             <muxc:TabView.TabItemTemplate>
                 <DataTemplate x:DataType="viewmodels:DialogueNodeViewModel">

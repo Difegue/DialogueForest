@@ -60,8 +60,7 @@ namespace DialogueForest.Core.ViewModels
         private void AddNode()
         {
             // TODO: Link to forestservice data
-            var nodeVm = Ioc.Default.GetRequiredService<DialogueNodeViewModel>();
-            nodeVm.NodeTitle = "My New Dialogue";
+            var nodeVm = DialogueNodeViewModel.Create(new DialogueNode(new Random().Next()));
 
             AddExistingNode(nodeVm);
         }

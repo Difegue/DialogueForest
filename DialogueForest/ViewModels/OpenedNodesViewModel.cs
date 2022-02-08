@@ -17,6 +17,9 @@ namespace DialogueForest.ViewModels
 
         public ObservableCollection<DialogueNodeViewModel> Tabs { get; } = new ObservableCollection<DialogueNodeViewModel>();
 
+        [ObservableProperty]
+        private int _selectedTabIndex;
+
         public OpenedNodesViewModel()
         {
             // Link with NavigationService
@@ -30,8 +33,18 @@ namespace DialogueForest.ViewModels
 
         public void OpenNode(DialogueNodeViewModel vm)
         {
-            // TODO refine
-            Tabs.Add(vm);
+            // Check if this node isn't already open
+            if (!Tabs.Contains(vm))
+            {
+                // Make 'really' sure
+                if (!Tabs.Select(t => t.ID).Contains(vm.ID))
+                {
+                    // TODO: Remove the current SelectedVM, unless it has unsaved changes?
+                    Tabs.Add(vm);
+                }
+            }
+
+            SelectedTabIndex = Tabs.IndexOf(vm);
         }
 
         [ICommand]
