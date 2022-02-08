@@ -71,7 +71,11 @@ namespace DialogueForest.Core.ViewModels
             Nodes.Add(nodeVm);
         }
 
-        public void RemoveNode(DialogueNodeViewModel vm) => Nodes.Remove(vm);
+        internal void MoveNodeToTrash(DialogueNodeViewModel nodeVm, DialogueNode node)
+        {
+            _dataService.MoveNodeToTrash(node);
+            Nodes.Remove(nodeVm);
+        }
 
         [ICommand]
         private void Delete()
@@ -79,5 +83,6 @@ namespace DialogueForest.Core.ViewModels
 
         }
 
+        
     }
 }

@@ -10,20 +10,20 @@ namespace DialogueForest.Core.Models
 
         public string Character { get; set; }
 
-        public List<string> DialogueLines { get; set; }
+        public List<DialogueText> DialogueLines { get; set; }
 
-        public Dictionary<string, long> Prompts { get; set; }
+        public List<DialogueReply> Prompts { get; set; }
 
-        public Dictionary<string, object> Metadata { get; set; }
+        public List<DialogueMetadataValue> Metadata { get; set; }
 
         public DialogueNode(long nodeId)
         {
             ID = nodeId;
-            Title = "Dialogue" + nodeId;
+            Title = "Dialogue #" + nodeId;
 
-            DialogueLines = new List<string>();
-            Prompts = new Dictionary<string, long>();
-            Metadata = new Dictionary<string, object>();
+            DialogueLines = new List<DialogueText>();
+            Prompts = new List<DialogueReply>();
+            Metadata = new List<DialogueMetadataValue>();
         }
 
     }

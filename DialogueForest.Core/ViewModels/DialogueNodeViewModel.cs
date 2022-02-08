@@ -10,6 +10,7 @@ using DialogueForest.Core.Interfaces;
 using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
 using DialogueForest.Core.ViewModels;
+using DialogueForest.Localization.Strings;
 
 namespace DialogueForest.ViewModels
 {
@@ -30,6 +31,18 @@ namespace DialogueForest.ViewModels
             instance.LoadFromNode(node);
 
             return instance;
+        }
+        private void LoadFromNode(DialogueNode node)
+        {
+            _node = node;
+
+            // TODO character/metadata
+
+            foreach (var prompt in node.Prompts)
+                AddPrompt(prompt);
+
+            foreach (var dialogue in node.DialogueLines)
+                AddDialog(dialogue);
         }
 
         public DialogueNodeViewModel(IDialogService dialogService, IInteropService interopService, INotificationService notificationService, ForestDataService forestService)
@@ -54,86 +67,85 @@ namespace DialogueForest.ViewModels
         public bool IsPromptsEmpty => Prompts.Count == 0;
         public bool IsMetaDataEmpty => MetaValues.Count == 0;
 
-        [ObservableProperty]
-        private string _nodeTitle;
-        [ObservableProperty]
-        private bool _isTrashed;
-        [ObservableProperty]
-        private bool _isPinned;
+        public bool IsTrashed => _dataService.IsNodeTrashed(_node);
+        public bool IsPinned => _dataService.IsNodePinned(_node);
+
+        public string NodeTitle
+        {
+            get => _node.Title;
+            set => SetProperty(_node.Title, value, _node, (u, n) => u.Title = n);
+        }
+
+        public string Character
+        {
+            get => _node.Character;
+            set => SetProperty(_node.Character, value, _node, (u, n) => u.Character = n);
+        }
 
         public string PlainText => Dialogs.FirstOrDefault()?.PlainDialogueText;
 
-        // TODO this might be changed so that the plainText only updates when the node is saved
         private void UpdatePlainText(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(nameof(PlainText));
 
         [ICommand]
-        private void AddDialog(string text = null)
+        private void AddDialog(DialogueText text = null)
         {
-            var dialogVm = Ioc.Default.GetRequiredService<DialoguePartViewModel>();
-            dialogVm.SetParentVm(this);
+            if (text == null)
+            {
+                text = new DialogueText();
+                _node.DialogueLines.Add(text);
+            }
+
+            var dialogVm = DialoguePartViewModel.Create(text, this);
             ActivateDialogue(dialogVm);
-
-            if (text != null)
-                dialogVm.RtfDialogueText = text;
-
             dialogVm.PropertyChanged += UpdatePlainText;
 
             Dialogs.Add(dialogVm);
         }
 
-        public void RemoveDialog(DialoguePartViewModel vm)
+        public void RemoveDialog(DialoguePartViewModel vm, DialogueText matchingText)
         {
             vm.PropertyChanged -= UpdatePlainText;
+            _node.DialogueLines.Remove(matchingText);
             Dialogs.Remove(vm);
         }
 
         [ICommand]
         private void AddPrompt() => AddPrompt(null);
 
-        private void AddPrompt(string text = null, long replyID = -1)
+        private void AddPrompt(DialogueReply reply = null)
         {
-            var promptVm = Ioc.Default.GetRequiredService<ReplyPromptViewModel>();
-            promptVm.SetParentVm(this);
+            if (reply == null)
+            {
+                reply = new DialogueReply();
+                _node.Prompts.Add(reply);
+            }
 
-            if (text != null)
-                promptVm.ReplyText = text;
-
-            if (replyID != -1)
-                promptVm.LinkedID = replyID;
+            var promptVm = ReplyPromptViewModel.Create(reply, this);
 
             Prompts.Add(promptVm);
         }
 
-        public void RemovePrompt(ReplyPromptViewModel vm) => Prompts.Remove(vm);
-
-        [ICommand]
-        private void PinDialogue()
+        public void RemovePrompt(ReplyPromptViewModel vm, DialogueReply matchingReply)
         {
-
+            _node.Prompts.Remove(matchingReply);
+            Prompts.Remove(vm);
         }
 
         [ICommand]
-        private void UnpinDialogue()
-        {
-
-        }
+        private void PinDialogue() => _dataService.SetPinnedNode(_node, true);
 
         [ICommand]
-        private void MoveToTrash()
-        {
-
-        }
+        private void UnpinDialogue() => _dataService.SetPinnedNode(_node, false);
 
         [ICommand]
-        private void Delete()
-        {
-
-        }
+        private void MoveToTrash() => _parentVm.MoveNodeToTrash(this, _node);
 
         [ICommand]
-        private void SaveNode()
+        private async Task Delete()
         {
-
+            if (await _dialogService.ShowConfirmDialogAsync(Resources.DeletePlaylistContentDialog, Resources.EmptySearchDesc,
+                        Resources.ButtonYesText, Resources.ButtonCancelText))
+                _dataService.DeleteNode(_node);
         }
 
         internal void SetParentVm(TreeViewModelBase treeViewModel)
@@ -149,19 +161,6 @@ namespace DialogueForest.ViewModels
             }
 
             dialogVm.IsActive = true;
-        }
-        private void LoadFromNode(DialogueNode node)
-        {
-            _node = node;
-            _nodeTitle = node.Title;
-
-            // TODO character/metadata
-
-            foreach (var prompt in node.Prompts) 
-                AddPrompt(prompt.Key, prompt.Value);
-
-            foreach (var dialogue in node.DialogueLines)
-                AddDialog(dialogue);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using DialogueForest.Core.Interfaces;
+using DialogueForest.Core.Models;
 using DialogueForest.Localization.Strings;
 using System.Collections.Generic;
 using System.Text;
@@ -10,27 +12,31 @@ namespace DialogueForest.ViewModels
 {
     public partial class DialoguePartViewModel : ObservableObject
     {
-        [ObservableProperty]
-        private string _rtfDialogueText;
+        private IDialogService _dialogService;
+
+        protected DialogueNodeViewModel _parentNodeVm;
+        protected DialogueText _text;
+
+        internal static DialoguePartViewModel Create(DialogueText text, DialogueNodeViewModel parent)
+        {
+            var instance = Ioc.Default.GetRequiredService<DialoguePartViewModel>();
+            instance._text = text;
+            instance._parentNodeVm = parent;
+
+            return instance;
+        }
+
+        public string RtfDialogueText
+        {
+            get => _text.RichText;
+            set => SetProperty(_text.RichText, value, _text, (u, n) => u.RichText = n);
+        }
 
         [ObservableProperty]
         private string _plainDialogueText;
 
         [ObservableProperty]
         private bool _isActive;
-
-        private DialogueNodeViewModel _parentNodeVm;
-
-        private IInteropService _interopService;
-        private IDialogService _dialogService;
-
-        public DialoguePartViewModel(IDialogService dialogService, IInteropService interopService)
-        {
-            _dialogService = dialogService;
-            _interopService = interopService;
-        }
-
-        public void SetParentVm(DialogueNodeViewModel parent) => _parentNodeVm = parent;
 
         [ICommand]
         private void Activate() => _parentNodeVm.ActivateDialogue(this);
@@ -40,8 +46,12 @@ namespace DialogueForest.ViewModels
         {
             if (await _dialogService.ShowConfirmDialogAsync(Resources.DeletePlaylistContentDialog, Resources.EmptySearchDesc,
                         Resources.ButtonYesText, Resources.ButtonCancelText))
-                _parentNodeVm.RemoveDialog(this);
+                _parentNodeVm.RemoveDialog(this, _text);
         }
 
+        public DialoguePartViewModel(IDialogService dialogService)
+        {
+            _dialogService = dialogService;
+        }
     }
 }

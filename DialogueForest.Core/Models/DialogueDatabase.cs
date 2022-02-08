@@ -4,8 +4,9 @@ using System.Text;
 
 namespace DialogueForest.Core.Models
 {
-    public class DialogueForest
+    public class DialogueDatabase
     {
+        public float LastID { get; set; }
 
         public List<DialogueTree> Trees { get; set; }
 
