@@ -106,6 +106,15 @@ namespace DialogueForest.Services
             }
         }
 
+        public async Task<string> ShowTreeNameDialogAsync()
+        {
+            var dialog = new TreeNameDialog();
+            var result = await _dispatcherService.EnqueueAsync(async () => await dialog.ShowAsync());
+
+            // Return new playlist name if checked, selected playlist otherwise
+            return result == ContentDialogResult.Primary ? dialog.TreeName : null;
+        }
+
         public async Task<bool> ShowConfirmDialogAsync(string title, string text, string primaryButtonText = null, string cancelButtonText = null)
         {
             // If a ContentDialog is already open, stop here and return false

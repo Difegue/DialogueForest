@@ -1,0 +1,25 @@
+﻿<ContentDialog
+    x:Class="DialogueForest.Views.TreeNameDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:strings="using:DialogueForest.Localization.Strings"
+    Title="{x:Bind strings:Resources.TreeNameDialogTitle}"
+    d:DesignHeight="345"
+    d:DesignWidth="256"
+    CloseButtonText="{x:Bind strings:Resources.ButtonCancelText}"
+    DefaultButton="Primary"
+    PrimaryButtonText="{x:Bind strings:Resources.ButtonCreateText}"
+    Style="{StaticResource DefaultContentDialogStyle}"
+    mc:Ignorable="d">
+
+    <ScrollViewer>
+        <StackPanel Spacing="12">
+            <TextBlock Text="{x:Bind strings:Resources.TreeNameDialogText}" />
+            <TextBox
+                PlaceholderText="{x:Bind strings:Resources.TreeNameDialogPlaceholder}"
+                Text="{x:Bind TreeName, Mode=TwoWay}" />
+        </StackPanel>
+    </ScrollViewer>
+</ContentDialog>

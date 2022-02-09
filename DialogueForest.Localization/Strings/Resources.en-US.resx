@@ -147,32 +147,32 @@
   <data name="NavigationTrash" xml:space="preserve">
     <value>Trash</value>
   </data>
-  <data name="NotificationNowPlayingTrack" xml:space="preserve">
-    <value>Now Playing {0}</value>
+  <data name="ContentDialogDeleteDialogue" xml:space="preserve">
+    <value>Delete this Text?</value>
   </data>
-  <data name="NotificationNoTracksLoaded" xml:space="preserve">
-    <value>No tracks loaded yet.</value>
+  <data name="ContentDialogDeleteReply" xml:space="preserve">
+    <value>Delete this Reply?</value>
   </data>
-  <data name="NotificationNoTrackPlaying" xml:space="preserve">
-    <value>No Track is currently playing.</value>
+  <data name="ContentDialogueDeleteNode" xml:space="preserve">
+    <value>Delete this Dialogue?</value>
   </data>
-  <data name="DeletePlaylistContentDialog" xml:space="preserve">
-    <value>Delete Playlist?</value>
+  <data name="TreeNameDialogTitle" xml:space="preserve">
+    <value>New Dialogue Tree</value>
   </data>
-  <data name="ErrorCantClearCache" xml:space="preserve">
-    <value>Couldn't clear queue!</value>
+  <data name="TreeNameDialogText" xml:space="preserve">
+    <value>Give a name to your freshly planted Tree! You can always change this later.</value>
   </data>
-  <data name="NotificationDbUpdateStarted" xml:space="preserve">
-    <value>Database update started.</value>
+  <data name="TreeNameDialogPlaceholder" xml:space="preserve">
+    <value>My Orange Tree</value>
   </data>
-  <data name="NotificationDbAlreadyUpdating" xml:space="preserve">
-    <value>The database is already being updated.</value>
+  <data name="TreeNameDialogDefaultName" xml:space="preserve">
+    <value>New Tree</value>
   </data>
   <data name="ButtonCancelText" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="SettingsNoServerError" xml:space="preserve">
-    <value>Couldn't find an MPD server at this address!</value>
+  <data name="ButtonCreateText" xml:space="preserve">
+    <value>Create</value>
   </data>
   <data name="SearchGoToDetail" xml:space="preserve">
     <value>Search for "{0}" on the server...</value>
@@ -203,8 +203,8 @@
     <value>All pages opened in a new window must subscribe to the Released Event.</value>
     <comment>The page is not subscribed to the Released event.</comment>
   </data>
-  <data name="NotificationAddedToPlaylist" xml:space="preserve">
-    <value>Added to Playlist {0}!</value>
+  <data name="ContentDialogWillBePermaDeleted" xml:space="preserve">
+    <value>It will be permanently deleted!</value>
   </data>
   <data name="NotificationAddedToQueue" xml:space="preserve">
     <value>Added to Queue!</value>
@@ -323,32 +323,26 @@ Hope you enjoy using the application!
     <value>Welcome to Stylophone!</value>
     <comment>First use prompt message title</comment>
   </data>
-  <data name="ContextMenuPlay" xml:space="preserve">
-    <value>Play</value>
+  <data name="ContextMenuLinksTo" xml:space="preserve">
+    <value>Links To</value>
   </data>
-  <data name="ContextMenuViewAlbum" xml:space="preserve">
-    <value>View Album</value>
+  <data name="ContextMenuLinkedBy" xml:space="preserve">
+    <value>Linked By</value>
   </data>
-  <data name="ContextMenuRemoveFromPlaylist" xml:space="preserve">
-    <value>Remove from Playlist</value>
+  <data name="ContextMenuPin" xml:space="preserve">
+    <value>Pin</value>
   </data>
-  <data name="ContextMenuRemoveFromQueue" xml:space="preserve">
-    <value>Remove from Queue</value>
+  <data name="ContextMenuUnpin" xml:space="preserve">
+    <value>Unpin</value>
   </data>
-  <data name="ContextMenuAddToPlaylist" xml:space="preserve">
-    <value>Add to Playlist</value>
+  <data name="ContextMenuTrash" xml:space="preserve">
+    <value>Move to Trash</value>
   </data>
-  <data name="ContextMenuAddQueueToPlaylist" xml:space="preserve">
-    <value>Save Queue as Playlist</value>
+  <data name="ContextMenuDelete" xml:space="preserve">
+    <value>Delete permanently</value>
   </data>
-  <data name="ContextMenuClearQueue" xml:space="preserve">
-    <value>Clear Queue</value>
-  </data>
-  <data name="ContextMenuAddToQueue" xml:space="preserve">
-    <value>Add to Queue</value>
-  </data>
-  <data name="ContextMenuDeletePlaylist" xml:space="preserve">
-    <value>Delete Playlist</value>
+  <data name="ContextMenuMove" xml:space="preserve">
+    <value>Move to another Tree</value>
   </data>
   <data name="EmptyViewDocumentsTitle" xml:space="preserve">
     <value>Let's get writing!</value>

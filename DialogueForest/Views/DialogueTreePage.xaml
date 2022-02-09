@@ -91,35 +91,35 @@
                 </Grid.ColumnDefinitions>
                 <Grid.ContextFlyout>
                     <MenuFlyout>
-                        <MenuFlyoutSubItem Text="Links to:" Tag="links_to" >
+                        <MenuFlyoutSubItem Text="{x:Bind strings:Resources.ContextMenuLinksTo}" Tag="links_to" >
                             <MenuFlyoutSubItem.Icon>
                                 <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEA54;" />
                             </MenuFlyoutSubItem.Icon>
                         </MenuFlyoutSubItem>
-                        <MenuFlyoutSubItem Text="Linked by:" Tag="linked_by">
+                        <MenuFlyoutSubItem Text="{x:Bind strings:Resources.ContextMenuLinkedBy}" Tag="linked_by">
                             <MenuFlyoutSubItem.Icon>
                                 <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE11F;" />
                             </MenuFlyoutSubItem.Icon>
                         </MenuFlyoutSubItem>
-                        <MenuFlyoutItem Text="Pin this Node" Command="{x:Bind PinDialogueCommand}"
+                        <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuPin}" Command="{x:Bind PinDialogueCommand}"
                                             Visibility="{x:Bind IsPinned, Converter={StaticResource ReverseBoolToVisibilityConverter}}"  >
                             <MenuFlyoutItem.Icon>
                                 <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE141;" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="Unpin this Node" Command="{x:Bind UnpinDialogueCommand}"
+                        <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuUnpin}" Command="{x:Bind UnpinDialogueCommand}"
                                             Visibility="{x:Bind IsPinned, Converter={StaticResource BoolToVisibilityConverter}}"  >
                             <MenuFlyoutItem.Icon>
                                 <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE196;" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="Move to Trash" Command="{x:Bind MoveToTrashCommand}"
+                        <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuTrash}" Command="{x:Bind MoveToTrashCommand}"
                                             Visibility="{x:Bind IsTrashed, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
                             <MenuFlyoutItem.Icon>
                                 <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" Foreground="{ThemeResource DestructiveActionForeground}" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="Permanenly Delete" Command="{x:Bind DeleteCommand}"
+                        <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuDelete}" Command="{x:Bind DeleteCommand}"
                                             Visibility="{x:Bind IsTrashed, Converter={StaticResource BoolToVisibilityConverter}}">
                             <MenuFlyoutItem.Icon>
                                 <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE621;" Foreground="{ThemeResource DestructiveActionForeground}"/>
@@ -140,35 +140,35 @@
                     </Button.Content>
                     <Button.Flyout>
                         <MenuFlyout>
-                            <MenuFlyoutSubItem Text="Links to:" Tag="links_to" >
+                            <MenuFlyoutSubItem Text="{x:Bind strings:Resources.ContextMenuLinksTo}" Tag="links_to" >
                                 <MenuFlyoutSubItem.Icon>
                                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEA54;" />
                                 </MenuFlyoutSubItem.Icon>
                             </MenuFlyoutSubItem>
-                            <MenuFlyoutSubItem Text="Linked by:" Tag="linked_by">
+                            <MenuFlyoutSubItem Text="{x:Bind strings:Resources.ContextMenuLinkedBy}" Tag="linked_by">
                                 <MenuFlyoutSubItem.Icon>
                                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE11F;" />
                                 </MenuFlyoutSubItem.Icon>
                             </MenuFlyoutSubItem>
-                            <MenuFlyoutItem Text="Pin this Node" Command="{x:Bind PinDialogueCommand}"
+                            <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuPin}" Command="{x:Bind PinDialogueCommand}"
                                             Visibility="{x:Bind IsPinned, Converter={StaticResource ReverseBoolToVisibilityConverter}}"  >
                                 <MenuFlyoutItem.Icon>
                                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE141;" />
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>
-                            <MenuFlyoutItem Text="Unpin this Node" Command="{x:Bind UnpinDialogueCommand}"
+                            <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuUnpin}" Command="{x:Bind UnpinDialogueCommand}"
                                             Visibility="{x:Bind IsPinned, Converter={StaticResource BoolToVisibilityConverter}}"  >
                                 <MenuFlyoutItem.Icon>
                                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE196;" />
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>
-                            <MenuFlyoutItem Text="Move to Trash" Command="{x:Bind MoveToTrashCommand}"
+                            <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuTrash}" Command="{x:Bind MoveToTrashCommand}"
                                             Visibility="{x:Bind IsTrashed, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
                                 <MenuFlyoutItem.Icon>
                                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" Foreground="{ThemeResource DestructiveActionForeground}" />
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>
-                            <MenuFlyoutItem Text="Permanenly Delete" Command="{x:Bind DeleteCommand}"
+                            <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuDelete}" Command="{x:Bind DeleteCommand}"
                                             Visibility="{x:Bind IsTrashed, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <MenuFlyoutItem.Icon>
                                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE621;" Foreground="{ThemeResource DestructiveActionForeground}"/>

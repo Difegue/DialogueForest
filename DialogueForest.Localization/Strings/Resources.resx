@@ -149,32 +149,41 @@
     <value>Trash</value>
     <comment>Navigation view item name for Trash</comment>
   </data>
-  <data name="NotificationNowPlayingTrack" xml:space="preserve">
-    <value>Now Playing {0}</value>
+  <data name="ContentDialogDeleteDialogue" xml:space="preserve">
+    <value>Delete this Text?</value>
+    <comment>Content Dialogs</comment>
   </data>
-  <data name="NotificationNoTracksLoaded" xml:space="preserve">
-    <value>No tracks loaded yet.</value>
+  <data name="ContentDialogDeleteReply" xml:space="preserve">
+    <value>Delete this Reply?</value>
+    <comment>Content Dialogs</comment>
   </data>
-  <data name="NotificationNoTrackPlaying" xml:space="preserve">
-    <value>No Track is currently playing.</value>
+  <data name="ContentDialogueDeleteNode" xml:space="preserve">
+    <value>Delete this Dialogue?</value>
+    <comment>Content Dialogs</comment>
   </data>
-  <data name="DeletePlaylistContentDialog" xml:space="preserve">
-    <value>Delete Playlist?</value>
+  <data name="TreeNameDialogTitle" xml:space="preserve">
+    <value>New Dialogue Tree</value>
+    <comment>New Tree Name Dialog</comment>
   </data>
-  <data name="ErrorCantClearCache" xml:space="preserve">
-    <value>Couldn't clear queue!</value>
+  <data name="TreeNameDialogText" xml:space="preserve">
+    <value>Give a name to your freshly planted Tree! You can always change this later.</value>
+    <comment>New Tree Name Dialog</comment>
   </data>
-  <data name="NotificationDbUpdateStarted" xml:space="preserve">
-    <value>Database update started.</value>
+  <data name="TreeNameDialogPlaceholder" xml:space="preserve">
+    <value>My Orange Tree</value>
+    <comment>New Tree Name Dialog</comment>
   </data>
-  <data name="NotificationDbAlreadyUpdating" xml:space="preserve">
-    <value>The database is already being updated.</value>
+  <data name="TreeNameDialogDefaultName" xml:space="preserve">
+    <value>New Tree</value>
+    <comment>New Tree Name Dialog</comment>
   </data>
   <data name="ButtonCancelText" xml:space="preserve">
     <value>Cancel</value>
+    <comment>Cancel btn</comment>
   </data>
-  <data name="SettingsNoServerError" xml:space="preserve">
-    <value>Couldn't find an MPD server at this address!</value>
+  <data name="ButtonCreateText" xml:space="preserve">
+    <value>Create</value>
+    <comment>Create btn</comment>
   </data>
   <data name="SearchGoToDetail" xml:space="preserve">
     <value>Search for "{0}" on the server...</value>
@@ -184,6 +193,7 @@
   </data>
   <data name="ButtonOKText" xml:space="preserve">
     <value>OK</value>
+    <comment>OK btn</comment>
   </data>
   <data name="ExceptionSettingsStorageExtensionsFileNameIsNullOrEmpty" xml:space="preserve">
     <value>File name is null or empty. Specify a valid file name</value>
@@ -205,8 +215,9 @@
     <value>All pages opened in a new window must subscribe to the Released Event.</value>
     <comment>The page is not subscribed to the Released event.</comment>
   </data>
-  <data name="NotificationAddedToPlaylist" xml:space="preserve">
-    <value>Added to Playlist {0}!</value>
+  <data name="ContentDialogWillBePermaDeleted" xml:space="preserve">
+    <value>It will be permanently deleted!</value>
+    <comment>Content Dialogs</comment>
   </data>
   <data name="NotificationAddedToQueue" xml:space="preserve">
     <value>Added to Queue!</value>
@@ -222,6 +233,7 @@
   </data>
   <data name="ErrorGeneric" xml:space="preserve">
     <value>Error: {0}</value>
+    <comment>Generic error msg</comment>
   </data>
   <data name="ErrorInvalidMPDResponse" xml:space="preserve">
     <value>Invalid MPD Response.</value>
@@ -231,6 +243,7 @@
   </data>
   <data name="TreeViewDeleteTree" xml:space="preserve">
     <value>Delete Tree</value>
+    <comment>Tree view delete tree btn</comment>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
     <value>About this application</value>
@@ -325,32 +338,33 @@ Hope you enjoy using the application!
     <value>Welcome to Stylophone!</value>
     <comment>First use prompt message title</comment>
   </data>
-  <data name="ContextMenuPlay" xml:space="preserve">
-    <value>Play</value>
+  <data name="ContextMenuLinksTo" xml:space="preserve">
+    <value>Links To</value>
+    <comment>Node context menu</comment>
   </data>
-  <data name="ContextMenuViewAlbum" xml:space="preserve">
-    <value>View Album</value>
+  <data name="ContextMenuLinkedBy" xml:space="preserve">
+    <value>Linked By</value>
+    <comment>Node context menu</comment>
   </data>
-  <data name="ContextMenuRemoveFromPlaylist" xml:space="preserve">
-    <value>Remove from Playlist</value>
+  <data name="ContextMenuPin" xml:space="preserve">
+    <value>Pin</value>
+    <comment>Node context menu</comment>
   </data>
-  <data name="ContextMenuRemoveFromQueue" xml:space="preserve">
-    <value>Remove from Queue</value>
+  <data name="ContextMenuUnpin" xml:space="preserve">
+    <value>Unpin</value>
+    <comment>Node context menu</comment>
   </data>
-  <data name="ContextMenuAddToPlaylist" xml:space="preserve">
-    <value>Add to Playlist</value>
+  <data name="ContextMenuTrash" xml:space="preserve">
+    <value>Move to Trash</value>
+    <comment>Node context menu</comment>
   </data>
-  <data name="ContextMenuAddQueueToPlaylist" xml:space="preserve">
-    <value>Save Queue as Playlist</value>
+  <data name="ContextMenuDelete" xml:space="preserve">
+    <value>Delete permanently</value>
+    <comment>Node context menu</comment>
   </data>
-  <data name="ContextMenuClearQueue" xml:space="preserve">
-    <value>Clear Queue</value>
-  </data>
-  <data name="ContextMenuAddToQueue" xml:space="preserve">
-    <value>Add to Queue</value>
-  </data>
-  <data name="ContextMenuDeletePlaylist" xml:space="preserve">
-    <value>Delete Playlist</value>
+  <data name="ContextMenuMove" xml:space="preserve">
+    <value>Move to another Tree</value>
+    <comment>Node context menu</comment>
   </data>
   <data name="EmptyViewDocumentsTitle" xml:space="preserve">
     <value>Let's get writing!</value>
@@ -472,9 +486,11 @@ Click on the "+" button to add some!</value>
   </data>
   <data name="OffText" xml:space="preserve">
     <value>Off</value>
+    <comment>Off toggle</comment>
   </data>
   <data name="OnText" xml:space="preserve">
     <value>On</value>
+    <comment>On toggle</comment>
   </data>
   <data name="SettingsLocalPlaybackHeader" xml:space="preserve">
     <value>Local Playback</value>
@@ -501,9 +517,11 @@ Enabling this option will show a second volume slider to control local volume.</
   </data>
   <data name="ButtonYesText" xml:space="preserve">
     <value>Yes</value>
+    <comment>Yes button</comment>
   </data>
   <data name="ButtonNoText" xml:space="preserve">
     <value>No</value>
+    <comment>No button</comment>
   </data>
   <data name="NavigationOpen" xml:space="preserve">
     <value>Open</value>
@@ -511,18 +529,22 @@ Enabling this option will show a second volume slider to control local volume.</
   </data>
   <data name="TreeViewAddNode" xml:space="preserve">
     <value>Add Dialogue Node</value>
+    <comment>Tree view add node btn</comment>
   </data>
   <data name="FirstRunFlavorText" xml:space="preserve">
     <value>David Bowie is credited with playing the Stylophone on his 1969 debut hit song "Space Oddity" and also for his 2002 album Heathen track titled "Slip Away," as well as on the song "Heathen (The Rays)".</value>
   </data>
   <data name="TreeViewGraphView" xml:space="preserve">
     <value>Open Graph Overview</value>
+    <comment>Tree view graph btn</comment>
   </data>
   <data name="TreeViewSortBy" xml:space="preserve">
     <value>Sort By</value>
+    <comment>Tree view sort btn</comment>
   </data>
   <data name="ButtonDeleteText" xml:space="preserve">
     <value>Delete</value>
+    <comment>Delete button</comment>
   </data>
   <data name="NavigationTrees" xml:space="preserve">
     <value>Dialogue Trees</value>

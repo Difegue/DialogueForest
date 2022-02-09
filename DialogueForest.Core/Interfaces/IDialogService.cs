@@ -7,6 +7,7 @@ namespace DialogueForest.Core.Interfaces
         Task ShowWhatsNewDialogIfAppropriateAsync();
         Task ShowFirstRunDialogIfAppropriateAsync();
         Task ShowRateAppDialogIfAppropriateAsync();
+        Task<string> ShowTreeNameDialogAsync();
         Task<bool> ShowConfirmDialogAsync(string title, string text, string primaryButtonText, string cancelButtonText);
     }
 }

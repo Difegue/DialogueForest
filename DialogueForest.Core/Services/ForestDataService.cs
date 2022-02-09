@@ -74,7 +74,7 @@ namespace DialogueForest.Core.Services
             // TODO: Notify PinnedVM
         }
 
-        internal void DeleteNode(DialogueNode node) => _currentForest.Trash.RemoveNode(node);
+        internal void DeleteNode(DialogueNode node) => _currentForest.Trash.RemoveNode(node); // TODO update trash
 
         internal bool IsNodePinned(DialogueNode node) => _currentForest.PinnedIDs.Contains(node.ID);
 

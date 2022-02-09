@@ -140,32 +140,8 @@
     <value>Definições</value>
     <comment>Navigation view item name for Settings</comment>
   </data>
-  <data name="NotificationNowPlayingTrack" xml:space="preserve">
-    <value>A reproduzir agora {0}</value>
-  </data>
-  <data name="NotificationNoTracksLoaded" xml:space="preserve">
-    <value>Ainda não há faixas carregadas.</value>
-  </data>
-  <data name="NotificationNoTrackPlaying" xml:space="preserve">
-    <value>Atualmente não está a tocar nenhuma faixa.</value>
-  </data>
-  <data name="DeletePlaylistContentDialog" xml:space="preserve">
-    <value>Eliminar Lista de reprodução?</value>
-  </data>
-  <data name="ErrorCantClearCache" xml:space="preserve">
-    <value>Não foi possível limpar a fila!</value>
-  </data>
-  <data name="NotificationDbUpdateStarted" xml:space="preserve">
-    <value>Atualização da base de dados iniciada.</value>
-  </data>
-  <data name="NotificationDbAlreadyUpdating" xml:space="preserve">
-    <value>A base de dados já está a ser atualizada.</value>
-  </data>
   <data name="ButtonCancelText" xml:space="preserve">
     <value>Cancelar</value>
-  </data>
-  <data name="SettingsNoServerError" xml:space="preserve">
-    <value>Não foi possível encontrar um servidor MPD neste endereço!</value>
   </data>
   <data name="SearchGoToDetail" xml:space="preserve">
     <value>Procurar por "{0}" no servidor...</value>
@@ -195,9 +171,6 @@
   <data name="ExceptionViewLifeTimeControlMissingReleasedSubscription" xml:space="preserve">
     <value>All pages opened in a new window must subscribe to the Released Event.</value>
     <comment>The page is not subscribed to the Released event.</comment>
-  </data>
-  <data name="NotificationAddedToPlaylist" xml:space="preserve">
-    <value>Adicionado na Lista de reprodução {0}!</value>
   </data>
   <data name="NotificationAddedToQueue" xml:space="preserve">
     <value>Adicionado à Fila!</value>
@@ -312,33 +285,6 @@ Espero que goste de utilizar a aplicação!
   <data name="FirstRunTitle" xml:space="preserve">
     <value>Bem-vindo ao Stylophone!</value>
     <comment>First use prompt message title</comment>
-  </data>
-  <data name="ContextMenuPlay" xml:space="preserve">
-    <value>Reproduzir</value>
-  </data>
-  <data name="ContextMenuViewAlbum" xml:space="preserve">
-    <value>Ver Álbum</value>
-  </data>
-  <data name="ContextMenuRemoveFromPlaylist" xml:space="preserve">
-    <value>Remover da Lista de reprodução</value>
-  </data>
-  <data name="ContextMenuRemoveFromQueue" xml:space="preserve">
-    <value>Remover da Fila</value>
-  </data>
-  <data name="ContextMenuAddToPlaylist" xml:space="preserve">
-    <value>Adicionar a Lista de reprodução</value>
-  </data>
-  <data name="ContextMenuAddQueueToPlaylist" xml:space="preserve">
-    <value>Guardar Fila como Lista de reprodução</value>
-  </data>
-  <data name="ContextMenuClearQueue" xml:space="preserve">
-    <value>Limpar Fila</value>
-  </data>
-  <data name="ContextMenuAddToQueue" xml:space="preserve">
-    <value>Adicionar a Fila</value>
-  </data>
-  <data name="ContextMenuDeletePlaylist" xml:space="preserve">
-    <value>Eliminar Lista de reprodução</value>
   </data>
   <data name="EmptyPlaylistTitle" xml:space="preserve">
     <value>Não posso interferir com isto.</value>

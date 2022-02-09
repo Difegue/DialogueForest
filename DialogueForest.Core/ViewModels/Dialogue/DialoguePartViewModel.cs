@@ -44,7 +44,7 @@ namespace DialogueForest.ViewModels
         [ICommand]
         private async Task Remove()
         {
-            if (await _dialogService.ShowConfirmDialogAsync(Resources.DeletePlaylistContentDialog, Resources.EmptySearchDesc,
+            if (await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogDeleteDialogue, Resources.ContentDialogWillBePermaDeleted,
                         Resources.ButtonYesText, Resources.ButtonCancelText))
                 _parentNodeVm.RemoveDialog(this, _text);
         }

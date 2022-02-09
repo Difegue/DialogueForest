@@ -81,8 +81,7 @@ namespace DialogueForest.ViewModels
         {
             var pageType = menuItem.GetValue(NavHelper.NavigateToProperty) as Type;
 
-            var isParameterMatching = false;
-
+            bool isParameterMatching;
             if (e.Parameter is string s)
                 isParameterMatching = s == (string)menuItem.Tag;
             else

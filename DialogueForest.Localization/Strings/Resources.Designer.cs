@@ -79,6 +79,15 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Create.
+        /// </summary>
+        public static string ButtonCreateText {
+            get {
+                return ResourceManager.GetString("ButtonCreateText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Delete.
         /// </summary>
         public static string ButtonDeleteText {
@@ -115,92 +124,101 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Save Queue as Playlist.
+        ///   Recherche une chaîne localisée semblable à Delete this Text?.
         /// </summary>
-        public static string ContextMenuAddQueueToPlaylist {
+        public static string ContentDialogDeleteDialogue {
             get {
-                return ResourceManager.GetString("ContextMenuAddQueueToPlaylist", resourceCulture);
+                return ResourceManager.GetString("ContentDialogDeleteDialogue", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Add to Playlist.
+        ///   Recherche une chaîne localisée semblable à Delete this Reply?.
         /// </summary>
-        public static string ContextMenuAddToPlaylist {
+        public static string ContentDialogDeleteReply {
             get {
-                return ResourceManager.GetString("ContextMenuAddToPlaylist", resourceCulture);
+                return ResourceManager.GetString("ContentDialogDeleteReply", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Add to Queue.
+        ///   Recherche une chaîne localisée semblable à Delete this Dialogue?.
         /// </summary>
-        public static string ContextMenuAddToQueue {
+        public static string ContentDialogueDeleteNode {
             get {
-                return ResourceManager.GetString("ContextMenuAddToQueue", resourceCulture);
+                return ResourceManager.GetString("ContentDialogueDeleteNode", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Clear Queue.
+        ///   Recherche une chaîne localisée semblable à It will be permanently deleted!.
         /// </summary>
-        public static string ContextMenuClearQueue {
+        public static string ContentDialogWillBePermaDeleted {
             get {
-                return ResourceManager.GetString("ContextMenuClearQueue", resourceCulture);
+                return ResourceManager.GetString("ContentDialogWillBePermaDeleted", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Delete Playlist.
+        ///   Recherche une chaîne localisée semblable à Delete permanently.
         /// </summary>
-        public static string ContextMenuDeletePlaylist {
+        public static string ContextMenuDelete {
             get {
-                return ResourceManager.GetString("ContextMenuDeletePlaylist", resourceCulture);
+                return ResourceManager.GetString("ContextMenuDelete", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Play.
+        ///   Recherche une chaîne localisée semblable à Linked By.
         /// </summary>
-        public static string ContextMenuPlay {
+        public static string ContextMenuLinkedBy {
             get {
-                return ResourceManager.GetString("ContextMenuPlay", resourceCulture);
+                return ResourceManager.GetString("ContextMenuLinkedBy", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Remove from Playlist.
+        ///   Recherche une chaîne localisée semblable à Links To.
         /// </summary>
-        public static string ContextMenuRemoveFromPlaylist {
+        public static string ContextMenuLinksTo {
             get {
-                return ResourceManager.GetString("ContextMenuRemoveFromPlaylist", resourceCulture);
+                return ResourceManager.GetString("ContextMenuLinksTo", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Remove from Queue.
+        ///   Recherche une chaîne localisée semblable à Move to another Tree.
         /// </summary>
-        public static string ContextMenuRemoveFromQueue {
+        public static string ContextMenuMove {
             get {
-                return ResourceManager.GetString("ContextMenuRemoveFromQueue", resourceCulture);
+                return ResourceManager.GetString("ContextMenuMove", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à View Album.
+        ///   Recherche une chaîne localisée semblable à Pin.
         /// </summary>
-        public static string ContextMenuViewAlbum {
+        public static string ContextMenuPin {
             get {
-                return ResourceManager.GetString("ContextMenuViewAlbum", resourceCulture);
+                return ResourceManager.GetString("ContextMenuPin", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Delete Playlist?.
+        ///   Recherche une chaîne localisée semblable à Move to Trash.
         /// </summary>
-        public static string DeletePlaylistContentDialog {
+        public static string ContextMenuTrash {
             get {
-                return ResourceManager.GetString("DeletePlaylistContentDialog", resourceCulture);
+                return ResourceManager.GetString("ContextMenuTrash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Unpin.
+        /// </summary>
+        public static string ContextMenuUnpin {
+            get {
+                return ResourceManager.GetString("ContextMenuUnpin", resourceCulture);
             }
         }
         
@@ -459,15 +477,6 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Couldn&apos;t clear queue!.
-        /// </summary>
-        public static string ErrorCantClearCache {
-            get {
-                return ResourceManager.GetString("ErrorCantClearCache", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Error: {0}.
         /// </summary>
         public static string ErrorGeneric {
@@ -688,15 +697,6 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Added to Playlist {0}!.
-        /// </summary>
-        public static string NotificationAddedToPlaylist {
-            get {
-                return ResourceManager.GetString("NotificationAddedToPlaylist", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Added to Queue!.
         /// </summary>
         public static string NotificationAddedToQueue {
@@ -711,51 +711,6 @@ namespace DialogueForest.Localization.Strings {
         public static string NotificationCacheDeleted {
             get {
                 return ResourceManager.GetString("NotificationCacheDeleted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à The database is already being updated..
-        /// </summary>
-        public static string NotificationDbAlreadyUpdating {
-            get {
-                return ResourceManager.GetString("NotificationDbAlreadyUpdating", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Database update started..
-        /// </summary>
-        public static string NotificationDbUpdateStarted {
-            get {
-                return ResourceManager.GetString("NotificationDbUpdateStarted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à No Track is currently playing..
-        /// </summary>
-        public static string NotificationNoTrackPlaying {
-            get {
-                return ResourceManager.GetString("NotificationNoTrackPlaying", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à No tracks loaded yet..
-        /// </summary>
-        public static string NotificationNoTracksLoaded {
-            get {
-                return ResourceManager.GetString("NotificationNoTracksLoaded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Now Playing {0}.
-        /// </summary>
-        public static string NotificationNowPlayingTrack {
-            get {
-                return ResourceManager.GetString("NotificationNowPlayingTrack", resourceCulture);
             }
         }
         
@@ -987,15 +942,6 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Couldn&apos;t find an MPD server at this address!.
-        /// </summary>
-        public static string SettingsNoServerError {
-            get {
-                return ResourceManager.GetString("SettingsNoServerError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à MPD Server.
         /// </summary>
         public static string SettingsServer {
@@ -1109,6 +1055,42 @@ namespace DialogueForest.Localization.Strings {
         public static string SettingsUpdateDbDesc {
             get {
                 return ResourceManager.GetString("SettingsUpdateDbDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à New Tree.
+        /// </summary>
+        public static string TreeNameDialogDefaultName {
+            get {
+                return ResourceManager.GetString("TreeNameDialogDefaultName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à My Orange Tree.
+        /// </summary>
+        public static string TreeNameDialogPlaceholder {
+            get {
+                return ResourceManager.GetString("TreeNameDialogPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Give a name to your freshly planted Tree! You can always change this later..
+        /// </summary>
+        public static string TreeNameDialogText {
+            get {
+                return ResourceManager.GetString("TreeNameDialogText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à New Dialogue Tree.
+        /// </summary>
+        public static string TreeNameDialogTitle {
+            get {
+                return ResourceManager.GetString("TreeNameDialogTitle", resourceCulture);
             }
         }
         

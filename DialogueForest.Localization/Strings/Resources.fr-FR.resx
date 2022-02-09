@@ -149,8 +149,8 @@
     <value>All pages opened in a new window must subscribe to the Released Event.</value>
     <comment>The page is not subscribed to the Released event.</comment>
   </data>
-  <data name="NotificationAddedToPlaylist" xml:space="preserve">
-    <value>Ajouté à la Playlist {0} !</value>
+  <data name="ContentDialogWillBePermaDeleted" xml:space="preserve">
+    <value>Il sera définitivement supprimé !</value>
   </data>
   <data name="NotificationAddedToQueue" xml:space="preserve">
     <value>Ajouté à la file d'attente !</value>
@@ -193,32 +193,32 @@
   <data name="NavigationTrash" xml:space="preserve">
     <value>Corbeille</value>
   </data>
-  <data name="NotificationNowPlayingTrack" xml:space="preserve">
-    <value>En train de lire: {0}</value>
+  <data name="ContentDialogDeleteDialogue" xml:space="preserve">
+    <value>Supprimer ce fragment ?</value>
   </data>
-  <data name="NotificationNoTracksLoaded" xml:space="preserve">
-    <value>Aucun morceau n'a été chargé.</value>
+  <data name="ContentDialogDeleteReply" xml:space="preserve">
+    <value>Supprimer cette réponse ?</value>
   </data>
-  <data name="NotificationNoTrackPlaying" xml:space="preserve">
-    <value>Aucun morceau n'est en train de jouer actuellement.</value>
+  <data name="ContentDialogueDeleteNode" xml:space="preserve">
+    <value>Supprimer ce dialogue ?</value>
   </data>
-  <data name="DeletePlaylistContentDialog" xml:space="preserve">
-    <value>Supprimer cette Playlist ?</value>
+  <data name="TreeNameDialogTitle" xml:space="preserve">
+    <value>Nouvel Arbre de Dialogue</value>
   </data>
-  <data name="ErrorCantClearCache" xml:space="preserve">
-    <value>Impossible de vider la file d'attente !</value>
+  <data name="TreeNameDialogText" xml:space="preserve">
+    <value>Donnez un nom à votre nouvel Arbre ! Vous pourrez toujours le changer plus tard.</value>
   </data>
-  <data name="NotificationDbUpdateStarted" xml:space="preserve">
-    <value>Démarrage de la mise à jour de la base de données MPD.</value>
+  <data name="TreeNameDialogPlaceholder" xml:space="preserve">
+    <value>Mon Oranger</value>
   </data>
-  <data name="NotificationDbAlreadyUpdating" xml:space="preserve">
-    <value>La base de données MPD est déjà en cours de rafraîchissement.</value>
+  <data name="TreeNameDialogDefaultName" xml:space="preserve">
+    <value>Nouvel Arbre</value>
   </data>
   <data name="ButtonCancelText" xml:space="preserve">
     <value>Annuler</value>
   </data>
-  <data name="SettingsNoServerError" xml:space="preserve">
-    <value>Impossible de trouver un serveur MPD à cette adresse !</value>
+  <data name="ButtonCreateText" xml:space="preserve">
+    <value>Créer</value>
   </data>
   <data name="SearchGoToDetail" xml:space="preserve">
     <value>Rechercher "{0}" sur le serveur...</value>
@@ -322,32 +322,26 @@ J'espère que vous apprécierez l'application!
     <value>Merci d'avoir installé Stylophone!</value>
     <comment>First use prompt message title</comment>
   </data>
-  <data name="ContextMenuPlay" xml:space="preserve">
-    <value>Lire</value>
+  <data name="ContextMenuLinksTo" xml:space="preserve">
+    <value>Relié à  </value>
   </data>
-  <data name="ContextMenuViewAlbum" xml:space="preserve">
-    <value>Voir l'album</value>
+  <data name="ContextMenuLinkedBy" xml:space="preserve">
+    <value>Relié par</value>
   </data>
-  <data name="ContextMenuRemoveFromPlaylist" xml:space="preserve">
-    <value>Supprimer de la Playlist</value>
+  <data name="ContextMenuPin" xml:space="preserve">
+    <value>Epingler</value>
   </data>
-  <data name="ContextMenuRemoveFromQueue" xml:space="preserve">
-    <value>Supprimer de la file d'attente</value>
+  <data name="ContextMenuUnpin" xml:space="preserve">
+    <value>Retirer des épingles</value>
   </data>
-  <data name="ContextMenuAddToPlaylist" xml:space="preserve">
-    <value>Ajouter à une Playlist</value>
+  <data name="ContextMenuTrash" xml:space="preserve">
+    <value>Déplacer vers la Corbeille</value>
   </data>
-  <data name="ContextMenuAddQueueToPlaylist" xml:space="preserve">
-    <value>Enregistrer la file d'attente comme Playlist</value>
+  <data name="ContextMenuDelete" xml:space="preserve">
+    <value>Effacer définitivement</value>
   </data>
-  <data name="ContextMenuClearQueue" xml:space="preserve">
-    <value>Vider la file d'attente</value>
-  </data>
-  <data name="ContextMenuAddToQueue" xml:space="preserve">
-    <value>Ajouter à la file d'attente</value>
-  </data>
-  <data name="ContextMenuDeletePlaylist" xml:space="preserve">
-    <value>Supprimer la Playlist</value>
+  <data name="ContextMenuMove" xml:space="preserve">
+    <value>Déplacer vers un autre arbre</value>
   </data>
   <data name="EmptyViewDocumentsTitle" xml:space="preserve">
     <value>Mettons-nous à écrire !</value>

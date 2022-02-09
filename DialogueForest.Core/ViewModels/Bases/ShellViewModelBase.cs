@@ -62,12 +62,16 @@ namespace DialogueForest.Core.ViewModels
         }
 
         [ICommand]
-        private void NewTree()
+        private async Task NewTree()
         {
-            // TODO dialog
-            _dataService.CreateNewTree("TheTree");
+            var name = await _dialogService.ShowTreeNameDialogAsync();
 
-            UpdateTreeList();
+            if (name != null)
+            {
+                _dataService.CreateNewTree(name);
+                UpdateTreeList();
+            }
+            
         }
 
 
@@ -85,10 +89,6 @@ namespace DialogueForest.Core.ViewModels
 
             var viewModelType = e.NavigationTarget;
             if (viewModelType == null) return;
-
-            // Use some reflection magic to get the static Header text for this ViewModel
-            //var headerMethod = viewModelType.GetMethod(nameof(ViewModelBase.GetHeader), BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-            //HeaderText = (string)headerMethod?.Invoke(null, null) ?? "";
         }
 
     }
