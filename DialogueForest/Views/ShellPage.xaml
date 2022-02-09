@@ -51,17 +51,16 @@
 
     <Grid>
 
-        <Border
+        <Grid
             x:Name="AppTitleBar"
             Height="40"
-            Width="400"
             Margin="48,4,0,0"
-            HorizontalAlignment="Left"
+            HorizontalAlignment="Stretch"
             VerticalAlignment="Top"
-            Background="Transparent"
             Canvas.ZIndex="1"
             IsHitTestVisible="True">
-            <StackPanel Orientation="Horizontal" Spacing="8">
+            <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Left" Background="Red"
+                        Width="400">
                 <Image VerticalAlignment="Center"
                         Margin="0,8,0,0"
                         Width="16"
@@ -75,7 +74,9 @@
                     Style="{StaticResource CaptionTextBlockStyle}"
                     Text="{x:Bind strings:Resources.AppDisplayName}" />
             </StackPanel>
-        </Border>
+
+            <Border HorizontalAlignment="Right" Background="Red" Width="400"/>
+        </Grid>
 
         <muxc:NavigationView
             x:Name="navigationView"

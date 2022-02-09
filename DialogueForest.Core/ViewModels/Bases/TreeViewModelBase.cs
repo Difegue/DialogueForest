@@ -19,13 +19,20 @@ namespace DialogueForest.Core.ViewModels
 {
     public  partial class TreeViewModelBase : ObservableObject
     {
-
         private IDialogService _dialogService;
         private IInteropService _interopService;
         private INavigationService _navigationService;
         private ForestDataService _dataService;
 
-        private DialogueTree _tree;
+        protected DialogueTree _tree;
+
+        public static TreeViewModelBase Create(DialogueTree tree)
+        {
+            var instance = Ioc.Default.GetRequiredService<TreeViewModelBase>();
+            instance._tree = tree;
+
+            return instance;
+        }
 
         public ObservableCollection<DialogueNodeViewModel> Nodes { get; } = new ObservableCollection<DialogueNodeViewModel>();
 
@@ -42,8 +49,11 @@ namespace DialogueForest.Core.ViewModels
 
         public bool IsNodesEmpty => Nodes.Count == 0;
 
-        [ObservableProperty]
-        private string _title;
+        public string Title
+        {
+            get => _tree.Name;
+            set => SetProperty(_tree.Name, value, _tree, (u, n) => u.Name = n);
+        }
 
         [ObservableProperty]
         private int _totalWords;
@@ -57,23 +67,22 @@ namespace DialogueForest.Core.ViewModels
         }
 
         [ICommand]
-        private void AddNode()
+        private void AddNode(DialogueNode node = null)
         {
-            // TODO: Link to forestservice data
-            var nodeVm = DialogueNodeViewModel.Create(new DialogueNode(new Random().Next()));
+            if (node == null)
+            {
+                node = _dataService.CreateNewNode();
+            }
+            _tree.AddNode(node);
+            var nodeVm = DialogueNodeViewModel.Create(node);
 
-            AddExistingNode(nodeVm);
-        }
-
-        private void AddExistingNode(DialogueNodeViewModel nodeVm)
-        {
             nodeVm.SetParentVm(this);
             Nodes.Add(nodeVm);
         }
 
         internal void MoveNodeToTrash(DialogueNodeViewModel nodeVm, DialogueNode node)
         {
-            _dataService.MoveNodeToTrash(node);
+            _dataService.MoveNodeToTrash(_tree, node);
             Nodes.Remove(nodeVm);
         }
 

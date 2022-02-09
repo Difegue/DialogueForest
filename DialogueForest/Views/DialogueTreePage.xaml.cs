@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using DialogueForest.Core.Models;
 using DialogueForest.Core.ViewModels;
 using System;
 
@@ -13,9 +14,9 @@ namespace DialogueForest.Views
         public DialogueTreePage()
         {
             InitializeComponent();
+
             // TODO
-            DataContext = Ioc.Default.GetRequiredService<TreeViewModelBase>();
-            ViewModel.Title = "My Tree";
+            DataContext = TreeViewModelBase.Create(new DialogueTree("My Tree"));
         }
     }
 }

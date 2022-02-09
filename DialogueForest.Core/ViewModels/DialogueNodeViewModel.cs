@@ -36,7 +36,7 @@ namespace DialogueForest.ViewModels
         {
             _node = node;
 
-            // TODO character/metadata
+            // TODO metadata
 
             foreach (var prompt in node.Prompts)
                 AddPrompt(prompt);
@@ -52,8 +52,6 @@ namespace DialogueForest.ViewModels
             _interopService = interopService;
             _dataService = forestService;
 
-
-            AddDialog();
             Prompts.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsPromptsEmpty));
             MetaValues.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsMetaDataEmpty));
         }

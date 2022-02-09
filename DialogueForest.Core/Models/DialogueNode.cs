@@ -22,6 +22,8 @@ namespace DialogueForest.Core.Models
             Title = "Dialogue #" + nodeId;
 
             DialogueLines = new List<DialogueText>();
+            DialogueLines.Add(new DialogueText());
+
             Prompts = new List<DialogueReply>();
             Metadata = new List<DialogueMetadataValue>();
         }

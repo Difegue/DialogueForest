@@ -6,11 +6,24 @@ namespace DialogueForest.Core.Models
 {
     public class DialogueDatabase
     {
-        public float LastID { get; set; }
+        public DialogueDatabase()
+        {
+            LastID = 1;
+
+            Trees = new List<DialogueTree>();
+            PinnedIDs = new List<long>();
+            Notes = new DialogueTree("NOtes");
+            Trash = new DialogueTree("Tr4sh");
+
+            MetadataDefinitions = new Dictionary<string, MetadataKind>();
+            CharacterDefinitions = new Dictionary<string, string>();
+        }
+
+        public long LastID { get; set; }
 
         public List<DialogueTree> Trees { get; set; }
 
-        public List<float> PinnedIDs { get; set; }
+        public List<long> PinnedIDs { get; set; }
 
         public DialogueTree Notes { get; set; }
 
