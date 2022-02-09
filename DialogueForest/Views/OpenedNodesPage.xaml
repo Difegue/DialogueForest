@@ -100,7 +100,7 @@
                 <Grid Width="16"/>
             </muxc:TabView.TabStripHeader>
             <muxc:TabView.TabStripFooter>
-                <Grid x:Name="CustomDragRegion" />
+                <Grid x:Name="CustomDragRegion" x:FieldModifier="Public" />
             </muxc:TabView.TabStripFooter>
             <muxc:TabView.TabItemTemplate>
                 <DataTemplate x:DataType="viewmodels:DialogueNodeViewModel">

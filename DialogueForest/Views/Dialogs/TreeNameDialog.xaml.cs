@@ -18,7 +18,7 @@ namespace DialogueForest.Views
         {
             this.InitializeComponent();
 
-            TreeName = Localization.Strings.Resources.TreeNameDialogDefaultName;
+            //TreeName = Localization.Strings.Resources.TreeNameDialogDefaultName;
         }
 
         public string TreeName { get; internal set; }

@@ -166,7 +166,8 @@
     <comment>New Tree Name Dialog</comment>
   </data>
   <data name="TreeNameDialogText" xml:space="preserve">
-    <value>Give a name to your freshly planted Tree! You can always change this later.</value>
+    <value>Give a name to your freshly planted Tree! 
+You can always change this later.</value>
     <comment>New Tree Name Dialog</comment>
   </data>
   <data name="TreeNameDialogPlaceholder" xml:space="preserve">

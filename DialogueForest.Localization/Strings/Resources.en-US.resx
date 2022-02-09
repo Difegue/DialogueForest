@@ -160,7 +160,8 @@
     <value>New Dialogue Tree</value>
   </data>
   <data name="TreeNameDialogText" xml:space="preserve">
-    <value>Give a name to your freshly planted Tree! You can always change this later.</value>
+    <value>Give a name to your freshly planted Tree! 
+You can always change this later.</value>
   </data>
   <data name="TreeNameDialogPlaceholder" xml:space="preserve">
     <value>My Orange Tree</value>

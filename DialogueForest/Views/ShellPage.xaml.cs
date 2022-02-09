@@ -40,6 +40,8 @@ namespace DialogueForest.Views
 
             //Register a handler for when the window changes focus
             Window.Current.Activated += Current_Activated;
+
+            tabsView.CustomDragRegion.SizeChanged += Page_SizeChanged;
             
         }
 
@@ -113,5 +115,20 @@ namespace DialogueForest.Views
             }
         }
 
+        // Bunch of event listeners to arrange titlebar draggable area
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e) => UpdateTitleBarLength(navigationView.IsPaneOpen);
+        private void NavigationView_PaneOpening(Microsoft.UI.Xaml.Controls.NavigationView sender, object args) => UpdateTitleBarLength(true);
+        private void NavigationView_PaneClosing(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewPaneClosingEventArgs args)
+            => UpdateTitleBarLength(false);
+
+        private void UpdateTitleBarLength(bool isPaneOpen)
+        {
+            // Awful hardcoded calculations to define the draggable zones
+            // CustomDragRegion is calculated by OpenedNodesPage based on the space taken by the opened tabs
+            TitleBarLeftPart.Width = Pane1.ActualWidth + 32 + (isPaneOpen ? navigationView.OpenPaneLength - AppTitleBar.Margin.Left : 0);
+            TitleBarRightPart.Width = tabsView.CustomDragRegion.ActualWidth - CoreApplication.GetCurrentView().TitleBar.SystemOverlayRightInset;
+        }
+
+        
     }
 }

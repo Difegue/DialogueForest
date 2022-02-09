@@ -1077,7 +1077,8 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Give a name to your freshly planted Tree! You can always change this later..
+        ///   Recherche une chaîne localisée semblable à Give a name to your freshly planted Tree! 
+        ///You can always change this later..
         /// </summary>
         public static string TreeNameDialogText {
             get {

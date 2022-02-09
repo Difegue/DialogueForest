@@ -206,7 +206,8 @@
     <value>Nouvel Arbre de Dialogue</value>
   </data>
   <data name="TreeNameDialogText" xml:space="preserve">
-    <value>Donnez un nom à votre nouvel Arbre ! Vous pourrez toujours le changer plus tard.</value>
+    <value>Donnez un nom à votre nouvel Arbre ! 
+Vous pourrez toujours le changer plus tard.</value>
   </data>
   <data name="TreeNameDialogPlaceholder" xml:space="preserve">
     <value>Mon Oranger</value>
