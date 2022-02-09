@@ -60,7 +60,7 @@
             VerticalAlignment="Top"
             Canvas.ZIndex="1"
             IsHitTestVisible="True">
-            <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Left" 
+            <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Left" Background="Transparent"
                         x:Name="TitleBarLeftPart">
                 <Image VerticalAlignment="Center"
                         Margin="0,8,0,0"
@@ -76,7 +76,7 @@
                     Text="{x:Bind strings:Resources.AppDisplayName}" />
             </StackPanel>
 
-            <Border HorizontalAlignment="Right" x:Name="TitleBarRightPart"  Width="400"/>
+            <Border HorizontalAlignment="Right" x:Name="TitleBarRightPart" Background="Transparent"/>
         </Grid>
 
         <muxc:NavigationView
