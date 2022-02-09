@@ -38,12 +38,13 @@ namespace DialogueForest.Core.Interfaces
         {
             var result = GoBackImplementation();
 
-            if (result)
+            if (result != null)
             {
                 // Get the viewmodel we landed back on from the implementation, and send an event with it
-                Navigated?.Invoke(this, new CoreNavigationEventArgs { NavigationTarget = CurrentPageViewModelType, Parameter = null });
+                Navigated?.Invoke(this, new CoreNavigationEventArgs { NavigationTarget = CurrentPageViewModelType, Parameter = result });
+                return true;
             }
-            return result;
+            return false;
         }
 
         public void OpenDialogueNode(DialogueNode node)
@@ -52,7 +53,7 @@ namespace DialogueForest.Core.Interfaces
             OpenDialogueNode(vm);
         }
 
-        public abstract bool GoBackImplementation();
+        public abstract object GoBackImplementation();
 
         public abstract Type CurrentPageViewModelType { get; }
         public abstract bool CanGoBack { get; }

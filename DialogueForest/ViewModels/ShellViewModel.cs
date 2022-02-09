@@ -14,6 +14,9 @@ using DialogueForest.Services;
 using Windows.Foundation;
 using DialogueForest.Helpers;
 using System.Windows.Input;
+using DialogueForest.Core.Services;
+using Windows.UI.Xaml.Media;
+using DialogueForest.Core.Models;
 
 namespace DialogueForest.ViewModels
 {
@@ -25,20 +28,20 @@ namespace DialogueForest.ViewModels
 
         private WinUI.NavigationView _navigationView;
         private WinUI.NavigationViewItem _treeContainer;
+        private WinUI.NavigationViewItem _newTreeItem;
         private InAppNotification _notificationHolder;
 
-        private IDialogService _dialogService;
 
-        public ShellViewModel(INavigationService navigationService, INotificationService notificationService, IDialogService dialogService, IDispatcherService dispatcherService) :
-            base(navigationService, notificationService, dispatcherService)
+        public ShellViewModel(INavigationService navigationService, INotificationService notificationService, IDialogService dialogService, IDispatcherService dispatcherService, ForestDataService dataService) :
+            base(navigationService, notificationService, dispatcherService, dialogService, dataService)
         {
-            _dialogService = dialogService;
         }
 
-        public void Initialize(Frame frame, WinUI.NavigationView navigationView, WinUI.NavigationViewItem treeContainer, InAppNotification notificationHolder, IList<KeyboardAccelerator> keyboardAccelerators)
+        public void Initialize(Frame frame, WinUI.NavigationView navigationView, WinUI.NavigationViewItem treeContainer, WinUI.NavigationViewItem newTreeItem, InAppNotification notificationHolder, IList<KeyboardAccelerator> keyboardAccelerators)
         {
             _navigationView = navigationView;
             _treeContainer = treeContainer;
+            _newTreeItem = newTreeItem;
             _notificationHolder = notificationHolder;
             _keyboardAccelerators = keyboardAccelerators;
 
@@ -60,21 +63,32 @@ namespace DialogueForest.ViewModels
                 return;
             }
 
-            if (e.NavigationTarget == typeof(DialogueTreeViewModel))
+            if (e.Parameter is DialogueTree)
             {
-                _navigationView.SelectedItem = _treeContainer;
-                return;
-            }
-
-            _navigationView.SelectedItem = _navigationView.MenuItems
+                _navigationView.SelectedItem = _treeContainer.MenuItems
                            .OfType<WinUI.NavigationViewItem>()
-                           .FirstOrDefault(menuItem => IsMenuItemForPageType(menuItem, e.NavigationTarget));
+                           .FirstOrDefault(menuItem => IsMenuItemForPageType(menuItem, e));
+            }
+            else
+            {
+                _navigationView.SelectedItem = _navigationView.MenuItems
+                           .OfType<WinUI.NavigationViewItem>()
+                           .FirstOrDefault(menuItem => IsMenuItemForPageType(menuItem, e));
+            }   
         }
 
-        private bool IsMenuItemForPageType(WinUI.NavigationViewItem menuItem, Type sourcePageType)
+        private bool IsMenuItemForPageType(WinUI.NavigationViewItem menuItem, CoreNavigationEventArgs e)
         {
             var pageType = menuItem.GetValue(NavHelper.NavigateToProperty) as Type;
-            return pageType == sourcePageType;
+
+            var isParameterMatching = false;
+
+            if (e.Parameter is string s)
+                isParameterMatching = s == (string)menuItem.Tag;
+            else
+                isParameterMatching = e.Parameter == menuItem.Tag;
+
+            return pageType == e.NavigationTarget && isParameterMatching;
         }
 
         protected override void ShowInAppNotification(object sender, InAppNotificationRequestedEventArgs e)
@@ -85,19 +99,22 @@ namespace DialogueForest.ViewModels
         protected override void UpdateTreeList()
         {
             // Update the navigationview by hand - It ain't clean but partial databinding would be an even bigger mess...
-            //var playlists = _mpdService.Playlists;
+            var trees = _dataService.GetDialogueTrees();
 
-            // Remove all menuitems in the "Playlists" menu
+            // Remove all menuitems in the "Trees" menu
             _treeContainer.MenuItems.Clear();
 
-            /*foreach (var playlist in playlists)
+            foreach (var tree in trees)
             {
                 var navigationViewItem = new WinUI.NavigationViewItem();
-                navigationViewItem.Icon = new SymbolIcon(Symbol.MusicInfo);
-                navigationViewItem.Content = playlist.Name;
-                //NavHelper.SetNavigateTo(navigationViewItem, typeof(PlaylistViewModel));
-                _playlistContainer.MenuItems.Add(navigationViewItem);
-            }*/
+                navigationViewItem.Icon = new FontIcon { Glyph = "\uEC0A" };
+                navigationViewItem.Content = tree.Name;
+                navigationViewItem.Tag = tree;
+                NavHelper.SetNavigateTo(navigationViewItem, typeof(DialogueTreeViewModel));
+                _treeContainer.MenuItems.Add(navigationViewItem);
+            }
+
+            _treeContainer.MenuItems.Add(_newTreeItem);
         }
 
         protected override void Loaded()
@@ -118,9 +135,7 @@ namespace DialogueForest.ViewModels
                 return;
             }
 
-            var item = _navigationView.MenuItems.Union(_treeContainer.MenuItems)
-                            .OfType<WinUI.NavigationViewItem>()
-                            .FirstOrDefault(menuItem => (string)menuItem.Content == (string)navArgs.InvokedItem);
+            var item = navArgs.InvokedItemContainer;
 
             if (item == null)
                 return;
@@ -134,12 +149,7 @@ namespace DialogueForest.ViewModels
             }
 
             var pageType = item.GetValue(NavHelper.NavigateToProperty) as Type;
-
-            // Tree children navigate with their name as parameter
-            if (_treeContainer.MenuItems.Contains(item))
-                _navigationService.Navigate(pageType, item.Content);
-            else
-                _navigationService.Navigate(pageType);
+            _navigationService.Navigate(pageType, item.Tag);
         }
 
         private void OnBackRequested(WinUI.NavigationView sender, WinUI.NavigationViewBackRequestedEventArgs args)

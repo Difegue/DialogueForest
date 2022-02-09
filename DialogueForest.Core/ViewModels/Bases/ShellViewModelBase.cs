@@ -8,6 +8,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DialogueForest.Core.Interfaces;
+using DialogueForest.Core.Services;
 using DialogueForest.Localization.Strings;
 
 namespace DialogueForest.Core.ViewModels
@@ -16,14 +17,18 @@ namespace DialogueForest.Core.ViewModels
     {
         protected INavigationService _navigationService;
         protected INotificationService _notificationService;
+        protected IDialogService _dialogService;
         protected IDispatcherService _dispatcherService;
+        protected ForestDataService _dataService;
 
 
-        public ShellViewModelBase(INavigationService navigationService, INotificationService notificationService, IDispatcherService dispatcherService)
+        public ShellViewModelBase(INavigationService navigationService, INotificationService notificationService, IDispatcherService dispatcherService, IDialogService dialogService, ForestDataService dataService)
         {
             _navigationService = navigationService;
             _notificationService = notificationService;
             _dispatcherService = dispatcherService;
+            _dialogService = dialogService;
+            _dataService = dataService;
 
             // First View, use that to initialize our DispatcherService
             _dispatcherService.Initialize();
@@ -59,7 +64,10 @@ namespace DialogueForest.Core.ViewModels
         [ICommand]
         private void NewTree()
         {
+            // TODO dialog
+            _dataService.CreateNewTree("TheTree");
 
+            UpdateTreeList();
         }
 
 

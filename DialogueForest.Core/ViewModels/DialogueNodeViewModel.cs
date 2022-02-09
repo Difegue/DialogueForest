@@ -22,7 +22,7 @@ namespace DialogueForest.ViewModels
         private INotificationService _notificationService;
         private ForestDataService _dataService;
 
-        private TreeViewModelBase _parentVm;
+        private DialogueTreeViewModel _parentVm;
         private DialogueNode _node;
 
         internal static DialogueNodeViewModel Create(DialogueNode node)
@@ -146,7 +146,7 @@ namespace DialogueForest.ViewModels
                 _dataService.DeleteNode(_node);
         }
 
-        internal void SetParentVm(TreeViewModelBase treeViewModel)
+        internal void SetParentVm(DialogueTreeViewModel treeViewModel)
         {
             _parentVm = treeViewModel;
         }

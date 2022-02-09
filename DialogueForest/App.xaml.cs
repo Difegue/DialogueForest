@@ -113,8 +113,8 @@ namespace DialogueForest
 
         private ActivationService CreateActivationService()
         {
-            // TODO
-            return new ActivationService(this, typeof(NotesViewModel), new Lazy<UIElement>(CreateShell));
+            // TODO WelcomeViewModel
+            return new ActivationService(this, typeof(DialogueTreeViewModel), new Lazy<UIElement>(CreateShell));
         }
 
         private UIElement CreateShell()
@@ -154,10 +154,7 @@ namespace DialogueForest
             //services.AddSingleton<SearchResultsViewModel>();
             //services.AddSingleton<LocalPlaybackViewModel>();
 
-            // TODO TEMPORARY
-            // Make the sub-VMs transient and remove this
-            services.AddTransient<TreeViewModelBase>();
-
+            services.AddTransient<DialogueTreeViewModel>();
             services.AddTransient<DialogueNodeViewModel>();
             services.AddTransient<DialoguePartViewModel>();
             services.AddTransient<ReplyPromptViewModel>();

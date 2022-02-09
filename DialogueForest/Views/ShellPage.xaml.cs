@@ -20,7 +20,7 @@ namespace DialogueForest.Views
         {
             InitializeComponent();
             DataContext = ((App)Application.Current).Services.GetService(typeof(ShellViewModel));
-            ViewModel.Initialize(shellFrame, navigationView, treeContainer, notificationHolder, KeyboardAccelerators);
+            ViewModel.Initialize(shellFrame, navigationView, treeContainer, newTreeItem, notificationHolder, KeyboardAccelerators);
 
             // Hide default title bar.
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;

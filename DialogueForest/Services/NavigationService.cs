@@ -19,12 +19,7 @@ namespace DialogueForest.Services
             { typeof(DialogueNodeViewModel), typeof(DialogueNodePage) },
             { typeof(SettingsViewModel), typeof(SettingsPage) },
             { typeof(GraphViewViewModel), typeof(GraphViewPage) },
-
             { typeof(DialogueTreeViewModel), typeof(DialogueTreePage) },
-            { typeof(NotesViewModel), typeof(DialogueTreePage) },
-            { typeof(PinsViewModel), typeof(DialogueTreePage) },
-            { typeof(TrashViewModel), typeof(DialogueTreePage) },
-
             { typeof(ExportViewModel), typeof(ExportPage) }
         };
 
@@ -59,12 +54,14 @@ namespace DialogueForest.Services
 
         public override void OpenDialogueNode(DialogueNodeViewModel vm) => NodeTabContainer.OpenNode(vm);
 
-        public override bool GoBackImplementation()
+        public override object GoBackImplementation()
         {
             if (CanGoBack)
             {
+                var param = Frame.BackStack.Last().Parameter;
                 Frame.GoBack();
-                return true;
+                
+                return param;
             }
 
             return false;

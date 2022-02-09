@@ -30,6 +30,8 @@ namespace DialogueForest.Core.Services
 
         }
 
+        public List<DialogueTree> GetDialogueTrees() => _currentForest.Trees;
+
         public DialogueNode GetNode(long id)
         {
             
@@ -45,6 +47,21 @@ namespace DialogueForest.Core.Services
 
             return null;
         }
+
+        public DialogueTree GetTrash() => _currentForest.Trash;
+
+        public DialogueTree GetPins()
+        {
+            // TODO kinda inefficient and prone to bugs
+            var t = new DialogueTree("Pins");
+
+            foreach (var id in _currentForest.PinnedIDs)
+                t.AddNode(GetNode(id));
+
+            return t;
+        }
+
+        public DialogueTree GetNotes() => _currentForest.Notes;
 
         internal bool IsNodeTrashed(DialogueNode node) => _currentForest.Trash.Nodes.ContainsValue(node);
 
@@ -73,6 +90,14 @@ namespace DialogueForest.Core.Services
             _currentForest.LastID++;
 
             return node;
+        }
+
+        internal DialogueTree CreateNewTree(string treeName)
+        {
+            var tree = new DialogueTree(treeName);
+            _currentForest.Trees.Add(tree);
+
+            return tree;
         }
     }
 }
