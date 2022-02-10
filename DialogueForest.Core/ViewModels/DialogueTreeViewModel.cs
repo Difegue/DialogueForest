@@ -24,14 +24,28 @@ namespace DialogueForest.Core.ViewModels
         private INavigationService _navigationService;
         private ForestDataService _dataService;
 
-        protected DialogueTree _tree;
+        private DialogueTree _tree;
 
         public static DialogueTreeViewModel Create(DialogueTree tree)
         {
             var instance = Ioc.Default.GetRequiredService<DialogueTreeViewModel>();
-            instance._tree = tree;
+            instance.LoadFromTree(tree);
 
             return instance;
+        }
+
+        private void LoadFromTree(DialogueTree tree)
+        {
+            _tree = tree;
+
+            foreach (var node in tree.Nodes.Values)
+            {
+                // TODO Check if there isn't already a VM for this node to recycle
+                var nodeVm = DialogueNodeViewModel.Create(node);
+
+                nodeVm.SetParentVm(this);
+                Nodes.Add(nodeVm);
+            }
         }
 
         public ObservableCollection<DialogueNodeViewModel> Nodes { get; } = new ObservableCollection<DialogueNodeViewModel>();

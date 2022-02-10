@@ -42,6 +42,10 @@ namespace DialogueForest.ViewModels
                     // TODO: Remove the current SelectedVM, unless it has unsaved changes?
                     Tabs.Add(vm);
                 }
+                else
+                {
+                    vm = Tabs.First(t => t.ID == vm.ID);
+                }
             }
 
             SelectedTabIndex = Tabs.IndexOf(vm);
@@ -52,7 +56,7 @@ namespace DialogueForest.ViewModels
         {
             if (args.Item is DialogueNodeViewModel item)
             {
-                Tabs.Remove(item);
+                Tabs.Remove(item);                
             }
         }
     }
