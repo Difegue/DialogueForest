@@ -42,19 +42,6 @@ namespace DialogueForest.Core.ViewModels
         [ObservableProperty]
         private string headerText;
 
-
-        [ICommand]
-        private void NewFile()
-        {
-
-        }
-
-        [ICommand]
-        private void OpenFile()
-        {
-
-        }
-
         [ICommand]
         private void Save()
         {

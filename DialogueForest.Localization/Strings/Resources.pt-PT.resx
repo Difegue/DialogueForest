@@ -143,9 +143,6 @@
   <data name="ButtonCancelText" xml:space="preserve">
     <value>Cancelar</value>
   </data>
-  <data name="SearchGoToDetail" xml:space="preserve">
-    <value>Procurar por "{0}" no servidor...</value>
-  </data>
   <data name="SearchTreePlaceholderText" xml:space="preserve">
     <value>Procurar </value>
   </data>
@@ -262,16 +259,10 @@
   <data name="SearchPlaceholderText" xml:space="preserve">
     <value>Procurar...</value>
   </data>
-  <data name="SearchAlbumsToggle" xml:space="preserve">
-    <value>Álbuns</value>
-  </data>
-  <data name="SearchArtistsToggle" xml:space="preserve">
-    <value>Artistas</value>
-  </data>
   <data name="SearchTracksToggle" xml:space="preserve">
     <value>Faixas</value>
   </data>
-  <data name="SearchNoResultsTitle.Text" xml:space="preserve">
+  <data name="WelcomeFlavorText" xml:space="preserve">
     <value>Não foram encontrados resultados...</value>
   </data>
   <data name="FirstRunText" xml:space="preserve">
@@ -283,32 +274,14 @@ Espero que goste de utilizar a aplicação!
     <comment>First use prompt message body</comment>
   </data>
   <data name="FirstRunTitle" xml:space="preserve">
-    <value>Bem-vindo ao Stylophone!</value>
+    <value>Bem-vindo ao DialogueForest!</value>
     <comment>First use prompt message title</comment>
-  </data>
-  <data name="EmptyPlaylistTitle" xml:space="preserve">
-    <value>Não posso interferir com isto.</value>
-  </data>
-  <data name="EmptyQueueDesc" xml:space="preserve">
-    <value>Porque não adiciona música?</value>
-  </data>
-  <data name="EmptyQueueTitle" xml:space="preserve">
-    <value>Tudo está calmo agora.</value>
-  </data>
-  <data name="EmptySearchTitle" xml:space="preserve">
-    <value>Pesquisa Funky Fresca!</value>
-  </data>
-  <data name="EmptySearchDesc" xml:space="preserve">
-    <value>Nenhuma faixa encontrada no Servidor.</value>
   </data>
   <data name="NavigationNewTree" xml:space="preserve">
     <value>Novo </value>
   </data>
   <data name="EditorPlaceholderText" xml:space="preserve">
     <value>Accusam consetetur ut accusam et gubergren augue diam enim dolor at nulla ea ipsum diam et lobortis. Et no rebum odio takimata nulla nisl takimata iriure sit aliquyam eirmod nulla sit. Magna justo consetetur takimata.</value>
-  </data>
-  <data name="EditorEmptyDialogue" xml:space="preserve">
-    <value>UNUSED</value>
   </data>
   <data name="EditorReplyPlaceholderText" xml:space="preserve">
     <value>Magna ea feugiat labore diam diam assum amet nibh vero sea eirmod magna takimata eum illum. Labore et nonumy vulputate lorem zzril erat kasd eu no sed laoreet duo labore et diam eos.</value>

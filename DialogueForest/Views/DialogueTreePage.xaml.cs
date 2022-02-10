@@ -40,7 +40,7 @@ namespace DialogueForest.Views
                     case "pins":
                         tree = dataService.GetPins();
                         break;
-                    default: tree = new DialogueTree("fix me!"); break; //throw new Exception("Unknown tag!");
+                    default: throw new Exception("Unknown tag!");
                 }
             }
 

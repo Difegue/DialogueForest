@@ -268,15 +268,6 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à UNUSEDD.
-        /// </summary>
-        public static string EditorEmptyDialogue {
-            get {
-                return ResourceManager.GetString("EditorEmptyDialogue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Replies to this dialogue will show up here, if you add any..
         /// </summary>
         public static string EditorEmptyReplies {
@@ -385,47 +376,11 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à I can&apos;t jam to this..
+        ///   Recherche une chaîne localisée semblable à You have unsaved changes.
         /// </summary>
-        public static string EmptyPlaylistTitle {
+        public static string EditorUnsavedChanges {
             get {
-                return ResourceManager.GetString("EmptyPlaylistTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Why don&apos;t you add some music?.
-        /// </summary>
-        public static string EmptyQueueDesc {
-            get {
-                return ResourceManager.GetString("EmptyQueueDesc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à All is quiet now..
-        /// </summary>
-        public static string EmptyQueueTitle {
-            get {
-                return ResourceManager.GetString("EmptyQueueTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à No Tracks found on Server..
-        /// </summary>
-        public static string EmptySearchDesc {
-            get {
-                return ResourceManager.GetString("EmptySearchDesc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Funky Fresh Search!.
-        /// </summary>
-        public static string EmptySearchTitle {
-            get {
-                return ResourceManager.GetString("EmptySearchTitle", resourceCulture);
+                return ResourceManager.GetString("EditorUnsavedChanges", resourceCulture);
             }
         }
         
@@ -445,6 +400,53 @@ namespace DialogueForest.Localization.Strings {
         public static string EmptyViewDocumentsTitle {
             get {
                 return ResourceManager.GetString("EmptyViewDocumentsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Notes are pieces of dialogue that aren&apos;t included in your final Export. 
+        ///Use them to store ideas or drafts!.
+        /// </summary>
+        public static string EmptyViewNotesDesc {
+            get {
+                return ResourceManager.GetString("EmptyViewNotesDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à You have no Notes..
+        /// </summary>
+        public static string EmptyViewNotesTitle {
+            get {
+                return ResourceManager.GetString("EmptyViewNotesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à You can pin Dialogue Nodes to find them again easily!
+        ///They&apos;ll show up here when you do..
+        /// </summary>
+        public static string EmptyViewPinsDesc {
+            get {
+                return ResourceManager.GetString("EmptyViewPinsDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Nothing on the pinboard..
+        /// </summary>
+        public static string EmptyViewPinsTitle {
+            get {
+                return ResourceManager.GetString("EmptyViewPinsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Nothing&apos;s trashed...yet..
+        /// </summary>
+        public static string EmptyViewTrashTitle {
+            get {
+                return ResourceManager.GetString("EmptyViewTrashTitle", resourceCulture);
             }
         }
         
@@ -589,7 +591,7 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Welcome to Stylophone!.
+        ///   Recherche une chaîne localisée semblable à Welcome to DialogueForest!.
         /// </summary>
         public static string FirstRunTitle {
             get {
@@ -607,7 +609,7 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à File.
+        ///   Recherche une chaîne localisée semblable à Start.
         /// </summary>
         public static string NavigationFile {
             get {
@@ -748,42 +750,6 @@ namespace DialogueForest.Localization.Strings {
         public static string RateAppPromptTitle {
             get {
                 return ResourceManager.GetString("RateAppPromptTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Albums.
-        /// </summary>
-        public static string SearchAlbumsToggle {
-            get {
-                return ResourceManager.GetString("SearchAlbumsToggle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Artists.
-        /// </summary>
-        public static string SearchArtistsToggle {
-            get {
-                return ResourceManager.GetString("SearchArtistsToggle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Search for &quot;{0}&quot; on the server....
-        /// </summary>
-        public static string SearchGoToDetail {
-            get {
-                return ResourceManager.GetString("SearchGoToDetail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à No Results have been found....
-        /// </summary>
-        public static string SearchNoResultsTitle_Text {
-            get {
-                return ResourceManager.GetString("SearchNoResultsTitle.Text", resourceCulture);
             }
         }
         
@@ -1128,6 +1094,42 @@ namespace DialogueForest.Localization.Strings {
         public static string TreeViewSortBy {
             get {
                 return ResourceManager.GetString("TreeViewSortBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à No Results have been found....
+        /// </summary>
+        public static string WelcomeFlavorText {
+            get {
+                return ResourceManager.GetString("WelcomeFlavorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Create a New Forest.
+        /// </summary>
+        public static string WelcomeNewButton {
+            get {
+                return ResourceManager.GetString("WelcomeNewButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Open an existing Forest.
+        /// </summary>
+        public static string WelcomeOpenButton {
+            get {
+                return ResourceManager.GetString("WelcomeOpenButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à See What&apos;s New.
+        /// </summary>
+        public static string WelcomeWhatsNew {
+            get {
+                return ResourceManager.GetString("WelcomeWhatsNew", resourceCulture);
             }
         }
     }

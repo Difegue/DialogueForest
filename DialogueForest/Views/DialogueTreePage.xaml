@@ -133,7 +133,7 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}"
                                Text="{x:Bind NodeTitle, Mode=OneWay}" TextTrimming="CharacterEllipsis"/>
 
-                <Button Grid.Row="0" Grid.Column="1" Padding="4,0" ToolTipService.ToolTip="Sort" Margin="0,-8,-8,8"
+                <Button Grid.Row="0" Grid.Column="1" Padding="4,0" ToolTipService.ToolTip="{x:Bind strings:Resources.NavigationSettings}" Margin="0,-8,-8,8"
                                   HorizontalAlignment="Right" VerticalAlignment="Top">
                     <Button.Content>
                         <SymbolIcon Symbol="More"/>
@@ -215,7 +215,7 @@
                 <StackPanel Orientation="Horizontal" Spacing="8" Grid.Column="2" HorizontalAlignment="Right">
                     <Button Command="{x:Bind ViewModel.AddNodeCommand}"
                                     ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewGraphView}">
-                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEC26;" FontSize="18" />
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF22C;" FontSize="18" />
                     </Button>
 
                     <muxc:DropDownButton ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewSortBy}">

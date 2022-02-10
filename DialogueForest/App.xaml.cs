@@ -113,8 +113,7 @@ namespace DialogueForest
 
         private ActivationService CreateActivationService()
         {
-            // TODO WelcomeViewModel
-            return new ActivationService(this, typeof(DialogueTreeViewModel), new Lazy<UIElement>(CreateShell));
+            return new ActivationService(this, typeof(WelcomeViewModel), new Lazy<UIElement>(CreateShell));
         }
 
         private UIElement CreateShell()
@@ -146,9 +145,8 @@ namespace DialogueForest
             // Viewmodels
             services.AddSingleton<ShellViewModel>();
             services.AddSingleton<SettingsViewModel>();
-
-            //services.AddSingleton<AlbumDetailViewModel>();
-            //services.AddSingleton<FoldersViewModel>();
+            services.AddSingleton<OpenedNodesViewModel>();
+            services.AddSingleton<WelcomeViewModel>();
             //services.AddSingleton<PlaylistViewModel>();
             //services.AddSingleton<QueueViewModel>();
             //services.AddSingleton<SearchResultsViewModel>();

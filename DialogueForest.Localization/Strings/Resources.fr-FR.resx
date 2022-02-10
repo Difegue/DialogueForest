@@ -181,7 +181,7 @@
     <comment>Navigation view item name for Folders</comment>
   </data>
   <data name="NavigationFile" xml:space="preserve">
-    <value>Fichier</value>
+    <value>Démarrer</value>
     <comment>Navigation view item name for Playlists</comment>
   </data>
   <data name="NavigationSettings" xml:space="preserve">
@@ -221,8 +221,8 @@ Vous pourrez toujours le changer plus tard.</value>
   <data name="ButtonCreateText" xml:space="preserve">
     <value>Créer</value>
   </data>
-  <data name="SearchGoToDetail" xml:space="preserve">
-    <value>Rechercher "{0}" sur le serveur...</value>
+  <data name="WelcomeWhatsNew" xml:space="preserve">
+    <value>Voir ce qu'il y a de neuf</value>
   </data>
   <data name="SearchTreePlaceholderText" xml:space="preserve">
     <value>Rechercher des noeuds...</value>
@@ -299,16 +299,16 @@ Vous pourrez toujours le changer plus tard.</value>
   <data name="SearchPlaceholderText" xml:space="preserve">
     <value>Rechercher...</value>
   </data>
-  <data name="SearchAlbumsToggle" xml:space="preserve">
-    <value>Albums</value>
+  <data name="WelcomeNewButton" xml:space="preserve">
+    <value>Créer une nouvelle Forêt</value>
   </data>
-  <data name="SearchArtistsToggle" xml:space="preserve">
-    <value>Artistes</value>
+  <data name="WelcomeOpenButton" xml:space="preserve">
+    <value>Ouvrir une Forêt existante</value>
   </data>
   <data name="SearchTracksToggle" xml:space="preserve">
     <value>Pistes</value>
   </data>
-  <data name="SearchNoResultsTitle.Text" xml:space="preserve">
+  <data name="WelcomeFlavorText" xml:space="preserve">
     <value>Aucun résultat trouvé...</value>
   </data>
   <data name="FirstRunText" xml:space="preserve">
@@ -320,7 +320,7 @@ J'espère que vous apprécierez l'application!
     <comment>First use prompt message body</comment>
   </data>
   <data name="FirstRunTitle" xml:space="preserve">
-    <value>Merci d'avoir installé Stylophone!</value>
+    <value>Merci d'avoir installé DialogueForest!</value>
     <comment>First use prompt message title</comment>
   </data>
   <data name="ContextMenuLinksTo" xml:space="preserve">
@@ -358,20 +358,22 @@ Vous pouvez créer des Dialogues dans les Arbres sur la gauche.</value>
     <value>Votre Dialogue apparaîtra ici.
 Cliquez sur le bouton "+" pour en ajouter !</value>
   </data>
-  <data name="EmptyPlaylistTitle" xml:space="preserve">
-    <value>Cette Playlist est bien vide.</value>
+  <data name="EmptyViewNotesTitle" xml:space="preserve">
+    <value>Vous n'avez pas de Notes.</value>
   </data>
-  <data name="EmptyQueueDesc" xml:space="preserve">
-    <value>Pourquoi ne pas mettre un peu de musique ?</value>
+  <data name="EmptyViewNotesDesc" xml:space="preserve">
+    <value>Les Notes sont des Dialogues qui ne seront pas présents dans un Export.
+Utilisez-les pour stocker des idées ou des brouillons !</value>
   </data>
-  <data name="EmptyQueueTitle" xml:space="preserve">
-    <value>Personne ne fait de bruit.</value>
+  <data name="EmptyViewPinsTitle" xml:space="preserve">
+    <value>Rien sur le tableau.</value>
   </data>
-  <data name="EmptySearchTitle" xml:space="preserve">
-    <value>Funky Fresh Search!</value>
+  <data name="EmptyViewTrashTitle" xml:space="preserve">
+    <value>Corbeille vide..pour le moment.</value>
   </data>
-  <data name="EmptySearchDesc" xml:space="preserve">
-    <value>Pas de morceaux trouvés sur le serveur.</value>
+  <data name="EmptyViewPinsDesc" xml:space="preserve">
+    <value>Vous pouvez épingler des Dialogues pour les retrouver rapidement !
+Vous les retrouverez ici.</value>
   </data>
   <data name="NavigationNewTree" xml:space="preserve">
     <value>Nouvel Arbre</value>
@@ -421,8 +423,8 @@ Cliquez sur le bouton "+" pour en ajouter !</value>
   <data name="EditorHeaderMetadata" xml:space="preserve">
     <value>Métadonnées</value>
   </data>
-  <data name="EditorEmptyDialogue" xml:space="preserve">
-    <value>UNUSED</value>
+  <data name="EditorUnsavedChanges" xml:space="preserve">
+    <value>Vous avez des modifications non sauvegardées</value>
   </data>
   <data name="EditorEmptyReplies" xml:space="preserve">
     <value>Les réponses à ce dialogue apparaîtront ici, si vous en ajoutez.</value>

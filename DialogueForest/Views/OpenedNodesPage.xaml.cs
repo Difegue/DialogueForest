@@ -1,5 +1,5 @@
 ﻿using System;
-
+using CommunityToolkit.Mvvm.DependencyInjection;
 using DialogueForest.ViewModels;
 using Windows.ApplicationModel.Core;
 using Windows.UI.WindowManagement;
@@ -10,7 +10,7 @@ namespace DialogueForest.Views
 {
     public sealed partial class OpenedNodesPage : Page
     {
-        public OpenedNodesViewModel ViewModel { get; } = new OpenedNodesViewModel();
+        public OpenedNodesViewModel ViewModel { get; } = Ioc.Default.GetRequiredService<OpenedNodesViewModel>();
 
         public OpenedNodesPage()
         {

@@ -1,0 +1,50 @@
+﻿<Page
+    x:Class="DialogueForest.Views.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DialogueForest.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:strings="using:DialogueForest.Localization.Strings"
+    mc:Ignorable="d">
+
+    <ScrollViewer VerticalAlignment="Top">
+        <StackPanel Spacing="8" HorizontalAlignment="Center" >
+
+            <Image Source="ms-appx:///Assets/Square150x150Logo.scale-200.png" Margin="{StaticResource LargeTopMargin}"
+               Width="196" Height="196"/>
+
+            <TextBlock Text="Good Evening" TextAlignment="Center"
+                   Style="{StaticResource TitleTextBlockStyle}"
+                   FontFamily="Segoe UI Variable Display"/>
+
+
+            <controls:WrapPanel HorizontalSpacing="12" VerticalSpacing="12" Orientation="Horizontal" Margin="12,36,0,0">
+
+                <Button  Width="128" Height="96">
+                    <StackPanel Spacing="8">
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF4A5;" FontSize="24" />
+                        <TextBlock Text="{x:Bind strings:Resources.WelcomeNewButton}" TextWrapping="Wrap" TextAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button  Width="128" Height="96">
+                    <StackPanel Spacing="8">
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE838;" FontSize="24" />
+                        <TextBlock Text="{x:Bind strings:Resources.WelcomeOpenButton}" TextWrapping="Wrap" TextAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+                <Button Width="128" Height="96">
+                    <StackPanel Spacing="8">
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE1D7;" FontSize="24" />
+                        <TextBlock Text="{x:Bind strings:Resources.WelcomeWhatsNew}" TextWrapping="Wrap" TextAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </controls:WrapPanel>
+
+            <TextBlock Text="{x:Bind strings:Resources.WelcomeFlavorText}" TextWrapping="Wrap" FontStyle="Italic"
+                       TextAlignment="Center"
+                       Margin="12,36"/>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

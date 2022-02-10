@@ -134,7 +134,7 @@
     <comment>Navigation view item name for File -&gt; Export</comment>
   </data>
   <data name="NavigationFile" xml:space="preserve">
-    <value>File</value>
+    <value>Start</value>
     <comment>Navigation view item name for File menu</comment>
   </data>
   <data name="NavigationSettings" xml:space="preserve">
@@ -186,8 +186,9 @@ You can always change this later.</value>
     <value>Create</value>
     <comment>Create btn</comment>
   </data>
-  <data name="SearchGoToDetail" xml:space="preserve">
-    <value>Search for "{0}" on the server...</value>
+  <data name="WelcomeWhatsNew" xml:space="preserve">
+    <value>See What's New</value>
+    <comment>What's new btn</comment>
   </data>
   <data name="SearchTreePlaceholderText" xml:space="preserve">
     <value>Search Nodes...</value>
@@ -315,17 +316,20 @@ You can always change this later.</value>
   <data name="SearchPlaceholderText" xml:space="preserve">
     <value>Search...</value>
   </data>
-  <data name="SearchAlbumsToggle" xml:space="preserve">
-    <value>Albums</value>
+  <data name="WelcomeNewButton" xml:space="preserve">
+    <value>Create a New Forest</value>
+    <comment>New button</comment>
   </data>
-  <data name="SearchArtistsToggle" xml:space="preserve">
-    <value>Artists</value>
+  <data name="WelcomeOpenButton" xml:space="preserve">
+    <value>Open an existing Forest</value>
+    <comment>Open button</comment>
   </data>
   <data name="SearchTracksToggle" xml:space="preserve">
     <value>Tracks</value>
   </data>
-  <data name="SearchNoResultsTitle.Text" xml:space="preserve">
+  <data name="WelcomeFlavorText" xml:space="preserve">
     <value>No Results have been found...</value>
+    <comment>Start screen flavor text</comment>
   </data>
   <data name="FirstRunText" xml:space="preserve">
     <value>To get started, please visit the Settings page to key in your MPD server's URL and port.
@@ -336,7 +340,7 @@ Hope you enjoy using the application!
     <comment>First use prompt message body</comment>
   </data>
   <data name="FirstRunTitle" xml:space="preserve">
-    <value>Welcome to Stylophone!</value>
+    <value>Welcome to DialogueForest!</value>
     <comment>First use prompt message title</comment>
   </data>
   <data name="ContextMenuLinksTo" xml:space="preserve">
@@ -385,20 +389,27 @@ You can create Nodes in the Dialogue Trees on the left side.</value>
 Click on the "+" button to add some!</value>
     <comment>Desc for tree view with no nodes</comment>
   </data>
-  <data name="EmptyPlaylistTitle" xml:space="preserve">
-    <value>I can't jam to this.</value>
+  <data name="EmptyViewNotesTitle" xml:space="preserve">
+    <value>You have no Notes.</value>
+    <comment>Title for notes empty view</comment>
   </data>
-  <data name="EmptyQueueDesc" xml:space="preserve">
-    <value>Why don't you add some music?</value>
+  <data name="EmptyViewNotesDesc" xml:space="preserve">
+    <value>Notes are pieces of dialogue that aren't included in your final Export. 
+Use them to store ideas or drafts!</value>
+    <comment>Desc for notes empty view</comment>
   </data>
-  <data name="EmptyQueueTitle" xml:space="preserve">
-    <value>All is quiet now.</value>
+  <data name="EmptyViewPinsTitle" xml:space="preserve">
+    <value>Nothing on the pinboard.</value>
+    <comment>Title for pins empty view</comment>
   </data>
-  <data name="EmptySearchTitle" xml:space="preserve">
-    <value>Funky Fresh Search!</value>
+  <data name="EmptyViewTrashTitle" xml:space="preserve">
+    <value>Nothing's trashed...yet.</value>
+    <comment>Title for trash empty view</comment>
   </data>
-  <data name="EmptySearchDesc" xml:space="preserve">
-    <value>No Tracks found on Server.</value>
+  <data name="EmptyViewPinsDesc" xml:space="preserve">
+    <value>You can pin Dialogue Nodes to find them again easily!
+They'll show up here when you do.</value>
+    <comment>Desc for pins empty view</comment>
   </data>
   <data name="NavigationNewTree" xml:space="preserve">
     <value>New Tree</value>
@@ -464,9 +475,9 @@ Click on the "+" button to add some!</value>
     <value>Metadata</value>
     <comment>Dialogue metadata header</comment>
   </data>
-  <data name="EditorEmptyDialogue" xml:space="preserve">
-    <value>UNUSEDD</value>
-    <comment>Dialogue editor no parts</comment>
+  <data name="EditorUnsavedChanges" xml:space="preserve">
+    <value>You have unsaved changes</value>
+    <comment>Editor unsaved changes</comment>
   </data>
   <data name="EditorEmptyReplies" xml:space="preserve">
     <value>Replies to this dialogue will show up here, if you add any.</value>

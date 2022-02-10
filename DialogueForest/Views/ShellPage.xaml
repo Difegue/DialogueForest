@@ -95,37 +95,21 @@
 
             <muxc:NavigationView.MenuItems>
                 <muxc:NavigationViewItem
-                    SelectsOnInvoked="False"
+                    helpers:NavHelper.NavigateTo="viewmodels:WelcomeViewModel"
                     Content="{x:Bind strings:Resources.NavigationFile}"
-                    Icon="Home" >
+                    Icon="Home" />
 
-                    <muxc:NavigationViewItem.MenuItems>
-
-                        <muxc:NavigationViewItem
-                            SelectsOnInvoked="False"
-                            helpers:NavHelper.Command="{x:Bind ViewModel.NewFileCommand}" 
-                            Content="{x:Bind strings:Resources.NavigationNew}"
-                            Icon="Document" />
-                        <muxc:NavigationViewItem
-                            SelectsOnInvoked="False"
-                            helpers:NavHelper.Command="{x:Bind ViewModel.OpenFileCommand}" 
-                            Content="{x:Bind strings:Resources.NavigationOpen}">
-                            <muxc:NavigationViewItem.Icon>
-                                <FontIcon Glyph="&#xE838;"/>
-                            </muxc:NavigationViewItem.Icon>
-                        </muxc:NavigationViewItem>
-                        <muxc:NavigationViewItem
-                            SelectsOnInvoked="False"
-                            helpers:NavHelper.Command="{x:Bind ViewModel.SaveCommand}"                
-                            Content="{x:Bind strings:Resources.NavigationSave}"
-                            Icon="Save" >
-                            <muxc:NavigationViewItem.KeyboardAccelerators>
-                                <KeyboardAccelerator Key="S" Modifiers="Control"/>
-                            </muxc:NavigationViewItem.KeyboardAccelerators>
-                        </muxc:NavigationViewItem>
-
-                    </muxc:NavigationViewItem.MenuItems>
-
+                <muxc:NavigationViewItem
+                        SelectsOnInvoked="False"
+                        helpers:NavHelper.Command="{x:Bind ViewModel.SaveCommand}"                
+                        Content="{x:Bind strings:Resources.NavigationSave}"
+                        Icon="Save" >
+                    <muxc:NavigationViewItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="S" Modifiers="Control"/>
+                    </muxc:NavigationViewItem.KeyboardAccelerators>
+                    <muxc:NavigationViewItem.InfoBadge>
+                        <muxc:InfoBadge Style="{StaticResource AttentionIconInfoBadgeStyle}" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorUnsavedChanges}"/>
+                    </muxc:NavigationViewItem.InfoBadge>
                 </muxc:NavigationViewItem>
 
                 <muxc:NavigationViewItem
