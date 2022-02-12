@@ -15,7 +15,7 @@
             <Image Source="ms-appx:///Assets/Square150x150Logo.scale-200.png" Margin="{StaticResource LargeTopMargin}"
                Width="196" Height="196"/>
 
-            <TextBlock Text="Good Evening" TextAlignment="Center"
+            <TextBlock Text="{x:Bind ViewModel.WelcomeText}" TextAlignment="Center"
                    Style="{StaticResource TitleTextBlockStyle}"
                    FontFamily="Segoe UI Variable Display"/>
 

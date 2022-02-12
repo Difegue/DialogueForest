@@ -158,8 +158,8 @@
   <data name="NotificationCacheDeleted" xml:space="preserve">
     <value>Le cache de pochettes a été vidé.</value>
   </data>
-  <data name="ErrorAddingAlbum" xml:space="preserve">
-    <value>Impossible d'ajouter l'album: {0}</value>
+  <data name="WelcomeGreetingMorning" xml:space="preserve">
+    <value>Bonjour</value>
   </data>
   <data name="ErrorPlayingTrack" xml:space="preserve">
     <value>Impossible de lire le contenu: {0}</value>
@@ -170,8 +170,8 @@
   <data name="ErrorInvalidMPDResponse" xml:space="preserve">
     <value>Réponse du serveur MPD invalide.</value>
   </data>
-  <data name="SettingsUpdateDbDesc" xml:space="preserve">
-    <value>Cette opération peut prendre un certain temps.</value>
+  <data name="WelcomeGreetingNight" xml:space="preserve">
+    <value>Bonne nuit</value>
   </data>
   <data name="TreeViewDeleteTree" xml:space="preserve">
     <value>Supprimer l'arbre</value>
@@ -234,22 +234,22 @@ Vous pourrez toujours le changer plus tard.</value>
     <value>A propos de cette application</value>
   </data>
   <data name="SettingsAboutText" xml:space="preserve">
-    <value>Client MPD pour UWP, utilisant MpcNET.</value>
+    <value>Un outil d'écriture de dialogue non-conventionnel pour les Jeux.</value>
   </data>
   <data name="SettingsAnalytics" xml:space="preserve">
     <value>Télémétrie</value>
   </data>
   <data name="SettingsAnalyticsText" xml:space="preserve">
-    <value>Autoriser Stylophone à envoyer des rapports d'analyse et de crash</value>
+    <value>Autoriser DialogueForest à envoyer des rapports d'analyse et de crash</value>
   </data>
   <data name="SettingsApplyOnRestart" xml:space="preserve">
     <value>Ce paramètre sera appliqué au redémarrage de l'application.</value>
   </data>
-  <data name="SettingsClearCache" xml:space="preserve">
-    <value>Vider le cache</value>
+  <data name="SettingsForest" xml:space="preserve">
+    <value>Forêt de Dialogues Actuelle</value>
   </data>
-  <data name="SettingsClearCacheDescription" xml:space="preserve">
-    <value>Nettoyer le cache de pochettes local</value>
+  <data name="SettingsMetadataHeader" xml:space="preserve">
+    <value>Métadonnées customisées</value>
   </data>
   <data name="SettingsCustomization" xml:space="preserve">
     <value>Personnalisation</value>
@@ -261,22 +261,23 @@ Vous pourrez toujours le changer plus tard.</value>
     <value>Code Source, License et Vie Privée</value>
   </data>
   <data name="SettingsGithubLink" xml:space="preserve">
-    <value>https://github.com/Difegue/Stylophone</value>
+    <value>https://github.com/Difegue/DialogueForest</value>
   </data>
-  <data name="SettingsServer" xml:space="preserve">
-    <value>Serveur MPD</value>
+  <data name="SettingsMetadataText" xml:space="preserve">
+    <value>Vous pouvez déclarer des métadonnées custom ici. 
+Ces métadonnées apparaîtront comme champs remplissables sur chaque noeud de Dialogue.</value>
   </data>
-  <data name="SettingsServerHost" xml:space="preserve">
-    <value>Hôte</value>
+  <data name="SettingsMetadataKey" xml:space="preserve">
+    <value>Clé</value>
   </data>
-  <data name="SettingsServerPort" xml:space="preserve">
-    <value>Port</value>
+  <data name="SettingsMetadataTypeString" xml:space="preserve">
+    <value>String</value>
   </data>
-  <data name="SettingsTheme" xml:space="preserve">
-    <value>Thème</value>
+  <data name="SettingsMetadataTypeBool" xml:space="preserve">
+    <value>Booléen</value>
   </data>
-  <data name="SettingsThemeDark" xml:space="preserve">
-    <value>Sombre</value>
+  <data name="SettingsMetadataTypeColor" xml:space="preserve">
+    <value>Couleur</value>
   </data>
   <data name="SettingsThemeDefault" xml:space="preserve">
     <value>Thème du système</value>
@@ -293,8 +294,8 @@ Vous pourrez toujours le changer plus tard.</value>
   <data name="SettingsUIDensityNormal" xml:space="preserve">
     <value>Normal</value>
   </data>
-  <data name="SettingsUpdateDatabase" xml:space="preserve">
-    <value>Mettre à jour</value>
+  <data name="SettingsMetadataTypeEnum" xml:space="preserve">
+    <value>Valeurs pré-existantes</value>
   </data>
   <data name="SearchPlaceholderText" xml:space="preserve">
     <value>Rechercher...</value>
@@ -324,7 +325,7 @@ J'espère que vous apprécierez l'application!
     <comment>First use prompt message title</comment>
   </data>
   <data name="ContextMenuLinksTo" xml:space="preserve">
-    <value>Relié à  </value>
+    <value>Relié à</value>
   </data>
   <data name="ContextMenuLinkedBy" xml:space="preserve">
     <value>Relié par</value>
@@ -432,14 +433,11 @@ Vous les retrouverez ici.</value>
   <data name="EditorReplyPlaceholderText" xml:space="preserve">
     <value>Magna ea feugiat labore diam diam assum amet nibh vero sea eirmod magna takimata eum illum. Labore et nonumy vulputate lorem zzril erat kasd eu no sed laoreet duo labore et diam eos.</value>
   </data>
-  <data name="SettingsServerPassword" xml:space="preserve">
-    <value>Mot de passe</value>
+  <data name="SettingsMetadataType" xml:space="preserve">
+    <value>Type</value>
   </data>
-  <data name="ErrorPassword" xml:space="preserve">
-    <value>Mot de passe invalide</value>
-  </data>
-  <data name="SettingsLocalPlaybackAvailable" xml:space="preserve">
-    <value>Écoute en local disponible</value>
+  <data name="WelcomeGreetingEvening" xml:space="preserve">
+    <value>Bonne soirée</value>
   </data>
   <data name="OffText" xml:space="preserve">
     <value>Désactivé</value>
@@ -447,15 +445,8 @@ Vous les retrouverez ici.</value>
   <data name="OnText" xml:space="preserve">
     <value>Activé</value>
   </data>
-  <data name="SettingsLocalPlaybackHeader" xml:space="preserve">
-    <value>Écoute en local</value>
-  </data>
-  <data name="SettingsLocalPlaybackText" xml:space="preserve">
-    <value>Stylophone peut lire le stream de votre serveur MPD. 
-L'activation de cette option affichera un second slider pour contrôler le volume local.</value>
-  </data>
-  <data name="ErrorPlayingMPDStream" xml:space="preserve">
-    <value>Erreur lors de la lecture du stream httpd du serveur MPD: {0}</value>
+  <data name="WelcomeGreetingAfternoon" xml:space="preserve">
+    <value>Bon après-midi</value>
   </data>
   <data name="NavigationNotes" xml:space="preserve">
     <value>Notes</value>

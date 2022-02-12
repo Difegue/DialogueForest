@@ -227,8 +227,9 @@ You can always change this later.</value>
   <data name="NotificationCacheDeleted" xml:space="preserve">
     <value>Album art cache has been deleted.</value>
   </data>
-  <data name="ErrorAddingAlbum" xml:space="preserve">
-    <value>Couldn't add Album: {0}</value>
+  <data name="WelcomeGreetingMorning" xml:space="preserve">
+    <value>Good Morning</value>
+    <comment>Welcome screen greeting</comment>
   </data>
   <data name="ErrorPlayingTrack" xml:space="preserve">
     <value>Couldn't play content: {0}</value>
@@ -240,8 +241,8 @@ You can always change this later.</value>
   <data name="ErrorInvalidMPDResponse" xml:space="preserve">
     <value>Invalid MPD Response.</value>
   </data>
-  <data name="SettingsUpdateDbDesc" xml:space="preserve">
-    <value>This operation might take the server some time to complete.</value>
+  <data name="WelcomeGreetingNight" xml:space="preserve">
+    <value>Good Night</value>
   </data>
   <data name="TreeViewDeleteTree" xml:space="preserve">
     <value>Delete Tree</value>
@@ -251,22 +252,23 @@ You can always change this later.</value>
     <value>About this application</value>
   </data>
   <data name="SettingsAboutText" xml:space="preserve">
-    <value>MPD Client for the Universal Windows Platform, based on MpcNET.</value>
+    <value>An opinionated Dialogue Writer for Games.</value>
   </data>
   <data name="SettingsAnalytics" xml:space="preserve">
     <value>Analytics</value>
   </data>
   <data name="SettingsAnalyticsText" xml:space="preserve">
-    <value>Allow Stylophone to send crash and analytics reports</value>
+    <value>Allow DialogueForest to send crash and analytics reports</value>
   </data>
   <data name="SettingsApplyOnRestart" xml:space="preserve">
     <value>This setting will apply after restarting the app.</value>
   </data>
-  <data name="SettingsClearCache" xml:space="preserve">
-    <value>Clear Cache</value>
+  <data name="SettingsForest" xml:space="preserve">
+    <value>Current Dialogue Forest</value>
+    <comment>Settings Forest Header</comment>
   </data>
-  <data name="SettingsClearCacheDescription" xml:space="preserve">
-    <value>Clear the local album art cache</value>
+  <data name="SettingsMetadataHeader" xml:space="preserve">
+    <value>Custom Metadata</value>
   </data>
   <data name="SettingsCustomization" xml:space="preserve">
     <value>Personalization</value>
@@ -278,22 +280,23 @@ You can always change this later.</value>
     <value>Source Code, License and Privacy Statement</value>
   </data>
   <data name="SettingsGithubLink" xml:space="preserve">
-    <value>https://github.com/Difegue/Stylophone</value>
+    <value>https://github.com/Difegue/DialogueForest</value>
   </data>
-  <data name="SettingsServer" xml:space="preserve">
-    <value>MPD Server</value>
+  <data name="SettingsMetadataText" xml:space="preserve">
+    <value>You can declare custom metadata fields here. 
+Said fields will appear on every Dialogue Node for you to input additional information.</value>
   </data>
-  <data name="SettingsServerHost" xml:space="preserve">
-    <value>Hostname</value>
+  <data name="SettingsMetadataKey" xml:space="preserve">
+    <value>Key</value>
   </data>
-  <data name="SettingsServerPort" xml:space="preserve">
-    <value>Port</value>
+  <data name="SettingsMetadataTypeString" xml:space="preserve">
+    <value>String</value>
   </data>
-  <data name="SettingsTheme" xml:space="preserve">
-    <value>Theme</value>
+  <data name="SettingsMetadataTypeBool" xml:space="preserve">
+    <value>Boolean</value>
   </data>
-  <data name="SettingsThemeDark" xml:space="preserve">
-    <value>Dark</value>
+  <data name="SettingsMetadataTypeColor" xml:space="preserve">
+    <value>Color</value>
   </data>
   <data name="SettingsThemeDefault" xml:space="preserve">
     <value>System default</value>
@@ -310,8 +313,8 @@ You can always change this later.</value>
   <data name="SettingsUIDensityNormal" xml:space="preserve">
     <value>Normal</value>
   </data>
-  <data name="SettingsUpdateDatabase" xml:space="preserve">
-    <value>Update</value>
+  <data name="SettingsMetadataTypeEnum" xml:space="preserve">
+    <value>Preexisting values</value>
   </data>
   <data name="SearchPlaceholderText" xml:space="preserve">
     <value>Search...</value>
@@ -487,14 +490,12 @@ They'll show up here when you do.</value>
     <value>Magna ea feugiat labore diam diam assum amet nibh vero sea eirmod magna takimata eum illum. Labore et nonumy vulputate lorem zzril erat kasd eu no sed laoreet duo labore et diam eos.</value>
     <comment>Reply prompt placeholder text</comment>
   </data>
-  <data name="SettingsServerPassword" xml:space="preserve">
-    <value>Password</value>
+  <data name="SettingsMetadataType" xml:space="preserve">
+    <value>Type</value>
   </data>
-  <data name="ErrorPassword" xml:space="preserve">
-    <value>Invalid password</value>
-  </data>
-  <data name="SettingsLocalPlaybackAvailable" xml:space="preserve">
-    <value>Local Playback available</value>
+  <data name="WelcomeGreetingEvening" xml:space="preserve">
+    <value>Good Evening</value>
+    <comment>Welcome screen greeting</comment>
   </data>
   <data name="OffText" xml:space="preserve">
     <value>Off</value>
@@ -504,15 +505,9 @@ They'll show up here when you do.</value>
     <value>On</value>
     <comment>On toggle</comment>
   </data>
-  <data name="SettingsLocalPlaybackHeader" xml:space="preserve">
-    <value>Local Playback</value>
-  </data>
-  <data name="SettingsLocalPlaybackText" xml:space="preserve">
-    <value>Stylophone can play your MPD Server's music stream.
-Enabling this option will show a second volume slider to control local volume.</value>
-  </data>
-  <data name="ErrorPlayingMPDStream" xml:space="preserve">
-    <value>Error trying to play the MPD server's httpd stream: {0}</value>
+  <data name="WelcomeGreetingAfternoon" xml:space="preserve">
+    <value>Good Afternoon</value>
+    <comment>Welcome screen greeting</comment>
   </data>
   <data name="NavigationNotes" xml:space="preserve">
     <value>Notes</value>

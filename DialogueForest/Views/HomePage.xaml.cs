@@ -26,7 +26,7 @@ namespace DialogueForest.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            //ViewModel.EnsureInstanceInitialized();
+            ViewModel.UpdateWelcomeText();
         }
     }
 }

@@ -470,15 +470,6 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Couldn&apos;t add Album: {0}.
-        /// </summary>
-        public static string ErrorAddingAlbum {
-            get {
-                return ResourceManager.GetString("ErrorAddingAlbum", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Error: {0}.
         /// </summary>
         public static string ErrorGeneric {
@@ -493,24 +484,6 @@ namespace DialogueForest.Localization.Strings {
         public static string ErrorInvalidMPDResponse {
             get {
                 return ResourceManager.GetString("ErrorInvalidMPDResponse", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Invalid password.
-        /// </summary>
-        public static string ErrorPassword {
-            get {
-                return ResourceManager.GetString("ErrorPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Error trying to play the MPD server&apos;s httpd stream: {0}.
-        /// </summary>
-        public static string ErrorPlayingMPDStream {
-            get {
-                return ResourceManager.GetString("ErrorPlayingMPDStream", resourceCulture);
             }
         }
         
@@ -790,7 +763,7 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à MPD Client for the Universal Windows Platform, based on MpcNET..
+        ///   Recherche une chaîne localisée semblable à An opinionated Dialogue Writer for Games..
         /// </summary>
         public static string SettingsAboutText {
             get {
@@ -808,7 +781,7 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow Stylophone to send crash and analytics reports.
+        ///   Recherche une chaîne localisée semblable à Allow DialogueForest to send crash and analytics reports.
         /// </summary>
         public static string SettingsAnalyticsText {
             get {
@@ -822,24 +795,6 @@ namespace DialogueForest.Localization.Strings {
         public static string SettingsApplyOnRestart {
             get {
                 return ResourceManager.GetString("SettingsApplyOnRestart", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Clear Cache.
-        /// </summary>
-        public static string SettingsClearCache {
-            get {
-                return ResourceManager.GetString("SettingsClearCache", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Clear the local album art cache.
-        /// </summary>
-        public static string SettingsClearCacheDescription {
-            get {
-                return ResourceManager.GetString("SettingsClearCacheDescription", resourceCulture);
             }
         }
         
@@ -862,6 +817,15 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Current Dialogue Forest.
+        /// </summary>
+        public static string SettingsForest {
+            get {
+                return ResourceManager.GetString("SettingsForest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Source Code, License and Privacy Statement.
         /// </summary>
         public static string SettingsGithub {
@@ -871,7 +835,7 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à https://github.com/Difegue/Stylophone.
+        ///   Recherche une chaîne localisée semblable à https://github.com/Difegue/DialogueForest.
         /// </summary>
         public static string SettingsGithubLink {
             get {
@@ -880,84 +844,75 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Local Playback available.
+        ///   Recherche une chaîne localisée semblable à Custom Metadata.
         /// </summary>
-        public static string SettingsLocalPlaybackAvailable {
+        public static string SettingsMetadataHeader {
             get {
-                return ResourceManager.GetString("SettingsLocalPlaybackAvailable", resourceCulture);
+                return ResourceManager.GetString("SettingsMetadataHeader", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Local Playback.
+        ///   Recherche une chaîne localisée semblable à Key.
         /// </summary>
-        public static string SettingsLocalPlaybackHeader {
+        public static string SettingsMetadataKey {
             get {
-                return ResourceManager.GetString("SettingsLocalPlaybackHeader", resourceCulture);
+                return ResourceManager.GetString("SettingsMetadataKey", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Stylophone can play your MPD Server&apos;s music stream.
-        ///Enabling this option will show a second volume slider to control local volume..
+        ///   Recherche une chaîne localisée semblable à You can declare custom metadata fields here. 
+        ///Said fields will appear on every Dialogue Node for you to input additional information..
         /// </summary>
-        public static string SettingsLocalPlaybackText {
+        public static string SettingsMetadataText {
             get {
-                return ResourceManager.GetString("SettingsLocalPlaybackText", resourceCulture);
+                return ResourceManager.GetString("SettingsMetadataText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à MPD Server.
+        ///   Recherche une chaîne localisée semblable à Type.
         /// </summary>
-        public static string SettingsServer {
+        public static string SettingsMetadataType {
             get {
-                return ResourceManager.GetString("SettingsServer", resourceCulture);
+                return ResourceManager.GetString("SettingsMetadataType", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Hostname.
+        ///   Recherche une chaîne localisée semblable à Boolean.
         /// </summary>
-        public static string SettingsServerHost {
+        public static string SettingsMetadataTypeBool {
             get {
-                return ResourceManager.GetString("SettingsServerHost", resourceCulture);
+                return ResourceManager.GetString("SettingsMetadataTypeBool", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Password.
+        ///   Recherche une chaîne localisée semblable à Color.
         /// </summary>
-        public static string SettingsServerPassword {
+        public static string SettingsMetadataTypeColor {
             get {
-                return ResourceManager.GetString("SettingsServerPassword", resourceCulture);
+                return ResourceManager.GetString("SettingsMetadataTypeColor", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Port.
+        ///   Recherche une chaîne localisée semblable à Preexisting values.
         /// </summary>
-        public static string SettingsServerPort {
+        public static string SettingsMetadataTypeEnum {
             get {
-                return ResourceManager.GetString("SettingsServerPort", resourceCulture);
+                return ResourceManager.GetString("SettingsMetadataTypeEnum", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Theme.
+        ///   Recherche une chaîne localisée semblable à String.
         /// </summary>
-        public static string SettingsTheme {
+        public static string SettingsMetadataTypeString {
             get {
-                return ResourceManager.GetString("SettingsTheme", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Dark.
-        /// </summary>
-        public static string SettingsThemeDark {
-            get {
-                return ResourceManager.GetString("SettingsThemeDark", resourceCulture);
+                return ResourceManager.GetString("SettingsMetadataTypeString", resourceCulture);
             }
         }
         
@@ -1003,24 +958,6 @@ namespace DialogueForest.Localization.Strings {
         public static string SettingsUIDensityNormal {
             get {
                 return ResourceManager.GetString("SettingsUIDensityNormal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Update.
-        /// </summary>
-        public static string SettingsUpdateDatabase {
-            get {
-                return ResourceManager.GetString("SettingsUpdateDatabase", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à This operation might take the server some time to complete..
-        /// </summary>
-        public static string SettingsUpdateDbDesc {
-            get {
-                return ResourceManager.GetString("SettingsUpdateDbDesc", resourceCulture);
             }
         }
         
@@ -1103,6 +1040,42 @@ namespace DialogueForest.Localization.Strings {
         public static string WelcomeFlavorText {
             get {
                 return ResourceManager.GetString("WelcomeFlavorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Good Afternoon.
+        /// </summary>
+        public static string WelcomeGreetingAfternoon {
+            get {
+                return ResourceManager.GetString("WelcomeGreetingAfternoon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Good Evening.
+        /// </summary>
+        public static string WelcomeGreetingEvening {
+            get {
+                return ResourceManager.GetString("WelcomeGreetingEvening", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Good Morning.
+        /// </summary>
+        public static string WelcomeGreetingMorning {
+            get {
+                return ResourceManager.GetString("WelcomeGreetingMorning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Good Night.
+        /// </summary>
+        public static string WelcomeGreetingNight {
+            get {
+                return ResourceManager.GetString("WelcomeGreetingNight", resourceCulture);
             }
         }
         

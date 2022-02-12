@@ -175,8 +175,8 @@
   <data name="NotificationCacheDeleted" xml:space="preserve">
     <value>A cache de arte do álbum foi eliminada.</value>
   </data>
-  <data name="ErrorAddingAlbum" xml:space="preserve">
-    <value>Não foi possível adicionar o Álbum: {0}</value>
+  <data name="WelcomeGreetingMorning" xml:space="preserve">
+    <value>Bom dia</value>
   </data>
   <data name="ErrorPlayingTrack" xml:space="preserve">
     <value>Não foi possível reproduzir o conteúdo: {0}</value>
@@ -187,29 +187,17 @@
   <data name="ErrorInvalidMPDResponse" xml:space="preserve">
     <value>Resposta MPD inválida.</value>
   </data>
-  <data name="SettingsUpdateDbDesc" xml:space="preserve">
-    <value>Esta operação pode levar algum tempo ao servidor completar.</value>
-  </data>
   <data name="SettingsAbout" xml:space="preserve">
     <value>Acerca desta aplicação</value>
-  </data>
-  <data name="SettingsAboutText" xml:space="preserve">
-    <value>Cliente MPD para a Plataforma Universal Windows, baseado em MpcNET.</value>
   </data>
   <data name="SettingsAnalytics" xml:space="preserve">
     <value>Analíticos</value>
   </data>
   <data name="SettingsAnalyticsText" xml:space="preserve">
-    <value>Permitir que o Stylophone envie relatórios de crash e analíticos</value>
+    <value>Permitir que o DialogueForest envie relatórios de crash e analíticos</value>
   </data>
   <data name="SettingsApplyOnRestart" xml:space="preserve">
     <value>Esta definição aplicar-se-á depois de reiniciar a aplicação.</value>
-  </data>
-  <data name="SettingsClearCache" xml:space="preserve">
-    <value>Limpar Cache</value>
-  </data>
-  <data name="SettingsClearCacheDescription" xml:space="preserve">
-    <value>Limpar a cache local de arte do álbum</value>
   </data>
   <data name="SettingsCustomization" xml:space="preserve">
     <value>Personalização</value>
@@ -221,22 +209,13 @@
     <value>Código Fonte, Licença e Declaração de Privacidade</value>
   </data>
   <data name="SettingsGithubLink" xml:space="preserve">
-    <value>https://github.com/Difegue/Stylophone</value>
+    <value>https://github.com/Difegue/DialogueForest</value>
   </data>
-  <data name="SettingsServer" xml:space="preserve">
-    <value>Servidor MPD</value>
+  <data name="SettingsMetadataKey" xml:space="preserve">
+    <value>Chave</value>
   </data>
-  <data name="SettingsServerHost" xml:space="preserve">
-    <value>Nome do anfitrião</value>
-  </data>
-  <data name="SettingsServerPort" xml:space="preserve">
-    <value>Porta</value>
-  </data>
-  <data name="SettingsTheme" xml:space="preserve">
-    <value>Tema</value>
-  </data>
-  <data name="SettingsThemeDark" xml:space="preserve">
-    <value>Escuro</value>
+  <data name="SettingsMetadataTypeString" xml:space="preserve">
+    <value>String</value>
   </data>
   <data name="SettingsThemeDefault" xml:space="preserve">
     <value>Pré-definição do Sistema</value>
@@ -252,9 +231,6 @@
   </data>
   <data name="SettingsUIDensityNormal" xml:space="preserve">
     <value>Normal</value>
-  </data>
-  <data name="SettingsUpdateDatabase" xml:space="preserve">
-    <value>Actualização</value>
   </data>
   <data name="SearchPlaceholderText" xml:space="preserve">
     <value>Procurar...</value>
@@ -286,30 +262,14 @@ Espero que goste de utilizar a aplicação!
   <data name="EditorReplyPlaceholderText" xml:space="preserve">
     <value>Magna ea feugiat labore diam diam assum amet nibh vero sea eirmod magna takimata eum illum. Labore et nonumy vulputate lorem zzril erat kasd eu no sed laoreet duo labore et diam eos.</value>
   </data>
-  <data name="SettingsServerPassword" xml:space="preserve">
-    <value>Palavra-passe</value>
-  </data>
-  <data name="ErrorPassword" xml:space="preserve">
-    <value>Palavra-passe inválida</value>
-  </data>
-  <data name="SettingsLocalPlaybackAvailable" xml:space="preserve">
-    <value>Reprodução Local disponível</value>
+  <data name="SettingsMetadataType" xml:space="preserve">
+    <value>Tipo</value>
   </data>
   <data name="OffText" xml:space="preserve">
     <value>Desligado</value>
   </data>
   <data name="OnText" xml:space="preserve">
     <value>Ligado</value>
-  </data>
-  <data name="SettingsLocalPlaybackHeader" xml:space="preserve">
-    <value>Reprodução Local</value>
-  </data>
-  <data name="SettingsLocalPlaybackText" xml:space="preserve">
-    <value>Stylophone pode tocar o fluxo de música do seu Servidor MPD. 
-Ativando esta opção mostrará um segundo deslizador de volume para controlar o volume local.</value>
-  </data>
-  <data name="ErrorPlayingMPDStream" xml:space="preserve">
-    <value>Erro ao tentar reproduzir o fluxo httpd do servidor MPD: {0}</value>
   </data>
   <data name="NavigationNotes" xml:space="preserve">
     <value>Notas</value>

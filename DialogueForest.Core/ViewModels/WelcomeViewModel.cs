@@ -24,13 +24,37 @@ namespace DialogueForest.Core.ViewModels
         private IApplicationStorageService _applicationStorageService;
         private IInteropService _interop;
 
+        [ObservableProperty]
+        private string _welcomeText;
 
         public WelcomeViewModel(IApplicationStorageService appStorage, IInteropService interop)
         {
             _applicationStorageService = appStorage;
             _interop = interop;
+        }
 
-            
+        public void UpdateWelcomeText()
+        {
+            var dt = DateTime.Now;
+            int hours = dt.Hour;
+
+            if (hours >= 1 || hours <= 12)
+            {
+                _welcomeText = Localization.Strings.Resources.WelcomeGreetingMorning;
+            }
+            else if (hours >= 12 || hours <= 16)
+            {
+                _welcomeText = Localization.Strings.Resources.WelcomeGreetingAfternoon;
+            }
+            else if (hours >= 16 || hours <= 21)
+            {
+                _welcomeText = Localization.Strings.Resources.WelcomeGreetingEvening;
+            }
+            else if (hours >= 21 || hours <= 24)
+            {
+                _welcomeText = Localization.Strings.Resources.WelcomeGreetingNight;
+            }
+
         }
     }
 }
