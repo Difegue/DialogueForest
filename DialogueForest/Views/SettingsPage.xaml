@@ -5,50 +5,166 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:helper="using:DialogueForest.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:converters="using:DialogueForest.Converters"
     xmlns:local="using:DialogueForest.Controls"
     xmlns:strings="using:DialogueForest.Localization.Strings"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:core="using:DialogueForest.Core.Interfaces"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
     mc:Ignorable="d">
     <Page.Resources>
 
-        
+        <converters:BoolToObjectConverter x:Key="DensityLabelConverter">
+            <converters:BoolToObjectConverter.TrueValue>
+                <TextBlock HorizontalTextAlignment="Right" Text="{x:Bind strings:Resources.SettingsUIDensityCompact}" />
+            </converters:BoolToObjectConverter.TrueValue>
+            <converters:BoolToObjectConverter.FalseValue>
+                <TextBlock HorizontalTextAlignment="Right" Text="{x:Bind strings:Resources.SettingsUIDensityNormal}" />
+            </converters:BoolToObjectConverter.FalseValue>
+        </converters:BoolToObjectConverter>
+
     </Page.Resources>
 
-    <ScrollViewer>
-        <StackPanel x:Name="ContentArea" Margin="{StaticResource SmallLeftRightMargin}">
-            <TextBlock
+    <Grid >
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind strings:Resources.NavigationSettings}" Margin="{StaticResource SmallTopMargin}"
+                   HorizontalAlignment="Center"/>
+
+        <ScrollViewer Margin="0,48,0,0">
+            <StackPanel x:Name="ContentArea" Margin="{StaticResource SmallLeftRightMargin}">
+
+                <TextBlock
+                Margin="{StaticResource MediumTopMargin}"
+                Style="{ThemeResource BaseTextBlockStyle}"
+                Text="{x:Bind strings:Resources.SettingsForest}" />
+
+                <local:SettingsBlockControl Title="{x:Bind strings:Resources.SettingsCharactersHeader}" Margin="{StaticResource SmallTopMargin}"
+                                            Description="{x:Bind strings:Resources.SettingsCharactersText}" >
+                    <local:SettingsBlockControl.Icon>
+                        <FontIcon Glyph="&#xED53;" />
+                    </local:SettingsBlockControl.Icon>
+
+                    <controls:InfoBadge Style="{StaticResource InformationalValueInfoBadgeStyle}" Value="10" />
+
+                    <local:SettingsBlockControl.ExpandableContent>
+                        <TextBlock/>
+                    </local:SettingsBlockControl.ExpandableContent>
+
+                </local:SettingsBlockControl>
+
+                <local:SettingsBlockControl Title="{x:Bind strings:Resources.SettingsMetadataHeader}"
+                                            Description="{x:Bind strings:Resources.SettingsMetadataText}">
+                    <local:SettingsBlockControl.Icon>
+                        <FontIcon Glyph="&#xE8EC;" />
+                    </local:SettingsBlockControl.Icon>
+
+                    <controls:InfoBadge Style="{StaticResource InformationalValueInfoBadgeStyle}" Value="10" />
+
+                    <local:SettingsBlockControl.ExpandableContent>
+                        <TextBlock/>
+                    </local:SettingsBlockControl.ExpandableContent>
+
+                </local:SettingsBlockControl>
+
+                <TextBlock
+                Margin="{StaticResource MediumTopMargin}"
+                Style="{ThemeResource BaseTextBlockStyle}"
+                Text="{x:Bind strings:Resources.SettingsCustomization}" />
+
+                <local:SettingsBlockControl Title="{x:Bind strings:Resources.SettingsTheme}" Margin="{StaticResource SmallTopMargin}">
+                    <local:SettingsBlockControl.Icon>
+                        <FontIcon Glyph="&#xE790;" />
+                    </local:SettingsBlockControl.Icon>
+
+                    <!-- Command="{x:Bind ViewModel.SwitchThemeCommand}" -->
+                    <ComboBox
+                    ItemsSource="{ui:EnumValues Type=core:Theme}"
+                    SelectedItem="{x:Bind ViewModel.ElementTheme, Mode=OneWay}" />
+
+                </local:SettingsBlockControl>
+
+                <local:SettingsBlockControl Title="{x:Bind strings:Resources.SettingsUIDensity}" Description="{x:Bind strings:Resources.SettingsApplyOnRestart}">
+                    <local:SettingsBlockControl.Icon>
+                        <SymbolIcon Symbol="FontSize" />
+                    </local:SettingsBlockControl.Icon>
+
+                    <Border Child="{x:Bind ViewModel.IsCompactSizing, Converter={StaticResource DensityLabelConverter}, Mode=OneWay}" />
+
+                    <local:SettingsBlockControl.ExpandableContent>
+                        <StackPanel Margin="56,8,8,8">
+                            <RadioButton
+                            Command="{x:Bind ViewModel.SwitchSizingCommand}"
+                            CommandParameter="False"
+                            Content="{x:Bind strings:Resources.SettingsUIDensityNormal}"
+                            GroupName="AppSizing"
+                            IsChecked="{x:Bind ViewModel.IsCompactSizing, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
+                            <RadioButton
+                            Command="{x:Bind ViewModel.SwitchSizingCommand}"
+                            CommandParameter="True"
+                            Content="{x:Bind strings:Resources.SettingsUIDensityCompact}"
+                            GroupName="AppSizing"
+                            IsChecked="{x:Bind ViewModel.IsCompactSizing, Mode=OneWay}" />
+                        </StackPanel>
+                    </local:SettingsBlockControl.ExpandableContent>
+                </local:SettingsBlockControl>
+
+                <!--  Analytics/About  -->
+
+                <TextBlock
+                Margin="{StaticResource MediumTopMargin}"
+                Style="{ThemeResource BaseTextBlockStyle}"
+                Text="{x:Bind strings:Resources.SettingsAnalytics}" />
+
+                <local:SettingsBlockControl
+                Title="{x:Bind strings:Resources.SettingsAnalyticsText}"
+                Margin="{StaticResource SmallTopMargin}"
+                Description="{x:Bind strings:Resources.SettingsApplyOnRestart}">
+                    <local:SettingsBlockControl.Icon>
+                        <SymbolIcon Symbol="Repair" />
+                    </local:SettingsBlockControl.Icon>
+                    <local:SettingsBlockControl.SettingsActionableElement>
+                        <ToggleSwitch
+                        Margin="0,0,-112,0"
+                        IsOn="{x:Bind ViewModel.EnableAnalytics, Mode=TwoWay}"
+                        OffContent=""
+                        OnContent="" />
+                    </local:SettingsBlockControl.SettingsActionableElement>
+                </local:SettingsBlockControl>
+
+
+                <TextBlock
                 Margin="{StaticResource MediumTopMargin}"
                 Style="{ThemeResource BaseTextBlockStyle}"
                 Text="{x:Bind strings:Resources.SettingsAbout}" />
 
-    <local:SettingsBlockControl
+                <local:SettingsBlockControl
                 Title="{x:Bind ViewModel.VersionDescription, Mode=OneWay}"
                 Margin="{StaticResource SmallTopMargin}"
                 Description="{x:Bind strings:Resources.SettingsAboutText}">
 
-        <local:SettingsBlockControl.Icon>
-            <controls:ImageIcon
+                    <local:SettingsBlockControl.Icon>
+                        <controls:ImageIcon
                         Width="48"
                         Height="48"
                         Source="ms-appx:///Assets/Square44x44Logo.altform-unplated_targetsize-256.png" />
-        </local:SettingsBlockControl.Icon>
+                    </local:SettingsBlockControl.Icon>
 
-        <local:SettingsBlockControl.ExpandableContent>
-            <StackPanel
+                    <local:SettingsBlockControl.ExpandableContent>
+                        <StackPanel
                         Margin="8"
                         Orientation="Vertical"
                         Spacing="4">
-                <HyperlinkButton Content="{x:Bind strings:Resources.SettingsGithub}" NavigateUri="{x:Bind strings:Resources.SettingsGithubLink}" />
-                <HyperlinkButton Command="{x:Bind ViewModel.RateAppCommand}" Content="{x:Bind strings:Resources.RateAppPromptTitle}" />
+                            <HyperlinkButton Content="{x:Bind strings:Resources.SettingsGithub}" NavigateUri="{x:Bind strings:Resources.SettingsGithubLink}" />
+                            <HyperlinkButton Command="{x:Bind ViewModel.RateAppCommand}" Content="{x:Bind strings:Resources.RateAppPromptTitle}" />
+                        </StackPanel>
+
+                    </local:SettingsBlockControl.ExpandableContent>
+
+                </local:SettingsBlockControl>
+
+                <Border Height="64" />
+
             </StackPanel>
+        </ScrollViewer>
 
-        </local:SettingsBlockControl.ExpandableContent>
-
-    </local:SettingsBlockControl>
-
-    <Border Height="64" />
-
-    </StackPanel>
-    </ScrollViewer>
+    </Grid>
 </Page>

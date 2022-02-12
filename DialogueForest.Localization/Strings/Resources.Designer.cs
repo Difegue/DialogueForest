@@ -479,42 +479,6 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Invalid MPD Response..
-        /// </summary>
-        public static string ErrorInvalidMPDResponse {
-            get {
-                return ResourceManager.GetString("ErrorInvalidMPDResponse", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Couldn&apos;t play content: {0}.
-        /// </summary>
-        public static string ErrorPlayingTrack {
-            get {
-                return ResourceManager.GetString("ErrorPlayingTrack", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à parameter must be an Enum name!.
-        /// </summary>
-        public static string ExceptionEnumToBooleanConverterParameterMustBeAnEnumName {
-            get {
-                return ResourceManager.GetString("ExceptionEnumToBooleanConverterParameterMustBeAnEnumName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à value must be an Enum!.
-        /// </summary>
-        public static string ExceptionEnumToBooleanConverterValueMustBeAnEnum {
-            get {
-                return ResourceManager.GetString("ExceptionEnumToBooleanConverterValueMustBeAnEnum", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à File name is null or empty. Specify a valid file name.
         /// </summary>
         public static string ExceptionSettingsStorageExtensionsFileNameIsNullOrEmpty {
@@ -799,6 +763,24 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pre-defined Characters.
+        /// </summary>
+        public static string SettingsCharactersHeader {
+            get {
+                return ResourceManager.GetString("SettingsCharactersHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à These will appear as quick presets in your Dialogue Nodes..
+        /// </summary>
+        public static string SettingsCharactersText {
+            get {
+                return ResourceManager.GetString("SettingsCharactersText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Personalization.
         /// </summary>
         public static string SettingsCustomization {
@@ -862,8 +844,7 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à You can declare custom metadata fields here. 
-        ///Said fields will appear on every Dialogue Node for you to input additional information..
+        ///   Recherche une chaîne localisée semblable à Metadata fields will appear on every Dialogue Node for you to input additional information..
         /// </summary>
         public static string SettingsMetadataText {
             get {
@@ -913,6 +894,24 @@ namespace DialogueForest.Localization.Strings {
         public static string SettingsMetadataTypeString {
             get {
                 return ResourceManager.GetString("SettingsMetadataTypeString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Application Theme.
+        /// </summary>
+        public static string SettingsTheme {
+            get {
+                return ResourceManager.GetString("SettingsTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Dark.
+        /// </summary>
+        public static string SettingsThemeDark {
+            get {
+                return ResourceManager.GetString("SettingsThemeDark", resourceCulture);
             }
         }
         

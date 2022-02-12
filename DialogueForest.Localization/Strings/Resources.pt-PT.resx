@@ -153,12 +153,12 @@
     <value>File name is null or empty. Specify a valid file name</value>
     <comment>File name is null or empty to save file in settings storage extensions</comment>
   </data>
-  <data name="ExceptionEnumToBooleanConverterValueMustBeAnEnum" xml:space="preserve">
-    <value>value must be an Enum!</value>
+  <data name="SettingsCharactersText" xml:space="preserve">
+    <value></value>
     <comment>Value must be an Enum in enum to boolean converter</comment>
   </data>
-  <data name="ExceptionEnumToBooleanConverterParameterMustBeAnEnumName" xml:space="preserve">
-    <value>parameter must be an Enum name!</value>
+  <data name="SettingsCharactersHeader" xml:space="preserve">
+    <value></value>
     <comment>Parameter must be an Enum name in enum to boolean converter</comment>
   </data>
   <data name="ExceptionViewLifeTimeControlViewDisposal" xml:space="preserve">
@@ -178,14 +178,11 @@
   <data name="WelcomeGreetingMorning" xml:space="preserve">
     <value>Bom dia</value>
   </data>
-  <data name="ErrorPlayingTrack" xml:space="preserve">
-    <value>Não foi possível reproduzir o conteúdo: {0}</value>
+  <data name="SettingsThemeDark" xml:space="preserve">
+    <value>Obscuro</value>
   </data>
   <data name="ErrorGeneric" xml:space="preserve">
     <value>Erro: {0}</value>
-  </data>
-  <data name="ErrorInvalidMPDResponse" xml:space="preserve">
-    <value>Resposta MPD inválida.</value>
   </data>
   <data name="SettingsAbout" xml:space="preserve">
     <value>Acerca desta aplicação</value>

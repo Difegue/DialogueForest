@@ -38,19 +38,19 @@ namespace DialogueForest.Core.ViewModels
             var dt = DateTime.Now;
             int hours = dt.Hour;
 
-            if (hours >= 1 || hours <= 12)
+            if (hours > 6 && hours < 12)
             {
                 _welcomeText = Localization.Strings.Resources.WelcomeGreetingMorning;
             }
-            else if (hours >= 12 || hours <= 16)
+            else if (hours > 12 && hours < 16)
             {
                 _welcomeText = Localization.Strings.Resources.WelcomeGreetingAfternoon;
             }
-            else if (hours >= 16 || hours <= 21)
+            else if (hours > 16 && hours < 21)
             {
                 _welcomeText = Localization.Strings.Resources.WelcomeGreetingEvening;
             }
-            else if (hours >= 21 || hours <= 24)
+            else 
             {
                 _welcomeText = Localization.Strings.Resources.WelcomeGreetingNight;
             }

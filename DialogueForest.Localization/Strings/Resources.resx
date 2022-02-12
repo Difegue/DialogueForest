@@ -201,13 +201,13 @@ You can always change this later.</value>
     <value>File name is null or empty. Specify a valid file name</value>
     <comment>File name is null or empty to save file in settings storage extensions</comment>
   </data>
-  <data name="ExceptionEnumToBooleanConverterValueMustBeAnEnum" xml:space="preserve">
-    <value>value must be an Enum!</value>
-    <comment>Value must be an Enum in enum to boolean converter</comment>
+  <data name="SettingsCharactersText" xml:space="preserve">
+    <value>These will appear as quick presets in your Dialogue Nodes.</value>
+    <comment>Settings Forest desc</comment>
   </data>
-  <data name="ExceptionEnumToBooleanConverterParameterMustBeAnEnumName" xml:space="preserve">
-    <value>parameter must be an Enum name!</value>
-    <comment>Parameter must be an Enum name in enum to boolean converter</comment>
+  <data name="SettingsCharactersHeader" xml:space="preserve">
+    <value>Pre-defined Characters</value>
+    <comment>Settings Forest Header</comment>
   </data>
   <data name="ExceptionViewLifeTimeControlViewDisposal" xml:space="preserve">
     <value>This view is being disposed.</value>
@@ -231,15 +231,15 @@ You can always change this later.</value>
     <value>Good Morning</value>
     <comment>Welcome screen greeting</comment>
   </data>
-  <data name="ErrorPlayingTrack" xml:space="preserve">
-    <value>Couldn't play content: {0}</value>
+  <data name="SettingsThemeDark" xml:space="preserve">
+    <value>Dark</value>
   </data>
   <data name="ErrorGeneric" xml:space="preserve">
     <value>Error: {0}</value>
     <comment>Generic error msg</comment>
   </data>
-  <data name="ErrorInvalidMPDResponse" xml:space="preserve">
-    <value>Invalid MPD Response.</value>
+  <data name="SettingsTheme" xml:space="preserve">
+    <value>Application Theme</value>
   </data>
   <data name="WelcomeGreetingNight" xml:space="preserve">
     <value>Good Night</value>
@@ -283,8 +283,7 @@ You can always change this later.</value>
     <value>https://github.com/Difegue/DialogueForest</value>
   </data>
   <data name="SettingsMetadataText" xml:space="preserve">
-    <value>You can declare custom metadata fields here. 
-Said fields will appear on every Dialogue Node for you to input additional information.</value>
+    <value>Metadata fields will appear on every Dialogue Node for you to input additional information.</value>
   </data>
   <data name="SettingsMetadataKey" xml:space="preserve">
     <value>Key</value>

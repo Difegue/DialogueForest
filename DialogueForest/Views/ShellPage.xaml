@@ -185,7 +185,7 @@
                             Background="{ThemeResource LayerFillColorDefaultBrush}"
                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                             BorderThickness="1"
-                            Width="300"
+                            Width="400"
                             CornerRadius="8,8,0,0">
                             <Frame x:Name="shellFrame"/>
                         </Grid>

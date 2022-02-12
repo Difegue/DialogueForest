@@ -133,12 +133,12 @@
     <value>File name is null or empty. Specify a valid file name</value>
     <comment>File name is null or empty to save file in settings storage extensions</comment>
   </data>
-  <data name="ExceptionEnumToBooleanConverterValueMustBeAnEnum" xml:space="preserve">
-    <value>value must be an Enum!</value>
+  <data name="SettingsCharactersText" xml:space="preserve">
+    <value>Ces derniers apparaîtront comme choix rapides pour chaque Dialogue.</value>
     <comment>Value must be an Enum in enum to boolean converter</comment>
   </data>
-  <data name="ExceptionEnumToBooleanConverterParameterMustBeAnEnumName" xml:space="preserve">
-    <value>parameter must be an Enum name!</value>
+  <data name="SettingsCharactersHeader" xml:space="preserve">
+    <value>Personnages prédéfinis</value>
     <comment>Parameter must be an Enum name in enum to boolean converter</comment>
   </data>
   <data name="ExceptionViewLifeTimeControlViewDisposal" xml:space="preserve">
@@ -161,14 +161,14 @@
   <data name="WelcomeGreetingMorning" xml:space="preserve">
     <value>Bonjour</value>
   </data>
-  <data name="ErrorPlayingTrack" xml:space="preserve">
-    <value>Impossible de lire le contenu: {0}</value>
+  <data name="SettingsThemeDark" xml:space="preserve">
+    <value>Sombre</value>
   </data>
   <data name="ErrorGeneric" xml:space="preserve">
     <value>Erreur: {0}</value>
   </data>
-  <data name="ErrorInvalidMPDResponse" xml:space="preserve">
-    <value>Réponse du serveur MPD invalide.</value>
+  <data name="SettingsTheme" xml:space="preserve">
+    <value>Thème de l'Application</value>
   </data>
   <data name="WelcomeGreetingNight" xml:space="preserve">
     <value>Bonne nuit</value>
@@ -264,8 +264,7 @@ Vous pourrez toujours le changer plus tard.</value>
     <value>https://github.com/Difegue/DialogueForest</value>
   </data>
   <data name="SettingsMetadataText" xml:space="preserve">
-    <value>Vous pouvez déclarer des métadonnées custom ici. 
-Ces métadonnées apparaîtront comme champs remplissables sur chaque noeud de Dialogue.</value>
+    <value>Ces métadonnées apparaîtront comme champs remplissables sur chaque Dialogue.</value>
   </data>
   <data name="SettingsMetadataKey" xml:space="preserve">
     <value>Clé</value>

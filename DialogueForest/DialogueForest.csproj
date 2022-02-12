@@ -179,7 +179,6 @@
       <DependentUpon>SettingsDisplayControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DoubleToThicknessConverter.cs" />
-    <Compile Include="Converters\EnumToBooleanConverter.cs" />
     <Compile Include="Converters\SkiaConverters.cs" />
     <Compile Include="EventHandlers\Ink\AddStrokeEventArgs.cs" />
     <Compile Include="EventHandlers\Ink\CopyPasteStrokesEventArgs.cs" />
