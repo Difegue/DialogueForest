@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using DialogueForest.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -19,5 +20,10 @@ namespace DialogueForest.ViewModels
         [ObservableProperty]
         private object _value;
 
+        [ICommand]
+        private void Delete()
+        {
+            // TODO
+        }
     }
 }

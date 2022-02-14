@@ -25,6 +25,11 @@ namespace DialogueForest.Core.Services
 
         }
 
+        public void SaveForestToStorage()
+        {
+
+        }
+
         public void SaveForestToFile()
         {
 
@@ -74,6 +79,19 @@ namespace DialogueForest.Core.Services
             // TODO: Notify PinnedVM
         }
 
+        public Dictionary<string, MetadataKind> GetMetadataDefinitions() => _currentForest.MetadataDefinitions;
+        internal void SetMetadataDefinitions(Dictionary<string, MetadataKind> data)
+        {
+            _currentForest.MetadataDefinitions = data;
+            SaveForestToStorage();
+        }
+        public List<string> GetCharacters() => _currentForest.CharacterDefinitions;
+        internal void SetCharacters(List<string> chars)
+        {
+            _currentForest.CharacterDefinitions = chars;
+            SaveForestToStorage();
+        }
+
         internal void DeleteNode(DialogueNode node) => _currentForest.Trash.RemoveNode(node); // TODO update trash
 
         internal bool IsNodePinned(DialogueNode node) => _currentForest.PinnedIDs.Contains(node.ID);
@@ -99,5 +117,6 @@ namespace DialogueForest.Core.Services
 
             return tree;
         }
+
     }
 }

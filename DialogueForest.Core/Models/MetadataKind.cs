@@ -9,6 +9,6 @@ namespace DialogueForest.Core.Models
         STRING,
         BOOL,
         COLOR,
-        ENUM
+        //ENUM
     }
 }

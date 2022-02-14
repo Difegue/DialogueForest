@@ -16,7 +16,7 @@ namespace DialogueForest.Core.Models
             Trash = new DialogueTree(Localization.Strings.Resources.NavigationTrash);
 
             MetadataDefinitions = new Dictionary<string, MetadataKind>();
-            CharacterDefinitions = new Dictionary<string, string>();
+            CharacterDefinitions = new List<string>();
         }
 
         public long LastID { get; set; }
@@ -31,7 +31,7 @@ namespace DialogueForest.Core.Models
 
         public Dictionary<string, MetadataKind> MetadataDefinitions { get; set; }
 
-        public Dictionary<string, string> CharacterDefinitions { get; set; }
+        public List<string> CharacterDefinitions { get; set; }
 
     }
 }
