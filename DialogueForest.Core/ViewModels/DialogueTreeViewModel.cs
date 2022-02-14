@@ -26,10 +26,11 @@ namespace DialogueForest.Core.ViewModels
 
         private DialogueTree _tree;
 
-        public static DialogueTreeViewModel Create(DialogueTree tree)
+        public static DialogueTreeViewModel Create(DialogueTree tree, bool canBeRenamed = false)
         {
             var instance = Ioc.Default.GetRequiredService<DialogueTreeViewModel>();
             instance.LoadFromTree(tree);
+            instance._canBeRenamed = canBeRenamed;
 
             return instance;
         }
@@ -72,6 +73,9 @@ namespace DialogueForest.Core.ViewModels
         [ObservableProperty]
         private int _totalWords;
 
+        [ObservableProperty]
+        private bool _canBeRenamed;
+
         public int TotalDialogues => Nodes.Count;
 
         [ICommand]
@@ -103,7 +107,7 @@ namespace DialogueForest.Core.ViewModels
         [ICommand]
         private void Delete()
         {
-
+            // TODO
         }
 
         

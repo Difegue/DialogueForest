@@ -12,8 +12,8 @@ namespace DialogueForest.Core.Models
 
             Trees = new List<DialogueTree>();
             PinnedIDs = new List<long>();
-            Notes = new DialogueTree("NOtes");
-            Trash = new DialogueTree("Tr4sh");
+            Notes = new DialogueTree(Localization.Strings.Resources.NavigationNotes);
+            Trash = new DialogueTree(Localization.Strings.Resources.NavigationTrash);
 
             MetadataDefinitions = new Dictionary<string, MetadataKind>();
             CharacterDefinitions = new Dictionary<string, string>();

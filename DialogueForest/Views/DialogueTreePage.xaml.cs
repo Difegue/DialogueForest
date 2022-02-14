@@ -20,14 +20,14 @@ namespace DialogueForest.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            DialogueTree tree = null;
-
+           
             if (e.Parameter is DialogueTree t)
             {
-                tree = t;
+                DataContext = DialogueTreeViewModel.Create(t, true);
             }   
             else if (e.Parameter is string s)
             {
+                DialogueTree tree = null;
                 var dataService = Ioc.Default.GetRequiredService<ForestDataService>();
                 switch (s)
                 {
@@ -42,10 +42,10 @@ namespace DialogueForest.Views
                         break;
                     default: throw new Exception("Unknown tag!");
                 }
-            }
 
-            if (tree != null)
                 DataContext = DialogueTreeViewModel.Create(tree);
+            }
+                
         }
     }
 }
