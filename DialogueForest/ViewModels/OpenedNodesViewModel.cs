@@ -9,6 +9,7 @@ using WinUI = Microsoft.UI.Xaml.Controls;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using DialogueForest.Core.Interfaces;
 using DialogueForest.Services;
+using DialogueForest.Core.ViewModels;
 
 namespace DialogueForest.ViewModels
 {

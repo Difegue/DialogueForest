@@ -1,6 +1,5 @@
 ﻿using System;
 
-using DialogueForest.ViewModels;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -8,6 +7,7 @@ using Windows.ApplicationModel.Core;
 using Windows.System;
 using Windows.System.Profile;
 using System.Collections.Generic;
+using DialogueForest.ViewModels;
 
 namespace DialogueForest.Views
 {

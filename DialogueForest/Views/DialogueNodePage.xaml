@@ -11,7 +11,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:strings="using:DialogueForest.Localization.Strings" 
     xmlns:local="using:DialogueForest.Controls"
-    xmlns:viewmodels="using:DialogueForest.ViewModels"
+    xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -30,7 +30,7 @@
                     </i:Interaction.Behaviors>
                 </Grid>
 
-                <StackPanel Margin="2,2" 
+                <StackPanel Margin="0,2" 
                             Visibility="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
 
                     <Grid HorizontalAlignment="Stretch" Height="40" BorderBrush="{ThemeResource ControlStrokeColorDefault}"

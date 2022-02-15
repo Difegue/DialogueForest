@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DialogueForest.Core.Models;
+using DialogueForest.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,28 +9,23 @@ using System.Text;
 namespace DialogueForest.Core.ViewModels
 {
 
-    public partial class MetadataViewModel : ObservableObject
+    public partial class CharacterViewModel : ObservableObject
     {
         private SettingsViewModel _parentVm;
 
-        public MetadataViewModel(SettingsViewModel parent)
+        public CharacterViewModel(SettingsViewModel parent)
         {
             _parentVm = parent;
         }
 
         [ObservableProperty]
-        private MetadataKind _kind;
-
-        [ObservableProperty]
         private string _name;
 
-        [ObservableProperty]
-        private object _value;
 
         [ICommand]
         private void Delete()
         {
-            _parentVm.RemoveMetadata(this);
+            _parentVm.RemoveCharacter(this);
         }
     }
 }

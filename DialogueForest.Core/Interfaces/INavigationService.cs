@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using DialogueForest.Core.Models;
-using DialogueForest.ViewModels;
+using DialogueForest.Core.ViewModels;
 using System;
 
 namespace DialogueForest.Core.Interfaces

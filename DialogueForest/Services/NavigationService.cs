@@ -1,14 +1,14 @@
-﻿using DialogueForest.ViewModels;
+﻿using DialogueForest.Core.ViewModels;
 using DialogueForest.Views;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 using DialogueForest.Core.Interfaces;
-using DialogueForest.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using DialogueForest.Core.Models;
+using DialogueForest.ViewModels;
 
 namespace DialogueForest.Services
 {

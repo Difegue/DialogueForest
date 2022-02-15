@@ -8,7 +8,7 @@
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:views="using:DialogueForest.Views" xmlns:strings="using:DialogueForest.Localization.Strings"
-    xmlns:viewmodels="using:DialogueForest.ViewModels"
+    xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d">
 
@@ -87,8 +87,8 @@
         </Grid>
 
         <muxc:TabView 
-            IsAddTabButtonVisible="False"
             AllowDropTabs="True"
+            IsAddTabButtonVisible="False"
             SelectedIndex="{x:Bind ViewModel.SelectedTabIndex, Mode=TwoWay}"
             TabItemsSource="{x:Bind ViewModel.Tabs}">
             <i:Interaction.Behaviors>
@@ -111,7 +111,8 @@
                             <muxc:FontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE8BE;"/>
                         </muxc:TabViewItem.IconSource>
                         <muxc:TabViewItem.Content>
-                            <views:DialogueNodePage DataContext="{x:Bind}" />
+                            <!--TOCHANGE tabview content is bugged af -->
+                            <views:DialogueNodePage />
                         </muxc:TabViewItem.Content>
                     </muxc:TabViewItem>
                 </DataTemplate>

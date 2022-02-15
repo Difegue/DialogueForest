@@ -3,12 +3,13 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using DialogueForest.Core.Interfaces;
 using DialogueForest.Core.Models;
+using DialogueForest.Core.Services;
 using DialogueForest.Localization.Strings;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DialogueForest.ViewModels
+namespace DialogueForest.Core.ViewModels
 {
     public partial class DialoguePartViewModel : ObservableObject
     {
@@ -26,10 +27,18 @@ namespace DialogueForest.ViewModels
             return instance;
         }
 
+        public List<string> Characters;
+
         public string RtfDialogueText
         {
             get => _text.RichText;
             set => SetProperty(_text.RichText, value, _text, (u, n) => u.RichText = n);
+        }
+
+        public string CharacterName
+        {
+            get => _text.Character;
+            set => SetProperty(_text.Character, value, _text, (u, n) => u.Character = n);
         }
 
         [ObservableProperty]
@@ -49,9 +58,10 @@ namespace DialogueForest.ViewModels
                 _parentNodeVm.RemoveDialog(this, _text);
         }
 
-        public DialoguePartViewModel(IDialogService dialogService)
+        public DialoguePartViewModel(IDialogService dialogService, ForestDataService dataService)
         {
             _dialogService = dialogService;
+            Characters = dataService.GetCharacters(); //TODO update character list if settings updated
         }
     }
 }

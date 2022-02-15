@@ -12,7 +12,7 @@ using DialogueForest.Core.Services;
 using DialogueForest.Core.ViewModels;
 using DialogueForest.Localization.Strings;
 
-namespace DialogueForest.ViewModels
+namespace DialogueForest.Core.ViewModels
 {
 
     public partial class DialogueNodeViewModel : ObservableObject
@@ -72,12 +72,6 @@ namespace DialogueForest.ViewModels
         {
             get => _node.Title;
             set => SetProperty(_node.Title, value, _node, (u, n) => u.Title = n);
-        }
-
-        public string Character
-        {
-            get => _node.Character;
-            set => SetProperty(_node.Character, value, _node, (u, n) => u.Character = n);
         }
 
         public string PlainText => Dialogs.FirstOrDefault()?.PlainDialogueText;

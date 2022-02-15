@@ -14,7 +14,7 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:viewmodels="using:DialogueForest.ViewModels"
+    xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
     mc:Ignorable="d">
     <Page.Resources>
 
@@ -29,10 +29,10 @@
 
         <DataTemplate x:Key="MetadataTemplateSettings" x:DataType="viewmodels:MetadataViewModel">
 
-            <Grid Style="{StaticResource CardGrid}" >
+            <Grid Style="{StaticResource CardGrid}" CornerRadius="0" BorderThickness="0,0,0,1">
                 <toolkit:WrapPanel VerticalSpacing="8" HorizontalSpacing="8" Orientation="Horizontal" >
 
-                    <TextBox Header="Name" Width="160" Text="{x:Bind Name}"/>
+                    <TextBox Header="Name" Width="160" Text="{x:Bind Name, Mode=TwoWay}"/>
 
                     <ComboBox Header="Type" Width="96"
                             ItemsSource="{ui:EnumValues Type=models:MetadataKind}" 
@@ -48,12 +48,12 @@
 
         </DataTemplate>
 
-        <DataTemplate x:Key="CharacterTemplate" x:DataType="x:String">
-            <Grid Style="{StaticResource CardGrid}" >
+        <DataTemplate x:Key="CharacterTemplate" x:DataType="viewmodels:CharacterViewModel">
+            <Grid Style="{StaticResource CardGrid}" CornerRadius="0" BorderThickness="0,0,0,1">
                 <toolkit:WrapPanel VerticalSpacing="10" HorizontalSpacing="10" Orientation="Horizontal" >
 
-                    <TextBox Header="Name" Width="264" Text="{x:Bind}"/>
-                    <Button Margin="20,0,0,0" VerticalAlignment="Bottom"
+                    <TextBox Header="Name" Width="264" Text="{x:Bind Name, Mode=TwoWay}"/>
+                    <Button Margin="18,0,0,0" Command="{x:Bind DeleteCommand}" VerticalAlignment="Bottom"
                                             ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewDeleteTree}">
                         <FontIcon Foreground="{ThemeResource DestructiveActionForeground}"
                                                   FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" FontSize="18"/>
@@ -100,7 +100,7 @@
 
                 </local:SettingsBlockControl>
 
-                <local:SettingsBlockControl Title="{x:Bind strings:Resources.SettingsMetadataHeader}"
+                <local:SettingsBlockControl Title="{x:Bind strings:Resources.SettingsMetadataHeader}" Margin="{StaticResource XXSmallTopMargin}"
                                             Description="{x:Bind strings:Resources.SettingsMetadataText}">
                     <local:SettingsBlockControl.Icon>
                         <FontIcon Glyph="&#xE8EC;" />
@@ -148,7 +148,9 @@
 
                 </local:SettingsBlockControl>
 
-                <local:SettingsBlockControl Title="{x:Bind strings:Resources.SettingsUIDensity}" Description="{x:Bind strings:Resources.SettingsApplyOnRestart}">
+                <local:SettingsBlockControl Margin="{StaticResource XXSmallTopMargin}"
+                                            Title="{x:Bind strings:Resources.SettingsUIDensity}" 
+                                            Description="{x:Bind strings:Resources.SettingsApplyOnRestart}">
                     <local:SettingsBlockControl.Icon>
                         <SymbolIcon Symbol="FontSize" />
                     </local:SettingsBlockControl.Icon>

@@ -9,7 +9,7 @@ using DialogueForest.Core.Services;
 using DialogueForest.Core.Models;
 using CommunityToolkit.Mvvm.DependencyInjection;
 
-namespace DialogueForest.ViewModels
+namespace DialogueForest.Core.ViewModels
 {
     public partial class ReplyPromptViewModel : ObservableObject
     {

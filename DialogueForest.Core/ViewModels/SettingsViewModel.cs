@@ -13,7 +13,7 @@ using DialogueForest.Core.Interfaces;
 using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
 using DialogueForest.Localization.Strings;
-using DialogueForest.ViewModels;
+using DialogueForest.Core.ViewModels;
 
 namespace DialogueForest.Core.ViewModels
 {
@@ -54,6 +54,8 @@ namespace DialogueForest.Core.ViewModels
                     data.Add(vm.Name, vm.Kind);
             }
             _dataService.SetMetadataDefinitions(data);
+
+            _dataService.SetCharacters(ForestCharacters.Select(vm => vm.Name).ToList());
         }
 
         [ObservableProperty]
@@ -66,22 +68,39 @@ namespace DialogueForest.Core.ViewModels
         private string _versionDescription;
 
         public ObservableCollection<MetadataViewModel> ForestMetadata { get; } = new ObservableCollection<MetadataViewModel>();
-        public ObservableCollection<string> ForestCharacters { get; } = new ObservableCollection<string>();
+        public ObservableCollection<CharacterViewModel> ForestCharacters { get; } = new ObservableCollection<CharacterViewModel>();
 
         public int MetadataCount => ForestMetadata.Count;
         public int CharacterCount => ForestCharacters.Count;
 
         [ICommand]
+        private void AddCharacter()
+        {
+            var vm = new CharacterViewModel(this);
+            vm.PropertyChanged += SaveForestSettings;
+            ForestCharacters.Add(vm);
+        }
+
+        public void RemoveCharacter(CharacterViewModel vm)
+        {
+            vm.PropertyChanged -= SaveForestSettings;
+            ForestCharacters.Remove(vm);
+            SaveForestSettings(this, null);
+        }
+
+        [ICommand]
         private void AddMetadata()
         {
-            var vm = new MetadataViewModel { Kind = MetadataKind.STRING };
+            var vm = new MetadataViewModel(this) { Kind = MetadataKind.STRING };
             vm.PropertyChanged += SaveForestSettings;
             ForestMetadata.Add(vm);
         }
 
-        public void RemoveMetadata()
+        public void RemoveMetadata(MetadataViewModel vm)
         {
-
+            vm.PropertyChanged -= SaveForestSettings;
+            ForestMetadata.Remove(vm);
+            SaveForestSettings(this, null);
         }
 
         [ICommand]
@@ -133,17 +152,26 @@ namespace DialogueForest.Core.ViewModels
                 ForestMetadata.Remove(vm);
             }
 
+            foreach (var vm in ForestCharacters)
+            {
+                vm.PropertyChanged -= SaveForestSettings;
+                ForestCharacters.Remove(vm);
+            }
+
             var metadata = _dataService.GetMetadataDefinitions();
             foreach (var key in metadata.Keys)
             {
-                var vm = new MetadataViewModel { Name = key, Kind = metadata[key] };
+                var vm = new MetadataViewModel(this) { Name = key, Kind = metadata[key] };
                 vm.PropertyChanged += SaveForestSettings;
                 ForestMetadata.Add(vm);
             }
 
-            ForestCharacters.Clear();
             foreach (var s in _dataService.GetCharacters())
-                ForestCharacters.Add(s);
+            {
+                var vm = new CharacterViewModel(this) { Name = s };
+                vm.PropertyChanged += SaveForestSettings;
+                ForestCharacters.Add(vm);
+            }
         }
 
         private string GetVersionDescription()
