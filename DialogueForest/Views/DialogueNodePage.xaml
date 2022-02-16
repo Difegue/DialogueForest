@@ -11,10 +11,20 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:strings="using:DialogueForest.Localization.Strings" 
     xmlns:local="using:DialogueForest.Controls"
-    xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
+    xmlns:views="using:DialogueForest.Views"
+    xmlns:viewmodels="using:DialogueForest.Core.ViewModels" xmlns:converters="using:DialogueForest.Converters"
     mc:Ignorable="d">
 
     <Page.Resources>
+
+        <converters:BoolMetadataConverter x:Key="BoolMetadataConverter"/>
+        <converters:ColorMetadataConverter x:Key="ColorMetadataConverter"/>
+
+        <Style x:Key="ColorPickerStyle" TargetType="controls:ColorPicker">
+            <Setter Property="ColorSpectrumShape" Value="Ring"/>
+            <Setter Property="IsAlphaEnabled" Value="False"/>
+            <Setter Property="IsHexInputVisible" Value="True"/>
+        </Style>
 
         <DataTemplate x:Key="DialogPartTemplate" x:DataType="viewmodels:DialoguePartViewModel">
             <Grid>
@@ -62,17 +72,8 @@
                             <AppBarSeparator />
 
                             <controls:ColorPickerButton ToolTipService.ToolTip="{x:Bind strings:Resources.EditorFontColor}"
-                                  SelectedColor="Navy">
-                                <controls:ColorPickerButton.ColorPickerStyle>
-                                    <Style TargetType="controls:ColorPicker">
-                                        <Setter Property="ColorSpectrumShape" Value="Ring"/>
-                                        <Setter Property="IsAlphaEnabled" Value="False"/>
-                                        <Setter Property="IsHexInputVisible" Value="True"/>
-                                    </Style>
-                                </controls:ColorPickerButton.ColorPickerStyle>
-                            </controls:ColorPickerButton>
+                                  SelectedColor="Navy" ColorPickerStyle="{StaticResource ColorPickerStyle}"/>
 
-                            
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Spacing="8" Grid.Column="2" HorizontalAlignment="Right" Margin="{StaticResource SmallRightMargin}">
@@ -127,6 +128,48 @@
             </Grid>
         </DataTemplate>
 
+        <DataTemplate x:Key="MetadataBoolTemplate" x:DataType="viewmodels:MetadataViewModel">
+            <local:SettingsBlockControl
+                        Icon="SwitchApps"
+                        Title="{x:Bind Name}">
+
+                <local:SettingsBlockControl.SettingsActionableElement>
+                    <ToggleSwitch IsOn="{x:Bind Value, Mode=TwoWay, Converter={StaticResource BoolMetadataConverter}}"
+                                  OffContent="" OnContent="" Margin="0,0,-112,0"/>
+                </local:SettingsBlockControl.SettingsActionableElement>
+
+            </local:SettingsBlockControl>
+        </DataTemplate>
+
+        <DataTemplate x:Key="MetadataStringTemplate" x:DataType="viewmodels:MetadataViewModel">
+            <local:SettingsBlockControl
+                        Icon="Tag"
+                        Title="{x:Bind Name}">
+
+                <local:SettingsBlockControl.SettingsActionableElement>
+                    <TextBox Width="180" Text="{x:Bind Value, Mode=TwoWay}"/>
+                </local:SettingsBlockControl.SettingsActionableElement>
+
+            </local:SettingsBlockControl>
+        </DataTemplate>
+
+        <DataTemplate x:Key="MetadataColorTemplate" x:DataType="viewmodels:MetadataViewModel">
+            <local:SettingsBlockControl
+                        Icon="Highlight"
+                        Title="{x:Bind Name}">
+
+                <local:SettingsBlockControl.SettingsActionableElement>
+                    <controls:ColorPickerButton SelectedColor="{x:Bind Value, Mode=TwoWay, Converter={StaticResource ColorMetadataConverter}}"
+                                                ColorPickerStyle="{StaticResource ColorPickerStyle}"/>
+                </local:SettingsBlockControl.SettingsActionableElement>
+
+            </local:SettingsBlockControl>
+        </DataTemplate>
+
+        <views:MetadataTemplateSelector x:Key="MetadataTemplateSelector"
+                                        MetadataBoolTemplate="{StaticResource MetadataBoolTemplate}"
+                                        MetadataStringTemplate="{StaticResource MetadataStringTemplate}"
+                                        MetadataColorTemplate="{StaticResource MetadataColorTemplate}"/>
     </Page.Resources>
     
     <Grid x:Name="ContentArea">
@@ -213,47 +256,9 @@
                         </StackPanel>
                     </controls:HeaderedContentControl.Header>
 
-                    <StackPanel Spacing="2">
-                        <local:SettingsBlockControl
-                        Icon="SwitchApps"
-                        Title="MyMetadataKey1">
-
-                            <local:SettingsBlockControl.SettingsActionableElement>
-                                <ToggleSwitch IsOn="False" OffContent="" OnContent="" Margin="0,0,-112,0"/>
-                            </local:SettingsBlockControl.SettingsActionableElement>
-
-                        </local:SettingsBlockControl>
-                        <local:SettingsBlockControl
-                        Icon="Tag"
-                        Title="MyMetadataKey2">
-
-                            <local:SettingsBlockControl.SettingsActionableElement>
-                                <TextBox Width="180"/>
-                            </local:SettingsBlockControl.SettingsActionableElement>
-
-                        </local:SettingsBlockControl>
-                        <local:SettingsBlockControl
-                        Icon="Highlight"
-                        Title="MyMetadataKey3">
-
-                            <local:SettingsBlockControl.SettingsActionableElement>
-                                <controls:ColorPickerButton x:Name="ColorPickerButton5"
-                                  SelectedColor="Teal">
-                                    <controls:ColorPickerButton.ColorPickerStyle>
-                                        <Style TargetType="controls:ColorPicker">
-                                            <Setter Property="ColorSpectrumShape" Value="Ring"/>
-                                            <Setter Property="IsAlphaEnabled" Value="True"/>
-                                            <Setter Property="IsHexInputVisible" Value="True"/>
-                                            <Setter Property="IsColorSpectrumVisible" Value="False"/>
-                                            <Setter Property="IsColorPaletteVisible" Value="True"/>
-                                            <Setter Property="IsColorChannelTextInputVisible" Value="False"/>
-                                        </Style>
-                                    </controls:ColorPickerButton.ColorPickerStyle>
-                                </controls:ColorPickerButton>
-                            </local:SettingsBlockControl.SettingsActionableElement>
-
-                        </local:SettingsBlockControl>
-                    </StackPanel>
+                    <ListView ItemsSource="{x:Bind ViewModel.MetaValues}"
+                    SelectionMode="None" 
+                    ItemTemplateSelector="{StaticResource MetadataTemplateSelector}"/>
 
                 </controls:HeaderedContentControl>
                 

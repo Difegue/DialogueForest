@@ -36,7 +36,20 @@ namespace DialogueForest.Core.ViewModels
         {
             _node = node;
 
-            // TODO metadata
+            // TODO Listen to meta array change event to update this
+            foreach (var kvp in _dataService.GetMetadataDefinitions())
+            {
+                // Check if the node already has metadata for this key
+                if (node.Metadata.FirstOrDefault(m => m.Key == kvp.Key) is DialogueMetadataValue metadata)
+                    AddMetadata(metadata);
+                else
+                {
+                    // Otherwise, create a new value holder
+                    var value = new DialogueMetadataValue { Key = kvp.Key, Kind = kvp.Value };
+                    node.Metadata.Add(value);
+                    AddMetadata(value);
+                }
+            }
 
             foreach (var prompt in node.Prompts)
                 AddPrompt(prompt);
@@ -121,6 +134,11 @@ namespace DialogueForest.Core.ViewModels
         {
             _node.Prompts.Remove(matchingReply);
             Prompts.Remove(vm);
+        }
+
+        private void AddMetadata(DialogueMetadataValue metaval)
+        {
+            MetaValues.Add(new MetadataViewModel(metaval));
         }
 
         [ICommand]
