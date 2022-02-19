@@ -19,7 +19,7 @@ namespace DialogueForest.ViewModels
         public ObservableCollection<DialogueNodeViewModel> Tabs { get; } = new ObservableCollection<DialogueNodeViewModel>();
 
         [ObservableProperty]
-        private int _selectedTabIndex;
+        private DialogueNodeViewModel _selectedItem;
 
         public OpenedNodesViewModel()
         {
@@ -49,7 +49,7 @@ namespace DialogueForest.ViewModels
                 }
             }
 
-            SelectedTabIndex = Tabs.IndexOf(vm);
+            SelectedItem = vm;
         }
 
         [ICommand]

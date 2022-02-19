@@ -51,7 +51,13 @@ namespace DialogueForest.Core.ViewModels
             foreach (var vm in ForestMetadata)
             {
                 if (vm.Name != null)
+                {
+                    // very cheap dupe checker
+                    while (data.ContainsKey(vm.Name))
+                        vm.Name += "'";
+
                     data.Add(vm.Name, vm.Kind);
+                }
             }
             _dataService.SetMetadataDefinitions(data);
 

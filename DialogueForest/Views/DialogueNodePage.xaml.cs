@@ -14,6 +14,8 @@ namespace DialogueForest.Views
         public DialogueNodePage()
         {
             InitializeComponent();
+
+            DataContextChanged += (s,a) => Bindings.Update();
         }
 
     }
