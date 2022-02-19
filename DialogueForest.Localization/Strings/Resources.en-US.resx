@@ -485,4 +485,10 @@ They'll show up here when you do.</value>
   <data name="NavigationTrees" xml:space="preserve">
     <value>Dialogue Trees</value>
   </data>
+  <data name="EditorEmptyMetadata1" xml:space="preserve">
+    <value>If you define custom metadata keys in</value>
+  </data>
+  <data name="EditorEmptyMetadata2" xml:space="preserve">
+    <value>, you will be able to set values for them here.</value>
+  </data>
 </root>

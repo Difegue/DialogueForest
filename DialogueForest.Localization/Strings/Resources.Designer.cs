@@ -268,6 +268,24 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à If you define custom metadata keys in.
+        /// </summary>
+        public static string EditorEmptyMetadata1 {
+            get {
+                return ResourceManager.GetString("EditorEmptyMetadata1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à , you will be able to set values for them here..
+        /// </summary>
+        public static string EditorEmptyMetadata2 {
+            get {
+                return ResourceManager.GetString("EditorEmptyMetadata2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Replies to this dialogue will show up here, if you add any..
         /// </summary>
         public static string EditorEmptyReplies {

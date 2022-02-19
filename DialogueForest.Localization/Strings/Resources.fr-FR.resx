@@ -484,4 +484,10 @@ Vous les retrouverez ici.</value>
   <data name="NavigationTrees" xml:space="preserve">
     <value>Arbres de Dialogue</value>
   </data>
+  <data name="EditorEmptyMetadata1" xml:space="preserve">
+    <value>Si vous définissez des métadonnées dans les</value>
+  </data>
+  <data name="EditorEmptyMetadata2" xml:space="preserve">
+    <value>, vous pourrez leur donner des valeurs ici.</value>
+  </data>
 </root>

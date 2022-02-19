@@ -97,7 +97,7 @@
                 </StackPanel>
             </Grid>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="DialogPromptTemplate" x:DataType="viewmodels:ReplyPromptViewModel">
             <Grid Style="{StaticResource CardGrid}" Margin="0,0,0,4">
                 <Grid.ColumnDefinitions>
@@ -171,7 +171,7 @@
                                         MetadataStringTemplate="{StaticResource MetadataStringTemplate}"
                                         MetadataColorTemplate="{StaticResource MetadataColorTemplate}"/>
     </Page.Resources>
-    
+
     <Grid x:Name="ContentArea">
         <Grid.RowDefinitions>
             <RowDefinition Height="112" />
@@ -221,7 +221,7 @@
                     <ListView ItemsSource="{x:Bind ViewModel.Dialogs}"
                     SelectionMode="None" Margin="-16,0,-12,0"
                     ItemTemplate="{StaticResource DialogPartTemplate}"/>
-                    
+
                 </controls:HeaderedContentControl>
 
                 <controls:HeaderedContentControl
@@ -239,10 +239,14 @@
                         </StackPanel>
                     </controls:HeaderedContentControl.Header>
 
-                    <ListView ItemsSource="{x:Bind ViewModel.Prompts}"
+                    <Grid>
+                        <ListView ItemsSource="{x:Bind ViewModel.Prompts}"
                     SelectionMode="None" Margin="-16,0,-12,0"
                     ItemTemplate="{StaticResource DialogPromptTemplate}"/>
 
+                        <TextBlock Visibility="{x:Bind ViewModel.IsPromptsEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                        Text="{x:Bind strings:Resources.EditorEmptyReplies}" Margin="{StaticResource SmallTopBottomMargin}"/>
+                    </Grid>
 
                 </controls:HeaderedContentControl>
 
@@ -256,12 +260,28 @@
                         </StackPanel>
                     </controls:HeaderedContentControl.Header>
 
-                    <ListView ItemsSource="{x:Bind ViewModel.MetaValues}"
+                    <Grid>
+                        <ListView ItemsSource="{x:Bind ViewModel.MetaValues}"
                     SelectionMode="None" 
                     ItemTemplateSelector="{StaticResource MetadataTemplateSelector}"/>
 
+                        <TextBlock Visibility="{x:Bind ViewModel.IsMetaDataEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                                   Margin="{StaticResource SmallTopBottomMargin}" >
+                            <Run Text="{x:Bind strings:Resources.EditorEmptyMetadata1}"/>
+                            <Hyperlink>
+                                <i:Interaction.Behaviors>
+                                    <ic:EventTriggerBehavior EventName="Click">
+                                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.OpenSettingsCommand}"></ic:InvokeCommandAction>
+                                    </ic:EventTriggerBehavior>
+                                </i:Interaction.Behaviors>
+                                <Run Text="{x:Bind strings:Resources.NavigationSettings}"/>
+                            </Hyperlink>
+                            <Run Text="{x:Bind strings:Resources.EditorEmptyMetadata2}"/>
+                        </TextBlock>
+                    </Grid>
+
                 </controls:HeaderedContentControl>
-                
+
                 <Border Height="64" />
             </StackPanel>
 

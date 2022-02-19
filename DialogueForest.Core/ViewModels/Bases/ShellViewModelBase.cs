@@ -55,8 +55,9 @@ namespace DialogueForest.Core.ViewModels
 
             if (name != null)
             {
-                _dataService.CreateNewTree(name);
+                var tree = _dataService.CreateNewTree(name);
                 UpdateTreeList();
+                _navigationService.Navigate<DialogueTreeViewModel>(tree);
             }
             
         }

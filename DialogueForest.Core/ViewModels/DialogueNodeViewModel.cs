@@ -18,7 +18,7 @@ namespace DialogueForest.Core.ViewModels
     public partial class DialogueNodeViewModel : ObservableObject
     {
         private IDialogService _dialogService;
-        private IInteropService _interopService;
+        private INavigationService _navigationService;
         private INotificationService _notificationService;
         private ForestDataService _dataService;
 
@@ -58,11 +58,11 @@ namespace DialogueForest.Core.ViewModels
                 AddDialog(dialogue);
         }
 
-        public DialogueNodeViewModel(IDialogService dialogService, IInteropService interopService, INotificationService notificationService, ForestDataService forestService)
+        public DialogueNodeViewModel(IDialogService dialogService, INavigationService navigationService, INotificationService notificationService, ForestDataService forestService)
         {
             _dialogService = dialogService;
             _notificationService = notificationService;
-            _interopService = interopService;
+            _navigationService = navigationService;
             _dataService = forestService;
 
             Prompts.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsPromptsEmpty));
@@ -90,6 +90,9 @@ namespace DialogueForest.Core.ViewModels
         public string PlainText => Dialogs.FirstOrDefault()?.PlainDialogueText;
 
         private void UpdatePlainText(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(nameof(PlainText));
+
+        [ICommand]
+        private void OpenSettings() => _navigationService.Navigate<SettingsViewModel>();
 
         [ICommand]
         private void AddDialog(DialogueText text = null)
