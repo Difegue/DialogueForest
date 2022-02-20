@@ -9,7 +9,7 @@ namespace DialogueForest.Views
 {
     public sealed partial class DialogueNodePage : Page
     {
-        public DialogueNodeViewModel ViewModel => (DialogueNodeViewModel)DataContext;
+        public DialogueNodeViewModel ViewModel => DataContext is DialogueNodeViewModel vm ? vm : null; 
 
         public DialogueNodePage()
         {

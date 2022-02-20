@@ -20,7 +20,7 @@ namespace DialogueForest.Core.ViewModels
     public partial class DialogueTreeViewModel : ObservableObject
     {
         private IDialogService _dialogService;
-        private IInteropService _interopService;
+        private OpenedNodesViewModel _openedNodes;
         private INavigationService _navigationService;
         private ForestDataService _dataService;
 
@@ -41,8 +41,17 @@ namespace DialogueForest.Core.ViewModels
 
             foreach (var node in tree.Nodes.Values)
             {
-                // TODO Check if there isn't already a VM for this node to recycle
-                var nodeVm = DialogueNodeViewModel.Create(node);
+                DialogueNodeViewModel nodeVm;
+
+                // Check if there isn't already a VM for this node to recycle
+                if (_openedNodes.Tabs.FirstOrDefault(vm => vm.ID == node.ID) is DialogueNodeViewModel existingVm)
+                {
+                    nodeVm = existingVm;  
+                } 
+                else
+                {
+                    nodeVm = DialogueNodeViewModel.Create(node);
+                }
 
                 nodeVm.SetParentVm(this);
                 Nodes.Add(nodeVm);
@@ -51,11 +60,11 @@ namespace DialogueForest.Core.ViewModels
 
         public ObservableCollection<DialogueNodeViewModel> Nodes { get; } = new ObservableCollection<DialogueNodeViewModel>();
 
-        public DialogueTreeViewModel(IDialogService dialogService, IInteropService interopService, INavigationService navigationService, ForestDataService forestService)
+        public DialogueTreeViewModel(IDialogService dialogService, OpenedNodesViewModel openedNodes, INavigationService navigationService, ForestDataService forestService)
         {
             _dialogService = dialogService;
             _navigationService = navigationService;
-            _interopService = interopService;
+            _openedNodes = openedNodes;
             _dataService = forestService;
 
             Nodes.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsNodesEmpty));

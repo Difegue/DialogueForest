@@ -5,13 +5,7 @@ using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-using WinUI = Microsoft.UI.Xaml.Controls;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using DialogueForest.Core.Interfaces;
-using DialogueForest.Services;
-using DialogueForest.Core.ViewModels;
-
-namespace DialogueForest.ViewModels
+namespace DialogueForest.Core.ViewModels
 {
     public partial class OpenedNodesViewModel : ObservableObject
     {
@@ -23,10 +17,6 @@ namespace DialogueForest.ViewModels
 
         public OpenedNodesViewModel()
         {
-            // Link with NavigationService
-            var navService = Ioc.Default.GetRequiredService<INavigationService>() as NavigationService;
-            navService.NodeTabContainer = this;
-
             Tabs.CollectionChanged += (s, e) => OnPropertyChanged(nameof(NoTabsOpen));
         }
 
@@ -53,12 +43,7 @@ namespace DialogueForest.ViewModels
         }
 
         [ICommand]
-        private void CloseTab(WinUI.TabViewTabCloseRequestedEventArgs args)
-        {
-            if (args.Item is DialogueNodeViewModel item)
-            {
-                Tabs.Remove(item);                
-            }
-        }
+        private void RemoveTab(DialogueNodeViewModel item) => Tabs.Remove(item);                
+
     }
 }

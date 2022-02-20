@@ -90,12 +90,8 @@
             AllowDropTabs="True"
             IsAddTabButtonVisible="False"
             SelectedItem="{x:Bind ViewModel.SelectedItem, Mode=TwoWay}"
-            TabItemsSource="{x:Bind ViewModel.Tabs}">
-            <i:Interaction.Behaviors>
-                <ic:EventTriggerBehavior EventName="TabCloseRequested">
-                    <ic:InvokeCommandAction Command="{x:Bind ViewModel.CloseTabCommand}" />
-                </ic:EventTriggerBehavior>
-            </i:Interaction.Behaviors>
+            TabItemsSource="{x:Bind ViewModel.Tabs}"
+            TabCloseRequested="TabView_TabCloseRequested">
             <muxc:TabView.TabStripHeader>
                 <Grid Width="16"/>
             </muxc:TabView.TabStripHeader>

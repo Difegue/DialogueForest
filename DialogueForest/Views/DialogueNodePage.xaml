@@ -28,7 +28,7 @@
 
         <DataTemplate x:Key="DialogPartTemplate" x:DataType="viewmodels:DialoguePartViewModel">
             <Grid>
-                <Grid Style="{StaticResource CardGrid}" ui:FrameworkElementExtensions.Cursor="IBeam" 
+                <Grid Style="{StaticResource CardGrid}" ui:FrameworkElementExtensions.Cursor="IBeam" Margin="-1,1"
                       Visibility="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
                     <local:BindableRichEditBox Background="Transparent" BorderThickness="0" IsHitTestVisible="False" 
                                                MaxHeight="90" Padding="0" 

@@ -1,5 +1,8 @@
 ﻿using System;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using DialogueForest.Core.Interfaces;
+using DialogueForest.Core.ViewModels;
+using DialogueForest.Services;
 using DialogueForest.ViewModels;
 using Windows.ApplicationModel.Core;
 using Windows.UI.WindowManagement;
@@ -16,7 +19,19 @@ namespace DialogueForest.Views
         {
             InitializeComponent();
 
+            // Link with NavigationService
+            var navService = Ioc.Default.GetRequiredService<INavigationService>() as NavigationService;
+            navService.NodeTabContainer = ViewModel;
+
             SetupWindow(null);
+        }
+
+        private void TabView_TabCloseRequested(Microsoft.UI.Xaml.Controls.TabView sender, Microsoft.UI.Xaml.Controls.TabViewTabCloseRequestedEventArgs args)
+        {
+            if (args.Item is DialogueNodeViewModel item)
+            {
+                ViewModel.RemoveTabCommand.Execute(item);
+            }
         }
 
         void SetupWindow(AppWindow window)
@@ -67,5 +82,6 @@ namespace DialogueForest.Views
             // Ensure that the height of the custom regions are the same as the titlebar.
             CustomDragRegion.Height = sender.Height;
         }
+
     }
 }
