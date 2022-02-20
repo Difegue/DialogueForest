@@ -172,8 +172,10 @@
             </i:Interaction.Behaviors>
 
             <Grid x:Name="contentContainer">
+
                 <muxc:TwoPaneView
                     x:Name="twoPaneView"
+                    Style="{StaticResource TwoPaneViewWithSplitterStyle}"
                     TallModeConfiguration="SinglePane"
                     MinWideModeWidth="640"
                     MinTallModeHeight="863">
@@ -181,7 +183,7 @@
                     <muxc:TwoPaneView.Pane1>
                         <Grid
                             x:Name="Pane1"
-                            Margin="4,40,8,-4"
+                            Margin="4,40,2,-4"
                             Background="{ThemeResource LayerFillColorDefaultBrush}"
                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                             BorderThickness="1"
@@ -191,7 +193,8 @@
                     </muxc:TwoPaneView.Pane1>
 
                     <muxc:TwoPaneView.Pane2>
-                        <views:OpenedNodesPage x:Name="tabsView" SizeChanged="Page_SizeChanged"/>
+                        <views:OpenedNodesPage x:Name="tabsView" Margin="2,0,0,0"
+                                               SizeChanged="Page_SizeChanged"/>
                     </muxc:TwoPaneView.Pane2>
                 </muxc:TwoPaneView>
 
@@ -210,7 +213,7 @@
                         <AdaptiveTrigger MinWindowWidth="689" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="Pane1.Width" Value="300" />
+                        <Setter Target="Pane1.MaxWidth" Value="368" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="BigVisualState">
@@ -218,7 +221,7 @@
                         <AdaptiveTrigger MinWindowWidth="960" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="Pane1.Width" Value="400" />
+                        <Setter Target="Pane1.MaxWidth" Value="496" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

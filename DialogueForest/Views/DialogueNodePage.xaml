@@ -138,8 +138,11 @@
 
         <DataTemplate x:Key="MetadataBoolTemplate" x:DataType="viewmodels:MetadataViewModel">
             <local:SettingsBlockControl
-                        Icon="SwitchApps"
                         Title="{x:Bind Name}">
+
+                <local:SettingsBlockControl.Icon>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF19F;" />
+                </local:SettingsBlockControl.Icon>
 
                 <local:SettingsBlockControl.SettingsActionableElement>
                     <ToggleSwitch IsOn="{x:Bind Value, Mode=TwoWay, Converter={StaticResource BoolMetadataConverter}}"
@@ -163,8 +166,11 @@
 
         <DataTemplate x:Key="MetadataColorTemplate" x:DataType="viewmodels:MetadataViewModel">
             <local:SettingsBlockControl 
-                        Icon="Highlight"
                         Title="{x:Bind Name}">
+
+                <local:SettingsBlockControl.Icon>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE790;" />
+                </local:SettingsBlockControl.Icon>
 
                 <local:SettingsBlockControl.SettingsActionableElement>
                     <controls:ColorPickerButton SelectedColor="{x:Bind Value, Mode=TwoWay, Converter={StaticResource ColorMetadataConverter}}"
@@ -253,7 +259,8 @@
                     ItemTemplate="{StaticResource DialogPromptTemplate}"/>
 
                         <TextBlock Visibility="{x:Bind ViewModel.IsPromptsEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
-                        Text="{x:Bind strings:Resources.EditorEmptyReplies}" Margin="{StaticResource SmallTopBottomMargin}"/>
+                                   Text="{x:Bind strings:Resources.EditorEmptyReplies}" Margin="{StaticResource SmallTopBottomMargin}"
+                                   TextWrapping="Wrap"/>
                     </Grid>
 
                 </controls:HeaderedContentControl>
@@ -274,7 +281,7 @@
                                   ItemTemplateSelector="{StaticResource MetadataTemplateSelector}"/>
 
                         <TextBlock Visibility="{x:Bind ViewModel.IsMetaDataEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
-                                   Margin="{StaticResource SmallTopBottomMargin}" >
+                                   Margin="{StaticResource SmallTopBottomMargin}" TextWrapping="Wrap" >
                             <Run Text="{x:Bind strings:Resources.EditorEmptyMetadata1}"/>
                             <Hyperlink>
                                 <i:Interaction.Behaviors>
