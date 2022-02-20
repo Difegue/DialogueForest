@@ -1,11 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using DialogueForest.Core.Interfaces;
 using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
 using DialogueForest.Localization.Strings;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,9 +16,9 @@ namespace DialogueForest.Core.ViewModels
     public partial class DialoguePartViewModel : ObservableObject
     {
         private IDialogService _dialogService;
-
-        protected DialogueNodeViewModel _parentNodeVm;
-        protected DialogueText _text;
+        private ForestDataService _dataService;
+        private DialogueNodeViewModel _parentNodeVm;
+        private DialogueText _text;
 
         internal static DialoguePartViewModel Create(DialogueText text, DialogueNodeViewModel parent)
         {
@@ -27,7 +29,7 @@ namespace DialogueForest.Core.ViewModels
             return instance;
         }
 
-        public List<string> Characters;
+        public ObservableCollection<string> Characters = new ObservableCollection<string>();
 
         public string RtfDialogueText
         {
@@ -58,10 +60,26 @@ namespace DialogueForest.Core.ViewModels
                 _parentNodeVm.RemoveDialog(this, _text);
         }
 
+        public void Receive(ForestSettingsChangedMessage message)
+        {
+            //TODO keep CharacterName even if it's not in the list (seems to be a display issue)
+
+            // Update character list if settings updated
+            Characters.Clear();
+            foreach (var c in _dataService.GetCharacters())
+                Characters.Add(c);
+        }
+
         public DialoguePartViewModel(IDialogService dialogService, ForestDataService dataService)
         {
             _dialogService = dialogService;
-            Characters = dataService.GetCharacters(); //TODO update character list if settings updated
+            _dataService = dataService;
+
+            Characters.Clear();
+            foreach (var c in _dataService.GetCharacters())
+                Characters.Add(c);
+
+            WeakReferenceMessenger.Default.Register<DialoguePartViewModel, ForestSettingsChangedMessage>(this, (r, m) => r.Receive(m));
         }
     }
 }

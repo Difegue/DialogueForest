@@ -9,6 +9,8 @@ using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using DialogueForest.Core.Interfaces;
 using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
@@ -16,6 +18,7 @@ using DialogueForest.Localization.Strings;
 
 namespace DialogueForest.Core.ViewModels
 {
+    public class ForestSettingsChangedMessage { }
 
     public partial class SettingsViewModel : ObservableObject
     {
@@ -59,8 +62,10 @@ namespace DialogueForest.Core.ViewModels
                 }
             }
             _dataService.SetMetadataDefinitions(data);
-
             _dataService.SetCharacters(ForestCharacters.Select(vm => vm.Name).ToList());
+
+            // Send a message to inform VMs the settings changed
+            WeakReferenceMessenger.Default.Send<ForestSettingsChangedMessage>();
         }
 
         [ObservableProperty]

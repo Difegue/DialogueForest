@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using DialogueForest.Core.Interfaces;
 using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
@@ -32,24 +33,18 @@ namespace DialogueForest.Core.ViewModels
 
             return instance;
         }
+
+        public void Receive(ForestSettingsChangedMessage message)
+        {
+            // Metadata definitions mightve changed, reload data from node
+            UpdateMetadata();
+        }
+
         private void LoadFromNode(DialogueNode node)
         {
             _node = node;
 
-            // TODO Listen to meta array change event to update this
-            foreach (var kvp in _dataService.GetMetadataDefinitions())
-            {
-                // Check if the node already has metadata for this key
-                if (node.Metadata.FirstOrDefault(m => m.Key == kvp.Key) is DialogueMetadataValue metadata)
-                    AddMetadata(metadata);
-                else
-                {
-                    // Otherwise, create a new value holder
-                    var value = new DialogueMetadataValue { Key = kvp.Key, Kind = kvp.Value };
-                    node.Metadata.Add(value);
-                    AddMetadata(value);
-                }
-            }
+            UpdateMetadata();
 
             foreach (var prompt in node.Prompts)
                 AddPrompt(prompt);
@@ -58,12 +53,36 @@ namespace DialogueForest.Core.ViewModels
                 AddDialog(dialogue);
         }
 
+        private void UpdateMetadata()
+        {
+            MetaValues.Clear();
+            foreach (var kvp in _dataService.GetMetadataDefinitions())
+            {
+                // Check if the node already has metadata for this key
+                if (_node.Metadata.FirstOrDefault(m => m.Key == kvp.Key) is DialogueMetadataValue metadata)
+                {
+                    // In case the kind changed, update it
+                    metadata.Kind = kvp.Value;
+                    AddMetadata(metadata);
+                }
+                else
+                {
+                    // Otherwise, create a new value holder
+                    var value = new DialogueMetadataValue { Key = kvp.Key, Kind = kvp.Value };
+                    _node.Metadata.Add(value);
+                    AddMetadata(value);
+                }
+            }
+        }
+
         public DialogueNodeViewModel(IDialogService dialogService, INavigationService navigationService, INotificationService notificationService, ForestDataService forestService)
         {
             _dialogService = dialogService;
             _notificationService = notificationService;
             _navigationService = navigationService;
             _dataService = forestService;
+
+            WeakReferenceMessenger.Default.Register<DialogueNodeViewModel, ForestSettingsChangedMessage>(this, (r, m) => r.Receive(m));
 
             Prompts.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsPromptsEmpty));
             MetaValues.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsMetaDataEmpty));
