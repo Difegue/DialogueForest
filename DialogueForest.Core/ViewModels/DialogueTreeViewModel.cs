@@ -72,6 +72,12 @@ namespace DialogueForest.Core.ViewModels
         }
 
         public bool IsNodesEmpty => Nodes.Count == 0;
+        public bool IsTrash => _tree == _dataService.GetTrash();
+        public bool IsNotes => _tree == _dataService.GetNotes();
+        public bool CannotAddNodes => _tree.CannotAddNodes;
+
+        public string EmptyViewTitle => IsTrash ? Resources.EmptyViewTrashTitle : IsNotes ? Resources.EmptyViewNotesTitle : Resources.EmptyViewTreeTitle;
+        public string EmptyViewDesc => IsTrash ? Resources.EmptyViewTrashDesc : IsNotes ? Resources.EmptyViewNotesDesc : Resources.EmptyViewTreeDesc;
 
         public string Title
         {

@@ -14,6 +14,7 @@ namespace DialogueForest.Core.Models
             PinnedIDs = new List<long>();
             Notes = new DialogueTree(Localization.Strings.Resources.NavigationNotes);
             Trash = new DialogueTree(Localization.Strings.Resources.NavigationTrash);
+            Trash.CannotAddNodes = true;
 
             MetadataDefinitions = new Dictionary<string, MetadataKind>();
             CharacterDefinitions = new List<string>();

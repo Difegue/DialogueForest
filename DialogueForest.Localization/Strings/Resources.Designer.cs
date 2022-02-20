@@ -422,7 +422,8 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Notes are pieces of dialogue that aren&apos;t included in your final Export. 
+        ///   Recherche une chaîne localisée semblable à Notes are pieces of dialogue that aren&apos;t 
+        ///included in your final Export. 
         ///Use them to store ideas or drafts!.
         /// </summary>
         public static string EmptyViewNotesDesc {
@@ -456,6 +457,15 @@ namespace DialogueForest.Localization.Strings {
         public static string EmptyViewPinsTitle {
             get {
                 return ResourceManager.GetString("EmptyViewPinsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Deleted Dialogue Nodes will end up here..
+        /// </summary>
+        public static string EmptyViewTrashDesc {
+            get {
+                return ResourceManager.GetString("EmptyViewTrashDesc", resourceCulture);
             }
         }
         

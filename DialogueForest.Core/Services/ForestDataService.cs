@@ -59,6 +59,7 @@ namespace DialogueForest.Core.Services
         {
             // TODO kinda inefficient and prone to bugs
             var t = new DialogueTree("Pins");
+            t.CannotAddNodes = true;
 
             foreach (var id in _currentForest.PinnedIDs)
                 t.AddNode(GetNode(id));

@@ -174,6 +174,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="0" Command="{x:Bind ViewModel.AddNodeCommand}" Style="{ThemeResource AccentButtonStyle}"
+                        Visibility="{x:Bind ViewModel.CannotAddNodes, Converter={StaticResource ReverseBoolToVisibilityConverter}}"
                         ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewAddNode}">
                     <StackPanel Spacing="4" Orientation="Horizontal">
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE109;" FontSize="18" />
@@ -215,9 +216,18 @@
                     <AppBarSeparator Padding="0"/>
 
                     <Button Command="{x:Bind ViewModel.DeleteCommand}"
-                                    ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewDeleteTree}">
+                            Visibility="{x:Bind ViewModel.IsTrash, Converter={StaticResource ReverseBoolToVisibilityConverter}}"
+                            ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewDeleteTree}"
+                            Margin="0,0,-8,0">
                         <FontIcon Foreground="{ThemeResource DestructiveActionForeground}"
                                   FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" FontSize="18"/>
+                    </Button>
+                    <Button Command="{x:Bind ViewModel.DeleteCommand}"
+                            Visibility="{x:Bind ViewModel.IsTrash, Converter={StaticResource BoolToVisibilityConverter}}"
+                            ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewDeleteTree}"
+                            Margin="-8,0,0,0">
+                        <FontIcon Foreground="{ThemeResource DestructiveActionForeground}"
+                                  FontFamily="Segoe Fluent Icons" Glyph="&#xE2AC;" FontSize="18"/>
                     </Button>
                 </StackPanel>
 
@@ -258,7 +268,6 @@
                     Visibility="{x:Bind ViewModel.IsNodesEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
-
 
             <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg4" Width="90" Height="90">
                 <Canvas.RenderTransform>
@@ -303,13 +312,14 @@
                 </Path>
             </Canvas>
 
-            <TextBlock
-                    Margin="{StaticResource SmallTopMargin}"
+            <TextBlock Margin="{StaticResource SmallTopMargin}"
                     HorizontalAlignment="Center"
                     Style="{StaticResource SubtitleTextBlockStyle}"
-                    Text="{x:Bind strings:Resources.EmptyViewTreeTitle}" />
-            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Margin="{StaticResource SmallTopMargin}"
-                       Text="{x:Bind strings:Resources.EmptyViewTreeDesc}" />
+                    Text="{x:Bind ViewModel.EmptyViewTitle}" />
+            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"
+                       Margin="{StaticResource SmallLeftTopRightBottomMargin}"
+                       Text="{x:Bind ViewModel.EmptyViewDesc}" />
+
         </StackPanel>
     </Grid>
 </Page>

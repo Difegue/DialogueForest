@@ -14,6 +14,8 @@ namespace DialogueForest.Core.Models
 
         public string Name { get; set; }
 
+        public bool CannotAddNodes { get; set; }
+
         public Dictionary<float, DialogueNode> Nodes { get; set; }
 
         internal void AddNode(DialogueNode node)

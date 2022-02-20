@@ -363,7 +363,8 @@ Click on the "+" button to add some!</value>
     <value>You have no Notes.</value>
   </data>
   <data name="EmptyViewNotesDesc" xml:space="preserve">
-    <value>Notes are pieces of dialogue that aren't included in your final Export. 
+    <value>Notes are pieces of dialogue that aren't 
+included in your final Export. 
 Use them to store ideas or drafts!</value>
   </data>
   <data name="EmptyViewPinsTitle" xml:space="preserve">
@@ -490,5 +491,8 @@ They'll show up here when you do.</value>
   </data>
   <data name="EditorEmptyMetadata2" xml:space="preserve">
     <value>, you will be able to set values for them here.</value>
+  </data>
+  <data name="EmptyViewTrashDesc" xml:space="preserve">
+    <value>Deleted Dialogue Nodes will end up here.</value>
   </data>
 </root>
