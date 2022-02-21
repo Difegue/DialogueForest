@@ -20,14 +20,18 @@ namespace DialogueForest.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-           
-            if (e.Parameter is DialogueTree t)
+            // The DialogueTreeVM can be obtained in multiple different ways.
+            if (e.Parameter is DialogueTree t) // Base tree model
             {
                 DataContext = DialogueTreeViewModel.Create(t, true);
-            }   
-            else if (e.Parameter is string s)
+            }
+            else if (e.Parameter is DialogueTreeViewModel existingVm) // Existing VM in case of navigation from the tabpage
             {
-                DialogueTree tree = null;
+                DataContext = existingVm;
+            }
+            else if (e.Parameter is string s) // Hardcoded special trees mapped to the dataService
+            {
+                DialogueTree tree;
                 var dataService = Ioc.Default.GetRequiredService<ForestDataService>();
                 switch (s)
                 {

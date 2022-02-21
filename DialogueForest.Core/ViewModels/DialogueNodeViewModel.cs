@@ -114,6 +114,14 @@ namespace DialogueForest.Core.ViewModels
         private void OpenSettings() => _navigationService.Navigate<SettingsViewModel>();
 
         [ICommand]
+        private void ShowInTree()
+        {
+            _navigationService.Navigate<DialogueTreeViewModel>(_parentVm);
+            _parentVm.SelectedNode = null;
+            _parentVm.SelectedNode = this;
+        } 
+
+        [ICommand]
         private void AddDialog(DialogueText text = null)
         {
             if (text == null)
@@ -164,13 +172,22 @@ namespace DialogueForest.Core.ViewModels
         }
 
         [ICommand]
-        private void PinDialogue() => _dataService.SetPinnedNode(_node, true);
+        private void PinDialogue()
+        {
+            _dataService.SetPinnedNode(_node, true);
+            _notificationService.ShowInAppNotification("Pinned!");
+        }
+        
 
         [ICommand]
         private void UnpinDialogue() => _dataService.SetPinnedNode(_node, false);
 
         [ICommand]
-        private void MoveToTrash() => _parentVm.MoveNodeToTrash(this, _node);
+        private void MoveToTrash()
+        {
+            _parentVm.MoveNodeToTrash(this, _node);
+            _notificationService.ShowInAppNotification("Trashed!");
+        } 
 
         [ICommand]
         private async Task Delete()

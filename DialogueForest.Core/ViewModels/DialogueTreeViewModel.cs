@@ -86,6 +86,9 @@ namespace DialogueForest.Core.ViewModels
         }
 
         [ObservableProperty]
+        private DialogueNodeViewModel _selectedNode;
+
+        [ObservableProperty]
         private int _totalWords;
 
         [ObservableProperty]
@@ -116,6 +119,7 @@ namespace DialogueForest.Core.ViewModels
         internal void MoveNodeToTrash(DialogueNodeViewModel nodeVm, DialogueNode node)
         {
             _dataService.MoveNodeToTrash(_tree, node);
+            nodeVm.SetParentVm(Create(_dataService.GetTrash())); // Hand off parenting to a trash treeVM
             Nodes.Remove(nodeVm);
         }
 
