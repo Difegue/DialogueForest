@@ -16,5 +16,7 @@ namespace DialogueForest.Core.Interfaces
         void SetValue<T>(string key, T value);
         T GetValue<T>(string key, T defaultValue = default);
 
+        Task<bool?> SaveDataToExternalFileAsync(byte[] bytes, string fileExtension);
+        Task<Stream> LoadDataFromExternalFileAsync(string fileExtension);
     }
 }

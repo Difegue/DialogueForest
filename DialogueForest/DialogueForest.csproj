@@ -187,7 +187,6 @@
     <Compile Include="Helpers\NavHelper.cs" />
     <Compile Include="Helpers\RtfHelper.cs" />
     <Compile Include="Helpers\ScrollSelectedItemIntoViewBehavior.cs" />
-    <Compile Include="Helpers\SettingsStorageExtensions.cs" />
     <Compile Include="Helpers\MiscHelpers.cs" />
     <Compile Include="Services\ActivationService.cs" />
     <Compile Include="Activation\DefaultActivationHandler.cs" />

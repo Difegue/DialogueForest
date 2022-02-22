@@ -1,7 +1,10 @@
-﻿using DialogueForest.Core.Models;
+﻿using DialogueForest.Core.Interfaces;
+using DialogueForest.Core.Models;
+using System.Text.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DialogueForest.Core.Services
 {
@@ -9,30 +12,73 @@ namespace DialogueForest.Core.Services
     {
         private DialogueDatabase _currentForest;
 
-        public ForestDataService()
+        private IApplicationStorageService _storageService;
+        private INotificationService _notificationService;
+
+        private const string STORAGE_NAME = "autosave.json";
+
+        public ForestDataService(IApplicationStorageService storageService, INotificationService notificationService)
         {
-            // TODO
-            _currentForest = new DialogueDatabase();
+            _storageService = storageService;
+            _notificationService = notificationService;
+
+            InitializeDatabase();
         }
 
-        public void LoadForestFromFile()
+        private async void InitializeDatabase()
         {
-
+            try
+            {
+                if (await _storageService.DoesFileExistAsync(STORAGE_NAME))
+                {
+                    await LoadForestFromStorageAsync();
+                }
+                else
+                {
+                    _currentForest = new DialogueDatabase();
+                }  
+            } 
+            catch (Exception ex)
+            {
+                _notificationService.ShowErrorNotification(ex);
+            }
         }
 
-        public void LoadForestFromStorage()
+        public async void LoadForestFromFile()
         {
+            var stream = await _storageService.LoadDataFromExternalFileAsync(".frst");
 
+            if (stream != null)
+            {
+                _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(stream);
+            }
         }
 
-        public void SaveForestToStorage()
+        public async Task LoadForestFromStorageAsync()
         {
-
+            var stream = await _storageService.OpenFileAsync(STORAGE_NAME);
+            _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(stream);
         }
 
-        public void SaveForestToFile()
+        public async Task SaveForestToStorageAsync()
         {
+            var bytes = JsonSerializer.SerializeToUtf8Bytes(_currentForest);
+            await _storageService.SaveDataToFileAsync(STORAGE_NAME, bytes);
+        }
 
+        public async void SaveForestToFile()
+        {
+            var bytes = JsonSerializer.SerializeToUtf8Bytes(_currentForest);
+            // TODO use suggested name/location if set
+            var res = await _storageService.SaveDataToExternalFileAsync(bytes, ".frst");
+
+            if (res.HasValue)
+            {
+                if (res.GetValueOrDefault())
+                    _notificationService.ShowInAppNotification("Saved!");
+                else
+                    _notificationService.ShowInAppNotification("Couldn't save!");
+            }
         }
 
         public List<DialogueTree> GetDialogueTrees() => _currentForest.Trees;
@@ -84,13 +130,13 @@ namespace DialogueForest.Core.Services
         internal void SetMetadataDefinitions(Dictionary<string, MetadataKind> data)
         {
             _currentForest.MetadataDefinitions = data;
-            SaveForestToStorage();
+            SaveForestToStorageAsync();
         }
         public List<string> GetCharacters() => _currentForest.CharacterDefinitions;
         internal void SetCharacters(List<string> chars)
         {
             _currentForest.CharacterDefinitions = chars;
-            SaveForestToStorage();
+            SaveForestToStorageAsync();
         }
 
         internal void DeleteNode(DialogueNode node) => _currentForest.Trash.RemoveNode(node); // TODO update trash

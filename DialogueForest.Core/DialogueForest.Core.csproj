@@ -9,8 +9,8 @@
    <ItemGroup>
      <PackageReference Include="CommunityToolkit.Common" Version="8.0.0-preview1" />
      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0-preview1" />
-     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
      <PackageReference Include="SkiaSharp" Version="2.88.0-preview.187" />
+     <PackageReference Include="System.Text.Json" Version="6.0.2" />
    </ItemGroup>
 
    <ItemGroup>

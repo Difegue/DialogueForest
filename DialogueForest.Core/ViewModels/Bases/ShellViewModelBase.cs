@@ -45,7 +45,7 @@ namespace DialogueForest.Core.ViewModels
         [ICommand]
         private void Save()
         {
-
+            _dataService.SaveForestToFile();
         }
 
         [ICommand]

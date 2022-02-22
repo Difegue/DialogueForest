@@ -2,10 +2,10 @@
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Newtonsoft.Json;
 using Microsoft.Toolkit.Uwp.Helpers;
 using System;
 using Windows.Foundation.Collections;
+using System.Collections.Generic;
 
 namespace DialogueForest.Services
 {
@@ -79,6 +79,59 @@ namespace DialogueForest.Services
             }
 
             return defaultValue;
+        }
+
+        public async Task<bool?> SaveDataToExternalFileAsync(byte[] bytes, string fileExtension)
+        {
+            var savePicker = new Windows.Storage.Pickers.FileSavePicker
+            {
+                SuggestedStartLocation =
+                Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary
+            };
+            // Dropdown of file types the user can save the file as
+            savePicker.FileTypeChoices.Add(fileExtension + " File", new List<string>() { fileExtension });
+            // Default file name if the user does not type one in or select a file to replace
+            //savePicker.SuggestedFileName = "New Document";
+
+            StorageFile file = await savePicker.PickSaveFileAsync();
+            if (file != null)
+            {
+                // Prevent updates to the remote version of the file until
+                // we finish making changes and call CompleteUpdatesAsync.
+                CachedFileManager.DeferUpdates(file);
+                // write to file
+                await FileIO.WriteBytesAsync(file, bytes);
+
+                // Let Windows know that we're finished changing the file so
+                // the other app can update the remote version of the file.
+                // Completing updates may require Windows to ask for user input.
+                Windows.Storage.Provider.FileUpdateStatus status =
+                    await CachedFileManager.CompleteUpdatesAsync(file);
+
+                return status == Windows.Storage.Provider.FileUpdateStatus.Complete;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<Stream> LoadDataFromExternalFileAsync(string fileExtension)
+        {
+            var picker = new Windows.Storage.Pickers.FileOpenPicker();
+            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.List;
+            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary;
+            picker.FileTypeFilter.Add(fileExtension);
+
+            StorageFile file = await picker.PickSingleFileAsync();
+            if (file != null)
+            {
+                return await file.OpenStreamForReadAsync();
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
