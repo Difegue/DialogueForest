@@ -5,9 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Messaging;
+using System.Threading;
 
 namespace DialogueForest.Core.Services
 {
+    public class SavedFileMessage
+    {
+        public FileAbstraction FileAbstraction { get; set; }
+    }
+
     public class ForestDataService
     {
         private DialogueDatabase _currentForest;
@@ -17,10 +24,29 @@ namespace DialogueForest.Core.Services
 
         private const string STORAGE_NAME = "autosave.json";
 
+        private FileAbstraction _lastSavedFile;
+        private bool _savedFileExists;
+        private Timer _autoSaveTimer;
+
         public ForestDataService(IApplicationStorageService storageService, INotificationService notificationService)
         {
             _storageService = storageService;
             _notificationService = notificationService;
+
+            _lastSavedFile = new FileAbstraction
+            {
+                Extension = ".frst",
+                Type = "Dialogue Forest",
+                Name = _storageService.GetValue("lastSavedName", "MyForest"),
+                Path = _storageService.GetValue<string>("lastSavedFolder", null)
+            };
+
+
+            if (_storageService.GetValue<string>("lastSavedFolder", null) != null)
+            {
+                _savedFileExists = true;
+                WeakReferenceMessenger.Default.Send(new SavedFileMessage { FileAbstraction = _lastSavedFile });
+            }
 
             InitializeDatabase();
         }
@@ -33,24 +59,44 @@ namespace DialogueForest.Core.Services
                 {
                     await LoadForestFromStorageAsync();
                 }
-                else
+                
+                if (_currentForest == null) 
                 {
                     _currentForest = new DialogueDatabase();
-                }  
-            } 
+                }
+
+                // Autosave to storage every 30 seconds
+                _autoSaveTimer = new Timer((e) =>
+                {
+                    SaveForestToStorage();
+                }, null, TimeSpan.Zero, TimeSpan.FromSeconds(30));
+            }
             catch (Exception ex)
             {
+                _notificationService.ShowInAppNotification("Couldn't load autosave!", false);
                 _notificationService.ShowErrorNotification(ex);
+
+                _currentForest = new DialogueDatabase();
             }
         }
 
         public async void LoadForestFromFile()
         {
-            var stream = await _storageService.LoadDataFromExternalFileAsync(".frst");
+            var res = await _storageService.LoadDataFromExternalFileAsync(".frst");
 
-            if (stream != null)
+            if (res != null)
             {
-                _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(stream);
+                try
+                {
+                    _lastSavedFile = res.Item1;
+                    _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(res.Item2);
+                    WeakReferenceMessenger.Default.Send(new SavedFileMessage { FileAbstraction = _lastSavedFile });
+                }
+                catch (Exception ex)
+                {
+                    _notificationService.ShowErrorNotification(ex);
+                }
+
             }
         }
 
@@ -60,32 +106,55 @@ namespace DialogueForest.Core.Services
             _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(stream);
         }
 
+        public void SaveForestToStorage()
+        {
+            Task.Run(async () =>
+            {
+                try { await SaveForestToStorageAsync(); }
+                catch (Exception ex)
+                {
+                    _notificationService.ShowInAppNotification("Couldn't autosave!", false);
+                    _notificationService.ShowErrorNotification(ex);
+                }
+
+            });
+        }
+
         public async Task SaveForestToStorageAsync()
         {
             var bytes = JsonSerializer.SerializeToUtf8Bytes(_currentForest);
             await _storageService.SaveDataToFileAsync(STORAGE_NAME, bytes);
         }
 
-        public async void SaveForestToFile()
+        public async Task SaveForestToFileAsync()
         {
             var bytes = JsonSerializer.SerializeToUtf8Bytes(_currentForest);
-            // TODO use suggested name/location if set
-            var res = await _storageService.SaveDataToExternalFileAsync(bytes, ".frst");
 
-            if (res.HasValue)
+            // Don't prompt the user if the savedFile already exists
+            _lastSavedFile = await _storageService.SaveDataToExternalFileAsync(bytes, _lastSavedFile, !_savedFileExists);
+
+            if (_lastSavedFile != null)
             {
-                if (res.GetValueOrDefault())
-                    _notificationService.ShowInAppNotification("Saved!");
-                else
-                    _notificationService.ShowInAppNotification("Couldn't save!");
+                _savedFileExists = true;
+                _storageService.SetValue("lastSavedFolder", _lastSavedFile.Path);
+                _storageService.SetValue("lastSavedName", _lastSavedFile.Name);
+
+                // Send a message to inform VMs we saved to disk
+                WeakReferenceMessenger.Default.Send(new SavedFileMessage { FileAbstraction = _lastSavedFile });
             }
+            else
+            {
+                _notificationService.ShowInAppNotification("Couldn't save!");
+                _lastSavedFile = null;
+            }
+
         }
 
         public List<DialogueTree> GetDialogueTrees() => _currentForest.Trees;
 
         public DialogueNode GetNode(long id)
         {
-            
+
             foreach (var tree in _currentForest.Trees)
                 if (tree.Nodes.ContainsKey(id))
                     return tree.Nodes[id];
@@ -117,7 +186,8 @@ namespace DialogueForest.Core.Services
 
         internal bool IsNodeTrashed(DialogueNode node) => _currentForest.Trash.Nodes.ContainsValue(node);
 
-        internal void SetPinnedNode(DialogueNode node, bool isPinned) {
+        internal void SetPinnedNode(DialogueNode node, bool isPinned)
+        {
             if (isPinned)
                 _currentForest.PinnedIDs.Add(node.ID);
             else
@@ -130,13 +200,11 @@ namespace DialogueForest.Core.Services
         internal void SetMetadataDefinitions(Dictionary<string, MetadataKind> data)
         {
             _currentForest.MetadataDefinitions = data;
-            SaveForestToStorageAsync();
         }
         public List<string> GetCharacters() => _currentForest.CharacterDefinitions;
         internal void SetCharacters(List<string> chars)
         {
             _currentForest.CharacterDefinitions = chars;
-            SaveForestToStorageAsync();
         }
 
         internal void DeleteNode(DialogueNode node) => _currentForest.Trash.RemoveNode(node); // TODO update trash

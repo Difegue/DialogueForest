@@ -64,6 +64,8 @@ namespace DialogueForest.Core.ViewModels
             _dataService.SetMetadataDefinitions(data);
             _dataService.SetCharacters(ForestCharacters.Select(vm => vm.Name).ToList());
 
+            _dataService.SaveForestToStorage();
+
             // Send a message to inform VMs the settings changed
             WeakReferenceMessenger.Default.Send<ForestSettingsChangedMessage>();
         }

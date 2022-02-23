@@ -81,21 +81,31 @@ namespace DialogueForest.Services
             return defaultValue;
         }
 
-        public async Task<bool?> SaveDataToExternalFileAsync(byte[] bytes, string fileExtension)
+        public async Task<FileAbstraction> SaveDataToExternalFileAsync(byte[] bytes, FileAbstraction suggestedFile, bool promptUser = true)
         {
-            var savePicker = new Windows.Storage.Pickers.FileSavePicker
-            {
-                SuggestedStartLocation =
-                Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary
-            };
-            // Dropdown of file types the user can save the file as
-            savePicker.FileTypeChoices.Add(fileExtension + " File", new List<string>() { fileExtension });
-            // Default file name if the user does not type one in or select a file to replace
-            //savePicker.SuggestedFileName = "New Document";
+            StorageFile file;
 
-            StorageFile file = await savePicker.PickSaveFileAsync();
+            if (promptUser)
+            {
+                var savePicker = new Windows.Storage.Pickers.FileSavePicker
+                {
+                    SuggestedFileName = suggestedFile.Name,
+                    SuggestedStartLocation =
+                Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary
+                };
+                // Dropdown of file types the user can save the file as
+                savePicker.FileTypeChoices.Add(suggestedFile.Type, new List<string>() { suggestedFile.Extension });
+
+                file = await savePicker.PickSaveFileAsync();
+            }
+            else
+                file = await StorageFile.GetFileFromPathAsync(suggestedFile.FullPath);
+            
             if (file != null)
             {
+                // Allow future access to the file
+                Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(file);
+
                 // Prevent updates to the remote version of the file until
                 // we finish making changes and call CompleteUpdatesAsync.
                 CachedFileManager.DeferUpdates(file);
@@ -108,15 +118,28 @@ namespace DialogueForest.Services
                 Windows.Storage.Provider.FileUpdateStatus status =
                     await CachedFileManager.CompleteUpdatesAsync(file);
 
-                return status == Windows.Storage.Provider.FileUpdateStatus.Complete;
+                if (status == Windows.Storage.Provider.FileUpdateStatus.Complete)
+                {
+                    var abstraction = new FileAbstraction
+                    {
+                        Name = file.DisplayName,
+                        Type = file.DisplayType,
+                        Extension = suggestedFile.Extension,
+                        Path = new FileInfo(file.Path).Directory.FullName
+                    };
+
+                    return abstraction;
+                }
+                else return null;
             }
             else
             {
-                return null;
+                // Cancelled
+                return suggestedFile;
             }
         }
 
-        public async Task<Stream> LoadDataFromExternalFileAsync(string fileExtension)
+        public async Task<Tuple<FileAbstraction,Stream>> LoadDataFromExternalFileAsync(string fileExtension)
         {
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
             picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.List;
@@ -126,7 +149,14 @@ namespace DialogueForest.Services
             StorageFile file = await picker.PickSingleFileAsync();
             if (file != null)
             {
-                return await file.OpenStreamForReadAsync();
+                var abstraction = new FileAbstraction
+                {
+                    Name = file.DisplayName,
+                    Type = file.DisplayType,
+                    Extension = fileExtension,
+                    Path = file.Path
+                };
+                return new Tuple<FileAbstraction, Stream>(abstraction, await file.OpenStreamForReadAsync());
             }
             else
             {

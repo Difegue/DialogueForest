@@ -14,6 +14,8 @@ namespace DialogueForest.Core.Models
 
         public List<DialogueMetadataValue> Metadata { get; set; }
 
+        public DialogueNode() { }
+
         public DialogueNode(long nodeId)
         {
             ID = nodeId;

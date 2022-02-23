@@ -16,7 +16,17 @@ namespace DialogueForest.Core.Interfaces
         void SetValue<T>(string key, T value);
         T GetValue<T>(string key, T defaultValue = default);
 
-        Task<bool?> SaveDataToExternalFileAsync(byte[] bytes, string fileExtension);
-        Task<Stream> LoadDataFromExternalFileAsync(string fileExtension);
+        Task<FileAbstraction> SaveDataToExternalFileAsync(byte[] bytes, FileAbstraction suggestedFile, bool promptUser = true);
+        Task<Tuple<FileAbstraction, Stream>> LoadDataFromExternalFileAsync(string fileExtension);
+    }
+
+    public class FileAbstraction
+    {
+        public string Name { get; set; }
+        public string Path { get; set; }
+        public string Extension { get; set; }
+
+        public string Type { get; set; }
+        public string FullPath => System.IO.Path.Combine(Path, Name + Extension);
     }
 }

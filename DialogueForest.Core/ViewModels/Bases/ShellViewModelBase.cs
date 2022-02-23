@@ -7,6 +7,7 @@ using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using DialogueForest.Core.Interfaces;
 using DialogueForest.Core.Services;
 using DialogueForest.Localization.Strings;
@@ -33,19 +34,28 @@ namespace DialogueForest.Core.ViewModels
             // First View, use that to initialize our DispatcherService
             _dispatcherService.Initialize();
 
+            WeakReferenceMessenger.Default.Register<ShellViewModelBase, SavedFileMessage>(this, (r, m) => r.Receive(m));
+            _titleBarText = Resources.AppDisplayName;
+
             ((NotificationServiceBase)_notificationService).InAppNotificationRequested += ShowInAppNotification;
             ((NavigationServiceBase)_navigationService).Navigated += OnFrameNavigated;
         }
 
+        private void Receive(SavedFileMessage m)
+        {
+            _titleBarText = Resources.AppDisplayName + " - " + m.FileAbstraction.Name + m.FileAbstraction.Extension;
+        }
+
         [ObservableProperty]
-        private bool isBackEnabled;
+        private bool _isBackEnabled;
         [ObservableProperty]
-        private string headerText;
+        private string _titleBarText;
 
         [ICommand]
-        private void Save()
+        private async Task Save()
         {
-            _dataService.SaveForestToFile();
+            await _dataService.SaveForestToStorageAsync();
+            await _dataService.SaveForestToFileAsync();
         }
 
         [ICommand]
@@ -61,7 +71,6 @@ namespace DialogueForest.Core.ViewModels
             }
             
         }
-
 
         [ICommand]
         protected abstract void Loaded();

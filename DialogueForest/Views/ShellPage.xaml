@@ -73,7 +73,8 @@
                     VerticalAlignment="Center"
                     FontFamily="Segoe UI Variable Display"
                     Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="{x:Bind strings:Resources.AppDisplayName}" />
+                    Text="{x:Bind ViewModel.TitleBarText, Mode=OneWay}"
+                    TextTrimming="CharacterEllipsis"/>
             </StackPanel>
 
             <Border HorizontalAlignment="Right" x:Name="TitleBarRightPart" Background="Transparent"/>
