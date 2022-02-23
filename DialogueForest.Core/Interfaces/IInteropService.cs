@@ -27,5 +27,6 @@ namespace DialogueForest.Core.Interfaces
         Task OpenStoreReviewUrlAsync();
 
         string ConvertRtf(string rtf, OutputFormat format);
+        void UpdateAppTitle(string v);
     }
 }

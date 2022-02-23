@@ -32,8 +32,8 @@ namespace DialogueForest.ViewModels
         private InAppNotification _notificationHolder;
 
 
-        public ShellViewModel(INavigationService navigationService, INotificationService notificationService, IDialogService dialogService, IDispatcherService dispatcherService, ForestDataService dataService) :
-            base(navigationService, notificationService, dispatcherService, dialogService, dataService)
+        public ShellViewModel(INavigationService navigationService, INotificationService notificationService, IDialogService dialogService, IDispatcherService dispatcherService, IInteropService interopService, ForestDataService dataService) :
+            base(navigationService, notificationService, dispatcherService, dialogService, interopService, dataService)
         {
         }
 

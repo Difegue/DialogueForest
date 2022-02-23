@@ -19,17 +19,19 @@ namespace DialogueForest.Core.ViewModels
         protected INavigationService _navigationService;
         protected INotificationService _notificationService;
         protected IDialogService _dialogService;
+        protected IInteropService _interopService;
         protected IDispatcherService _dispatcherService;
         protected ForestDataService _dataService;
 
 
-        public ShellViewModelBase(INavigationService navigationService, INotificationService notificationService, IDispatcherService dispatcherService, IDialogService dialogService, ForestDataService dataService)
+        public ShellViewModelBase(INavigationService navigationService, INotificationService notificationService, IDispatcherService dispatcherService, IDialogService dialogService, IInteropService interopService, ForestDataService dataService)
         {
             _navigationService = navigationService;
             _notificationService = notificationService;
             _dispatcherService = dispatcherService;
             _dialogService = dialogService;
             _dataService = dataService;
+            _interopService = interopService;
 
             // First View, use that to initialize our DispatcherService
             _dispatcherService.Initialize();
@@ -43,7 +45,8 @@ namespace DialogueForest.Core.ViewModels
 
         private void Receive(SavedFileMessage m)
         {
-            _titleBarText = Resources.AppDisplayName + " - " + m.FileAbstraction.Name + m.FileAbstraction.Extension;
+            TitleBarText = Resources.AppDisplayName + " - " + m.FileAbstraction.Name + m.FileAbstraction.Extension;
+            _interopService.UpdateAppTitle(m.FileAbstraction.Name + m.FileAbstraction.Extension);
         }
 
         [ObservableProperty]

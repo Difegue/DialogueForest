@@ -124,5 +124,10 @@ namespace DialogueForest.Services
         }
 
         public string ConvertRtf(string rtf, OutputFormat format) => RtfHelper.Convert(rtf, format);
+
+        public void UpdateAppTitle(string title)
+        {
+            ApplicationView.GetForCurrentView().Title = title;
+        }
     }
 }
