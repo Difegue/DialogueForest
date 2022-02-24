@@ -99,7 +99,6 @@
 
                     <local:BindableRichEditBox x:Name="Editor" PlaceholderText="{x:Bind strings:Resources.EditorPlaceholderText}"
                                                Height="180" CornerRadius="0,0,4,4" 
-                                               PlainText="{x:Bind PlainDialogueText, Mode=TwoWay}"
                                                RtfText="{x:Bind RtfDialogueText, Mode=TwoWay}"
                                                IsFocused="{x:Bind IsActive, Mode=OneWay}"/>
                 </StackPanel>

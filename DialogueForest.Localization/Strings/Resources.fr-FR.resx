@@ -222,7 +222,7 @@ Vous pourrez toujours le changer plus tard.</value>
     <value>Créer</value>
   </data>
   <data name="WelcomeWhatsNew" xml:space="preserve">
-    <value>Voir ce qu'il y a de neuf</value>
+    <value>Quoi de Neuf</value>
   </data>
   <data name="SearchTreePlaceholderText" xml:space="preserve">
     <value>Rechercher des noeuds...</value>
@@ -493,5 +493,8 @@ Vous les retrouverez ici.</value>
   </data>
   <data name="EmptyViewTrashDesc" xml:space="preserve">
     <value>Les Dialogues supprimées arriveront ici.</value>
+  </data>
+  <data name="WelcomeSaveAs" xml:space="preserve">
+    <value>Enregistrer sous...</value>
   </data>
 </root>

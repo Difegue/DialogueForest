@@ -187,7 +187,7 @@ You can always change this later.</value>
     <comment>Create btn</comment>
   </data>
   <data name="WelcomeWhatsNew" xml:space="preserve">
-    <value>See What's New</value>
+    <value>What's New</value>
     <comment>What's new btn</comment>
   </data>
   <data name="SearchTreePlaceholderText" xml:space="preserve">
@@ -323,7 +323,7 @@ You can always change this later.</value>
     <comment>New button</comment>
   </data>
   <data name="WelcomeOpenButton" xml:space="preserve">
-    <value>Open an existing Forest</value>
+    <value>Open existing Forest</value>
     <comment>Open button</comment>
   </data>
   <data name="SearchTracksToggle" xml:space="preserve">
@@ -567,5 +567,9 @@ They'll show up here when you do.</value>
   <data name="EmptyViewTrashDesc" xml:space="preserve">
     <value>Deleted Dialogue Nodes will end up here.</value>
     <comment>Desc for trash empty view</comment>
+  </data>
+  <data name="WelcomeSaveAs" xml:space="preserve">
+    <value>Save As...</value>
+    <comment>Save as button</comment>
   </data>
 </root>

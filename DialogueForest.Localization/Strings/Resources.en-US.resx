@@ -176,7 +176,7 @@ You can always change this later.</value>
     <value>Create</value>
   </data>
   <data name="WelcomeWhatsNew" xml:space="preserve">
-    <value>See What's New</value>
+    <value>What's New</value>
   </data>
   <data name="SearchTreePlaceholderText" xml:space="preserve">
     <value>Search Nodes...</value>
@@ -304,7 +304,7 @@ You can always change this later.</value>
     <value>Create a New Forest</value>
   </data>
   <data name="WelcomeOpenButton" xml:space="preserve">
-    <value>Open an existing Forest</value>
+    <value>Open existing Forest</value>
   </data>
   <data name="SearchTracksToggle" xml:space="preserve">
     <value>Tracks</value>
@@ -494,5 +494,8 @@ They'll show up here when you do.</value>
   </data>
   <data name="EmptyViewTrashDesc" xml:space="preserve">
     <value>Deleted Dialogue Nodes will end up here.</value>
+  </data>
+  <data name="WelcomeSaveAs" xml:space="preserve">
+    <value>Save As...</value>
   </data>
 </root>

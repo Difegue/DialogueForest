@@ -12,6 +12,7 @@ using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
 using DialogueForest.Core.ViewModels;
 using DialogueForest.Localization.Strings;
+using SkiaSharp;
 
 namespace DialogueForest.Core.ViewModels
 {
@@ -51,6 +52,8 @@ namespace DialogueForest.Core.ViewModels
 
             foreach (var dialogue in node.DialogueLines)
                 AddDialog(dialogue);
+
+            OnPropertyChanged(nameof(TextSummary));
         }
 
         private void UpdateMetadata()
@@ -106,9 +109,9 @@ namespace DialogueForest.Core.ViewModels
             set => SetProperty(_node.Title, value, _node, (u, n) => u.Title = n);
         }
 
-        public string PlainText => Dialogs.FirstOrDefault()?.PlainDialogueText;
+        public string TextSummary => Dialogs.Select(d => d.RtfDialogueText).FirstOrDefault();
 
-        private void UpdatePlainText(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(nameof(PlainText));
+        private void UpdateTextSummary(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(nameof(TextSummary));
 
         [ICommand]
         private void OpenSettings() => _navigationService.Navigate<SettingsViewModel>();
@@ -132,14 +135,14 @@ namespace DialogueForest.Core.ViewModels
 
             var dialogVm = DialoguePartViewModel.Create(text, this);
             ActivateDialogue(dialogVm);
-            dialogVm.PropertyChanged += UpdatePlainText;
+            dialogVm.PropertyChanged += UpdateTextSummary;
 
             Dialogs.Add(dialogVm);
         }
 
         public void RemoveDialog(DialoguePartViewModel vm, DialogueText matchingText)
         {
-            vm.PropertyChanged -= UpdatePlainText;
+            vm.PropertyChanged -= UpdateTextSummary;
             _node.DialogueLines.Remove(matchingText);
             Dialogs.Remove(vm);
         }

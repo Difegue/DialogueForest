@@ -9,7 +9,7 @@
     xmlns:strings="using:DialogueForest.Localization.Strings"
     xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:i="using:Microsoft.Xaml.Interactivity" xmlns:ic="using:Microsoft.Xaml.Interactions.Core" xmlns:helpers="using:DialogueForest.Helpers"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:i="using:Microsoft.Xaml.Interactivity" xmlns:ic="using:Microsoft.Xaml.Interactions.Core" xmlns:helpers="using:DialogueForest.Helpers" xmlns:local="using:DialogueForest.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -138,10 +138,11 @@
                     <TextBlock Text="#"/>
                     <TextBlock Text="{x:Bind ID}"/>
                 </StackPanel>
-                
 
-                <TextBlock Grid.Row="2" Grid.ColumnSpan="2" TextWrapping="Wrap" MaxLines="3" TextTrimming="CharacterEllipsis"
-                        Text="{x:Bind PlainText, Mode=OneWay}"/>
+
+                <local:BindableRichEditBox Background="Transparent" BorderThickness="0" IsHitTestVisible="False" 
+                                               MaxHeight="90" Padding="0" Grid.Row="2" Grid.ColumnSpan="2" TextWrapping="Wrap" 
+                                               RtfText="{x:Bind TextSummary, Mode=OneWay}" />
             </Grid>
         </DataTemplate>
     </Page.Resources>

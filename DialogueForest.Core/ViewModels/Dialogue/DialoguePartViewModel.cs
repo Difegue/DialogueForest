@@ -44,9 +44,6 @@ namespace DialogueForest.Core.ViewModels
         }
 
         [ObservableProperty]
-        private string _plainDialogueText;
-
-        [ObservableProperty]
         private bool _isActive;
 
         [ICommand]

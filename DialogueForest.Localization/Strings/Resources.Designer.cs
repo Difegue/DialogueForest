@@ -1116,7 +1116,7 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Open an existing Forest.
+        ///   Recherche une chaîne localisée semblable à Open existing Forest.
         /// </summary>
         public static string WelcomeOpenButton {
             get {
@@ -1125,7 +1125,16 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à See What&apos;s New.
+        ///   Recherche une chaîne localisée semblable à Save As....
+        /// </summary>
+        public static string WelcomeSaveAs {
+            get {
+                return ResourceManager.GetString("WelcomeSaveAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à What&apos;s New.
         /// </summary>
         public static string WelcomeWhatsNew {
             get {

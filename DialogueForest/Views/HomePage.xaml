@@ -20,7 +20,7 @@
                    FontFamily="Segoe UI Variable Display"/>
 
 
-            <controls:WrapPanel HorizontalSpacing="12" VerticalSpacing="12" Orientation="Horizontal" Margin="12,36,0,0">
+            <controls:WrapPanel HorizontalSpacing="12" VerticalSpacing="12" Orientation="Horizontal" Margin="12,36,0,0" >
 
                 <Button Width="128" Height="96">
                     <StackPanel Spacing="8">
@@ -37,7 +37,7 @@
                 <Button Width="128" Height="96">
                     <StackPanel Spacing="8">
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE792;" FontSize="24" />
-                        <TextBlock Text="Save Current Forest as..." TextWrapping="Wrap" TextAlignment="Center"/>
+                        <TextBlock Text="{x:Bind strings:Resources.WelcomeSaveAs}" TextWrapping="Wrap" TextAlignment="Center"/>
                     </StackPanel>
                 </Button>
                 <Button Width="128" Height="96">
