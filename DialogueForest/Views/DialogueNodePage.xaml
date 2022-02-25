@@ -12,7 +12,9 @@
     xmlns:strings="using:DialogueForest.Localization.Strings" 
     xmlns:local="using:DialogueForest.Controls"
     xmlns:views="using:DialogueForest.Views"
-    xmlns:viewmodels="using:DialogueForest.Core.ViewModels" xmlns:converters="using:DialogueForest.Converters"
+    xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
+    xmlns:converters="using:DialogueForest.Converters"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Converters"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -23,10 +25,12 @@
             <Setter Property="Padding" Value="0" />
         </Style>
 
-
         <converters:BoolMetadataConverter x:Key="BoolMetadataConverter"/>
         <converters:ColorMetadataConverter x:Key="ColorMetadataConverter"/>
         <converters:StringMetadataConverter x:Key="StringMetadataConverter"/>
+
+        <toolkit:StringFormatConverter x:Key="CharacterNameConverter"/>
+
 
         <Style x:Key="ColorPickerStyle" TargetType="controls:ColorPicker">
             <Setter Property="ColorSpectrumShape" Value="Ring"/>
@@ -38,8 +42,19 @@
             <Grid>
                 <Grid Style="{StaticResource CardGrid}" ui:FrameworkElementExtensions.Cursor="IBeam" Margin="-1,1"
                       Visibility="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- &#10240; is a braille blank character to break the converter's not-useful-here trimming behavior -->
+                    <TextBlock Text="{x:Bind CharacterName, Mode=OneWay, Converter={StaticResource CharacterNameConverter},
+                                             ConverterParameter=' {0} :&#10240;'}" 
+                               Style="{StaticResource BaseTextBlockStyle}"
+                               Grid.Column="0" />
+
                     <local:BindableRichEditBox Background="Transparent" BorderThickness="0" IsHitTestVisible="False" 
-                                               MaxHeight="90" Padding="0" 
+                                               Padding="0" Grid.Column="1"
                                                RtfText="{x:Bind RtfDialogueText, Mode=OneWay}" />
                     <i:Interaction.Behaviors>
                         <ic:EventTriggerBehavior EventName="Tapped">
@@ -86,7 +101,7 @@
 
                         <StackPanel Orientation="Horizontal" Spacing="8" Grid.Column="2" HorizontalAlignment="Right" Margin="{StaticResource SmallRightMargin}">
                             <ComboBox PlaceholderText="Character" IsEditable="True" ItemsSource="{x:Bind Characters}"
-                                      Width="160" Height="30" VerticalAlignment="Center" />
+                                      Width="160" Height="30" VerticalAlignment="Center" SelectedItem="{x:Bind CharacterName, Mode=TwoWay}" />
                             <Button Command="{x:Bind RemoveCommand}" Height="30"
                                 ToolTipService.ToolTip="{x:Bind strings:Resources.EditorDeleteDialogue}">
                                 <Button.Content>

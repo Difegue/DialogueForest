@@ -37,17 +37,20 @@ namespace DialogueForest.Core.ViewModels
             _dispatcherService.Initialize();
 
             WeakReferenceMessenger.Default.Register<ShellViewModelBase, SavedFileMessage>(this, (r, m) => r.Receive(m));
-            _titleBarText = Resources.AppDisplayName;
+            _titleBarText = _dataService.LastSavedFile != null ? UpdateTitleBar() : Resources.AppDisplayName;
 
             ((NotificationServiceBase)_notificationService).InAppNotificationRequested += ShowInAppNotification;
             ((NavigationServiceBase)_navigationService).Navigated += OnFrameNavigated;
         }
 
-        private void Receive(SavedFileMessage m)
+        private string UpdateTitleBar()
         {
-            TitleBarText = Resources.AppDisplayName + " - " + m.FileAbstraction.Name + m.FileAbstraction.Extension;
-            _interopService.UpdateAppTitle(m.FileAbstraction.Name + m.FileAbstraction.Extension);
+            var file = _dataService.LastSavedFile;
+            _interopService.UpdateAppTitle(file.Name + file.Extension);
+            return Resources.AppDisplayName + " - " + file.Name + file.Extension;
         }
+
+        private void Receive(SavedFileMessage m) => _titleBarText = UpdateTitleBar();
 
         [ObservableProperty]
         private bool _isBackEnabled;

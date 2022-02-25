@@ -24,16 +24,17 @@ namespace DialogueForest.Core.Services
 
         private const string STORAGE_NAME = "autosave.json";
 
-        private FileAbstraction _lastSavedFile;
         private bool _savedFileExists;
         private Timer _autoSaveTimer;
+
+        public FileAbstraction LastSavedFile { get; private set; }
 
         public ForestDataService(IApplicationStorageService storageService, INotificationService notificationService)
         {
             _storageService = storageService;
             _notificationService = notificationService;
 
-            _lastSavedFile = new FileAbstraction
+            LastSavedFile = new FileAbstraction
             {
                 Extension = ".frst",
                 Type = "Dialogue Forest",
@@ -45,7 +46,7 @@ namespace DialogueForest.Core.Services
             if (_storageService.GetValue<string>("lastSavedFolder", null) != null)
             {
                 _savedFileExists = true;
-                WeakReferenceMessenger.Default.Send(new SavedFileMessage { FileAbstraction = _lastSavedFile });
+                WeakReferenceMessenger.Default.Send(new SavedFileMessage { FileAbstraction = LastSavedFile });
             }
 
             InitializeDatabase();
@@ -65,11 +66,11 @@ namespace DialogueForest.Core.Services
                     _currentForest = new DialogueDatabase();
                 }
 
-                // Autosave to storage every 30 seconds
+                // Autosave to storage every 5 seconds
                 _autoSaveTimer = new Timer((e) =>
                 {
                     SaveForestToStorage();
-                }, null, TimeSpan.Zero, TimeSpan.FromSeconds(30));
+                }, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
             }
             catch (Exception ex)
             {
@@ -88,9 +89,9 @@ namespace DialogueForest.Core.Services
             {
                 try
                 {
-                    _lastSavedFile = res.Item1;
+                    LastSavedFile = res.Item1;
                     _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(res.Item2);
-                    WeakReferenceMessenger.Default.Send(new SavedFileMessage { FileAbstraction = _lastSavedFile });
+                    WeakReferenceMessenger.Default.Send(new SavedFileMessage { FileAbstraction = LastSavedFile });
                 }
                 catch (Exception ex)
                 {
@@ -131,21 +132,21 @@ namespace DialogueForest.Core.Services
             var bytes = JsonSerializer.SerializeToUtf8Bytes(_currentForest);
 
             // Don't prompt the user if the savedFile already exists
-            _lastSavedFile = await _storageService.SaveDataToExternalFileAsync(bytes, _lastSavedFile, !_savedFileExists);
+            LastSavedFile = await _storageService.SaveDataToExternalFileAsync(bytes, LastSavedFile, !_savedFileExists);
 
-            if (_lastSavedFile != null)
+            if (LastSavedFile != null)
             {
                 _savedFileExists = true;
-                _storageService.SetValue("lastSavedFolder", _lastSavedFile.Path);
-                _storageService.SetValue("lastSavedName", _lastSavedFile.Name);
+                _storageService.SetValue("lastSavedFolder", LastSavedFile.Path);
+                _storageService.SetValue("lastSavedName", LastSavedFile.Name);
 
                 // Send a message to inform VMs we saved to disk
-                WeakReferenceMessenger.Default.Send(new SavedFileMessage { FileAbstraction = _lastSavedFile });
+                WeakReferenceMessenger.Default.Send(new SavedFileMessage { FileAbstraction = LastSavedFile });
             }
             else
             {
                 _notificationService.ShowInAppNotification("Couldn't save!");
-                _lastSavedFile = null;
+                LastSavedFile = null;
             }
 
         }
