@@ -151,7 +151,7 @@ namespace DialogueForest.Core.Services
 
         }
 
-        public List<DialogueTree> GetDialogueTrees() => _currentForest.Trees;
+        public List<DialogueTree> GetDialogueTrees() => _currentForest?.Trees;
 
         public DialogueNode GetNode(long id)
         {

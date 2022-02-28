@@ -147,7 +147,7 @@ namespace DialogueForest
             services.AddSingleton<SettingsViewModel>();
             services.AddSingleton<OpenedNodesViewModel>();
             services.AddSingleton<WelcomeViewModel>();
-            //services.AddSingleton<PlaylistViewModel>();
+            services.AddSingleton<ExportViewModel>();
             //services.AddSingleton<QueueViewModel>();
             //services.AddSingleton<SearchResultsViewModel>();
             //services.AddSingleton<LocalPlaybackViewModel>();

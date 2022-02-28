@@ -81,6 +81,36 @@ namespace DialogueForest.Services
             return defaultValue;
         }
 
+        public async Task<FileAbstraction> GetExternalFileAsync(FileAbstraction suggestedFile)
+        {
+            var savePicker = new Windows.Storage.Pickers.FileSavePicker
+            {
+                SuggestedFileName = suggestedFile.Name,
+                SuggestedStartLocation =
+                Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary
+            };
+            // Dropdown of file types the user can save the file as
+            savePicker.FileTypeChoices.Add(suggestedFile.Type, new List<string>() { suggestedFile.Extension });
+
+            var file = await savePicker.PickSaveFileAsync();
+
+            if (file != null)
+            {
+                // Allow future access to the file
+                Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(file);
+
+                return new FileAbstraction
+                {
+                    Name = file.DisplayName,
+                    Type = file.DisplayType,
+                    Extension = suggestedFile.Extension,
+                    Path = new FileInfo(file.Path).Directory.FullName
+                };
+            }
+
+            return null;
+        }
+
         public async Task<FileAbstraction> SaveDataToExternalFileAsync(byte[] bytes, FileAbstraction suggestedFile, bool promptUser = true)
         {
             StorageFile file;

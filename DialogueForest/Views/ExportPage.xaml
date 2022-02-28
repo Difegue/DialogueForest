@@ -4,8 +4,87 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:DialogueForest.Controls"
+    xmlns:strings="using:DialogueForest.Localization.Strings"
+    xmlns:core="using:DialogueForest.Core.Interfaces"
+    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI" xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
+    <Page.Resources>
 
-    <Frame x:Name="shellFrame" />
+    </Page.Resources>
 
+    <Grid >
+        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind strings:Resources.NavigationExport}" Margin="{StaticResource SmallTopMargin}"
+                   HorizontalAlignment="Center"/>
+
+        <ScrollViewer Margin="0,48,0,0">
+            <StackPanel x:Name="ContentArea" Margin="{StaticResource SmallLeftRightMargin}">
+
+                <!--#region Export Settings -->
+
+                <local:SettingsBlockControl Title="{x:Bind strings:Resources.ExportConversionParameter}"
+                                            Description="{x:Bind strings:Resources.ExportConversionDesc}"
+                                            Margin="{StaticResource MediumTopMargin}">
+                    <local:SettingsBlockControl.Icon>
+                        <FontIcon Glyph="&#xE185;" />
+                    </local:SettingsBlockControl.Icon>
+
+                    <ComboBox
+                    ItemsSource="{ui:EnumValues Type=core:OutputFormat}" 
+                    SelectedItem="{x:Bind ViewModel.RtfConversionParameter, Mode=TwoWay}"/>
+
+                </local:SettingsBlockControl>
+
+                <local:SettingsBlockControl Margin="{StaticResource XXSmallTopMargin}"
+                                            Title="{x:Bind strings:Resources.ExportFileLocation}" 
+                                            Description="{x:Bind ViewModel.ExportFileLocation, Mode=OneWay}">
+                    <local:SettingsBlockControl.Icon>
+                        <FontIcon Glyph="&#xEC5B;" />
+                    </local:SettingsBlockControl.Icon>
+
+                    <Button Command="{x:Bind ViewModel.PickExportLocationCommand}" ToolTipService.ToolTip="{x:Bind strings:Resources.ButtonFileText}">
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE10C;" />
+                    </Button>
+
+                </local:SettingsBlockControl>
+
+                <!--#endregion-->
+
+                <!--  #region The button  -->
+
+                <Button HorizontalAlignment="Stretch" 
+                Margin="{StaticResource MediumTopMargin}"
+                Style="{ThemeResource AccentButtonStyle}"
+                Command="{x:Bind ViewModel.ExportCommand}">
+
+                    <StackPanel Spacing="8">
+
+                        <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Width="64" Height="48">
+                            <Canvas.RenderTransform>
+                                <CompositeTransform ScaleX="0.05" ScaleY="0.05" />
+                            </Canvas.RenderTransform>
+                            <Canvas.Resources/>
+                            <Path Fill="{ThemeResource TextOnAccentFillColorPrimaryBrush}" Data="m 163.75181 381.61736 c -7.04104 0 -13.13401 3.167 -18.27892 9.5 -5.14491 6.333 -7.71777 13.833 -7.71777 22.5 0 8.667 2.57286 16.167 7.71777 22.5 5.14491 6.333 11.23788 9.5 18.27892 9.5 h 103.98673 c 7.04104 0 13.13401 -3.167 18.27891 -9.5 5.14491 -6.333 7.71777 -13.833 7.71777 -22.5 0 -8.667 -2.57286 -16.167 -7.71777 -22.5 -5.1449 -6.333 -11.23787 -9.5 -18.27891 -9.5 z M 25.99668 501.11346 c -7.04104 -10e-6 -13.13401 3.16699 -18.27892 9.5 -5.1449 6.33299 -7.71776 13.833 -7.71776 22.5 0 8.667 2.57286 16.167 7.71776 22.5 5.14491 6.33299 11.23788 9.5 18.27892 9.5 h 207.97346 c 7.04104 0 13.13401 -3.16701 18.27892 -9.5 5.1449 -6.333 7.71776 -13.83301 7.71776 -22.5 0 -8.667 -2.57286 -16.167 -7.71776 -22.5 -5.14491 -6.33301 -11.23788 -9.5 -18.27892 -9.5 z"/>
+                            <Path Fill="{ThemeResource TextOnAccentFillColorPrimaryBrush}" Data="m 289.68037 820.5 c -48.33276 -22.23416 -65.24414 -80.39046 -48.69015 -135.82079 5.5442 -55.85874 45.94726 -104.29244 76.7951 -153.53094 C 363.68178 460.76552 409.57826 390.38276 455.47474 320 c -55.285 15.80612 -49.69933 -68.85597 2.96324 -64 152.63475 0.29884 305.53466 -0.59983 458.00241 0.45317 49.72751 4.7914 68.17435 51.25871 97.00101 82.19427 29.2558 36.45086 58.5115 72.90171 87.7673 109.35256 74.6052 -4.90341 144.1039 30.65181 166.2823 97.12495 23.7552 58.91576 -2.7958 128.76764 -13.2271 193.89411 -4.33 31.67428 -14.3429 69.70065 -50.3709 85.23108 -35.0359 13.80945 -69.7104 5.45094 -104.4357 7.74986 -35.1714 21.50739 -75.901 67.0469 -123.57981 63.73047 C 923.37313 902.69773 886.2431 865.69695 864.08017 832 c -116.38993 0 -232.77987 0 -349.1698 0 -50.2979 68.155 -155.17724 85.99072 -201.31225 32.37486 C 302.12132 852.31534 294.06959 837.16246 289.68037 820.5 Z M 442.20865 448 c 76.5 0 153 0 229.5 0 8.42203 -42.66667 16.84406 -85.33333 25.26609 -128 -53.48376 0.78508 -106.55919 -1.60159 -160.30901 1.25012 -27.91553 11.58507 -37.35628 43.23681 -54.78572 65.66496 C 468.65622 407.27672 455.43244 427.63836 442.20865 448 Z m 293.5 0 c 91.66667 0 183.33333 0 274.99995 0 C 977.3082 407.24792 945.11727 365.40657 910.95134 325.34389 887.92911 315.09342 857.96582 322.03572 831.68216 320 c -23.56914 0 -47.13828 0 -70.70742 0 -8.42203 42.66667 -16.84406 85.33333 -25.26609 128 z M 608.54342 768 c 16.84406 -85.33333 33.68812 -170.66667 50.53218 -256 -86.16667 0 -172.33333 0 -258.5 0 -28.32872 45.18165 -60.72705 88.73075 -86.04749 135.12487 -7.90914 27.4921 -16.56901 56.74171 -13.08252 83.37513 35.72479 -77.22857 144.38844 -116.40022 202.38008 -71.98032 32.57686 22.93739 51.11316 65.0568 40.71775 109.48032 21.33333 0 42.66667 0 64 0 z m 256 0 c 13.05621 -86.47893 127.69222 -155.24007 199.04228 -118 42.6906 19.15723 69.3119 66.60653 56.9578 118 21.3333 0 42.6666 0 63.9999 0 8.9748 -51.2275 22.8672 -102.77707 27.849 -153.75 1.4249 -64.16292 -54.649 -109.0525 -119.8073 -102.25 -123.16986 0 -246.33968 0 -369.5095 0 -16.84406 85.33333 -33.68812 170.66667 -50.53218 256 64 0 128 0 192 0 z m -384 0 c 12.92556 -51.90672 -49.67037 -84.61612 -94.95405 -49.39053 -47.51272 30.66859 -44.37339 104.61602 5.50514 112.1404 36.62335 8.96306 82.80595 -23.27895 89.44891 -62.74987 z m 576.00008 0 c 12.9255 -51.90674 -49.6704 -84.6161 -94.95411 -49.39053 -47.51277 30.66858 -44.3734 104.61607 5.50521 112.1404 36.6234 8.96306 82.806 -23.27895 89.4489 -62.74987 z"/>
+                        </Canvas>
+
+                        <TextBlock Text="{x:Bind strings:Resources.ExportActionButtonText}" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    
+                </Button>
+
+                <muxc:ProgressRing  Width="72" Height="72" Margin="{StaticResource LargeTopMargin}"
+                                    Maximum="100" Value="50" IsIndeterminate="False" />
+                <TextBlock Text="Exporting..."
+                           Style="{StaticResource SubtitleTextBlockStyle}"
+                           HorizontalAlignment="Center" Margin="{StaticResource SmallTopMargin}"/>
+
+                <!--#endregion-->
+
+                <Border Height="64" />
+
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
 </Page>

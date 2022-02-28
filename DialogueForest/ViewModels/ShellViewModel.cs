@@ -122,6 +122,8 @@ namespace DialogueForest.ViewModels
             // More info on tracking issue https://github.com/Microsoft/microsoft-ui-xaml/issues/8
             _keyboardAccelerators.Add(_altLeftKeyboardAccelerator);
             _keyboardAccelerators.Add(_backKeyboardAccelerator);
+
+            UpdateTreeList();
         }
 
         protected override void ItemInvoked(object args)

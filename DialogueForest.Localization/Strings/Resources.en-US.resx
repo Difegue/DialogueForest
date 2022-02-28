@@ -498,4 +498,19 @@ They'll show up here when you do.</value>
   <data name="WelcomeSaveAs" xml:space="preserve">
     <value>Save As...</value>
   </data>
+  <data name="ExportConversionParameter" xml:space="preserve">
+    <value>Text Format</value>
+  </data>
+  <data name="ExportConversionDesc" xml:space="preserve">
+    <value>Choose which format your Dialogue text will be exported as.</value>
+  </data>
+  <data name="ExportFileLocation" xml:space="preserve">
+    <value>JSON Export Location</value>
+  </data>
+  <data name="ButtonFileText" xml:space="preserve">
+    <value>Pick a File...</value>
+  </data>
+  <data name="ExportActionButtonText" xml:space="preserve">
+    <value>Export All Dialogue</value>
+  </data>
 </root>

@@ -1,5 +1,6 @@
 ﻿using System;
-
+using CommunityToolkit.Mvvm.DependencyInjection;
+using DialogueForest.Core.ViewModels;
 using DialogueForest.ViewModels;
 
 using Windows.UI.Xaml;
@@ -10,19 +11,13 @@ namespace DialogueForest.Views
 {
     public sealed partial class ExportPage : Page
     {
-        //public ShellContentDialogViewModel ViewModel { get; } = new ShellContentDialogViewModel();
+        public ExportViewModel ViewModel => (ExportViewModel)DataContext;
 
-        private ExportPage(Type pageType, object parameter = null, NavigationTransitionInfo infoOverride = null)
+        public ExportPage()
         {
             InitializeComponent();
-            shellFrame.Navigate(pageType, parameter,  infoOverride);
-            shellFrame.Width = Window.Current.Bounds.Width * 0.8;
-            shellFrame.Height = Window.Current.Bounds.Height * 0.8;
+            DataContext = Ioc.Default.GetRequiredService<ExportViewModel>();
         }
 
-        public static ExportPage Create(Type pageType, object parameter = null, NavigationTransitionInfo infoOverride = null)
-        {
-            return new ExportPage(pageType, parameter, infoOverride);
-        }
     }
 }

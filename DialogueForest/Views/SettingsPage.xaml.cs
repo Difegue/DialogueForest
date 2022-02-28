@@ -1,7 +1,6 @@
 ﻿using System;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using DialogueForest.Core.ViewModels;
-using DialogueForest.Core.ViewModels;
 
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;

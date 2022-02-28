@@ -497,4 +497,19 @@ Vous les retrouverez ici.</value>
   <data name="WelcomeSaveAs" xml:space="preserve">
     <value>Enregistrer sous...</value>
   </data>
+  <data name="ExportConversionParameter" xml:space="preserve">
+    <value>Format du texte</value>
+  </data>
+  <data name="ExportConversionDesc" xml:space="preserve">
+    <value>Choisissez le format qui sera utilisé pour exporter le texte des dialogues.</value>
+  </data>
+  <data name="ExportFileLocation" xml:space="preserve">
+    <value>Emplacement de l'export JSON</value>
+  </data>
+  <data name="ButtonFileText" xml:space="preserve">
+    <value>Choisissez un fichier...</value>
+  </data>
+  <data name="ExportActionButtonText" xml:space="preserve">
+    <value>Exporter tout le Dialogue</value>
+  </data>
 </root>

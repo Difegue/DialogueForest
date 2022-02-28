@@ -97,6 +97,15 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pick a File....
+        /// </summary>
+        public static string ButtonFileText {
+            get {
+                return ResourceManager.GetString("ButtonFileText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à No.
         /// </summary>
         public static string ButtonNoText {
@@ -530,6 +539,42 @@ namespace DialogueForest.Localization.Strings {
         public static string ExceptionViewLifeTimeControlViewDisposal {
             get {
                 return ResourceManager.GetString("ExceptionViewLifeTimeControlViewDisposal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Export All Dialogue.
+        /// </summary>
+        public static string ExportActionButtonText {
+            get {
+                return ResourceManager.GetString("ExportActionButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Choose which format your Dialogue text will be exported as..
+        /// </summary>
+        public static string ExportConversionDesc {
+            get {
+                return ResourceManager.GetString("ExportConversionDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Text Format.
+        /// </summary>
+        public static string ExportConversionParameter {
+            get {
+                return ResourceManager.GetString("ExportConversionParameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à JSON Export Location.
+        /// </summary>
+        public static string ExportFileLocation {
+            get {
+                return ResourceManager.GetString("ExportFileLocation", resourceCulture);
             }
         }
         
