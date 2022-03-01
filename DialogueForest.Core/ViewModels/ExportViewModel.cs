@@ -16,15 +16,13 @@ namespace DialogueForest.Core.ViewModels
     {
         private IApplicationStorageService _applicationStorageService;
         private INotificationService _notificationService;
-        private IInteropService _interopService;
         private IDialogService _dialogService;
         private ForestDataService _dataService;
 
-        public ExportViewModel(IApplicationStorageService appStorage, INotificationService notificationService, IInteropService interopService, IDialogService dialogService, ForestDataService dataService)
+        public ExportViewModel(IApplicationStorageService appStorage, INotificationService notificationService, IDialogService dialogService, ForestDataService dataService)
         {
             _applicationStorageService = appStorage;
             _notificationService = notificationService;
-            _interopService = interopService;
             _dataService = dataService;
             _dialogService = dialogService;
         }
@@ -132,7 +130,7 @@ namespace DialogueForest.Core.ViewModels
             foreach (var line in node.DialogueLines)
             {
                 var convertedLine = new Dictionary<string, object>();
-                convertedLine.Add("Text", _interopService.ConvertRtf(line.RichText, _rtfConversionParameter));
+                convertedLine.Add("Text", RtfHelper.Convert(line.RichText, _rtfConversionParameter));
                 convertedLine.Add("Character", line.Character);
 
                 exportedLines.Add(convertedLine);

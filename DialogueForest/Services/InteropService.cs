@@ -123,8 +123,6 @@ namespace DialogueForest.Services
             await CoreApplication.GetCurrentView().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SystemInformation.LaunchStoreForReviewAsync());
         }
 
-        public string ConvertRtf(string rtf, OutputFormat format) => RtfHelper.Convert(rtf, format);
-
         public void UpdateAppTitle(string title)
         {
             ApplicationView.GetForCurrentView().Title = title;
