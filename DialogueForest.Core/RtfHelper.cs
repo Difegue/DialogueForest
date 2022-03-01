@@ -22,12 +22,15 @@ namespace DialogueForest.Core
             };
             var html = Rtf.ToHtml(rtf, settings);
 
+            // Remove pure B/W color tags which can be inserted by app theme
+            html = html.Replace("color:#FFFFFF;", "").Replace("color:#000000;", "");
+
             switch (format)
             {
                 case OutputFormat.PlainText: return Html.ToPlainText(html);
                 case OutputFormat.HTML: return html;
-                case OutputFormat.BBCode: return Html.ToMarkdown(html);
-                case OutputFormat.UnityRichText: return Html.ToMarkdown(html);
+                case OutputFormat.BBCode: return Html.ToMarkdown(html); // TODO
+                case OutputFormat.Markdown: return Html.ToMarkdown(html);
             }
 
             // dumb fail state

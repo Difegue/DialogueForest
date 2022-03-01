@@ -10,6 +10,12 @@ namespace DialogueForest.Helpers
     public static class UWPHelpers
     {
 
+        public static string ConvertRtfWhiteTextToBlack(this string s)
+        => s.Replace("\\red255\\green255\\blue255", "\\red0\\green0\\blue0");
+
+        public static string ConvertRtfBlackTextToWhite(this string s)
+            => s.Replace("\\red0\\green0\\blue0", "\\red255\\green255\\blue255");
+
         // If no items are selected, select the one underneath us.
         // https://github.com/microsoft/microsoft-ui-xaml/issues/911
         public static void SelectItemOnFlyoutRightClick<T>(ListView QueueList, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)

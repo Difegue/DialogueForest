@@ -1,6 +1,7 @@
 ﻿using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 using Windows.UI.Text;
+using DialogueForest.Helpers;
 
 namespace DialogueForest.Controls
 {
@@ -79,7 +80,18 @@ namespace DialogueForest.Controls
             if (!rtb._lockChangeExecution)
             {
                 rtb._lockChangeExecution = true;
-                rtb.Document.SetText(TextSetOptions.FormatRtf, rtb.RtfText);
+
+                // https://github.com/microsoft/microsoft-ui-xaml/issues/1941 -- needs the extra defaults option to avoid adding extraneous newlines..
+                var options = TextSetOptions.FormatRtf | TextSetOptions.ApplyRtfDocumentDefaults;
+
+                // Make black text white if dark theme is requested
+                var text = Window.Current.Content is FrameworkElement fe
+                    ? fe.ActualTheme == ElementTheme.Light
+                        ? rtb.RtfText.ConvertRtfWhiteTextToBlack()
+                        : rtb.RtfText.ConvertRtfBlackTextToWhite()
+                    : rtb.RtfText.ConvertRtfWhiteTextToBlack(); // Assume light theme if actual theme cannot be determined
+
+                rtb.Document.SetText(options, text);
                 rtb._lockChangeExecution = false;
             }
         }

@@ -75,18 +75,21 @@
                             <ColumnDefinition Width="280"/>
                         </Grid.ColumnDefinitions>
 
-                        <StackPanel Orientation="Horizontal" Spacing="8" Grid.Column="0" Margin="{StaticResource SmallLeftMargin}">
-                            <ToggleButton ToolTipService.ToolTip="{x:Bind strings:Resources.EditorBold}" >
+                        <StackPanel x:Name="EditorControls" Orientation="Horizontal" Spacing="8" Grid.Column="0" Margin="{StaticResource SmallLeftMargin}">
+                            <ToggleButton x:Name="Bold" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorBold}"
+                                          Click="Toggle_Bold" Tag="{Binding ElementName=Editor}">
                                 <ToggleButton.Content>
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8DD;" FontSize="14"/>
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton ToolTipService.ToolTip="{x:Bind strings:Resources.EditorItalic}">
+                            <ToggleButton x:Name="Italic" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorItalic}"
+                                          Click="Toggle_Italic" Tag="{Binding ElementName=Editor}">
                                 <ToggleButton.Content>
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8DB;" FontSize="14"/>
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton ToolTipService.ToolTip="{x:Bind strings:Resources.EditorUnderline}">
+                            <ToggleButton x:Name="Underline" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorUnderline}"
+                                          Click="Toggle_Underline" Tag="{Binding ElementName=Editor}">
                                 <ToggleButton.Content>
                                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19A;" FontSize="14"/>
                                 </ToggleButton.Content>
@@ -94,15 +97,17 @@
 
                             <AppBarSeparator />
 
-                            <controls:ColorPickerButton ToolTipService.ToolTip="{x:Bind strings:Resources.EditorFontColor}"
-                                  SelectedColor="Navy" ColorPickerStyle="{StaticResource ColorPickerStyle}"/>
+                            <controls:ColorPickerButton x:Name="Color" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorFontColor}"
+                                                        ColorPickerStyle="{StaticResource ColorPickerStyle}" Height="28"
+                                                        CornerRadius="{ThemeResource ControlCornerRadius}"
+                                                        Click="ColorPicker_Click" Tag="{Binding ElementName=Editor}"/>
 
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Spacing="8" Grid.Column="2" HorizontalAlignment="Right" Margin="{StaticResource SmallRightMargin}">
                             <ComboBox PlaceholderText="Character" IsEditable="True" ItemsSource="{x:Bind Characters}"
-                                      Width="160" Height="30" VerticalAlignment="Center" SelectedItem="{x:Bind CharacterName, Mode=TwoWay}" />
-                            <Button Command="{x:Bind RemoveCommand}" Height="30"
+                                      Width="160" Height="28" VerticalAlignment="Center" SelectedItem="{x:Bind CharacterName, Mode=TwoWay}" />
+                            <Button Command="{x:Bind RemoveCommand}" Height="28"
                                 ToolTipService.ToolTip="{x:Bind strings:Resources.EditorDeleteDialogue}">
                                 <Button.Content>
                                     <FontIcon Foreground="{ThemeResource DestructiveActionForeground}" FontFamily="Segoe Fluent Icons"
@@ -113,9 +118,13 @@
                     </Grid>
 
                     <local:BindableRichEditBox x:Name="Editor" PlaceholderText="{x:Bind strings:Resources.EditorPlaceholderText}"
-                                               Height="180" CornerRadius="0,0,4,4" 
+                                               Height="180" CornerRadius="0,0,4,4"
+                                               SelectionFlyout="{x:Null}" Tag="{Binding ElementName=EditorControls}"
                                                RtfText="{x:Bind RtfDialogueText, Mode=TwoWay}"
-                                               IsFocused="{x:Bind IsActive, Mode=OneWay}"/>
+                                               IsFocused="{x:Bind IsActive, Mode=OneWay}"
+                                               SelectionChanged="Selection_Changed"
+                                               TextChanged="Selection_Changed"
+                                               />
                 </StackPanel>
             </Grid>
         </DataTemplate>

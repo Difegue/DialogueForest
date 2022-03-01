@@ -16,7 +16,7 @@ namespace DialogueForest.Core.Interfaces
         PlainText = 0,
         BBCode = 1,
         HTML = 2,
-        UnityRichText = 3
+        Markdown = 3
     }
 
     public interface IInteropService
