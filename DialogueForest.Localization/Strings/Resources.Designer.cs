@@ -106,6 +106,15 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pick a Folder....
+        /// </summary>
+        public static string ButtonFolderText {
+            get {
+                return ResourceManager.GetString("ButtonFolderText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à No.
         /// </summary>
         public static string ButtonNoText {
@@ -579,6 +588,33 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Exporting... Please wait warmly..
+        /// </summary>
+        public static string ExportOperationInProgress {
+            get {
+                return ResourceManager.GetString("ExportOperationInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à If enabled, we&apos;ll export a separate JSON for each Dialogue Tree..
+        /// </summary>
+        public static string ExportSeparateFilesDesc {
+            get {
+                return ResourceManager.GetString("ExportSeparateFilesDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Create separate JSON files.
+        /// </summary>
+        public static string ExportSeparateFilesTitle {
+            get {
+                return ResourceManager.GetString("ExportSeparateFilesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à David Bowie is credited with playing the Stylophone on his 1969 debut hit song &quot;Space Oddity&quot; and also for his 2002 album Heathen track titled &quot;Slip Away,&quot; as well as on the song &quot;Heathen (The Rays)&quot;..
         /// </summary>
         public static string FirstRunFlavorText {
@@ -709,20 +745,20 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Added to Queue!.
+        ///   Recherche une chaîne localisée semblable à Export Failed! See the below notification for details..
         /// </summary>
-        public static string NotificationAddedToQueue {
+        public static string NotificationExportFailed {
             get {
-                return ResourceManager.GetString("NotificationAddedToQueue", resourceCulture);
+                return ResourceManager.GetString("NotificationExportFailed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Album art cache has been deleted..
+        ///   Recherche une chaîne localisée semblable à Exported Successfully!.
         /// </summary>
-        public static string NotificationCacheDeleted {
+        public static string NotificationExportSuccess {
             get {
-                return ResourceManager.GetString("NotificationCacheDeleted", resourceCulture);
+                return ResourceManager.GetString("NotificationExportSuccess", resourceCulture);
             }
         }
         

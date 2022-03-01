@@ -152,11 +152,11 @@
   <data name="ContentDialogWillBePermaDeleted" xml:space="preserve">
     <value>Il sera définitivement supprimé !</value>
   </data>
-  <data name="NotificationAddedToQueue" xml:space="preserve">
-    <value>Ajouté à la file d'attente !</value>
+  <data name="NotificationExportSuccess" xml:space="preserve">
+    <value>Exporté avec succès !</value>
   </data>
-  <data name="NotificationCacheDeleted" xml:space="preserve">
-    <value>Le cache de pochettes a été vidé.</value>
+  <data name="NotificationExportFailed" xml:space="preserve">
+    <value>L'export a échoué ! Lisez la notification ci-dessous pour plus de détails.</value>
   </data>
   <data name="WelcomeGreetingMorning" xml:space="preserve">
     <value>Bonjour</value>
@@ -511,5 +511,17 @@ Vous les retrouverez ici.</value>
   </data>
   <data name="ExportActionButtonText" xml:space="preserve">
     <value>Exporter tout le Dialogue</value>
+  </data>
+  <data name="ButtonFolderText" xml:space="preserve">
+    <value>Choisissez un dossier...</value>
+  </data>
+  <data name="ExportSeparateFilesTitle" xml:space="preserve">
+    <value>Créer des fichiers JSON séparés</value>
+  </data>
+  <data name="ExportSeparateFilesDesc" xml:space="preserve">
+    <value>Si activé, nous créerons un JSON par arbre de Dialogue.</value>
+  </data>
+  <data name="ExportOperationInProgress" xml:space="preserve">
+    <value>Export en cours... Veuillez patienter.</value>
   </data>
 </root>

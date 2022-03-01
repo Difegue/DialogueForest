@@ -18,7 +18,7 @@ namespace DialogueForest.Core.Interfaces
 
         Task<FileAbstraction> SaveDataToExternalFileAsync(byte[] bytes, FileAbstraction suggestedFile, bool promptUser = true);
         Task<Tuple<FileAbstraction, Stream>> LoadDataFromExternalFileAsync(string fileExtension);
-        Task<FileAbstraction> GetExternalFileAsync(FileAbstraction suggestedFile);
+        Task<FileAbstraction> GetExternalFolderAsync();
     }
 
     public class FileAbstraction

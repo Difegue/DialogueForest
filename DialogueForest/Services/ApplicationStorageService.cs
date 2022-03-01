@@ -81,30 +81,26 @@ namespace DialogueForest.Services
             return defaultValue;
         }
 
-        public async Task<FileAbstraction> GetExternalFileAsync(FileAbstraction suggestedFile)
+        public async Task<FileAbstraction> GetExternalFolderAsync()
         {
-            var savePicker = new Windows.Storage.Pickers.FileSavePicker
-            {
-                SuggestedFileName = suggestedFile.Name,
+            var folderPicker = new Windows.Storage.Pickers.FolderPicker() {
                 SuggestedStartLocation =
                 Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary
             };
-            // Dropdown of file types the user can save the file as
-            savePicker.FileTypeChoices.Add(suggestedFile.Type, new List<string>() { suggestedFile.Extension });
+            folderPicker.FileTypeFilter.Add("*");
 
-            var file = await savePicker.PickSaveFileAsync();
-
-            if (file != null)
+            var folder = await folderPicker.PickSingleFolderAsync();
+            if (folder != null)
             {
-                // Allow future access to the file
-                Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(file);
+                // Application now has read/write access to all contents in the picked folder
+                // (including other sub-folder contents)
+                Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(folder);
 
                 return new FileAbstraction
                 {
-                    Name = file.DisplayName,
-                    Type = file.DisplayType,
-                    Extension = suggestedFile.Extension,
-                    Path = new FileInfo(file.Path).Directory.FullName
+                    Name = null,
+                    Type = folder.DisplayType,
+                    Path = folder.Path
                 };
             }
 
@@ -129,7 +125,12 @@ namespace DialogueForest.Services
                 file = await savePicker.PickSaveFileAsync();
             }
             else
-                file = await StorageFile.GetFileFromPathAsync(suggestedFile.FullPath);
+            {
+                var folder = await StorageFolder.GetFolderFromPathAsync(suggestedFile.Path);
+                var fileName = suggestedFile.Name + suggestedFile.Extension;
+
+                file = await folder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
+            } 
             
             if (file != null)
             {
@@ -193,5 +194,6 @@ namespace DialogueForest.Services
                 return null;
             }
         }
+
     }
 }

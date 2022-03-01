@@ -36,26 +36,40 @@
                 </local:SettingsBlockControl>
 
                 <local:SettingsBlockControl Margin="{StaticResource XXSmallTopMargin}"
+                                            Title="{x:Bind strings:Resources.ExportSeparateFilesTitle}" 
+                                            Description="{x:Bind strings:Resources.ExportSeparateFilesDesc}">
+                    <local:SettingsBlockControl.Icon>
+                        <FontIcon Glyph="&#xF585;" />
+                    </local:SettingsBlockControl.Icon>
+
+                    <ToggleSwitch IsOn="{x:Bind ViewModel.ExportSeparateFiles, Mode=TwoWay}" OnContent="" OffContent="" Margin="0,0,-112,0"/>
+
+                </local:SettingsBlockControl>
+
+                <local:SettingsBlockControl Margin="{StaticResource XXSmallTopMargin}"
                                             Title="{x:Bind strings:Resources.ExportFileLocation}" 
-                                            Description="{x:Bind ViewModel.ExportFileLocation, Mode=OneWay}">
+                                            Description="{x:Bind ViewModel.ExportFolder, Mode=OneWay}">
                     <local:SettingsBlockControl.Icon>
                         <FontIcon Glyph="&#xEC5B;" />
                     </local:SettingsBlockControl.Icon>
 
-                    <Button Command="{x:Bind ViewModel.PickExportLocationCommand}" ToolTipService.ToolTip="{x:Bind strings:Resources.ButtonFileText}">
-                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE10C;" />
+                    <Button Command="{x:Bind ViewModel.PickExportLocationCommand}" ToolTipService.ToolTip="{x:Bind strings:Resources.ButtonFolderText}">
+                        <FontIcon Glyph="&#xE10C;" />
                     </Button>
 
                 </local:SettingsBlockControl>
+
+                
 
                 <!--#endregion-->
 
                 <!--  #region The button  -->
 
                 <Button HorizontalAlignment="Stretch" 
-                Margin="{StaticResource MediumTopMargin}"
+                Margin="2,16,2,0"
                 Style="{ThemeResource AccentButtonStyle}"
-                Command="{x:Bind ViewModel.ExportCommand}">
+                Command="{x:Bind ViewModel.ExportCommand}"
+                IsEnabled="{x:Bind ViewModel.IsExportInProgress, Converter={StaticResource BoolNegationConverter}}">
 
                     <StackPanel Spacing="8">
 
@@ -74,11 +88,16 @@
                 </Button>
 
                 <muxc:ProgressRing  Width="72" Height="72" Margin="{StaticResource LargeTopMargin}"
-                                    Maximum="100" Value="50" IsIndeterminate="False" />
-                <TextBlock Text="Exporting..."
+                                    IsIndeterminate="True"
+                                    Visibility="{x:Bind ViewModel.IsExportInProgress, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                <TextBlock Text="{x:Bind strings:Resources.ExportOperationInProgress}"
+                           Visibility="{x:Bind ViewModel.IsExportInProgress, Converter={StaticResource BoolToVisibilityConverter}}"
                            Style="{StaticResource SubtitleTextBlockStyle}"
                            HorizontalAlignment="Center" Margin="{StaticResource SmallTopMargin}"/>
-
+                <TextBlock Text="{x:Bind ViewModel.CurrentExportedTree}"
+                           Visibility="{x:Bind ViewModel.IsExportInProgress, Converter={StaticResource BoolToVisibilityConverter}}"
+                           Style="{StaticResource BodyTextBlockStyle}"
+                           HorizontalAlignment="Center" Margin="{StaticResource XSmallTopMargin}"/>
                 <!--#endregion-->
 
                 <Border Height="64" />

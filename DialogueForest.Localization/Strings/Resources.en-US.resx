@@ -207,11 +207,11 @@ You can always change this later.</value>
   <data name="ContentDialogWillBePermaDeleted" xml:space="preserve">
     <value>It will be permanently deleted!</value>
   </data>
-  <data name="NotificationAddedToQueue" xml:space="preserve">
-    <value>Added to Queue!</value>
+  <data name="NotificationExportSuccess" xml:space="preserve">
+    <value>Exported Successfully!</value>
   </data>
-  <data name="NotificationCacheDeleted" xml:space="preserve">
-    <value>Album art cache has been deleted.</value>
+  <data name="NotificationExportFailed" xml:space="preserve">
+    <value>Export Failed! See the below notification for details.</value>
   </data>
   <data name="WelcomeGreetingMorning" xml:space="preserve">
     <value>Good Morning</value>
@@ -512,5 +512,17 @@ They'll show up here when you do.</value>
   </data>
   <data name="ExportActionButtonText" xml:space="preserve">
     <value>Export All Dialogue</value>
+  </data>
+  <data name="ButtonFolderText" xml:space="preserve">
+    <value>Pick a Folder...</value>
+  </data>
+  <data name="ExportSeparateFilesTitle" xml:space="preserve">
+    <value>Create separate JSON files</value>
+  </data>
+  <data name="ExportSeparateFilesDesc" xml:space="preserve">
+    <value>If enabled, we'll export a separate JSON for each Dialogue Tree.</value>
+  </data>
+  <data name="ExportOperationInProgress" xml:space="preserve">
+    <value>Exporting... Please wait warmly.</value>
   </data>
 </root>
