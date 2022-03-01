@@ -55,6 +55,7 @@ namespace DialogueForest.Views
             var selection = editor.Document.Selection;
             var controls = editor.Tag as StackPanel;
 
+            // This is totally going to break at some point.
             var boldBtn = controls.Children[0] as ToggleButton;
             var italicBtn = controls.Children[1] as ToggleButton;
             var underlineBtn = controls.Children[2] as ToggleButton;

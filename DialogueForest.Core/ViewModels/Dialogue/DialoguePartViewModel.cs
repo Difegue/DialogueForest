@@ -24,9 +24,16 @@ namespace DialogueForest.Core.ViewModels
         {
             var instance = Ioc.Default.GetRequiredService<DialoguePartViewModel>();
             instance._text = text;
-            instance._parentNodeVm = parent;
+            instance.SetParent(parent);
 
             return instance;
+        }
+
+        private void SetParent(DialogueNodeViewModel parent)
+        {
+            _parentNodeVm = parent;
+            _parentNodeVm.Dialogs.CollectionChanged += (s, e) => 
+                OnPropertyChanged(nameof(ParentHasMultipleDialogs));
         }
 
         public ObservableCollection<string> Characters = new ObservableCollection<string>();
@@ -56,6 +63,8 @@ namespace DialogueForest.Core.ViewModels
                         Resources.ButtonYesText, Resources.ButtonCancelText))
                 _parentNodeVm.RemoveDialog(this, _text);
         }
+
+        public bool ParentHasMultipleDialogs => _parentNodeVm.Dialogs.Count > 1;
 
         public void Receive(ForestSettingsChangedMessage message)
         {

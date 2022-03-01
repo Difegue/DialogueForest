@@ -145,6 +145,8 @@ namespace DialogueForest.Core.ViewModels
             vm.PropertyChanged -= UpdateTextSummary;
             _node.DialogueLines.Remove(matchingText);
             Dialogs.Remove(vm);
+
+            Dialogs.First().IsActive = true;
         }
 
         [ICommand]

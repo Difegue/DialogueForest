@@ -1,7 +1,7 @@
 ﻿using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 using Windows.UI.Text;
-using DialogueForest.Helpers;
+using DialogueForest.Core;
 
 namespace DialogueForest.Controls
 {

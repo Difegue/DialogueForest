@@ -7,6 +7,12 @@ namespace DialogueForest.Core
 {
     public static class RtfHelper
     {
+        public static string ConvertRtfWhiteTextToBlack(this string s)
+        => s.Replace("\\red255\\green255\\blue255", "\\red0\\green0\\blue0");
+
+        public static string ConvertRtfBlackTextToWhite(this string s)
+            => s.Replace("\\red0\\green0\\blue0", "\\red255\\green255\\blue255");
+
         internal static string Convert(string rtf, OutputFormat format)
         {
             if (rtf == null) return "";
