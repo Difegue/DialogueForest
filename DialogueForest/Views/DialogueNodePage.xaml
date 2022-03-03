@@ -198,7 +198,8 @@
 
                 <local:SettingsBlockControl.SettingsActionableElement>
                     <controls:ColorPickerButton SelectedColor="{x:Bind Value, Mode=TwoWay, Converter={StaticResource ColorMetadataConverter}}"
-                                                ColorPickerStyle="{StaticResource ColorPickerStyle}"/>
+                                                ColorPickerStyle="{StaticResource ColorPickerStyle}"
+                                                CornerRadius="{ThemeResource ControlCornerRadius}"/>
                 </local:SettingsBlockControl.SettingsActionableElement>
 
             </local:SettingsBlockControl>
@@ -223,7 +224,7 @@
 
         <StackPanel Grid.Column="0" Spacing="4" Margin="{StaticResource SmallLeftTopMargin}" >
 
-            <muxc:BreadcrumbBar Height="24"/>
+            <Border Height="24"/>
 
             <TextBox Text="{x:Bind ViewModel.NodeTitle, Mode=TwoWay}"
                      FontSize="32" FontWeight="SemiBold" Margin="{StaticResource MediumRightMargin}"
