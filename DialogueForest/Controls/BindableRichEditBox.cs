@@ -2,6 +2,9 @@
 using Windows.UI.Xaml;
 using Windows.UI.Text;
 using DialogueForest.Core;
+using Windows.Foundation;
+using System;
+using System.Linq;
 
 namespace DialogueForest.Controls
 {
@@ -94,6 +97,11 @@ namespace DialogueForest.Controls
                 rtb.Document.SetText(options, text);
                 rtb._lockChangeExecution = false;
             }
+
+            // HACK: RichEditBox doesn't like having its text set programmatically and won't update its height,
+            // so we give it a helpful nudge by setting a minheight fitting the amount of linebreaks in the text.
+            rtb.Document.GetText(TextGetOptions.UseLf, out var plainTxt);
+            rtb.MinHeight = 16 + plainTxt.Split("\n").Count() * 16;
         }
 
         private static void IsFocusedPropertyChanged(DependencyObject dependencyObject,

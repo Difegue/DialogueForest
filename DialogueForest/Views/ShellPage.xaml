@@ -123,10 +123,11 @@
 
                 <muxc:NavigationViewItemSeparator />
 
-                <!--  This menuitem is filled in viewmodel (E8BE) (EC0A)  -->
+                <!--  This menuitem is filled in viewmodel -->
                 <muxc:NavigationViewItem
                     x:Name="treeContainer"
                     SelectsOnInvoked="False"
+                    IsExpanded="True"
                     Content="{x:Bind strings:Resources.NavigationTrees}">
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE1C3;"/>
