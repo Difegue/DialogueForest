@@ -26,8 +26,13 @@ namespace DialogueForest.Core.ViewModels
             instance._reply = reply;
             instance._parentNodeVm = parent;
 
+            instance.LinkableIDs = parent.GetIDs();
+
             return instance;
         }
+
+        public List<long> LinkableIDs { get; private set; }
+        public bool HasLinkedID => LinkedID > 0 && LinkedID != _parentNodeVm.ID;
 
         public string ReplyText
         {
@@ -38,7 +43,11 @@ namespace DialogueForest.Core.ViewModels
         public long LinkedID
         {
             get => _reply.LinkedID;
-            set => SetProperty(_reply.LinkedID, value, _reply, (u, n) => u.LinkedID = n);
+            set
+            {
+                SetProperty(_reply.LinkedID, value, _reply, (u, n) => u.LinkedID = n);
+                OnPropertyChanged(nameof(HasLinkedID));
+            }
         }
 
 

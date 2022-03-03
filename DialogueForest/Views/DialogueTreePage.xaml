@@ -269,7 +269,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1"
-                    Visibility="{x:Bind ViewModel.Nodes, Mode=OneWay, Converter={StaticResource EmptyViewVisibilityConverter}}"
+                    Visibility="{x:Bind ViewModel.IsNodesEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
 

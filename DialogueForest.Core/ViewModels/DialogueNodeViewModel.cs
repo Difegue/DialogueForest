@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -34,6 +35,8 @@ namespace DialogueForest.Core.ViewModels
 
             return instance;
         }
+
+        internal List<long> GetIDs() => _parentVm.Nodes.Select(n => n.ID).ToList();
 
         public void Receive(ForestSettingsChangedMessage message)
         {

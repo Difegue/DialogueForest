@@ -67,9 +67,11 @@ namespace DialogueForest.Core.ViewModels
             _openedNodes = openedNodes;
             _dataService = forestService;
 
+            Nodes.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsNodesEmpty));
             Nodes.CollectionChanged += (s, e) => OnPropertyChanged(nameof(TotalDialogues));
         }
 
+        public bool IsNodesEmpty => Nodes.Count == 0;
         public bool IsTrash => _tree == _dataService.GetTrash();
         public bool IsNotes => _tree == _dataService.GetNotes();
         public bool CannotAddNodes => _tree.CannotAddNodes;

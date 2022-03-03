@@ -24,6 +24,5 @@
         x:Key="ReverseBoolToVisibilityConverter"
         FalseValue="Visible"
         TrueValue="Collapsed" />
-    <converters:CollectionVisibilityConverter x:Key="EmptyViewVisibilityConverter" EmptyValue="Visible" NotEmptyValue="Collapsed"/>
 
 </ResourceDictionary>
