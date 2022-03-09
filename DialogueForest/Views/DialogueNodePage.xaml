@@ -142,8 +142,9 @@
                 <StackPanel Orientation="Vertical" Grid.Column="1" Spacing="4">
                     <TextBlock Text="{x:Bind strings:Resources.EditorReplyLinkedTo}"/>
                     <StackPanel Orientation="Horizontal" Spacing="8">
-                        <!-- Due to Bindings.Update in the codebehind, we can't precompile this binding. -->
+                        <!-- Due to Bindings.Update in the codebehind, we can't precompile the LinkedID binding. -->
                         <ComboBox IsEditable="True" AllowDrop="True"
+                                  DragOver="ComboBox_DragOver" Drop="ComboBox_Drop"
                                   SelectedItem="{Binding LinkedID, Mode=TwoWay}"
                                   ItemsSource="{x:Bind LinkableIDs, Mode=OneWay}"
                                   />
@@ -221,29 +222,22 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="80"/>
-        </Grid.ColumnDefinitions>
+        <StackPanel Spacing="4" Margin="12,24,0,0" >
 
-        <StackPanel Grid.Column="0" Spacing="4" Margin="{StaticResource SmallLeftTopMargin}" >
-
-            <Border Height="24"/>
+            <HyperlinkButton Margin="0,0,0,-8" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorShowInTree}"
+                             Command="{x:Bind ViewModel.ShowInTreeCommand}" >
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEC0A;" FontSize="16"/>
+                    <TextBlock Text="{x:Bind ViewModel.TreeTitle}"/>
+                </StackPanel>
+            </HyperlinkButton>
 
             <TextBox Text="{x:Bind ViewModel.NodeTitle, Mode=TwoWay}"
                      FontSize="32" FontWeight="SemiBold" Margin="{StaticResource MediumRightMargin}"
                      FontFamily="Segoe UI Variable Display" Background="Transparent" BorderThickness="0"/>
         </StackPanel>
 
-        <AppBarButton Label="{x:Bind strings:Resources.EditorShowInTree}" Width="80"
-                      Grid.Row="0" Grid.Column="1" Margin="-16,36,16,0"
-                      Command="{x:Bind ViewModel.ShowInTreeCommand}">
-            <AppBarButton.Icon>
-                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEC0A;" />
-            </AppBarButton.Icon>
-        </AppBarButton>
-
-        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2">
+        <ScrollViewer Grid.Row="1">
 
             <StackPanel Spacing="8" Margin="{StaticResource MediumLeftRightMargin}">
 

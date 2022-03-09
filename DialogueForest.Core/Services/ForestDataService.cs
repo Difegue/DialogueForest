@@ -186,6 +186,14 @@ namespace DialogueForest.Core.Services
             return t;
         }
 
+        public void MoveNode(DialogueNode node, DialogueTree origin, DialogueTree destination)
+        {
+            // TODO update lookup table and notify VMs (both tree and nodeVMs) with a message
+
+            origin.RemoveNode(node);
+            destination.AddNode(node);
+        }
+
         public DialogueTree GetNotes() => _currentForest.Notes;
 
         internal bool IsNodeTrashed(DialogueNode node) => _currentForest.Trash.Nodes.ContainsValue(node);
@@ -214,12 +222,6 @@ namespace DialogueForest.Core.Services
         internal void DeleteNode(DialogueNode node) => _currentForest.Trash.RemoveNode(node); // TODO update trash
 
         internal bool IsNodePinned(DialogueNode node) => _currentForest.PinnedIDs.Contains(node.ID);
-
-        internal void MoveNodeToTrash(DialogueTree tree, DialogueNode node)
-        {
-            tree.RemoveNode(node);
-            _currentForest.Trash.AddNode(node);
-        }
 
         internal DialogueNode CreateNewNode()
         {

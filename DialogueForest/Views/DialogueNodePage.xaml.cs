@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Text;
 using Microsoft.Toolkit.Uwp.UI.Controls;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace DialogueForest.Views
 {
@@ -86,6 +87,32 @@ namespace DialogueForest.Views
             editor.Document.Selection.CharacterFormat.ForegroundColor = e.NewColor;
         }
 
+        private void ComboBox_DragOver(object sender, DragEventArgs e)
+        {
+            // Only accept text (aka Dialogue Node IDs)
+            e.AcceptedOperation = (e.DataView.Contains(StandardDataFormats.Text)) ? DataPackageOperation.Link : DataPackageOperation.None;
+        }
+
+        private async void ComboBox_Drop(object sender, DragEventArgs e)
+        {
+            // This test is in theory not needed as we returned DataPackageOperation.None if
+            // the DataPackage did not contained text. However, it is always better if each
+            // method is robust by itself
+            if (e.DataView.Contains(StandardDataFormats.Text))
+            {
+                // We need to take a Deferral as we won't be able to confirm the end
+                // of the operation synchronously
+                var def = e.GetDeferral();
+                var text = await e.DataView.GetTextAsync();
+
+                // If this is an ID, assign it to SelectedItem - VM bindings will handle the rest
+                if (long.TryParse(text, out var nodeId))
+                    ((ComboBox)sender).SelectedItem = nodeId;
+
+                e.AcceptedOperation = DataPackageOperation.Link;
+                def.Complete();
+            }
+        }
     }
 
     /// <summary>

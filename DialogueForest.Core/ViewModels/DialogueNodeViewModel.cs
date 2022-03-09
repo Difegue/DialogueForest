@@ -122,6 +122,7 @@ namespace DialogueForest.Core.ViewModels
             set => SetProperty(_node.Title, value, _node, (u, n) => u.Title = n);
         }
 
+        public string TreeTitle => _parentVm.Title;
         public string TextSummary => Dialogs.Select(d => d.RtfDialogueText).FirstOrDefault();
 
         private void UpdateTextSummary(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(nameof(TextSummary));
@@ -218,6 +219,7 @@ namespace DialogueForest.Core.ViewModels
         internal void SetParentVm(DialogueTreeViewModel treeViewModel)
         {
             _parentVm = treeViewModel;
+            OnPropertyChanged(nameof(TreeTitle));
         }
 
         internal void ActivateDialogue(DialoguePartViewModel dialogVm)

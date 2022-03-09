@@ -118,7 +118,9 @@ namespace DialogueForest.Core.ViewModels
 
         internal void MoveNodeToTrash(DialogueNodeViewModel nodeVm, DialogueNode node)
         {
-            _dataService.MoveNodeToTrash(_tree, node);
+            var trash = _dataService.GetTrash();
+
+            _dataService.MoveNode(node, _tree, trash);
             nodeVm.SetParentVm(Create(_dataService.GetTrash())); // Hand off parenting to a trash treeVM
             Nodes.Remove(nodeVm);
         }

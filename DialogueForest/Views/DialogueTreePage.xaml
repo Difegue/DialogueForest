@@ -246,7 +246,8 @@
                     SelectionMode="None"
                     StretchContentForSingleRow="True"
                     DesiredWidth="270"
-                    ItemHeight="96"
+                    ItemHeight="96" CanDragItems="True"
+                    DragItemsStarting="NodeList_DragItemsStarting"
                     SelectedItem="{x:Bind ViewModel.SelectedNode, Mode=TwoWay}"
                     ItemClickCommand="{x:Bind ViewModel.ShowNodeCommand}">
                 <i:Interaction.Behaviors>

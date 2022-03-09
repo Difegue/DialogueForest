@@ -17,6 +17,7 @@ using System.Windows.Input;
 using DialogueForest.Core.Services;
 using Windows.UI.Xaml.Media;
 using DialogueForest.Core.Models;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace DialogueForest.ViewModels
 {
@@ -47,7 +48,7 @@ namespace DialogueForest.ViewModels
 
             var concreteNavService = (NavigationService)_navigationService;
             concreteNavService.Frame = frame;
-            concreteNavService.Navigated += UpdateNavigationViewSelection; 
+            concreteNavService.Navigated += UpdateNavigationViewSelection;
 
             _navigationView.BackRequested += OnBackRequested;
 
@@ -74,7 +75,7 @@ namespace DialogueForest.ViewModels
                 _navigationView.SelectedItem = _navigationView.MenuItems
                            .OfType<WinUI.NavigationViewItem>()
                            .FirstOrDefault(menuItem => IsMenuItemForPageType(menuItem, e));
-            }   
+            }
         }
 
         private bool IsMenuItemForPageType(WinUI.NavigationViewItem menuItem, CoreNavigationEventArgs e)
@@ -109,11 +110,61 @@ namespace DialogueForest.ViewModels
                 navigationViewItem.Icon = new FontIcon { Glyph = "\uEC0A" };
                 navigationViewItem.Content = tree.Name;
                 navigationViewItem.Tag = tree;
+
+                // Setup the item to accept dropped nodes
+                navigationViewItem.AllowDrop = true;
+                navigationViewItem.DragOver += NavigationViewItem_DragOver;
+                navigationViewItem.Drop += NavigationViewItem_Drop;
+
                 NavHelper.SetNavigateTo(navigationViewItem, typeof(DialogueTreeViewModel));
                 _treeContainer.MenuItems.Add(navigationViewItem);
             }
 
             _treeContainer.MenuItems.Add(_newTreeItem);
+        }
+
+        public async void NavigationViewItem_Drop(object sender, Windows.UI.Xaml.DragEventArgs e)
+        {
+            if (e.DataView.Contains(StandardDataFormats.Text))
+            {
+                // We need to take a Deferral as we won't be able to confirm the end
+                // of the operation synchronously
+                var def = e.GetDeferral();
+                var text = await e.DataView.GetTextAsync();
+
+                // If this is an ID, move it to our tree
+                if (long.TryParse(text, out var nodeId))
+                {
+                    var source = _dataService.GetNode(nodeId);
+                    var node = source.Item2;
+                    var origin = source.Item1;
+
+                    var nvi = ((WinUI.NavigationViewItem)sender);
+
+                    if (nvi.Tag is DialogueTree destination)
+                    {
+                        _dataService.MoveNode(node, origin, destination);
+                    }
+                    else if (nvi.Tag is string s)
+                    {
+                        if (s == "notes")
+                            _dataService.MoveNode(node, origin, _dataService.GetNotes());
+
+                        if (s == "trash")
+                            _dataService.MoveNode(node, origin, _dataService.GetTrash());
+                    }
+
+                }
+
+                e.AcceptedOperation = DataPackageOperation.Move;
+                def.Complete();
+            }
+        }
+
+        public void NavigationViewItem_DragOver(object sender, Windows.UI.Xaml.DragEventArgs e)
+        {
+            // Only accept text (aka Dialogue Node IDs)
+            e.AcceptedOperation = (e.DataView.Contains(StandardDataFormats.Text)) ? DataPackageOperation.Move : DataPackageOperation.None;
         }
 
         protected override void Loaded()
@@ -123,6 +174,7 @@ namespace DialogueForest.ViewModels
             _keyboardAccelerators.Add(_altLeftKeyboardAccelerator);
             _keyboardAccelerators.Add(_backKeyboardAccelerator);
 
+            // TODO this might require to be hooked to an event on dataService to know when it's done loading from storage.
             UpdateTreeList();
         }
 

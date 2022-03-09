@@ -3,7 +3,7 @@ using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
 using DialogueForest.Core.ViewModels;
 using System;
-
+using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -50,6 +50,18 @@ namespace DialogueForest.Views
                 DataContext = DialogueTreeViewModel.Create(tree);
             }
                 
+        }
+
+        private void NodeList_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
+        {
+            if (e.Items.Count == 1 && e.Items[0] is DialogueNodeViewModel vm)
+            {
+                // Set the content of the DataPackage to the ID of the node we're dragging
+                e.Data.SetText(vm.ID.ToString());
+
+                // We can either Link (when dragging to a Reply Prompt) or Move (when dragging to another Tree)
+                e.Data.RequestedOperation = DataPackageOperation.Link | DataPackageOperation.Move;
+            }
         }
     }
 }

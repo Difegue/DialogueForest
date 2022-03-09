@@ -129,6 +129,8 @@ namespace DialogueForest.Views
             TitleBarRightPart.Width = tabsView.CustomDragRegion.ActualWidth - CoreApplication.GetCurrentView().TitleBar.SystemOverlayRightInset;
         }
 
-        
+        private void NavigationViewItem_DragOver(object sender, DragEventArgs e) => ViewModel.NavigationViewItem_DragOver(sender, e);
+
+        private void NavigationViewItem_Drop(object sender, DragEventArgs e) => ViewModel.NavigationViewItem_Drop(sender, e);
     }
 }
