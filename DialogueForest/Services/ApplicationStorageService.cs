@@ -94,7 +94,9 @@ namespace DialogueForest.Services
             {
                 // Application now has read/write access to all contents in the picked folder
                 // (including other sub-folder contents)
-                Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(folder);
+                // Allow future access to the folder
+                var token = Windows.Storage.AccessCache.StorageApplicationPermissions.MostRecentlyUsedList.Add(folder);
+                SetValue(folder.Path, token);
 
                 return new FileAbstraction
                 {
@@ -109,9 +111,29 @@ namespace DialogueForest.Services
 
         public async Task<FileAbstraction> SaveDataToExternalFileAsync(byte[] bytes, FileAbstraction suggestedFile, bool promptUser = true)
         {
-            StorageFile file;
+            StorageFile file = null;
 
-            if (promptUser)
+            if (!promptUser)
+            {
+                // Get folder from MostRecentlyUsedList (or file if that fails)
+                var folderToken = GetValue<string>(suggestedFile.Path);
+
+                if (folderToken != null)
+                {
+                    var folder = await Windows.Storage.AccessCache.StorageApplicationPermissions.MostRecentlyUsedList.GetFolderAsync(folderToken);
+                    var fileName = suggestedFile.Name + suggestedFile.Extension;
+                    file = await folder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
+                }
+                else
+                {
+                    var fileToken = GetValue<string>(suggestedFile.FullPath);
+                    if (fileToken != null)
+                        file = await Windows.Storage.AccessCache.StorageApplicationPermissions.MostRecentlyUsedList.GetFileAsync(fileToken);
+                }
+            }
+
+            // We'll prompt the user no matter what if we couldn't get a valid token from MostRecentlyUsedList
+            if (promptUser || file == null)
             {
                 var savePicker = new Windows.Storage.Pickers.FileSavePicker
                 {
@@ -123,20 +145,17 @@ namespace DialogueForest.Services
                 savePicker.FileTypeChoices.Add(suggestedFile.Type, new List<string>() { suggestedFile.Extension });
 
                 file = await savePicker.PickSaveFileAsync();
-            }
-            else
-            {
-                var folder = await StorageFolder.GetFolderFromPathAsync(suggestedFile.Path);
-                var fileName = suggestedFile.Name + suggestedFile.Extension;
 
-                file = await folder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
-            } 
+                if (file != null)
+                {
+                    // Allow future access to the file
+                    var token = Windows.Storage.AccessCache.StorageApplicationPermissions.MostRecentlyUsedList.Add(file);
+                    SetValue(file.Path, token);
+                }
+            }
             
             if (file != null)
             {
-                // Allow future access to the file
-                Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(file);
-
                 // Prevent updates to the remote version of the file until
                 // we finish making changes and call CompleteUpdatesAsync.
                 CachedFileManager.DeferUpdates(file);
@@ -180,12 +199,16 @@ namespace DialogueForest.Services
             StorageFile file = await picker.PickSingleFileAsync();
             if (file != null)
             {
+                // Allow future access to the file
+                var token = Windows.Storage.AccessCache.StorageApplicationPermissions.MostRecentlyUsedList.Add(file);
+                SetValue(file.Path, token);
+
                 var abstraction = new FileAbstraction
                 {
                     Name = file.DisplayName,
                     Type = file.DisplayType,
                     Extension = fileExtension,
-                    Path = file.Path
+                    Path = new FileInfo(file.Path).Directory.FullName
                 };
                 return new Tuple<FileAbstraction, Stream>(abstraction, await file.OpenStreamForReadAsync());
             }
