@@ -4,7 +4,7 @@ namespace DialogueForest.Core.Interfaces
 {
     public interface IDialogService
     {
-        Task ShowWhatsNewDialogIfAppropriateAsync();
+        Task ShowWhatsNewDialogIfAppropriateAsync(bool forceShow = false);
         Task ShowFirstRunDialogIfAppropriateAsync();
         Task ShowRateAppDialogIfAppropriateAsync();
         Task<string> ShowTreeNameDialogAsync();

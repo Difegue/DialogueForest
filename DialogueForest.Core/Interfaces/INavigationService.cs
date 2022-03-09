@@ -16,7 +16,7 @@ namespace DialogueForest.Core.Interfaces
         void Navigate(Type viewmodel, object parameter = null);
         void Navigate<T>(object parameter = null) where T : ObservableObject;
         void SetItemForNextConnectedAnimation(object item);
-        void OpenDialogueNode(DialogueNode node);
+        void OpenDialogueNode(DialogueTree parent, DialogueNode node);
         void OpenDialogueNode(DialogueNodeViewModel existingVm);
     }
 
@@ -47,9 +47,10 @@ namespace DialogueForest.Core.Interfaces
             return false;
         }
 
-        public void OpenDialogueNode(DialogueNode node)
+        public void OpenDialogueNode(DialogueTree parent, DialogueNode node)
         {
-            var vm = DialogueNodeViewModel.Create(node);
+            var parentVm = DialogueTreeViewModel.Create(parent);
+            var vm = DialogueNodeViewModel.Create(node, parentVm);
             OpenDialogueNode(vm);
         }
 

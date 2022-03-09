@@ -58,6 +58,12 @@ namespace DialogueForest.Core.ViewModels
         private string _titleBarText;
 
         [ICommand]
+        private async Task Open()
+        {
+            await _dataService.LoadForestFromFileAsync();
+        }
+
+        [ICommand]
         private async Task Save()
         {
             await _dataService.SaveForestToStorageAsync();

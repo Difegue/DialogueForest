@@ -28,19 +28,19 @@
                         <TextBlock Text="{x:Bind strings:Resources.WelcomeNewButton}" TextWrapping="Wrap" TextAlignment="Center"/>
                     </StackPanel>
                 </Button>
-                <Button Width="128" Height="96">
+                <Button Width="128" Height="96" Command="{x:Bind ViewModel.OpenFileCommand}">
                     <StackPanel Spacing="8">
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE838;" FontSize="24" />
                         <TextBlock Text="{x:Bind strings:Resources.WelcomeOpenButton}" TextWrapping="Wrap" TextAlignment="Center"/>
                     </StackPanel>
                 </Button>
-                <Button Width="128" Height="96">
+                <Button Width="128" Height="96" Command="{x:Bind ViewModel.SaveFileAsCommand}">
                     <StackPanel Spacing="8">
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE792;" FontSize="24" />
                         <TextBlock Text="{x:Bind strings:Resources.WelcomeSaveAs}" TextWrapping="Wrap" TextAlignment="Center"/>
                     </StackPanel>
                 </Button>
-                <Button Width="128" Height="96">
+                <Button Width="128" Height="96" Command="{x:Bind ViewModel.ShowWhatsNewCommand}">
                     <StackPanel Spacing="8">
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE1D7;" FontSize="24" />
                         <TextBlock Text="{x:Bind strings:Resources.WelcomeWhatsNew}" TextWrapping="Wrap" TextAlignment="Center"/>

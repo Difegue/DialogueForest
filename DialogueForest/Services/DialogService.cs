@@ -29,14 +29,15 @@ namespace DialogueForest.Services
             _notificationService = notificationService;
         }
 
-        private bool shown = false;
+        private bool shownFirstRun = false;
+        private bool shownWhatsNew = false;
         public async Task ShowFirstRunDialogIfAppropriateAsync()
         {
             await _dispatcherService.ExecuteOnUIThreadAsync(async () =>
                 {
-                    if (SystemInformation.Instance.IsFirstRun && !shown)
+                    if (SystemInformation.Instance.IsFirstRun && !shownFirstRun)
                     {
-                        shown = true;
+                        shownFirstRun = true;
                         var dialog = new FirstRunDialog();
                         await dialog.ShowAsync();
                         _navigationService.Navigate<SettingsViewModel>();
@@ -44,13 +45,13 @@ namespace DialogueForest.Services
                 });
         }
 
-        public async Task ShowWhatsNewDialogIfAppropriateAsync()
+        public async Task ShowWhatsNewDialogIfAppropriateAsync(bool forceShow)
         {
             await _dispatcherService.ExecuteOnUIThreadAsync(async () =>
                 {
-                    if (SystemInformation.Instance.IsAppUpdated && !shown)
+                    if (forceShow || (SystemInformation.Instance.IsAppUpdated && !shownWhatsNew))
                     {
-                        shown = true;
+                        shownWhatsNew = true;
                         var dialog = new WhatsNewDialog();
                         await dialog.ShowAsync();
                     }

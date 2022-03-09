@@ -50,13 +50,14 @@ namespace DialogueForest.Core.ViewModels
                 } 
                 else
                 {
-                    nodeVm = DialogueNodeViewModel.Create(node);
+                    nodeVm = DialogueNodeViewModel.Create(node, this);
                 }
 
-                nodeVm.SetParentVm(this);
                 Nodes.Add(nodeVm);
             }
         }
+
+        internal List<long> GetIDs() => _tree.Nodes.Keys.ToList();
 
         public ObservableCollection<DialogueNodeViewModel> Nodes { get; } = new ObservableCollection<DialogueNodeViewModel>();
 
@@ -110,9 +111,8 @@ namespace DialogueForest.Core.ViewModels
                 node = _dataService.CreateNewNode();
             }
             _tree.AddNode(node);
-            var nodeVm = DialogueNodeViewModel.Create(node);
 
-            nodeVm.SetParentVm(this);
+            var nodeVm = DialogueNodeViewModel.Create(node, this);
             Nodes.Add(nodeVm);
         }
 

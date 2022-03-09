@@ -81,7 +81,7 @@ namespace DialogueForest.Core.Services
             }
         }
 
-        public async void LoadForestFromFile()
+        public async Task LoadForestFromFileAsync()
         {
             var res = await _storageService.LoadDataFromExternalFileAsync(".frst");
 
@@ -127,12 +127,14 @@ namespace DialogueForest.Core.Services
             await _storageService.SaveDataToFileAsync(STORAGE_NAME, bytes);
         }
 
-        public async Task SaveForestToFileAsync()
+        public async Task SaveForestToFileAsync(bool promptNewFile = false)
         {
             var bytes = JsonSerializer.SerializeToUtf8Bytes(_currentForest);
 
+            var promptUser = promptNewFile ? true : !_savedFileExists;
+
             // Don't prompt the user if the savedFile already exists
-            LastSavedFile = await _storageService.SaveDataToExternalFileAsync(bytes, LastSavedFile, !_savedFileExists);
+            LastSavedFile = await _storageService.SaveDataToExternalFileAsync(bytes, LastSavedFile, promptUser);
 
             if (LastSavedFile != null)
             {
@@ -153,21 +155,22 @@ namespace DialogueForest.Core.Services
 
         public List<DialogueTree> GetDialogueTrees() => _currentForest?.Trees;
 
-        public DialogueNode GetNode(long id)
+        public Tuple<DialogueTree,DialogueNode> GetNode(long id)
         {
 
             foreach (var tree in _currentForest.Trees)
                 if (tree.Nodes.ContainsKey(id))
-                    return tree.Nodes[id];
+                    return new(tree, tree.Nodes[id]);
 
             if (_currentForest.Notes.Nodes.ContainsKey(id))
-                return _currentForest.Notes.Nodes[id];
+                return new(_currentForest.Notes, _currentForest.Notes.Nodes[id]);
 
             if (_currentForest.Trash.Nodes.ContainsKey(id))
-                return _currentForest.Trash.Nodes[id];
+                return new(_currentForest.Trash, _currentForest.Trash.Nodes[id]);
 
             return null;
         }
+
 
         public DialogueTree GetTrash() => _currentForest.Trash;
 
@@ -178,7 +181,7 @@ namespace DialogueForest.Core.Services
             t.CannotAddNodes = true;
 
             foreach (var id in _currentForest.PinnedIDs)
-                t.AddNode(GetNode(id));
+                t.AddNode(GetNode(id).Item2);
 
             return t;
         }

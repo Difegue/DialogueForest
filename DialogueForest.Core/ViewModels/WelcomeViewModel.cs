@@ -1,8 +1,9 @@
 ﻿using System;
-
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DialogueForest.Core.Interfaces;
+using DialogueForest.Core.Services;
 
 namespace DialogueForest.Core.ViewModels
 {
@@ -16,21 +17,25 @@ namespace DialogueForest.Core.ViewModels
         }
 
         [ICommand]
-        private void OpenFile()
-        {
+        private async Task OpenFile() => await _dataService.LoadForestFromFileAsync();
 
-        }
+        [ICommand]
+        private async Task SaveFileAs() => await _dataService.SaveForestToFileAsync(true);
 
-        private IApplicationStorageService _applicationStorageService;
-        private IInteropService _interop;
+        [ICommand]
+        private async Task ShowWhatsNew() => await _dialogService.ShowWhatsNewDialogIfAppropriateAsync(true);
 
         [ObservableProperty]
         private string _welcomeText;
 
-        public WelcomeViewModel(IApplicationStorageService appStorage, IInteropService interop)
+
+        private ForestDataService _dataService;
+        private IDialogService _dialogService;
+
+        public WelcomeViewModel(ForestDataService dataService, IDialogService dialogService)
         {
-            _applicationStorageService = appStorage;
-            _interop = interop;
+            _dataService = dataService;
+            _dialogService = dialogService;
         }
 
         public void UpdateWelcomeText()

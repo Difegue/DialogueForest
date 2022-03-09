@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using DialogueForest.Core.Services;
 using DialogueForest.Core.Models;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using System.Collections.ObjectModel;
 
 namespace DialogueForest.Core.ViewModels
 {
@@ -26,12 +27,10 @@ namespace DialogueForest.Core.ViewModels
             instance._reply = reply;
             instance._parentNodeVm = parent;
 
-            instance.LinkableIDs = parent.GetIDs();
-
             return instance;
         }
 
-        public List<long> LinkableIDs { get; private set; }
+        public List<long> LinkableIDs => _parentNodeVm.GetIDs();
         public bool HasLinkedID => LinkedID > 0 && LinkedID != _parentNodeVm.ID;
 
         public string ReplyText
@@ -67,7 +66,7 @@ namespace DialogueForest.Core.ViewModels
             var node = _dataService.GetNode(LinkedID);
 
             if (node != null)
-                _navigationService.OpenDialogueNode(node);
+                _navigationService.OpenDialogueNode(node.Item1, node.Item2);
         }
 
         public ReplyPromptViewModel(ForestDataService dataService, IDialogService dialogService, INavigationService navigationService)

@@ -9,14 +9,14 @@ namespace DialogueForest.Core.Models
         public DialogueTree(string name)
         {
             Name = name;
-            Nodes = new Dictionary<float, DialogueNode>();
+            Nodes = new Dictionary<long, DialogueNode>();
         }
 
         public string Name { get; set; }
 
         public bool CannotAddNodes { get; set; }
 
-        public Dictionary<float, DialogueNode> Nodes { get; set; }
+        public Dictionary<long, DialogueNode> Nodes { get; set; }
 
         internal void AddNode(DialogueNode node)
         {

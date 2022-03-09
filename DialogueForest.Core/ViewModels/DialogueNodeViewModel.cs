@@ -28,15 +28,25 @@ namespace DialogueForest.Core.ViewModels
         private DialogueTreeViewModel _parentVm;
         private DialogueNode _node;
 
-        internal static DialogueNodeViewModel Create(DialogueNode node)
+        internal static DialogueNodeViewModel Create(DialogueNode node, DialogueTreeViewModel parentVm)
         {
             var instance = Ioc.Default.GetRequiredService<DialogueNodeViewModel>();
+            instance.SetParentVm(parentVm);
             instance.LoadFromNode(node);
 
             return instance;
         }
 
-        internal List<long> GetIDs() => _parentVm.Nodes.Select(n => n.ID).ToList();
+        /// <summary>
+        ///  Get all the IDs of the Tree this node belongs to.
+        /// </summary>
+        /// <returns></returns>
+        internal List<long> GetIDs()
+        {
+            var allIDs = _parentVm.GetIDs();
+            allIDs.Remove(ID); // Remove ourselves
+            return allIDs;
+        }
 
         public void Receive(ForestSettingsChangedMessage message)
         {
