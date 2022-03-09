@@ -53,19 +53,35 @@ namespace DialogueForest.Services
 
         public override void SetItemForNextConnectedAnimation(object item) => Frame.SetListDataItemForNextConnectedAnimation(item);
 
-        public override void OpenDialogueNode(DialogueNodeViewModel vm) => NodeTabContainer.OpenNode(vm);
+        public override void OpenDialogueNode(DialogueNodeViewModel vm)
+        {
+            // Add the node to the backstack
+            Frame.BackStack.Add(new Windows.UI.Xaml.Navigation.PageStackEntry(typeof(DialogueNodePage), vm, null));
+            NodeTabContainer.OpenNode(vm);
+        }
 
         public override object GoBackImplementation()
         {
             if (CanGoBack)
             {
                 var param = Frame.BackStack.Last().Parameter;
-                Frame.GoBack();
+
+                // Nodes are a special case and use the tabcontainer instead of the frame
+                if (param is DialogueNodeViewModel vm)
+                {
+                    NodeTabContainer.OpenNode(vm);
+                    Frame.BackStack.Remove(Frame.BackStack.Last());
+                    return null;
+                }
+                else
+                {
+                    Frame.GoBack();
+                    return param;
+                }
                 
-                return param;
             }
 
-            return false;
+            return null;
         }
 
         public OpenedNodesViewModel NodeTabContainer { get; set; }

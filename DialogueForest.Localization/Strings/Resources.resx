@@ -268,7 +268,7 @@ You can always change this later.</value>
     <comment>Settings Forest Header</comment>
   </data>
   <data name="SettingsMetadataHeader" xml:space="preserve">
-    <value>Custom Metadata</value>
+    <value>Custom Properties</value>
   </data>
   <data name="SettingsCustomization" xml:space="preserve">
     <value>Personalization</value>
@@ -283,7 +283,7 @@ You can always change this later.</value>
     <value>https://github.com/Difegue/DialogueForest</value>
   </data>
   <data name="SettingsMetadataText" xml:space="preserve">
-    <value>Metadata fields will appear on every Dialogue Node for you to input additional information.</value>
+    <value>Property fields will appear on every Dialogue Node for you to input additional information.</value>
   </data>
   <data name="SettingsMetadataKey" xml:space="preserve">
     <value>Key</value>
@@ -475,7 +475,7 @@ They'll show up here when you do.</value>
     <comment>Reply prompt editor add reply</comment>
   </data>
   <data name="EditorHeaderMetadata" xml:space="preserve">
-    <value>Metadata</value>
+    <value>Custom Properties</value>
     <comment>Dialogue metadata header</comment>
   </data>
   <data name="EditorUnsavedChanges" xml:space="preserve">

@@ -331,7 +331,7 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Metadata.
+        ///   Recherche une chaîne localisée semblable à Custom Properties.
         /// </summary>
         public static string EditorHeaderMetadata {
             get {
@@ -935,7 +935,7 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Custom Metadata.
+        ///   Recherche une chaîne localisée semblable à Custom Properties.
         /// </summary>
         public static string SettingsMetadataHeader {
             get {
@@ -953,7 +953,7 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Metadata fields will appear on every Dialogue Node for you to input additional information..
+        ///   Recherche une chaîne localisée semblable à Property fields will appear on every Dialogue Node for you to input additional information..
         /// </summary>
         public static string SettingsMetadataText {
             get {

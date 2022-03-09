@@ -249,7 +249,7 @@ Vous pourrez toujours le changer plus tard.</value>
     <value>Forêt de Dialogues Actuelle</value>
   </data>
   <data name="SettingsMetadataHeader" xml:space="preserve">
-    <value>Métadonnées customisées</value>
+    <value>Propriétés Custom</value>
   </data>
   <data name="SettingsCustomization" xml:space="preserve">
     <value>Personnalisation</value>
@@ -264,7 +264,7 @@ Vous pourrez toujours le changer plus tard.</value>
     <value>https://github.com/Difegue/DialogueForest</value>
   </data>
   <data name="SettingsMetadataText" xml:space="preserve">
-    <value>Ces métadonnées apparaîtront comme champs remplissables sur chaque Dialogue.</value>
+    <value>Ces propriétés apparaîtront comme champs remplissables sur chaque Dialogue.</value>
   </data>
   <data name="SettingsMetadataKey" xml:space="preserve">
     <value>Clé</value>
@@ -422,7 +422,7 @@ Vous les retrouverez ici.</value>
     <value>Ajouter une réponse</value>
   </data>
   <data name="EditorHeaderMetadata" xml:space="preserve">
-    <value>Métadonnées</value>
+    <value>Propriétés Custom</value>
   </data>
   <data name="EditorUnsavedChanges" xml:space="preserve">
     <value>Vous avez des modifications non sauvegardées</value>
