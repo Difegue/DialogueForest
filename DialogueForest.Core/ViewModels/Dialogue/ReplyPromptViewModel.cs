@@ -31,7 +31,6 @@ namespace DialogueForest.Core.ViewModels
         }
 
         public List<long> LinkableIDs => _parentNodeVm.GetIDs();
-        public bool HasLinkedID => LinkedID > 0 && LinkedID != _parentNodeVm.ID;
 
         public string ReplyText
         {
@@ -39,6 +38,7 @@ namespace DialogueForest.Core.ViewModels
             set => SetProperty(_reply.Text, value, _reply, (u, n) => u.Text = n);
         }
 
+        public bool HasLinkedID => LinkedID > 0 && LinkedID != _parentNodeVm.ID;
         public long LinkedID
         {
             get => _reply.LinkedID;
@@ -61,12 +61,12 @@ namespace DialogueForest.Core.ViewModels
         [ICommand]
         private void GoToLinkedDialogue()
         {
-            if (LinkedID < 0) return;
+            if (LinkedID < 0 || LinkedID == _parentNodeVm.ID) return;
 
-            var node = _dataService.GetNode(LinkedID);
+            var tuple = _dataService.GetNode(LinkedID);
 
-            if (node != null)
-                _navigationService.OpenDialogueNode(node.Item1, node.Item2);
+            if (tuple != null)
+                _navigationService.OpenDialogueNode(tuple.Item1, tuple.Item2);
         }
 
         public ReplyPromptViewModel(ForestDataService dataService, IDialogService dialogService, INavigationService navigationService)

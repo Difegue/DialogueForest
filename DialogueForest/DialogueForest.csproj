@@ -178,6 +178,7 @@
     <Compile Include="Controls\SettingsDisplayControl.xaml.cs">
       <DependentUpon>SettingsDisplayControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DialogueNodeFromIDConverter.cs" />
     <Compile Include="Converters\MetadataConverters.cs" />
     <Compile Include="Converters\SkiaConverters.cs" />
     <Compile Include="EventHandlers\Ink\AddStrokeEventArgs.cs" />

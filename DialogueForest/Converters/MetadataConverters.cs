@@ -1,6 +1,4 @@
-﻿using SkiaSharp;
-using System;
-using SkiaSharp.Views.UWP;
+﻿using System;
 using Windows.UI.Xaml.Data;
 
 namespace DialogueForest.Converters
