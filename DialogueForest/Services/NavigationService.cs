@@ -29,7 +29,7 @@ namespace DialogueForest.Services
 
         }
 
-        public override bool CanGoBack => Frame.CanGoBack;
+        public override bool CanGoBack => Frame.BackStack.Count > 0;
 
         public override Type CurrentPageViewModelType => _viewModelToPageDictionary.Keys.Where(
             k => _viewModelToPageDictionary[k] == Frame.CurrentSourcePageType).FirstOrDefault();
@@ -55,9 +55,10 @@ namespace DialogueForest.Services
 
         public override void OpenDialogueNode(DialogueNodeViewModel vm)
         {
-            // Add the node to the backstack
-            Frame.BackStack.Add(new Windows.UI.Xaml.Navigation.PageStackEntry(typeof(DialogueNodePage), vm, null));
+            // Add the previous node to the backstack
+            Frame.BackStack.Add(new Windows.UI.Xaml.Navigation.PageStackEntry(typeof(DialogueNodePage), NodeTabContainer.SelectedItem, null));
             NodeTabContainer.OpenNode(vm);
+            //TODO invoke navigated here so CanGoBack updates
         }
 
         public override object GoBackImplementation()
