@@ -91,12 +91,12 @@
                 </Grid.ColumnDefinitions>
                 <Grid.ContextFlyout>
                     <MenuFlyout>
-                        <MenuFlyoutSubItem Text="{x:Bind strings:Resources.ContextMenuLinksTo}" Tag="links_to" >
+                        <MenuFlyoutSubItem Text="{x:Bind strings:Resources.ContextMenuLinksTo}" Tag="links_to" Loaded="AddLinkFlyoutHandler">
                             <MenuFlyoutSubItem.Icon>
                                 <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEA54;" />
                             </MenuFlyoutSubItem.Icon>
                         </MenuFlyoutSubItem>
-                        <MenuFlyoutSubItem Text="{x:Bind strings:Resources.ContextMenuLinkedBy}" Tag="linked_by">
+                        <MenuFlyoutSubItem Text="{x:Bind strings:Resources.ContextMenuLinkedBy}" Tag="linked_by" Loaded="AddLinkFlyoutHandler">
                             <MenuFlyoutSubItem.Icon>
                                 <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE11F;" />
                             </MenuFlyoutSubItem.Icon>

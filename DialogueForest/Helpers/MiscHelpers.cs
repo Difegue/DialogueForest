@@ -1,44 +1,63 @@
-﻿using System.Linq;
+﻿using DialogueForest.Core.Models;
+using DialogueForest.Core.ViewModels;
+using Microsoft.Toolkit.Uwp;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
 
 namespace DialogueForest.Helpers
 {
     public static class UWPHelpers
     {
 
-        // If no items are selected, select the one underneath us.
-        // https://github.com/microsoft/microsoft-ui-xaml/issues/911
-        public static void SelectItemOnFlyoutRightClick<T>(ListView QueueList, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        /// <summary>
+        /// Handle dynamic node loading for links_to/linked_by menuflyouts for DialogueNodePage/DialogueTreePage.
+        /// </summary>
+        /// <param name="container"></param>
+        /// <param name="vm"></param>
+        public static void LoadLinkedNodesIntoMenuFlyout(MenuFlyoutSubItem container, DialogueNodeViewModel vm)
         {
-            // We can get the correct ViewModel by looking at the OriginalSource of the right-click event. 
-            var s = (FrameworkElement)e.OriginalSource;
-            var d = s.DataContext;
+            var dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
-            if (d is T && !QueueList.SelectedItems.Contains(d))
+            // Needed so we can run dispatcherless
+            var tag = container.Tag;
+
+            container.Items.Clear();
+            container.Items.Add(new MenuFlyoutItem { Text = "..." });
+
+            Task.Run(async () =>
             {
-                var state = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Shift);
-
-                // Don't clear selectedItems if shift is pressed (multi-selection)
-                if ((state & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down)
+                List<DialogueNode> nodes = null;
+                switch (tag)
                 {
-                    var pos1 = QueueList.Items.IndexOf(QueueList.SelectedItems.First());
-                    var pos2 = QueueList.Items.IndexOf(d);
+                    case "links_to": nodes = vm.GetNodesLinkedByUs(); break;
+                    case "linked_by": nodes = vm.GetNodesLinkingToUs(); break;
+                    default: nodes = new List<DialogueNode>(); break;
+                }
 
-                    if (pos2 < pos1)
-                        QueueList.SelectRange(new ItemIndexRange(pos2, (uint)(pos1 - pos2)));
-                    else
-                        QueueList.SelectRange(new ItemIndexRange(pos1, (uint)(pos2 - pos1 + 1)));
-                }
-                else
+                await dispatcherQueue.EnqueueAsync(() =>
                 {
-                    QueueList.SelectedItems.Clear();
-                    QueueList.SelectedItems.Add(d);
-                }
-            }
+                    container.Items.Clear();
+                    foreach (var node in nodes)
+                    {
+                        var flyoutItem = new MenuFlyoutItem { Text = $"#{node.ID} - {node.Title}", Command = vm.OpenNodeCommand, CommandParameter = node.ID };
+                        container.Items.Add(flyoutItem);
+                    }
+
+                    if (nodes.Count == 0)
+                    {
+                        container.Items.Add(new MenuFlyoutItem { Text = Localization.Strings.Resources.EditorReplyPlaceholderText }); //TODO loc
+                    }
+
+                });
+
+            });
         }
     }
 }

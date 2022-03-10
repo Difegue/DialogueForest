@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Threading;
+using System.Linq;
 
 namespace DialogueForest.Core.Services
 {
@@ -81,6 +82,7 @@ namespace DialogueForest.Core.Services
             }
         }
 
+        #region FileSystem stuff
         public async Task LoadForestFromFileAsync()
         {
             var res = await _storageService.LoadDataFromExternalFileAsync(".frst");
@@ -152,11 +154,37 @@ namespace DialogueForest.Core.Services
             }
 
         }
+        #endregion
 
+        #region Tree/Node API
+        public Dictionary<string, MetadataKind> GetMetadataDefinitions() => _currentForest.MetadataDefinitions;
+        public List<string> GetCharacters() => _currentForest.CharacterDefinitions;
         public List<DialogueTree> GetDialogueTrees() => _currentForest?.Trees;
+        public DialogueTree GetTrash() => _currentForest.Trash;
+        public DialogueTree GetNotes() => _currentForest.Notes;
+
+        internal bool IsNodeTrashed(DialogueNode node) => _currentForest.Trash.Nodes.ContainsValue(node);
+        internal void DeleteNode(DialogueNode node) => _currentForest.Trash.RemoveNode(node); // TODO update trash
+        internal bool IsNodePinned(DialogueNode node) => _currentForest.PinnedIDs.Contains(node.ID);
+
+        internal DialogueNode CreateNewNode()
+        {
+            var node = new DialogueNode(_currentForest.LastID);
+            _currentForest.LastID++;
+
+            return node;
+        }
+        internal DialogueTree CreateNewTree(string treeName)
+        {
+            var tree = new DialogueTree(treeName);
+            _currentForest.Trees.Add(tree);
+
+            return tree;
+        }
 
         public Tuple<DialogueTree,DialogueNode> GetNode(long id)
         {
+            // TODO super inefficient, needs a lookup table (ID => containing tree)
 
             foreach (var tree in _currentForest.Trees)
                 if (tree.Nodes.ContainsKey(id))
@@ -171,8 +199,29 @@ namespace DialogueForest.Core.Services
             return null;
         }
 
+        /// <summary>
+        /// Get all nodes linking to a given ID. This only looks in the Tree hosting the node.
+        /// TODO: Expand to all trees?
+        /// </summary>
+        /// <param name="id">ID to find links for</param>
+        /// <returns></returns>
+        public List<DialogueNode> GetNodesLinkingToID(long id)
+        {
+            var res = new List<DialogueNode>();
+            var tuple = GetNode(id);
 
-        public DialogueTree GetTrash() => _currentForest.Trash;
+            if (tuple != null)
+            {
+                foreach (var node in tuple.Item1.Nodes)
+                {
+                    if (node.Value.Prompts.Select(p => p.LinkedID).Contains(id))
+                        res.Add(node.Value);
+                }
+            }
+
+            return res;
+        }
+
 
         public DialogueTree GetPins()
         {
@@ -194,10 +243,6 @@ namespace DialogueForest.Core.Services
             destination.AddNode(node);
         }
 
-        public DialogueTree GetNotes() => _currentForest.Notes;
-
-        internal bool IsNodeTrashed(DialogueNode node) => _currentForest.Trash.Nodes.ContainsValue(node);
-
         internal void SetPinnedNode(DialogueNode node, bool isPinned)
         {
             if (isPinned)
@@ -208,36 +253,16 @@ namespace DialogueForest.Core.Services
             // TODO: Notify PinnedVM
         }
 
-        public Dictionary<string, MetadataKind> GetMetadataDefinitions() => _currentForest.MetadataDefinitions;
         internal void SetMetadataDefinitions(Dictionary<string, MetadataKind> data)
         {
             _currentForest.MetadataDefinitions = data;
         }
-        public List<string> GetCharacters() => _currentForest.CharacterDefinitions;
+        
         internal void SetCharacters(List<string> chars)
         {
             _currentForest.CharacterDefinitions = chars;
         }
 
-        internal void DeleteNode(DialogueNode node) => _currentForest.Trash.RemoveNode(node); // TODO update trash
-
-        internal bool IsNodePinned(DialogueNode node) => _currentForest.PinnedIDs.Contains(node.ID);
-
-        internal DialogueNode CreateNewNode()
-        {
-            var node = new DialogueNode(_currentForest.LastID);
-            _currentForest.LastID++;
-
-            return node;
-        }
-
-        internal DialogueTree CreateNewTree(string treeName)
-        {
-            var tree = new DialogueTree(treeName);
-            _currentForest.Trees.Add(tree);
-
-            return tree;
-        }
-
+        #endregion
     }
 }

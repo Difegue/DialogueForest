@@ -9,6 +9,12 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Text;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using Windows.ApplicationModel.DataTransfer;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Windows.System;
+using Microsoft.Toolkit.Uwp;
+using System.Linq;
+using Windows.UI.Xaml.Input;
 
 namespace DialogueForest.Views
 {
@@ -21,6 +27,10 @@ namespace DialogueForest.Views
             InitializeComponent();
 
             DataContextChanged += (s,a) => Bindings.Update();
+
+            // https://stackoverflow.com/questions/50242909/what-event-is-triggered-when-the-mouse-pointer-enters-a-menuflyoutsubitem-elemen
+            LinkedBySubItem.AddHandler(PointerEnteredEvent, new PointerEventHandler(GetLinkedNodes), true);
+            LinksToSubItem.AddHandler(PointerEnteredEvent, new PointerEventHandler(GetLinkedNodes), true);
         }
 
         private void Toggle_Bold(object sender, RoutedEventArgs e)
@@ -113,6 +123,8 @@ namespace DialogueForest.Views
                 def.Complete();
             }
         }
+
+        private void GetLinkedNodes(object sender, PointerRoutedEventArgs e) => Helpers.UWPHelpers.LoadLinkedNodesIntoMenuFlyout(sender as MenuFlyoutSubItem, ViewModel);
     }
 
     /// <summary>

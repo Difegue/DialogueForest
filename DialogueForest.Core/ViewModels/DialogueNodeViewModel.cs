@@ -131,6 +131,15 @@ namespace DialogueForest.Core.ViewModels
         private void OpenSettings() => _navigationService.Navigate<SettingsViewModel>();
 
         [ICommand]
+        private void OpenNode(long nodeId)
+        {
+            var tuple = _dataService.GetNode(nodeId);
+
+            if (tuple != null)
+                _navigationService.OpenDialogueNode(tuple.Item1, tuple.Item2);
+        }
+
+        [ICommand]
         private void ShowInTree()
         {
             _navigationService.Navigate<DialogueTreeViewModel>(_parentVm);
@@ -152,6 +161,19 @@ namespace DialogueForest.Core.ViewModels
             dialogVm.PropertyChanged += UpdateTextSummary;
 
             Dialogs.Add(dialogVm);
+        }
+
+        public List<DialogueNode> GetNodesLinkedByUs()
+        {
+            return Prompts.Select(p => p.LinkedID)
+                .Where(i => i!= 0 && i!= ID) // Filter out no linked IDs and ourselves
+                .Select(i => _dataService.GetNode(i).Item2) // Get DialogueNode
+                .ToList();
+        }
+
+        public List<DialogueNode> GetNodesLinkingToUs()
+        {
+            return _dataService.GetNodesLinkingToID(ID);
         }
 
         public void RemoveDialog(DialoguePartViewModel vm, DialogueText matchingText)
