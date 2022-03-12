@@ -8,13 +8,10 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Threading;
 using System.Linq;
+using DialogueForest.Core.Messages;
 
 namespace DialogueForest.Core.Services
 {
-    public class SavedFileMessage
-    {
-        public FileAbstraction FileAbstraction { get; set; }
-    }
 
     public class ForestDataService
     {

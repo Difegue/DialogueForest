@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using DialogueForest.Core.Interfaces;
+using DialogueForest.Core.Messages;
 using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
 using DialogueForest.Localization.Strings;

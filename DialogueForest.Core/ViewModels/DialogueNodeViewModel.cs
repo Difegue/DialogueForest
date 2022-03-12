@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using DialogueForest.Core.Interfaces;
+using DialogueForest.Core.Messages;
 using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
 using DialogueForest.Core.ViewModels;
@@ -46,12 +47,6 @@ namespace DialogueForest.Core.ViewModels
             var allIDs = _parentVm.GetIDs();
             allIDs.Remove(ID); // Remove ourselves
             return allIDs;
-        }
-
-        public void Receive(ForestSettingsChangedMessage message)
-        {
-            // Metadata definitions mightve changed, reload data from node
-            UpdateMetadata();
         }
 
         private void LoadFromNode(DialogueNode node)
@@ -98,7 +93,7 @@ namespace DialogueForest.Core.ViewModels
             _navigationService = navigationService;
             _dataService = forestService;
 
-            WeakReferenceMessenger.Default.Register<DialogueNodeViewModel, ForestSettingsChangedMessage>(this, (r, m) => r.Receive(m));
+            WeakReferenceMessenger.Default.Register<DialogueNodeViewModel, ForestSettingsChangedMessage>(this, (r, m) => r.UpdateMetadata());
 
             Prompts.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsPromptsEmpty));
             MetaValues.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsMetaDataEmpty));

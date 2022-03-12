@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using DialogueForest.Core.Interfaces;
+using DialogueForest.Core.Messages;
 using DialogueForest.Core.Services;
 using DialogueForest.Localization.Strings;
 
@@ -36,7 +37,8 @@ namespace DialogueForest.Core.ViewModels
             // First View, use that to initialize our DispatcherService
             _dispatcherService.Initialize();
 
-            WeakReferenceMessenger.Default.Register<ShellViewModelBase, SavedFileMessage>(this, (r, m) => r.Receive(m));
+            WeakReferenceMessenger.Default.Register<ShellViewModelBase, SavedFileMessage>(this, (r, m) => r.TitleBarText = r.UpdateTitleBar());
+
             _titleBarText = _dataService.LastSavedFile != null ? UpdateTitleBar() : Resources.AppDisplayName;
 
             ((NotificationServiceBase)_notificationService).InAppNotificationRequested += ShowInAppNotification;
@@ -49,8 +51,6 @@ namespace DialogueForest.Core.ViewModels
             _interopService.UpdateAppTitle(file.Name + file.Extension);
             return Resources.AppDisplayName + " - " + file.Name + file.Extension;
         }
-
-        private void Receive(SavedFileMessage m) => _titleBarText = UpdateTitleBar();
 
         [ObservableProperty]
         private bool _isBackEnabled;

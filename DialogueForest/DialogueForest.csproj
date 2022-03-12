@@ -180,14 +180,13 @@
     </Compile>
     <Compile Include="Converters\DialogueNodeFromIDConverter.cs" />
     <Compile Include="Converters\MetadataConverters.cs" />
-    <Compile Include="Converters\SkiaConverters.cs" />
     <Compile Include="EventHandlers\Ink\AddStrokeEventArgs.cs" />
     <Compile Include="EventHandlers\Ink\CopyPasteStrokesEventArgs.cs" />
     <Compile Include="EventHandlers\Ink\MoveStrokesEventArgs.cs" />
     <Compile Include="EventHandlers\Ink\RemoveEventArgs.cs" />
     <Compile Include="Helpers\NavHelper.cs" />
     <Compile Include="Helpers\ScrollSelectedItemIntoViewBehavior.cs" />
-    <Compile Include="Helpers\MiscHelpers.cs" />
+    <Compile Include="Helpers\UWPHelpers.cs" />
     <Compile Include="Services\ActivationService.cs" />
     <Compile Include="Activation\DefaultActivationHandler.cs" />
     <Compile Include="Services\ApplicationStorageService.cs" />
