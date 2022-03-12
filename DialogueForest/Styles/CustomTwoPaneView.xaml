@@ -101,6 +101,7 @@
                         <contract7Present:ScrollViewer
                                 x:Name="PART_Pane1ScrollViewer"
                                 Grid.Column="0"
+                                IsTabStop="True"
                                 VerticalScrollBarVisibility="Auto">
                             <Border Child="{TemplateBinding Pane1}" />
                         </contract7Present:ScrollViewer>
