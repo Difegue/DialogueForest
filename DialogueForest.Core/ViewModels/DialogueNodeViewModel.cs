@@ -96,8 +96,19 @@ namespace DialogueForest.Core.ViewModels
             WeakReferenceMessenger.Default.Register<DialogueNodeViewModel, TreeUpdatedMessage>(this, (r, m) => 
                 r.OnPropertyChanged(nameof(TreeTitle)));
 
+            WeakReferenceMessenger.Default.Register<DialogueNodeViewModel, NodeMovedMessage>(this, (r, m) => r.UpdateParent(m));
+
             Prompts.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsPromptsEmpty));
             MetaValues.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsMetaDataEmpty));
+        }
+
+        private void UpdateParent(NodeMovedMessage m)
+        {
+            if (m.NodeMoved.ID == ID)
+            {
+                // TODO reuse existing treeVMs if possible
+                SetParentVm(DialogueTreeViewModel.Create(m.DestinationTree));
+            }
         }
 
         public ObservableCollection<DialoguePartViewModel> Dialogs { get; } = new ObservableCollection<DialoguePartViewModel>();

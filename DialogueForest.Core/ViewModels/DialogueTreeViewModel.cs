@@ -28,6 +28,7 @@ namespace DialogueForest.Core.ViewModels
 
         private DialogueTree _tree;
 
+        // TODO use this constructor less and figure out a way to recycle VMs
         public static DialogueTreeViewModel Create(DialogueTree tree, bool canBeRenamed = false)
         {
             var instance = Ioc.Default.GetRequiredService<DialogueTreeViewModel>();
@@ -72,6 +73,32 @@ namespace DialogueForest.Core.ViewModels
 
             Nodes.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsNodesEmpty));
             Nodes.CollectionChanged += (s, e) => OnPropertyChanged(nameof(TotalDialogues));
+
+            WeakReferenceMessenger.Default.Register<DialogueTreeViewModel, NodeMovedMessage>(this, (r, m) => r.UpdateNodes(m));
+        }
+
+        private void UpdateNodes(NodeMovedMessage message)
+        {
+            var node = message.NodeMoved;
+
+            if (_tree == message.SourceTree)
+            {
+                // Remove Node 
+                Nodes.Remove(Nodes.Where(vm => vm.ID == node.ID).FirstOrDefault());
+            } 
+            
+            if (_tree == message.DestinationTree)
+            {
+                // Add Node
+                if (_openedNodes.Tabs.FirstOrDefault(vm => vm.ID == node.ID) is DialogueNodeViewModel existingVm)
+                {
+                    Nodes.Add(existingVm);
+                }
+                else
+                {
+                    Nodes.Add(DialogueNodeViewModel.Create(node, this));
+                }
+            }
         }
 
         public bool IsNodesEmpty => Nodes.Count == 0;

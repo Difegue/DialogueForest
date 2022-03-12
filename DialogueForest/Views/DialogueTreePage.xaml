@@ -159,6 +159,7 @@
 
             <TextBox Text="{x:Bind ViewModel.Title, Mode=TwoWay}" HorizontalAlignment="Center" Margin="0,0,0,-16" FontSize="20" FontWeight="SemiBold"
                      Visibility="{x:Bind ViewModel.CanBeRenamed, Converter={StaticResource BoolToVisibilityConverter}}"
+                     
                      FontFamily="Segoe UI Variable Display" Background="Transparent" BorderThickness="0"/>
             <TextBlock Style="{StaticResource SubtitleTextBlockStyle}"
                        Text="{x:Bind ViewModel.Title}" HorizontalAlignment="Center" Margin="0,-8,0,0"

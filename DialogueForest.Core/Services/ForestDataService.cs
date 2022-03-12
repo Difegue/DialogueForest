@@ -234,10 +234,13 @@ namespace DialogueForest.Core.Services
 
         public void MoveNode(DialogueNode node, DialogueTree origin, DialogueTree destination)
         {
-            // TODO update lookup table and notify VMs (both tree and nodeVMs) with a message
+            // TODO update lookup table and 
 
             origin.RemoveNode(node);
             destination.AddNode(node);
+
+            // Notify VMs (both tree and nodeVMs) with a message
+            WeakReferenceMessenger.Default.Send(new NodeMovedMessage { SourceTree = origin, DestinationTree = destination, NodeMoved = node });
         }
 
         internal void SetPinnedNode(DialogueNode node, bool isPinned)
