@@ -38,6 +38,7 @@ namespace DialogueForest.Core.ViewModels
             _dispatcherService.Initialize();
 
             WeakReferenceMessenger.Default.Register<ShellViewModelBase, SavedFileMessage>(this, (r, m) => r.TitleBarText = r.UpdateTitleBar());
+            WeakReferenceMessenger.Default.Register<ShellViewModelBase, TreeUpdatedMessage>(this, (r, m) => r.UpdateTreeList());
 
             _titleBarText = _dataService.LastSavedFile != null ? UpdateTitleBar() : Resources.AppDisplayName;
 

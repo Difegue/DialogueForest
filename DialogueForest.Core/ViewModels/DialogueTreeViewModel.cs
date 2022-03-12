@@ -14,6 +14,8 @@ using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
 using DialogueForest.Localization.Strings;
 using DialogueForest.Core.ViewModels;
+using DialogueForest.Core.Messages;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace DialogueForest.Core.ViewModels
 {
@@ -83,7 +85,11 @@ namespace DialogueForest.Core.ViewModels
         public string Title
         {
             get => _tree.Name;
-            set => SetProperty(_tree.Name, value, _tree, (u, n) => u.Name = n);
+            set
+            {
+                SetProperty(_tree.Name, value, _tree, (u, n) => u.Name = n);
+                WeakReferenceMessenger.Default.Send(new TreeUpdatedMessage());
+            }
         }
 
         [ObservableProperty]

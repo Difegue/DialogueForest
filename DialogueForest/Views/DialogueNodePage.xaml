@@ -233,7 +233,7 @@
                              Command="{x:Bind ViewModel.ShowInTreeCommand}" >
                 <StackPanel Orientation="Horizontal" Spacing="8">
                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEC0A;" FontSize="16"/>
-                    <TextBlock Text="{x:Bind ViewModel.TreeTitle}"/>
+                    <TextBlock Text="{x:Bind ViewModel.TreeTitle, Mode=OneWay}"/>
                 </StackPanel>
             </HyperlinkButton>
 

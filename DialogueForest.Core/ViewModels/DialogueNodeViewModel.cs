@@ -12,7 +12,6 @@ using DialogueForest.Core.Interfaces;
 using DialogueForest.Core.Messages;
 using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
-using DialogueForest.Core.ViewModels;
 using DialogueForest.Localization.Strings;
 using SkiaSharp;
 
@@ -94,6 +93,8 @@ namespace DialogueForest.Core.ViewModels
             _dataService = forestService;
 
             WeakReferenceMessenger.Default.Register<DialogueNodeViewModel, ForestSettingsChangedMessage>(this, (r, m) => r.UpdateMetadata());
+            WeakReferenceMessenger.Default.Register<DialogueNodeViewModel, TreeUpdatedMessage>(this, (r, m) => 
+                r.OnPropertyChanged(nameof(TreeTitle)));
 
             Prompts.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsPromptsEmpty));
             MetaValues.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsMetaDataEmpty));
