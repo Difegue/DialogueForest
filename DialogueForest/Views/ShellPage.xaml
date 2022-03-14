@@ -109,7 +109,8 @@
                         <KeyboardAccelerator Key="S" Modifiers="Control"/>
                     </muxc:NavigationViewItem.KeyboardAccelerators>
                     <muxc:NavigationViewItem.InfoBadge>
-                        <muxc:InfoBadge Style="{StaticResource AttentionIconInfoBadgeStyle}" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorUnsavedChanges}"/>
+                        <muxc:InfoBadge Style="{StaticResource AttentionIconInfoBadgeStyle}" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorUnsavedChanges}"
+                                        Visibility="{x:Bind ViewModel.HasUnsavedChanges, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
                     </muxc:NavigationViewItem.InfoBadge>
                 </muxc:NavigationViewItem>
 

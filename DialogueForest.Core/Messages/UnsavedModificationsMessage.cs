@@ -4,5 +4,5 @@ using System.Text;
 
 namespace DialogueForest.Core.Messages
 {
-    public class TreeUpdatedMessage { }
+    public class UnsavedModificationsMessage { }
 }

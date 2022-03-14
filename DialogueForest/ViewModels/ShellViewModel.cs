@@ -15,7 +15,6 @@ using Windows.Foundation;
 using DialogueForest.Helpers;
 using System.Windows.Input;
 using DialogueForest.Core.Services;
-using Windows.UI.Xaml.Media;
 using DialogueForest.Core.Models;
 using Windows.ApplicationModel.DataTransfer;
 

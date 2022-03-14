@@ -33,7 +33,7 @@ namespace DialogueForest.Core.ViewModels
         private void SetParent(DialogueNodeViewModel parent)
         {
             _parentNodeVm = parent;
-            _parentNodeVm.Dialogs.CollectionChanged += (s, e) => 
+            _parentNodeVm.Dialogs.CollectionChanged += (s, e) =>
                 OnPropertyChanged(nameof(ParentHasMultipleDialogs));
         }
 
@@ -42,13 +42,17 @@ namespace DialogueForest.Core.ViewModels
         public string RtfDialogueText
         {
             get => _text.RichText;
-            set => SetProperty(_text.RichText, value, _text, (u, n) => u.RichText = n);
+            set => SetProperty(_text.RichText, value, _text, (u, n) => { u.RichText = n; 
+                    WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage()); 
+            });
         }
 
         public string CharacterName
         {
             get => _text.Character;
-            set => SetProperty(_text.Character, value, _text, (u, n) => u.Character = n);
+            set => SetProperty(_text.Character, value, _text, (u, n) => { u.Character = n; 
+                    WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage()); 
+            });
         }
 
         [ObservableProperty]

@@ -126,7 +126,9 @@ namespace DialogueForest.Core.ViewModels
         public string NodeTitle
         {
             get => _node.Title;
-            set => SetProperty(_node.Title, value, _node, (u, n) => u.Title = n);
+            set => SetProperty(_node.Title, value, _node, (u, n) => { u.Title = n;
+                    WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage()); 
+            });
         }
 
         public string TreeTitle => _parentVm.Title;
@@ -161,6 +163,7 @@ namespace DialogueForest.Core.ViewModels
             {
                 text = new DialogueText();
                 _node.DialogueLines.Add(text);
+                WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage());
             }
 
             var dialogVm = DialoguePartViewModel.Create(text, this);
@@ -190,6 +193,7 @@ namespace DialogueForest.Core.ViewModels
             Dialogs.Remove(vm);
 
             Dialogs.First().IsActive = true;
+            WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage());
         }
 
         [ICommand]
@@ -201,6 +205,7 @@ namespace DialogueForest.Core.ViewModels
             {
                 reply = new DialogueReply();
                 _node.Prompts.Add(reply);
+                WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage());
             }
 
             var promptVm = ReplyPromptViewModel.Create(reply, this);
@@ -212,6 +217,7 @@ namespace DialogueForest.Core.ViewModels
         {
             _node.Prompts.Remove(matchingReply);
             Prompts.Remove(vm);
+            WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage());
         }
 
         private void AddMetadata(DialogueMetadataValue metaval)

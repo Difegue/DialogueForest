@@ -37,22 +37,42 @@ namespace DialogueForest.Core.ViewModels
             // First View, use that to initialize our DispatcherService
             _dispatcherService.Initialize();
 
-            WeakReferenceMessenger.Default.Register<ShellViewModelBase, SavedFileMessage>(this, (r, m) => r.TitleBarText = r.UpdateTitleBar());
-            WeakReferenceMessenger.Default.Register<ShellViewModelBase, TreeUpdatedMessage>(this, (r, m) => r.UpdateTreeList());
-
-            _titleBarText = _dataService.LastSavedFile != null ? UpdateTitleBar() : Resources.AppDisplayName;
+            // Listeners to set unsaved/saved document status
+            WeakReferenceMessenger.Default.Register<ShellViewModelBase, TreeUpdatedMessage>(this, (r, m) =>
+            {
+                r.SetIsDirty(true);
+                r.UpdateTreeList();
+            });
+            WeakReferenceMessenger.Default.Register<ShellViewModelBase, SavedFileMessage>(this, (r, m) => r.SetIsDirty(false));
+            WeakReferenceMessenger.Default.Register<ShellViewModelBase, NodeMovedMessage>(this, (r, m) => r.SetIsDirty(true));
+            WeakReferenceMessenger.Default.Register<ShellViewModelBase, ForestSettingsChangedMessage>(this, (r, m) => r.SetIsDirty(true));
+            WeakReferenceMessenger.Default.Register<ShellViewModelBase, UnsavedModificationsMessage>(this, (r, m) => r.SetIsDirty(true));
+            
+            UpdateTitleBar();
 
             ((NotificationServiceBase)_notificationService).InAppNotificationRequested += ShowInAppNotification;
             ((NavigationServiceBase)_navigationService).Navigated += OnFrameNavigated;
         }
 
-        private string UpdateTitleBar()
+        private void SetIsDirty(bool isDirty)
         {
-            var file = _dataService.LastSavedFile;
-            _interopService.UpdateAppTitle(file.Name + file.Extension);
-            return Resources.AppDisplayName + " - " + file.Name + file.Extension;
+            HasUnsavedChanges = isDirty;
+            UpdateTitleBar();
         }
 
+        private void UpdateTitleBar()
+        {
+            var file = _dataService.LastSavedFile;
+
+            if (file != null)
+                _interopService.UpdateAppTitle(file.Name + file.Extension);
+
+            var displayName = (file == null) ? Resources.NavigationNew : file.Name + file.Extension;
+            TitleBarText = Resources.AppDisplayName + " - " + displayName + (HasUnsavedChanges ? "*" : "");
+        }
+
+        [ObservableProperty]
+        private bool _hasUnsavedChanges;
         [ObservableProperty]
         private bool _isBackEnabled;
         [ObservableProperty]
@@ -82,7 +102,7 @@ namespace DialogueForest.Core.ViewModels
                 UpdateTreeList();
                 _navigationService.Navigate<DialogueTreeViewModel>(tree);
             }
-            
+
         }
 
         [ICommand]

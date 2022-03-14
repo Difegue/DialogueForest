@@ -144,6 +144,7 @@ namespace DialogueForest.Core.ViewModels
                 node = _dataService.CreateNewNode();
             }
             _tree.AddNode(node);
+            WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage());
 
             var nodeVm = DialogueNodeViewModel.Create(node, this);
             Nodes.Add(nodeVm);
@@ -162,6 +163,7 @@ namespace DialogueForest.Core.ViewModels
         private void Delete()
         {
             // TODO
+            WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage());
         }
 
         

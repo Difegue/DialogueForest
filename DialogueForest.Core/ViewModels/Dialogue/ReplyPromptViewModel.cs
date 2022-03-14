@@ -9,6 +9,8 @@ using DialogueForest.Core.Services;
 using DialogueForest.Core.Models;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Messaging;
+using DialogueForest.Core.Messages;
 
 namespace DialogueForest.Core.ViewModels
 {
@@ -35,7 +37,9 @@ namespace DialogueForest.Core.ViewModels
         public string ReplyText
         {
             get => _reply.Text;
-            set => SetProperty(_reply.Text, value, _reply, (u, n) => u.Text = n);
+            set => SetProperty(_reply.Text, value, _reply, (u, n) => { u.Text = n; 
+                    WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage()); 
+            });
         }
 
         public bool HasLinkedID => LinkedID > 0 && LinkedID != _parentNodeVm.ID;
@@ -44,7 +48,9 @@ namespace DialogueForest.Core.ViewModels
             get => _reply.LinkedID;
             set
             {
-                SetProperty(_reply.LinkedID, value, _reply, (u, n) => u.LinkedID = n);
+                SetProperty(_reply.LinkedID, value, _reply, (u, n) => { u.LinkedID = n;
+                    WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage());
+                });
                 OnPropertyChanged(nameof(HasLinkedID));
             }
         }

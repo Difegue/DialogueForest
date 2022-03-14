@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using DialogueForest.Core.Messages;
 using DialogueForest.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -33,13 +35,17 @@ namespace DialogueForest.Core.ViewModels
         public string Name
         {
             get => _metaval.Key;
-            set => SetProperty(_metaval.Key, value, _metaval, (u, n) => u.Key = n);
+            set => SetProperty(_metaval.Key, value, _metaval, (u, n) => { u.Key = n; 
+                WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage()); 
+            });
         }
 
         public object Value
         {
             get => _metaval.Value;
-            set => SetProperty(_metaval.Value, value, _metaval, (u, n) => u.Value = n);
+            set => SetProperty(_metaval.Value, value, _metaval, (u, n) => { u.Value = n; 
+                WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage()); 
+            });
         }        
 
         [ICommand]
