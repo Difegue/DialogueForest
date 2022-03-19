@@ -34,20 +34,21 @@ namespace DialogueForest.Core.ViewModels
             _dataService = dataService;
             _interopService = interopService;
 
-            // First View, use that to initialize our DispatcherService
-            _dispatcherService.Initialize();
-
             // Listeners to set unsaved/saved document status
             WeakReferenceMessenger.Default.Register<ShellViewModelBase, TreeUpdatedMessage>(this, (r, m) =>
             {
-                r.SetIsDirty(true);
+                r.SetIsDirty(m.SetDirty);
                 r.UpdateTreeList();
             });
             WeakReferenceMessenger.Default.Register<ShellViewModelBase, SavedFileMessage>(this, (r, m) => r.SetIsDirty(false));
             WeakReferenceMessenger.Default.Register<ShellViewModelBase, NodeMovedMessage>(this, (r, m) => r.SetIsDirty(true));
             WeakReferenceMessenger.Default.Register<ShellViewModelBase, ForestSettingsChangedMessage>(this, (r, m) => r.SetIsDirty(true));
             WeakReferenceMessenger.Default.Register<ShellViewModelBase, UnsavedModificationsMessage>(this, (r, m) => r.SetIsDirty(true));
-            
+
+            // First View, use that to initialize some services
+            _dispatcherService.Initialize();
+            _dataService.InitializeDatabase();
+
             UpdateTitleBar();
 
             ((NotificationServiceBase)_notificationService).InAppNotificationRequested += ShowInAppNotification;

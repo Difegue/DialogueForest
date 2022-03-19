@@ -172,9 +172,6 @@ namespace DialogueForest.ViewModels
             // More info on tracking issue https://github.com/Microsoft/microsoft-ui-xaml/issues/8
             _keyboardAccelerators.Add(_altLeftKeyboardAccelerator);
             _keyboardAccelerators.Add(_backKeyboardAccelerator);
-
-            // TODO this might require to be hooked to an event on dataService to know when it's done loading from storage.
-            UpdateTreeList();
         }
 
         protected override void ItemInvoked(object args)

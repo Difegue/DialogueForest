@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace DialogueForest.Core.Messages
 {
-    public class TreeUpdatedMessage { }
+    public record TreeUpdatedMessage(bool SetDirty = true);
+
 }

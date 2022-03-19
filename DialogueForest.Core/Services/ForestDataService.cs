@@ -44,13 +44,11 @@ namespace DialogueForest.Core.Services
             if (_storageService.GetValue<string>("lastSavedFolder", null) != null)
             {
                 _savedFileExists = true;
-                WeakReferenceMessenger.Default.Send(new SavedFileMessage { FileAbstraction = LastSavedFile });
+                WeakReferenceMessenger.Default.Send(new SavedFileMessage(LastSavedFile));
             }
-
-            InitializeDatabase();
         }
 
-        private async void InitializeDatabase()
+        public async void InitializeDatabase()
         {
             try
             {
@@ -90,7 +88,8 @@ namespace DialogueForest.Core.Services
                 {
                     LastSavedFile = res.Item1;
                     _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(res.Item2);
-                    WeakReferenceMessenger.Default.Send(new SavedFileMessage { FileAbstraction = LastSavedFile });
+                    WeakReferenceMessenger.Default.Send(new SavedFileMessage(LastSavedFile));
+                    WeakReferenceMessenger.Default.Send(new TreeUpdatedMessage(false)); // Notify listeners we're loaded
                 }
                 catch (Exception ex)
                 {
@@ -104,6 +103,7 @@ namespace DialogueForest.Core.Services
         {
             var stream = await _storageService.OpenFileAsync(STORAGE_NAME);
             _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(stream);
+            WeakReferenceMessenger.Default.Send(new TreeUpdatedMessage(false)); // Notify listeners we're loaded
         }
 
         public void SaveForestToStorage()
@@ -142,7 +142,7 @@ namespace DialogueForest.Core.Services
                 _storageService.SetValue("lastSavedName", LastSavedFile.Name);
 
                 // Send a message to inform VMs we saved to disk
-                WeakReferenceMessenger.Default.Send(new SavedFileMessage { FileAbstraction = LastSavedFile });
+                WeakReferenceMessenger.Default.Send(new SavedFileMessage(LastSavedFile));
             }
             else
             {
@@ -240,7 +240,7 @@ namespace DialogueForest.Core.Services
             destination.AddNode(node);
 
             // Notify VMs (both tree and nodeVMs) with a message
-            WeakReferenceMessenger.Default.Send(new NodeMovedMessage { SourceTree = origin, DestinationTree = destination, NodeMoved = node });
+            WeakReferenceMessenger.Default.Send(new NodeMovedMessage(origin, destination, node));
         }
 
         internal void SetPinnedNode(DialogueNode node, bool isPinned)
