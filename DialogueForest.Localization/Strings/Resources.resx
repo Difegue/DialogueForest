@@ -599,4 +599,22 @@ They'll show up here when you do.</value>
   <data name="ExportOperationInProgress" xml:space="preserve">
     <value>Exporting... Please wait warmly.</value>
   </data>
+  <data name="NoNodesText" xml:space="preserve">
+    <value>No Nodes</value>
+  </data>
+  <data name="ContentDialogDeleteTree" xml:space="preserve">
+    <value>Delete this Tree?</value>
+  </data>
+  <data name="ContentDialogDeleteTreeDesc" xml:space="preserve">
+    <value>All its nodes will be moved to Trash.</value>
+  </data>
+  <data name="NotificationPinned" xml:space="preserve">
+    <value>Pinned!</value>
+  </data>
+  <data name="NotificationUnpinned" xml:space="preserve">
+    <value>Unpinned!</value>
+  </data>
+  <data name="NotificationTrashed" xml:space="preserve">
+    <value>Trashed!</value>
+  </data>
 </root>

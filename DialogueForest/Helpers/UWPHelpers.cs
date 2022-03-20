@@ -52,7 +52,7 @@ namespace DialogueForest.Helpers
 
                     if (nodes.Count == 0)
                     {
-                        container.Items.Add(new MenuFlyoutItem { Text = Localization.Strings.Resources.EditorReplyPlaceholderText }); //TODO loc
+                        container.Items.Add(new MenuFlyoutItem { Text = Localization.Strings.Resources.NoNodesText }); 
                     }
 
                 });

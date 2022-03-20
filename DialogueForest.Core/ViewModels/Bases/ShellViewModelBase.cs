@@ -45,10 +45,6 @@ namespace DialogueForest.Core.ViewModels
             WeakReferenceMessenger.Default.Register<ShellViewModelBase, ForestSettingsChangedMessage>(this, (r, m) => r.SetIsDirty(true));
             WeakReferenceMessenger.Default.Register<ShellViewModelBase, UnsavedModificationsMessage>(this, (r, m) => r.SetIsDirty(true));
 
-            // First View, use that to initialize some services
-            _dispatcherService.Initialize();
-            _dataService.InitializeDatabase();
-
             UpdateTitleBar();
 
             ((NotificationServiceBase)_notificationService).InAppNotificationRequested += ShowInAppNotification;

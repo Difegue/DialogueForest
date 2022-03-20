@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -13,7 +12,6 @@ using DialogueForest.Core.Interfaces;
 using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
 using DialogueForest.Localization.Strings;
-using DialogueForest.Core.ViewModels;
 using DialogueForest.Core.Messages;
 using CommunityToolkit.Mvvm.Messaging;
 
@@ -24,6 +22,7 @@ namespace DialogueForest.Core.ViewModels
         private IDialogService _dialogService;
         private OpenedNodesViewModel _openedNodes;
         private INavigationService _navigationService;
+        private INotificationService _notificationService;
         private ForestDataService _dataService;
 
         private DialogueTree _tree;
@@ -64,11 +63,12 @@ namespace DialogueForest.Core.ViewModels
 
         public ObservableCollection<DialogueNodeViewModel> Nodes { get; } = new ObservableCollection<DialogueNodeViewModel>();
 
-        public DialogueTreeViewModel(IDialogService dialogService, OpenedNodesViewModel openedNodes, INavigationService navigationService, ForestDataService forestService)
+        public DialogueTreeViewModel(IDialogService dialogService, OpenedNodesViewModel openedNodes, INavigationService navigationService, INotificationService notificationService, ForestDataService forestService)
         {
             _dialogService = dialogService;
             _navigationService = navigationService;
             _openedNodes = openedNodes;
+            _notificationService = notificationService;
             _dataService = forestService;
 
             Nodes.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsNodesEmpty));
@@ -160,10 +160,16 @@ namespace DialogueForest.Core.ViewModels
         }
 
         [ICommand]
-        private void Delete()
+        private async Task Delete()
         {
-            // TODO
-            WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage());
+            if (await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogDeleteTree, Resources.ContentDialogDeleteTreeDesc,
+                       Resources.ButtonYesText, Resources.ButtonCancelText))
+            {
+                _dataService.DeleteTree(_tree);
+                _notificationService.ShowInAppNotification(Resources.NotificationTrashed);
+                _navigationService.Navigate<DialogueTreeViewModel>("trash");
+            }
+               
         }
 
         

@@ -18,6 +18,7 @@ namespace DialogueForest.Core.Interfaces
         void SetItemForNextConnectedAnimation(object item);
         void OpenDialogueNode(DialogueTree parent, DialogueNode node);
         void OpenDialogueNode(DialogueNodeViewModel existingVm);
+        void CloseDialogueNode(DialogueNodeViewModel existingVm);
     }
 
     public abstract class NavigationServiceBase: INavigationService
@@ -60,5 +61,6 @@ namespace DialogueForest.Core.Interfaces
         public abstract bool CanGoBack { get; }
         public abstract void SetItemForNextConnectedAnimation(object item);
         public abstract void OpenDialogueNode(DialogueNodeViewModel existingVm);
+        public abstract void CloseDialogueNode(DialogueNodeViewModel existingVm);
     }
 }

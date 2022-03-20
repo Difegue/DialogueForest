@@ -229,18 +229,22 @@ namespace DialogueForest.Core.ViewModels
         private void PinDialogue()
         {
             _dataService.SetPinnedNode(_node, true);
-            _notificationService.ShowInAppNotification("Pinned!");
+            _notificationService.ShowInAppNotification(Resources.NotificationPinned);
         }
         
 
         [ICommand]
-        private void UnpinDialogue() => _dataService.SetPinnedNode(_node, false);
+        private void UnpinDialogue()
+        {
+            _dataService.SetPinnedNode(_node, false);
+            _notificationService.ShowInAppNotification(Resources.NotificationUnpinned);
+        }
 
         [ICommand]
         private void MoveToTrash()
         {
             _parentVm.MoveNodeToTrash(this, _node);
-            _notificationService.ShowInAppNotification("Trashed!");
+            _notificationService.ShowInAppNotification(Resources.NotificationTrashed);
         } 
 
         [ICommand]
@@ -248,7 +252,10 @@ namespace DialogueForest.Core.ViewModels
         {
             if (await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogueDeleteNode, Resources.ContentDialogWillBePermaDeleted,
                         Resources.ButtonYesText, Resources.ButtonCancelText))
+            {
                 _dataService.DeleteNode(_node);
+                _navigationService.CloseDialogueNode(this);
+            }
         }
 
         internal void SetParentVm(DialogueTreeViewModel treeViewModel)

@@ -524,4 +524,22 @@ Vous les retrouverez ici.</value>
   <data name="ExportOperationInProgress" xml:space="preserve">
     <value>Export en cours... Veuillez patienter.</value>
   </data>
+  <data name="NoNodesText" xml:space="preserve">
+    <value>Pas de Noeuds</value>
+  </data>
+  <data name="ContentDialogDeleteTree" xml:space="preserve">
+    <value>Supprimer cet arbre ?</value>
+  </data>
+  <data name="ContentDialogDeleteTreeDesc" xml:space="preserve">
+    <value>Tous ses dialogues seront déplacés à la corbeille.</value>
+  </data>
+  <data name="NotificationPinned" xml:space="preserve">
+    <value>Epinglé !</value>
+  </data>
+  <data name="NotificationUnpinned" xml:space="preserve">
+    <value>Retiré des épingles !</value>
+  </data>
+  <data name="NotificationTrashed" xml:space="preserve">
+    <value>Mis à la corbeille !</value>
+  </data>
 </root>

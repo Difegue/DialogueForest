@@ -53,6 +53,10 @@ namespace DialogueForest.ViewModels
 
             _altLeftKeyboardAccelerator = BuildKeyboardAccelerator(VirtualKey.Left, GoBack, VirtualKeyModifiers.Menu);
             _backKeyboardAccelerator = BuildKeyboardAccelerator(VirtualKey.GoBack, GoBack);
+
+            // First View, use that to initialize some services
+            _dispatcherService.Initialize();
+            _dataService.InitializeDatabase();
         }
 
         private void UpdateNavigationViewSelection(object sender, CoreNavigationEventArgs e)

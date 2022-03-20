@@ -42,6 +42,25 @@ namespace DialogueForest.Core.ViewModels
             SelectedItem = vm;
         }
 
+        public void CloseNode(DialogueNodeViewModel vm)
+        {
+            // Check if this node is open
+            if (!Tabs.Contains(vm))
+            {
+                // Make 'really' sure
+                if (Tabs.Select(t => t.ID).Contains(vm.ID))
+                {
+                    vm = Tabs.First(t => t.ID == vm.ID);
+                }
+            }
+
+            Tabs.Remove(vm);
+            if (SelectedItem == vm)
+            {
+                SelectedItem = Tabs.First();
+            }
+        }
+
         [ICommand]
         private void RemoveTab(DialogueNodeViewModel item) => Tabs.Remove(item);                
 

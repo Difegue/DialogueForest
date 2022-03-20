@@ -160,8 +160,18 @@ namespace DialogueForest.Core.Services
         public DialogueTree GetTrash() => _currentForest.Trash;
         public DialogueTree GetNotes() => _currentForest.Notes;
 
-        internal bool IsNodeTrashed(DialogueNode node) => _currentForest.Trash.Nodes.ContainsValue(node);
-        internal void DeleteNode(DialogueNode node) => _currentForest.Trash.RemoveNode(node); // TODO update trash
+        internal bool IsNodeTrashed(DialogueNode node) => GetTrash().Nodes.ContainsValue(node);
+        internal void DeleteNode(DialogueNode node) => GetTrash().RemoveNode(node); // TODO update trash
+        internal void DeleteTree(DialogueTree tree)
+        {
+            var nodeList = tree.Nodes.Values;
+            while (nodeList.Count > 0)
+                MoveNode(nodeList.First(), tree, GetTrash());
+
+            GetDialogueTrees().Remove(tree);
+            WeakReferenceMessenger.Default.Send(new TreeUpdatedMessage());
+        }
+
         internal bool IsNodePinned(DialogueNode node) => _currentForest.PinnedIDs.Contains(node.ID);
 
         internal DialogueNode CreateNewNode()
@@ -174,7 +184,7 @@ namespace DialogueForest.Core.Services
         internal DialogueTree CreateNewTree(string treeName)
         {
             var tree = new DialogueTree(treeName);
-            _currentForest.Trees.Add(tree);
+            GetDialogueTrees().Add(tree);
 
             return tree;
         }

@@ -61,6 +61,11 @@ namespace DialogueForest.Services
             //TODO invoke navigated here so CanGoBack updates
         }
 
+        public override void CloseDialogueNode(DialogueNodeViewModel vm)
+        {
+            NodeTabContainer.CloseNode(vm);
+        }
+
         public override object GoBackImplementation()
         {
             if (CanGoBack)
@@ -84,6 +89,7 @@ namespace DialogueForest.Services
 
             return null;
         }
+        
 
         public OpenedNodesViewModel NodeTabContainer { get; set; }
 

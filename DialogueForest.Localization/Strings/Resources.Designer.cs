@@ -160,6 +160,24 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Delete this Tree?.
+        /// </summary>
+        public static string ContentDialogDeleteTree {
+            get {
+                return ResourceManager.GetString("ContentDialogDeleteTree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à All its nodes will be moved to Trash..
+        /// </summary>
+        public static string ContentDialogDeleteTreeDesc {
+            get {
+                return ResourceManager.GetString("ContentDialogDeleteTreeDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Delete this Dialogue?.
         /// </summary>
         public static string ContentDialogueDeleteNode {
@@ -745,6 +763,15 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à No Nodes.
+        /// </summary>
+        public static string NoNodesText {
+            get {
+                return ResourceManager.GetString("NoNodesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Export Failed! See the below notification for details..
         /// </summary>
         public static string NotificationExportFailed {
@@ -759,6 +786,33 @@ namespace DialogueForest.Localization.Strings {
         public static string NotificationExportSuccess {
             get {
                 return ResourceManager.GetString("NotificationExportSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pinned!.
+        /// </summary>
+        public static string NotificationPinned {
+            get {
+                return ResourceManager.GetString("NotificationPinned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Trashed!.
+        /// </summary>
+        public static string NotificationTrashed {
+            get {
+                return ResourceManager.GetString("NotificationTrashed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Unpinned!.
+        /// </summary>
+        public static string NotificationUnpinned {
+            get {
+                return ResourceManager.GetString("NotificationUnpinned", resourceCulture);
             }
         }
         
