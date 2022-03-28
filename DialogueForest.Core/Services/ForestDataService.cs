@@ -70,10 +70,7 @@ namespace DialogueForest.Core.Services
             }
             catch (Exception ex)
             {
-                _notificationService.ShowInAppNotification("Couldn't load autosave!", false);
-                _notificationService.ShowErrorNotification(ex);
-
-                _currentForest = new DialogueDatabase();
+                _notificationService.ShowInAppNotification("Couldn't load autosave! " + ex, false);
             }
         }
 
@@ -122,6 +119,7 @@ namespace DialogueForest.Core.Services
 
         public async Task SaveForestToStorageAsync()
         {
+            // TODO lock
             var bytes = JsonSerializer.SerializeToUtf8Bytes(_currentForest);
             await _storageService.SaveDataToFileAsync(STORAGE_NAME, bytes);
         }

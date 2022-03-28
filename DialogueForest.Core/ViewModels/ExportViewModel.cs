@@ -103,6 +103,7 @@ namespace DialogueForest.Core.ViewModels
                         {
                             Name = tree.Name,
                             Extension = ".json",
+                            Type = "DialogueForest Export",
                             Path = _exportFolder
                         };
                         await _applicationStorageService.SaveDataToExternalFileAsync(treeBytes, savedFile, false);
@@ -118,6 +119,7 @@ namespace DialogueForest.Core.ViewModels
                     {
                         Name = _dataService.LastSavedFile.Name,
                         Extension = ".json",
+                        Type = "DialogueForest Export",
                         Path = _exportFolder
                     };
                     await _applicationStorageService.SaveDataToExternalFileAsync(forestBytes, savedFile, false);

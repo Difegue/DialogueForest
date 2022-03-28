@@ -30,7 +30,7 @@ namespace DialogueForest.Core
 
             // Regex first for colors (only tag we handle that needs that kind of precision)
             var pattern = @"<p.*color:([^;]*);.*"">(.*?)<\/p>";
-            html = Regex.Replace(html, pattern, m => $"[color={m.Groups[1].Value}]{m.Groups[2].Value}[/color]");
+            html = Regex.Replace(html, pattern, m => $"[color={m.Groups[1].Value}]{m.Groups[2].Value}[/color]\n");
             
             html = Regex.Replace(html, @"<p style=""[^""]*"">", "");
             html = Regex.Replace(html, @"<div style=""[^""]*"">", "");
@@ -42,7 +42,7 @@ namespace DialogueForest.Core
             html = html.Replace("&amp;", "&").Replace("&lt;", "<").Replace("&gt;", ">").Replace("&nbsp;", "")
                        .Replace("<u>", "[u]").Replace("</u>", "[/u]").Replace("<strong>", "[b]").Replace("</strong>", "[/b]")
                        .Replace("<em>", "[i]").Replace("</em>", "[/i]")
-                       .Replace("<br>", "\n").Replace("</div>", "").Replace("</span>", "").Replace("</p>", "");
+                       .Replace("<br>", "").Replace("</div>", "").Replace("</span>", "").Replace("</p>", "\n");
 
 
 

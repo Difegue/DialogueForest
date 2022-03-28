@@ -116,7 +116,7 @@ namespace DialogueForest.Services
             if (!promptUser)
             {
                 // Get folder from MostRecentlyUsedList (or file if that fails)
-                var folderToken = GetValue<string>(suggestedFile.Path);
+                var folderToken = GetValue<string>(suggestedFile?.Path);
 
                 if (folderToken != null)
                 {
