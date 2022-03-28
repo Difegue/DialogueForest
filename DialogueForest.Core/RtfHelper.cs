@@ -35,7 +35,7 @@ namespace DialogueForest.Core
             {
                 case OutputFormat.PlainText: return Html.ToPlainText(html);
                 case OutputFormat.HTML: return html;
-                case OutputFormat.BBCode: return Html.ToMarkdown(html); // TODO
+                case OutputFormat.BBCode: return BBCodeHtmlConverter.Convert(html);
                 case OutputFormat.Markdown: return Html.ToMarkdown(html);
             }
 
