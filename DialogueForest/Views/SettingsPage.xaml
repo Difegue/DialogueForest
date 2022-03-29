@@ -29,8 +29,16 @@
 
         <DataTemplate x:Key="MetadataTemplateSettings" x:DataType="viewmodels:MetadataViewModel">
 
-            <Grid Style="{StaticResource CardGrid}" CornerRadius="0" BorderThickness="0,0,0,1">
-                <toolkit:WrapPanel VerticalSpacing="8" HorizontalSpacing="8" Orientation="Horizontal" >
+            <Grid Style="{StaticResource CardGrid}" CornerRadius="0" BorderThickness="0,0,0,1" >
+
+                <Button Margin="0,-8,0,0" Command="{x:Bind DeleteCommand}" VerticalAlignment="Top" HorizontalAlignment="Right"
+                            ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewDeleteTree}">
+                    <FontIcon Foreground="{ThemeResource DestructiveActionForeground}"
+                                  FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" FontSize="18"/>
+                </Button>
+
+                <toolkit:WrapPanel VerticalSpacing="8" HorizontalSpacing="8" Orientation="Horizontal"
+                                   Margin="{StaticResource XXSmallTopMargin}">
 
                     <TextBox Header="Name" Width="160" Text="{x:Bind Name, Mode=TwoWay}"/>
 
@@ -38,11 +46,6 @@
                             ItemsSource="{ui:EnumValues Type=models:MetadataKind}" 
                             SelectedItem="{x:Bind Kind, Mode=TwoWay}" />
 
-                    <Button Margin="20,0,0,0" Command="{x:Bind DeleteCommand}" VerticalAlignment="Bottom"
-                            ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewDeleteTree}">
-                        <FontIcon Foreground="{ThemeResource DestructiveActionForeground}"
-                                  FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" FontSize="18"/>
-                    </Button>
                 </toolkit:WrapPanel>
             </Grid>
 
@@ -50,15 +53,14 @@
 
         <DataTemplate x:Key="CharacterTemplate" x:DataType="viewmodels:CharacterViewModel">
             <Grid Style="{StaticResource CardGrid}" CornerRadius="0" BorderThickness="0,0,0,1">
-                <toolkit:WrapPanel VerticalSpacing="10" HorizontalSpacing="10" Orientation="Horizontal" >
 
-                    <TextBox Header="Name" Width="264" Text="{x:Bind Name, Mode=TwoWay}"/>
-                    <Button Margin="18,0,0,0" Command="{x:Bind DeleteCommand}" VerticalAlignment="Bottom"
+                <Button Margin="0,28,0,0" Command="{x:Bind DeleteCommand}" VerticalAlignment="Center" HorizontalAlignment="Right"
                                             ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewDeleteTree}">
-                        <FontIcon Foreground="{ThemeResource DestructiveActionForeground}"
+                    <FontIcon Foreground="{ThemeResource DestructiveActionForeground}"
                                                   FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" FontSize="18"/>
-                    </Button>
-                </toolkit:WrapPanel>
+                </Button>
+
+                <TextBox Header="Name" HorizontalAlignment="Stretch" Margin="0,0,60,0" Text="{x:Bind Name, Mode=TwoWay}"/>
             </Grid>
         </DataTemplate>
 
