@@ -617,4 +617,7 @@ They'll show up here when you do.</value>
   <data name="NotificationTrashed" xml:space="preserve">
     <value>Trashed!</value>
   </data>
+  <data name="EditorCharacterPlaceholder" xml:space="preserve">
+    <value>Character</value>
+  </data>
 </root>

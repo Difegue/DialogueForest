@@ -542,4 +542,7 @@ Vous les retrouverez ici.</value>
   <data name="NotificationTrashed" xml:space="preserve">
     <value>Mis à la corbeille !</value>
   </data>
+  <data name="EditorCharacterPlaceholder" xml:space="preserve">
+    <value>Personnage</value>
+  </data>
 </root>

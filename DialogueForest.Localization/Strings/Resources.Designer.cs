@@ -286,6 +286,15 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Character.
+        /// </summary>
+        public static string EditorCharacterPlaceholder {
+            get {
+                return ResourceManager.GetString("EditorCharacterPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Delete Dialogue portion.
         /// </summary>
         public static string EditorDeleteDialogue {

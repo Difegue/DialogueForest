@@ -49,7 +49,7 @@ namespace DialogueForest.Core.ViewModels
 
         public string CharacterName
         {
-            get => _text.Character;
+            get => _text?.Character;
             set => SetProperty(_text.Character, value, _text, (u, n) => { u.Character = n; 
                     WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage()); 
             });
@@ -71,14 +71,14 @@ namespace DialogueForest.Core.ViewModels
 
         public bool ParentHasMultipleDialogs => _parentNodeVm.Dialogs.Count > 1;
 
-        public void Receive(ForestSettingsChangedMessage message)
+        public void UpdateCharacters(ForestSettingsChangedMessage message)
         {
-            //TODO keep CharacterName even if it's not in the list (seems to be a display issue)
-
-            // Update character list if settings updated
             Characters.Clear();
+                
             foreach (var c in _dataService.GetCharacters())
+            {
                 Characters.Add(c);
+            }
         }
 
         public DialoguePartViewModel(IDialogService dialogService, ForestDataService dataService)
@@ -86,11 +86,9 @@ namespace DialogueForest.Core.ViewModels
             _dialogService = dialogService;
             _dataService = dataService;
 
-            Characters.Clear();
-            foreach (var c in _dataService.GetCharacters())
-                Characters.Add(c);
-
-            WeakReferenceMessenger.Default.Register<DialoguePartViewModel, ForestSettingsChangedMessage>(this, (r, m) => r.Receive(m));
+            // Fill the list of characters
+            UpdateCharacters(null);
+            WeakReferenceMessenger.Default.Register<DialoguePartViewModel, ForestSettingsChangedMessage>(this, (r, m) => r.UpdateCharacters(m));
         }
     }
 }

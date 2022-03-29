@@ -23,6 +23,7 @@ namespace DialogueForest.Core.Services
         private const string STORAGE_NAME = "autosave.json";
 
         private bool _savedFileExists;
+        private bool _isSavingToStorage;
         private Timer _autoSaveTimer;
 
         public FileAbstraction LastSavedFile { get; private set; }
@@ -119,9 +120,13 @@ namespace DialogueForest.Core.Services
 
         public async Task SaveForestToStorageAsync()
         {
-            // TODO lock
-            var bytes = JsonSerializer.SerializeToUtf8Bytes(_currentForest);
-            await _storageService.SaveDataToFileAsync(STORAGE_NAME, bytes);
+            if (!_isSavingToStorage)
+            {
+                _isSavingToStorage = true;
+                var bytes = JsonSerializer.SerializeToUtf8Bytes(_currentForest);
+                await _storageService.SaveDataToFileAsync(STORAGE_NAME, bytes);
+                _isSavingToStorage = false;
+            }
         }
 
         public async Task SaveForestToFileAsync(bool promptNewFile = false)
