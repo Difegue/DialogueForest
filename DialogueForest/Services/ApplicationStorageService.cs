@@ -6,11 +6,15 @@ using CommunityToolkit.WinUI.Helpers;
 using System;
 using Windows.Foundation.Collections;
 using System.Collections.Generic;
+using Windows.Storage.Pickers;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace DialogueForest.Services
 {
     public sealed class ApplicationStorageService : IApplicationStorageService
     {
+        // TODO 
         /// <summary>
         /// The <see cref="IPropertySet"/> with the settings targeted by the current instance.
         /// </summary>
@@ -86,20 +90,23 @@ namespace DialogueForest.Services
 
         public async Task<FileAbstraction> GetExternalFolderAsync()
         {
-            var folderPicker = new Windows.Storage.Pickers.FolderPicker() {
-                SuggestedStartLocation =
-                Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary
+            var folderPicker = new FolderPicker() {
+                SuggestedStartLocation = PickerLocationId.DocumentsLibrary
             };
             folderPicker.FileTypeFilter.Add("*");
+
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle((Application.Current as App)?.Window);
+            WinRT.Interop.InitializeWithWindow.Initialize(folderPicker, hwnd);
 
             var folder = await folderPicker.PickSingleFolderAsync();
             if (folder != null)
             {
+                // TODO packaged
                 // Application now has read/write access to all contents in the picked folder
                 // (including other sub-folder contents)
                 // Allow future access to the folder
-                var token = Windows.Storage.AccessCache.StorageApplicationPermissions.MostRecentlyUsedList.Add(folder);
-                SetValue(folder.Path, token);
+                //var token = Windows.Storage.AccessCache.StorageApplicationPermissions.MostRecentlyUsedList.Add(folder);
+                //SetValue(folder.Path, token);
 
                 return new FileAbstraction
                 {
@@ -138,12 +145,15 @@ namespace DialogueForest.Services
             // We'll prompt the user no matter what if we couldn't get a valid token from MostRecentlyUsedList
             if (promptUser || file == null)
             {
-                var savePicker = new Windows.Storage.Pickers.FileSavePicker
+                var savePicker = new FileSavePicker
                 {
                     SuggestedFileName = suggestedFile.Name,
-                    SuggestedStartLocation =
-                Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary
+                    SuggestedStartLocation = PickerLocationId.DocumentsLibrary
                 };
+
+                var hwnd = WinRT.Interop.WindowNative.GetWindowHandle((Application.Current as App)?.Window);
+                WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hwnd);
+
                 // Dropdown of file types the user can save the file as
                 savePicker.FileTypeChoices.Add(suggestedFile.Type, new List<string>() { suggestedFile.Extension });
 
@@ -151,9 +161,10 @@ namespace DialogueForest.Services
 
                 if (file != null)
                 {
+                    // TODO packaged
                     // Allow future access to the file
-                    var token = Windows.Storage.AccessCache.StorageApplicationPermissions.MostRecentlyUsedList.Add(file);
-                    SetValue(file.Path, token);
+                    //var token = Windows.Storage.AccessCache.StorageApplicationPermissions.MostRecentlyUsedList.Add(file);
+                    //SetValue(file.Path, token);
                 }
             }
             
@@ -194,17 +205,21 @@ namespace DialogueForest.Services
 
         public async Task<Tuple<FileAbstraction,Stream>> LoadDataFromExternalFileAsync(string fileExtension)
         {
-            var picker = new Windows.Storage.Pickers.FileOpenPicker();
-            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.List;
-            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary;
+            var picker = new FileOpenPicker();
+            picker.ViewMode = PickerViewMode.List;
+            picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
             picker.FileTypeFilter.Add(fileExtension);
+
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle((Application.Current as App)?.Window);
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
 
             StorageFile file = await picker.PickSingleFileAsync();
             if (file != null)
             {
+                // TODO packaged
                 // Allow future access to the file
-                var token = Windows.Storage.AccessCache.StorageApplicationPermissions.MostRecentlyUsedList.Add(file);
-                SetValue(file.Path, token);
+                //var token = Windows.Storage.AccessCache.StorageApplicationPermissions.MostRecentlyUsedList.Add(file);
+                //SetValue(file.Path, token);
 
                 var abstraction = new FileAbstraction
                 {

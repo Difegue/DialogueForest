@@ -26,6 +26,7 @@ namespace DialogueForest
     public sealed partial class App : Application
     {
         private WindowEx _window;
+        public WindowEx Window => _window;
         public XamlRoot XamlRoot { get; private set; }
 
         /// <summary>

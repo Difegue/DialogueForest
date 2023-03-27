@@ -17,7 +17,7 @@ namespace DialogueForest.Views
         public TreeNameDialog()
         {
             this.InitializeComponent();
-
+            XamlRoot = (Application.Current as App)?.XamlRoot;
             //TreeName = Localization.Strings.Resources.TreeNameDialogDefaultName;
         }
 

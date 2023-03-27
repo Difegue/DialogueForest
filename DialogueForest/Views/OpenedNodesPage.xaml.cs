@@ -36,6 +36,7 @@ namespace DialogueForest.Views
 
         void SetupWindow(AppWindow window)
         {
+            // TODO packaged
             return;
             
             if (window == null)

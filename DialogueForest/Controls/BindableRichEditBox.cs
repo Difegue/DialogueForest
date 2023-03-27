@@ -88,7 +88,7 @@ namespace DialogueForest.Controls
                 var options = TextSetOptions.FormatRtf | TextSetOptions.ApplyRtfDocumentDefaults;
 
                 // Make black text white if dark theme is requested
-                var text = Window.Current.Content is FrameworkElement fe
+                var text = (Application.Current as App)?.Window.Content is FrameworkElement fe
                     ? fe.ActualTheme == ElementTheme.Light
                         ? rtb.RtfText.ConvertRtfWhiteTextToBlack()
                         : rtb.RtfText.ConvertRtfBlackTextToWhite()

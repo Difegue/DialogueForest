@@ -35,12 +35,12 @@ namespace DialogueForest.Services
         {
             await _dispatcherService.ExecuteOnUIThreadAsync(async () =>
                 {
+                    // TODO packaged
                     return;
                     if (SystemInformation.Instance.IsFirstRun && !shownFirstRun)
                     {
                         shownFirstRun = true;
                         var dialog = new FirstRunDialog();
-                        dialog.XamlRoot = (Application.Current as App)?.XamlRoot;
 
                         await dialog.ShowAsync();
                         _navigationService.Navigate<SettingsViewModel>();
@@ -66,6 +66,8 @@ namespace DialogueForest.Services
             var storeContext = StoreContext.GetDefault();
             await _dispatcherService.ExecuteOnUIThreadAsync(async () =>
             {
+                // TODO packaged
+                return;
                 if (SystemInformation.Instance.LaunchCount >=4 && !_storageService.GetValue<bool>("HasSeenRateAppPrompt"))
                 {
                     if (await ShowConfirmDialogAsync(Strings.RateAppPromptTitle, Strings.RateAppPromptText, Strings.ButtonYesText, Strings.ButtonNoText))
@@ -113,7 +115,6 @@ namespace DialogueForest.Services
         public async Task<string> ShowTreeNameDialogAsync()
         {
             var dialog = new TreeNameDialog();
-            dialog.XamlRoot = (Application.Current as App)?.XamlRoot;
 
             var result = await _dispatcherService.EnqueueAsync(async () => await dialog.ShowAsync());
 
@@ -124,11 +125,13 @@ namespace DialogueForest.Services
         public async Task<bool> ShowConfirmDialogAsync(string title, string text, string primaryButtonText = null, string cancelButtonText = null)
         {
             // If a ContentDialog is already open, stop here and return false
-            if (VisualTreeHelper.GetOpenPopups(Window.Current).Where(p => p.Child is ContentDialog).Any())
+            if (VisualTreeHelper.GetOpenPopups((Application.Current as App)?.Window)
+                .Where(p => p.Child is ContentDialog).Any())
                 return false;
 
             ContentDialog confirmDialog = new ContentDialog
             {
+                XamlRoot = (Application.Current as App)?.XamlRoot,
                 Title = title,
                 Content = text,
                 PrimaryButtonText = primaryButtonText,
