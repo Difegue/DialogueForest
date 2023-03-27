@@ -1,14 +1,12 @@
 ﻿using DialogueForest.Core.ViewModels;
 using DialogueForest.Views;
-using Microsoft.Toolkit.Uwp.UI.Animations;
+using CommunityToolkit.WinUI.UI.Animations;
 using DialogueForest.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using DialogueForest.Core.Models;
-using DialogueForest.ViewModels;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace DialogueForest.Services
 {
@@ -55,7 +53,7 @@ namespace DialogueForest.Services
         public override void OpenDialogueNode(DialogueNodeViewModel vm)
         {
             // Add the previous node to the backstack
-            Frame.BackStack.Add(new Windows.UI.Xaml.Navigation.PageStackEntry(typeof(DialogueNodePage), NodeTabContainer.SelectedItem, null));
+            Frame.BackStack.Add(new Microsoft.UI.Xaml.Navigation.PageStackEntry(typeof(DialogueNodePage), NodeTabContainer.SelectedItem, null));
             NodeTabContainer.OpenNode(vm);
             //TODO invoke navigated here so CanGoBack updates
         }

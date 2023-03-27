@@ -7,7 +7,7 @@
     xmlns:local="using:DialogueForest.Controls"
     xmlns:strings="using:DialogueForest.Localization.Strings"
     xmlns:core="using:DialogueForest.Core.Interfaces"
-    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI" xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI" xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
     <Page.Resources>
 

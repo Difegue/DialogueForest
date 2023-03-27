@@ -4,12 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
-    xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI"
+    xmlns:media="using:CommunityToolkit.WinUI.UI.Media"
     xmlns:strings="using:DialogueForest.Localization.Strings"
     xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:i="using:Microsoft.Xaml.Interactivity" xmlns:ic="using:Microsoft.Xaml.Interactions.Core" xmlns:helpers="using:DialogueForest.Helpers" xmlns:local="using:DialogueForest.Controls"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls" xmlns:i="using:Microsoft.Xaml.Interactivity" xmlns:ic="using:Microsoft.Xaml.Interactions.Core" xmlns:helpers="using:DialogueForest.Helpers" xmlns:local="using:DialogueForest.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>

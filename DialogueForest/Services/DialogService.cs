@@ -2,14 +2,14 @@
 using System.Threading.Tasks;
 
 using DialogueForest.Views;
-using Microsoft.Toolkit.Uwp.Helpers;
+using CommunityToolkit.WinUI.Helpers;
 using DialogueForest.Core.Interfaces;
 using DialogueForest.Core.ViewModels;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Strings = DialogueForest.Localization.Strings.Resources;
 using Windows.Services.Store;
-using Windows.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media;
 using System.Linq;
 
 namespace DialogueForest.Services
@@ -35,10 +35,13 @@ namespace DialogueForest.Services
         {
             await _dispatcherService.ExecuteOnUIThreadAsync(async () =>
                 {
+                    return;
                     if (SystemInformation.Instance.IsFirstRun && !shownFirstRun)
                     {
                         shownFirstRun = true;
                         var dialog = new FirstRunDialog();
+                        dialog.XamlRoot = (Application.Current as App)?.XamlRoot;
+
                         await dialog.ShowAsync();
                         _navigationService.Navigate<SettingsViewModel>();
                     }
@@ -110,6 +113,8 @@ namespace DialogueForest.Services
         public async Task<string> ShowTreeNameDialogAsync()
         {
             var dialog = new TreeNameDialog();
+            dialog.XamlRoot = (Application.Current as App)?.XamlRoot;
+
             var result = await _dispatcherService.EnqueueAsync(async () => await dialog.ShowAsync());
 
             // Return new playlist name if checked, selected playlist otherwise

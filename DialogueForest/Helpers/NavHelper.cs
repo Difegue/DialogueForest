@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using Microsoft.UI.Xaml.Controls;
 
-using Windows.UI.Xaml;
+using Microsoft.UI.Xaml;
 
 namespace DialogueForest.Helpers
 {

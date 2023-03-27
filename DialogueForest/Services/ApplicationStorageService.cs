@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Microsoft.Toolkit.Uwp.Helpers;
+using CommunityToolkit.WinUI.Helpers;
 using System;
 using Windows.Foundation.Collections;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace DialogueForest.Services
         /// <summary>
         /// The <see cref="IPropertySet"/> with the settings targeted by the current instance.
         /// </summary>
-        private readonly IPropertySet SettingsStorage = ApplicationData.Current.LocalSettings.Values;
+        private readonly IPropertySet SettingsStorage; // = ApplicationData.Current.LocalSettings.Values;
 
         private async Task<StorageFolder> GetFolderAsync(string name)
         {
@@ -30,12 +30,14 @@ namespace DialogueForest.Services
 
         public async Task<bool> DoesFileExistAsync(string fileName, string parentFolder = "")
         {
+            return false;
             var folder = await GetFolderAsync(parentFolder);
             return await StorageFileHelper.FileExistsAsync(folder, fileName);
         }
 
         public async Task SaveDataToFileAsync(string fileName, byte[] data, string parentFolder = "")
         {
+            return;
             var folder = await GetFolderAsync(parentFolder);
             await StorageFileHelper.WriteBytesToFileAsync(folder, data, fileName);
         }
@@ -60,12 +62,13 @@ namespace DialogueForest.Services
 
         public void SetValue<T>(string key, T value)
         {
-            if (!SettingsStorage.ContainsKey(key)) SettingsStorage.Add(key, value);
-            else SettingsStorage[key] = value;
+            //if (!SettingsStorage.ContainsKey(key)) SettingsStorage.Add(key, value);
+            //else SettingsStorage[key] = value;
         }
 
         public T GetValue<T>(string key, T defaultValue = default)
         {
+            /*
             if (SettingsStorage.TryGetValue(key, out object value))
             {
                 try
@@ -76,7 +79,7 @@ namespace DialogueForest.Services
                 {
                     // Corrupted storage, return default
                 }
-            }
+            }*/
 
             return defaultValue;
         }

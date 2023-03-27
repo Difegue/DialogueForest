@@ -6,8 +6,8 @@ using DialogueForest.Services;
 using DialogueForest.ViewModels;
 using Windows.ApplicationModel.Core;
 using Windows.UI.WindowManagement;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace DialogueForest.Views
 {
@@ -36,6 +36,8 @@ namespace DialogueForest.Views
 
         void SetupWindow(AppWindow window)
         {
+            return;
+            
             if (window == null)
             {
                 // Hook onto titlebar
@@ -49,14 +51,14 @@ namespace DialogueForest.Views
 
                 // Extend into the titlebar
                 window.TitleBar.ExtendsContentIntoTitleBar = true;
-                window.TitleBar.ButtonBackgroundColor = Windows.UI.Colors.Transparent;
-                window.TitleBar.ButtonInactiveBackgroundColor = Windows.UI.Colors.Transparent;
+                window.TitleBar.ButtonBackgroundColor = Microsoft.UI.Colors.Transparent;
+                window.TitleBar.ButtonInactiveBackgroundColor = Microsoft.UI.Colors.Transparent;
 
                 // Due to a bug in AppWindow, we cannot follow the same pattern as CoreWindow when setting the min width.
                 // Instead, set a hardcoded number. 
                 CustomDragRegion.MinWidth = 188;
 
-                window.Frame.DragRegionVisuals.Add(CustomDragRegion);
+                //window.Frame.DragRegionVisuals.Add(CustomDragRegion);
             }
         }
 

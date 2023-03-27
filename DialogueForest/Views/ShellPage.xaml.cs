@@ -1,12 +1,9 @@
 ﻿using System;
 
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using Windows.ApplicationModel.Core;
-using Windows.System;
-using Windows.System.Profile;
-using System.Collections.Generic;
 using DialogueForest.ViewModels;
 
 namespace DialogueForest.Views
@@ -23,23 +20,23 @@ namespace DialogueForest.Views
             ViewModel.Initialize(shellFrame, navigationView, treeContainer, newTreeItem, notificationHolder, KeyboardAccelerators);
 
             // Hide default title bar.
-            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
-            UpdateTitleBarLayout(coreTitleBar);
+            //var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            //coreTitleBar.ExtendViewIntoTitleBar = true;
+            //UpdateTitleBarLayout(coreTitleBar);
 
             // Set XAML element as a draggable region.
-            Window.Current.SetTitleBar(AppTitleBar);
+            //Window.Current.SetTitleBar(AppTitleBar);
 
             // Register a handler for when the size of the overlaid caption control changes.
             // For example, when the app moves to a screen with a different DPI.
-            coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
+            //coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
 
             // Register a handler for when the title bar visibility changes.
             // For example, when the title bar is invoked in full screen mode.
-            coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
+            //coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
 
             //Register a handler for when the window changes focus
-            Window.Current.Activated += Current_Activated;
+            //Window.Current.Activated += Current_Activated;
 
             tabsView.CustomDragRegion.SizeChanged += Page_SizeChanged;
             
@@ -126,7 +123,7 @@ namespace DialogueForest.Views
             // Awful hardcoded calculations to define the draggable zones
             // CustomDragRegion is calculated by OpenedNodesPage based on the space taken by the opened tabs
             TitleBarLeftPart.Width = Pane1.ActualWidth + 32 + (isPaneOpen ? navigationView.OpenPaneLength - AppTitleBar.Margin.Left : 0);
-            TitleBarRightPart.Width = tabsView.CustomDragRegion.ActualWidth - CoreApplication.GetCurrentView().TitleBar.SystemOverlayRightInset;
+            //TitleBarRightPart.Width = tabsView.CustomDragRegion.ActualWidth - CoreApplication.GetCurrentView().TitleBar.SystemOverlayRightInset;
         }
 
         private void NavigationViewItem_DragOver(object sender, DragEventArgs e) => ViewModel.NavigationViewItem_DragOver(sender, e);

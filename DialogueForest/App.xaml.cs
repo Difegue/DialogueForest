@@ -9,25 +9,24 @@ using Microsoft.Extensions.DependencyInjection;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using DialogueForest.Core.Interfaces;
 using DialogueForest.Core.ViewModels;
-using Windows.ApplicationModel.Activation;
-using Windows.UI.Xaml;
-using Microsoft.Toolkit.Uwp.Helpers;
+using Microsoft.UI.Xaml;
+using CommunityToolkit.WinUI.Helpers;
 using Windows.UI.ViewManagement;
 using Windows.Foundation;
 using Windows.UI;
 using DialogueForest.ViewModels;
 using DialogueForest.Core.Services;
+using Microsoft.UI;
+using WinUIEx;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace DialogueForest
 {
     public sealed partial class App : Application
     {
-        private Lazy<ActivationService> _activationService;
-
-        private ActivationService ActivationService
-        {
-            get { return _activationService.Value; }
-        }
+        private WindowEx _window;
+        public XamlRoot XamlRoot { get; private set; }
 
         /// <summary>
         /// Gets the <see cref="IServiceProvider"/> instance to resolve application services.
@@ -42,17 +41,10 @@ namespace DialogueForest
 
             InitializeComponent();
             UnhandledException += OnAppUnhandledException;
-
-            // Deferred execution until used. Check https://docs.microsoft.com/dotnet/api/system.lazy-1 for further info on Lazy<T> class.
-            _activationService = new Lazy<ActivationService>(CreateActivationService);
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
-            Windows.ApplicationModel.Core.CoreApplication.EnablePrelaunch(true);
-
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(500, 500));
-
             // Compact sizing
             var isCompactEnabled = Ioc.Default.GetRequiredService<IApplicationStorageService>().GetValue<bool>(nameof(SettingsViewModel.IsCompactSizing));
             if (isCompactEnabled)
@@ -62,7 +54,7 @@ namespace DialogueForest
             }
 
             // Analytics
-            SystemInformation.Instance.TrackAppUse(args);
+            //SystemInformation.Instance.TrackAppUse(args);
 #if DEBUG
 #else
             var enableAnalytics = Ioc.Default.GetRequiredService<IApplicationStorageService>().GetValue<bool>(nameof(SettingsViewModel.EnableAnalytics), true);
@@ -73,25 +65,47 @@ namespace DialogueForest
                     typeof(Analytics), typeof(Crashes));
             }
 #endif
-
+            /*
             var viewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
             viewTitleBar.ButtonBackgroundColor = Colors.Transparent;
             viewTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
             viewTitleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
             viewTitleBar.ButtonInactiveForegroundColor = (Color)Resources["SystemBaseHighColor"];
+            */
 
-            if (!args.PrelaunchActivated)
+            _window = new WindowEx()
             {
-                await ActivationService.ActivateAsync(args);
-            }
+                MinHeight = 500,
+                MinWidth = 500,
+                Title = "DialogueForest",
+                ExtendsContentIntoTitleBar = true,
+                Backdrop = new MicaSystemBackdrop(),
+            };
+
+            var theme = Ioc.Default.GetRequiredService<IApplicationStorageService>().GetValue<string>(nameof(SettingsViewModel.ElementTheme));
+            Enum.TryParse(theme, out Theme elementTheme);
+            await Ioc.Default.GetRequiredService<IInteropService>().SetThemeAsync(elementTheme);
+            Ioc.Default.GetRequiredService<IDispatcherService>().Initialize();
+
+            _ = Task.Run(async () =>
+            {
+                Thread.Sleep(60000);
+                await Ioc.Default.GetRequiredService<IDialogService>().ShowRateAppDialogIfAppropriateAsync();
+            });
+
+            var shell = new Views.ShellPage();
+
+            shell.Loaded += async (s, e) =>
+            {
+                XamlRoot = shell.XamlRoot;
+                await Ioc.Default.GetRequiredService<IDialogService>().ShowFirstRunDialogIfAppropriateAsync();
+            };
+
+            _window.WindowContent = shell;
+            _window.Activate();
         }
 
-        protected override async void OnActivated(IActivatedEventArgs args)
-        {
-            await ActivationService.ActivateAsync(args);
-        }
-
-        private void OnAppUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        private void OnAppUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
         {
 #if DEBUG
 #else
@@ -108,16 +122,6 @@ namespace DialogueForest
 
             // Try to handle the exception in case it's not catastrophic
             e.Handled = true;
-        }
-
-        private ActivationService CreateActivationService()
-        {
-            return new ActivationService(this, typeof(WelcomeViewModel), new Lazy<UIElement>(CreateShell));
-        }
-
-        private UIElement CreateShell()
-        {
-            return new Views.ShellPage();
         }
 
         /// <summary>

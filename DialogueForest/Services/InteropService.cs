@@ -5,14 +5,14 @@ using DialogueForest.Core.Interfaces;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI;
-using Windows.UI.Core;
 using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
+using Microsoft.UI.Xaml;
 using DialogueForest.Core.ViewModels;
 using System.IO;
 using Windows.ApplicationModel;
-using Microsoft.Toolkit.Uwp.Helpers;
+using CommunityToolkit.WinUI.Helpers;
 using DialogueForest.Helpers;
+using Windows.UI.Core;
 
 namespace DialogueForest.Services
 {
@@ -22,15 +22,15 @@ namespace DialogueForest.Services
 
         public InteropService()
         {
-
+            
             UISettings uiSettings = new UISettings();
             uiSettings.ColorValuesChanged += HandleSystemThemeChange;
 
             // Fallback in case the above fails, we'll check when we get activated next.
-            Window.Current.CoreWindow.Activated += CoreWindow_Activated;
+            //Window.Current.CoreWindow.Activated += CoreWindow_Activated;
         }
 
-        private void CoreWindow_Activated(CoreWindow sender, WindowActivatedEventArgs args)
+        private void CoreWindow_Activated(CoreWindow sender, Windows.UI.Core.WindowActivatedEventArgs args)
         {
             if (Window.Current.Content is FrameworkElement frameworkElement && _appTheme != Application.Current.RequestedTheme)
             {
@@ -53,9 +53,7 @@ namespace DialogueForest.Services
 
         public Version GetAppVersion()
         {
-            var package = Package.Current;
-            var packageId = package.Id;
-            return new Version(packageId.Version.Major, packageId.Version.Minor, packageId.Version.Revision, packageId.Version.Build);
+            return new Version(1,0); // TODO
         }
 
         private async Task SetRequestedThemeAsync(ElementTheme theme)
@@ -75,7 +73,7 @@ namespace DialogueForest.Services
         private void UpdateTitleBar(ElementTheme theme)
         {
             // https://stackoverflow.com/questions/48201278/uwp-changing-titlebar-buttonforegroundcolor-with-themeresource
-            Color color;
+            Color? color = null;
             _appTheme = Application.Current.RequestedTheme;
 
             switch (theme)
@@ -117,7 +115,7 @@ namespace DialogueForest.Services
 
         public void UpdateAppTitle(string title)
         {
-            ApplicationView.GetForCurrentView().Title = title;
+            //ApplicationView.GetForCurrentView().Title = title;
         }
     }
 }

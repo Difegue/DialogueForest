@@ -9,11 +9,11 @@
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:core="using:DialogueForest.Core.Interfaces"
     xmlns:models="using:DialogueForest.Core.Models"
-    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
-    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+    xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
     mc:Ignorable="d">
     <Page.Resources>

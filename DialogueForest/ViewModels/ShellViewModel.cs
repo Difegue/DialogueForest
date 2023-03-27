@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Microsoft.Toolkit.Uwp.UI.Controls;
 using Windows.System;
 using DialogueForest.Core.ViewModels;
 using DialogueForest.Core.Interfaces;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 
-using WinUI = Microsoft.UI.Xaml.Controls;
 using DialogueForest.Services;
 using Windows.Foundation;
 using DialogueForest.Helpers;
@@ -17,6 +15,7 @@ using System.Windows.Input;
 using DialogueForest.Core.Services;
 using DialogueForest.Core.Models;
 using Windows.ApplicationModel.DataTransfer;
+using CommunityToolkit.WinUI.UI.Controls;
 
 namespace DialogueForest.ViewModels
 {
@@ -26,9 +25,9 @@ namespace DialogueForest.ViewModels
         private KeyboardAccelerator _altLeftKeyboardAccelerator;
         private KeyboardAccelerator _backKeyboardAccelerator;
 
-        private WinUI.NavigationView _navigationView;
-        private WinUI.NavigationViewItem _treeContainer;
-        private WinUI.NavigationViewItem _newTreeItem;
+        private NavigationView _navigationView;
+        private NavigationViewItem _treeContainer;
+        private NavigationViewItem _newTreeItem;
         private InAppNotification _notificationHolder;
 
 
@@ -37,7 +36,7 @@ namespace DialogueForest.ViewModels
         {
         }
 
-        public void Initialize(Frame frame, WinUI.NavigationView navigationView, WinUI.NavigationViewItem treeContainer, WinUI.NavigationViewItem newTreeItem, InAppNotification notificationHolder, IList<KeyboardAccelerator> keyboardAccelerators)
+        public void Initialize(Frame frame, NavigationView navigationView, NavigationViewItem treeContainer, NavigationViewItem newTreeItem, InAppNotification notificationHolder, IList<KeyboardAccelerator> keyboardAccelerators)
         {
             _navigationView = navigationView;
             _treeContainer = treeContainer;
@@ -55,7 +54,6 @@ namespace DialogueForest.ViewModels
             _backKeyboardAccelerator = BuildKeyboardAccelerator(VirtualKey.GoBack, GoBack);
 
             // First View, use that to initialize some services
-            _dispatcherService.Initialize();
             _dataService.InitializeDatabase();
         }
 
@@ -63,25 +61,25 @@ namespace DialogueForest.ViewModels
         {
             if (e.NavigationTarget == typeof(SettingsViewModel))
             {
-                _navigationView.SelectedItem = _navigationView.SettingsItem as WinUI.NavigationViewItem;
+                _navigationView.SelectedItem = _navigationView.SettingsItem as NavigationViewItem;
                 return;
             }
 
             if (e.Parameter is DialogueTree)
             {
                 _navigationView.SelectedItem = _treeContainer.MenuItems
-                           .OfType<WinUI.NavigationViewItem>()
+                           .OfType<NavigationViewItem>()
                            .FirstOrDefault(menuItem => IsMenuItemForPageType(menuItem, e));
             }
             else
             {
                 _navigationView.SelectedItem = _navigationView.MenuItems
-                           .OfType<WinUI.NavigationViewItem>()
+                           .OfType<NavigationViewItem>()
                            .FirstOrDefault(menuItem => IsMenuItemForPageType(menuItem, e));
             }
         }
 
-        private bool IsMenuItemForPageType(WinUI.NavigationViewItem menuItem, CoreNavigationEventArgs e)
+        private bool IsMenuItemForPageType(NavigationViewItem menuItem, CoreNavigationEventArgs e)
         {
             var pageType = menuItem.GetValue(NavHelper.NavigateToProperty) as Type;
 
@@ -109,7 +107,7 @@ namespace DialogueForest.ViewModels
 
             foreach (var tree in trees)
             {
-                var navigationViewItem = new WinUI.NavigationViewItem();
+                var navigationViewItem = new NavigationViewItem();
                 navigationViewItem.Icon = new FontIcon { Glyph = "\uEC0A" };
                 navigationViewItem.Content = tree.Name;
                 navigationViewItem.Tag = tree;
@@ -126,7 +124,7 @@ namespace DialogueForest.ViewModels
             _treeContainer.MenuItems.Add(_newTreeItem);
         }
 
-        public async void NavigationViewItem_Drop(object sender, Windows.UI.Xaml.DragEventArgs e)
+        public async void NavigationViewItem_Drop(object sender, Microsoft.UI.Xaml.DragEventArgs e)
         {
             if (e.DataView.Contains(StandardDataFormats.Text))
             {
@@ -142,7 +140,7 @@ namespace DialogueForest.ViewModels
                     var node = source.Item2;
                     var origin = source.Item1;
 
-                    var nvi = ((WinUI.NavigationViewItem)sender);
+                    var nvi = ((NavigationViewItem)sender);
 
                     if (nvi.Tag is DialogueTree destination)
                     {
@@ -164,7 +162,7 @@ namespace DialogueForest.ViewModels
             }
         }
 
-        public void NavigationViewItem_DragOver(object sender, Windows.UI.Xaml.DragEventArgs e)
+        public void NavigationViewItem_DragOver(object sender, Microsoft.UI.Xaml.DragEventArgs e)
         {
             // Only accept text (aka Dialogue Node IDs)
             e.AcceptedOperation = (e.DataView.Contains(StandardDataFormats.Text)) ? DataPackageOperation.Move : DataPackageOperation.None;
@@ -180,7 +178,7 @@ namespace DialogueForest.ViewModels
 
         protected override void ItemInvoked(object args)
         {
-            var navArgs = (WinUI.NavigationViewItemInvokedEventArgs)args;
+            var navArgs = (NavigationViewItemInvokedEventArgs)args;
 
             if (navArgs.IsSettingsInvoked)
             {
@@ -205,7 +203,7 @@ namespace DialogueForest.ViewModels
             _navigationService.Navigate(pageType, item.Tag);
         }
 
-        private void OnBackRequested(WinUI.NavigationView sender, WinUI.NavigationViewBackRequestedEventArgs args)
+        private void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
             _navigationService.GoBack();
         }

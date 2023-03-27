@@ -7,8 +7,8 @@ using DialogueForest.Core.Interfaces;
 using DialogueForest.Services;
 using DialogueForest.Core.ViewModels;
 using Windows.ApplicationModel.Activation;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System.Threading;
 
 namespace DialogueForest.Services
