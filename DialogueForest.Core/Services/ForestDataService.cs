@@ -99,8 +99,10 @@ namespace DialogueForest.Core.Services
 
         public async Task LoadForestFromStorageAsync()
         {
-            var stream = await _storageService.OpenFileAsync(STORAGE_NAME);
-            _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(stream);
+            using (var stream = await _storageService.OpenFileAsync(STORAGE_NAME))
+            {
+                _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(stream);
+            }   
             WeakReferenceMessenger.Default.Send(new TreeUpdatedMessage(false)); // Notify listeners we're loaded
         }
 
