@@ -118,19 +118,19 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Common">
-      <Version>8.0.0-preview1</Version>
+      <Version>8.1.0</Version>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm">
-      <Version>8.0.0-preview1</Version>
+      <Version>8.1.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
       <Version>4.5.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Crashes">
-      <Version>4.5.0</Version>
+      <Version>5.0.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection">
-      <Version>6.0.0</Version>
+      <Version>7.0.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.13</Version>
@@ -159,12 +159,6 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.1</Version>
     </PackageReference>
-    <PackageReference Include="SkiaSharp.Views">
-      <Version>2.88.0-preview.187</Version>
-    </PackageReference>
-    <PackageReference Include="Win2D.uwp">
-      <Version>1.26.0</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Strings\en-us\Resources.resw" />
@@ -180,10 +174,6 @@
     </Compile>
     <Compile Include="Converters\DialogueNodeFromIDConverter.cs" />
     <Compile Include="Converters\MetadataConverters.cs" />
-    <Compile Include="EventHandlers\Ink\AddStrokeEventArgs.cs" />
-    <Compile Include="EventHandlers\Ink\CopyPasteStrokesEventArgs.cs" />
-    <Compile Include="EventHandlers\Ink\MoveStrokesEventArgs.cs" />
-    <Compile Include="EventHandlers\Ink\RemoveEventArgs.cs" />
     <Compile Include="Helpers\NavHelper.cs" />
     <Compile Include="Helpers\ScrollSelectedItemIntoViewBehavior.cs" />
     <Compile Include="Helpers\UWPHelpers.cs" />
@@ -192,22 +182,9 @@
     <Compile Include="Services\ApplicationStorageService.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\DispatcherService.cs" />
-    <Compile Include="Services\Ink\InkCopyPasteService.cs" />
-    <Compile Include="Services\Ink\InkFileService.cs" />
-    <Compile Include="Services\Ink\InkLassoSelectionService.cs" />
-    <Compile Include="Services\Ink\InkPointerDeviceService.cs" />
-    <Compile Include="Services\Ink\InkSelectionRectangleService.cs" />
-    <Compile Include="Services\Ink\InkStrokesService.cs" />
-    <Compile Include="Services\Ink\InkUndoRedoService.cs" />
-    <Compile Include="Services\Ink\InkZoomService.cs" />
-    <Compile Include="Services\Ink\UndoRedo\AddStrokeUndoRedoOperation.cs" />
-    <Compile Include="Services\Ink\UndoRedo\IUndoRedoOperation.cs" />
-    <Compile Include="Services\Ink\UndoRedo\MoveStrokesUndoRedoOperation.cs" />
-    <Compile Include="Services\Ink\UndoRedo\RemoveStrokeUndoRedoOperation.cs" />
     <Compile Include="Services\InteropService.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\NotificationService.cs" />
-    <Compile Include="ViewModels\GraphViewViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\Dialogs\TreeNameDialog.xaml.cs">
       <DependentUpon>TreeNameDialog.xaml</DependentUpon>
@@ -217,9 +194,6 @@
     </Compile>
     <Compile Include="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Ink\GraphViewPage.xaml.cs">
-      <DependentUpon>GraphViewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DialogueNodePage.xaml.cs">
       <DependentUpon>DialogueNodePage.xaml</DependentUpon>
@@ -298,10 +272,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Ink\GraphViewPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\DialogueNodePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -367,7 +337,9 @@
       <Name>DialogueForest.Localization</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="EventHandlers\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

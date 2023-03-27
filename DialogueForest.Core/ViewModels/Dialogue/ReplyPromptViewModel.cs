@@ -56,7 +56,7 @@ namespace DialogueForest.Core.ViewModels
         }
 
 
-        [ICommand]
+        [RelayCommand]
         private async Task Remove()
         {
             if (await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogDeleteReply, Resources.ContentDialogWillBePermaDeleted, 
@@ -64,7 +64,7 @@ namespace DialogueForest.Core.ViewModels
                 _parentNodeVm.RemovePrompt(this, _reply);
         }
 
-        [ICommand]
+        [RelayCommand]
         private void GoToLinkedDialogue()
         {
             if (LinkedID < 0 || LinkedID == _parentNodeVm.ID) return;

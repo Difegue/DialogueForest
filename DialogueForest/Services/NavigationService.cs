@@ -18,7 +18,6 @@ namespace DialogueForest.Services
         {
             { typeof(DialogueNodeViewModel), typeof(DialogueNodePage) },
             { typeof(SettingsViewModel), typeof(SettingsPage) },
-            { typeof(GraphViewViewModel), typeof(GraphViewPage) },
             { typeof(DialogueTreeViewModel), typeof(DialogueTreePage) },
             { typeof(ExportViewModel), typeof(ExportPage) },
             { typeof(WelcomeViewModel), typeof(HomePage) }

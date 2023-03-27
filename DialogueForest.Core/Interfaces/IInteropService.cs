@@ -1,5 +1,4 @@
-﻿using SkiaSharp;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
 namespace DialogueForest.Core.Interfaces
@@ -21,7 +20,6 @@ namespace DialogueForest.Core.Interfaces
 
     public interface IInteropService
     {
-        SKColor GetAccentColor();
         Version GetAppVersion();
         Task SetThemeAsync(Theme param);
         Task OpenStoreReviewUrlAsync();

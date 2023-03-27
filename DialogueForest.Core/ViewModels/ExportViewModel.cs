@@ -59,7 +59,7 @@ namespace DialogueForest.Core.ViewModels
         [ObservableProperty]
         private OutputFormat _rtfConversionParameter;
 
-        [ICommand]
+        [RelayCommand]
         private async Task PickExportLocation()
         {
             var folder = await _applicationStorageService.GetExternalFolderAsync();
@@ -70,7 +70,7 @@ namespace DialogueForest.Core.ViewModels
             }
         }
 
-        [ICommand(AllowConcurrentExecutions = false)]
+        [RelayCommand(AllowConcurrentExecutions = false)]
         private async Task Export()
         {
             if (_exportFolder == null)

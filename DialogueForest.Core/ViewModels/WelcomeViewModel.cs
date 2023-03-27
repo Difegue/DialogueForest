@@ -10,19 +10,19 @@ namespace DialogueForest.Core.ViewModels
     public partial class WelcomeViewModel : ObservableObject
     {
 
-        [ICommand]
+        [RelayCommand]
         private void NewFile()
         {
 
         }
 
-        [ICommand]
+        [RelayCommand]
         private async Task OpenFile() => await _dataService.LoadForestFromFileAsync();
 
-        [ICommand]
+        [RelayCommand]
         private async Task SaveFileAs() => await _dataService.SaveForestToFileAsync(true);
 
-        [ICommand]
+        [RelayCommand]
         private async Task ShowWhatsNew() => await _dialogService.ShowWhatsNewDialogIfAppropriateAsync(true);
 
         [ObservableProperty]

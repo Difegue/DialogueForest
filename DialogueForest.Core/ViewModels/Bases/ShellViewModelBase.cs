@@ -75,20 +75,20 @@ namespace DialogueForest.Core.ViewModels
         [ObservableProperty]
         private string _titleBarText;
 
-        [ICommand]
+        [RelayCommand]
         private async Task Open()
         {
             await _dataService.LoadForestFromFileAsync();
         }
 
-        [ICommand]
+        [RelayCommand]
         private async Task Save()
         {
             await _dataService.SaveForestToStorageAsync();
             await _dataService.SaveForestToFileAsync();
         }
 
-        [ICommand]
+        [RelayCommand]
         private async Task NewTree()
         {
             var name = await _dialogService.ShowTreeNameDialogAsync();
@@ -102,9 +102,9 @@ namespace DialogueForest.Core.ViewModels
 
         }
 
-        [ICommand]
+        [RelayCommand]
         protected abstract void Loaded();
-        [ICommand]
+        [RelayCommand]
         protected abstract void ItemInvoked(object item);
 
         protected abstract void ShowInAppNotification(object sender, InAppNotificationRequestedEventArgs e);

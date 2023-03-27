@@ -13,7 +13,6 @@ using DialogueForest.Core.Messages;
 using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
 using DialogueForest.Localization.Strings;
-using SkiaSharp;
 
 namespace DialogueForest.Core.ViewModels
 {
@@ -136,10 +135,10 @@ namespace DialogueForest.Core.ViewModels
 
         private void UpdateTextSummary(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(nameof(TextSummary));
 
-        [ICommand]
+        [RelayCommand]
         private void OpenSettings() => _navigationService.Navigate<SettingsViewModel>();
 
-        [ICommand]
+        [RelayCommand]
         private void OpenNode(long nodeId)
         {
             var tuple = _dataService.GetNode(nodeId);
@@ -148,7 +147,7 @@ namespace DialogueForest.Core.ViewModels
                 _navigationService.OpenDialogueNode(tuple.Item1, tuple.Item2);
         }
 
-        [ICommand]
+        [RelayCommand]
         private void ShowInTree()
         {
             _navigationService.Navigate<DialogueTreeViewModel>(_parentVm);
@@ -156,7 +155,7 @@ namespace DialogueForest.Core.ViewModels
             _parentVm.SelectedNode = this;
         } 
 
-        [ICommand]
+        [RelayCommand]
         private void AddDialog(DialogueText text = null)
         {
             if (text == null)
@@ -196,7 +195,7 @@ namespace DialogueForest.Core.ViewModels
             WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage());
         }
 
-        [ICommand]
+        [RelayCommand]
         private void AddPrompt() => AddPrompt(null);
 
         private void AddPrompt(DialogueReply reply = null)
@@ -225,7 +224,7 @@ namespace DialogueForest.Core.ViewModels
             MetaValues.Add(new MetadataViewModel(metaval));
         }
 
-        [ICommand]
+        [RelayCommand]
         private void PinDialogue()
         {
             _dataService.SetPinnedNode(_node, true);
@@ -233,21 +232,21 @@ namespace DialogueForest.Core.ViewModels
         }
         
 
-        [ICommand]
+        [RelayCommand]
         private void UnpinDialogue()
         {
             _dataService.SetPinnedNode(_node, false);
             _notificationService.ShowInAppNotification(Resources.NotificationUnpinned);
         }
 
-        [ICommand]
+        [RelayCommand]
         private void MoveToTrash()
         {
             _parentVm.MoveNodeToTrash(this, _node);
             _notificationService.ShowInAppNotification(Resources.NotificationTrashed);
         } 
 
-        [ICommand]
+        [RelayCommand]
         private async Task Delete()
         {
             if (await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogueDeleteNode, Resources.ContentDialogWillBePermaDeleted,

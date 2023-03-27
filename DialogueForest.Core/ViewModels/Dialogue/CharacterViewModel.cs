@@ -22,7 +22,7 @@ namespace DialogueForest.Core.ViewModels
         private string _name;
 
 
-        [ICommand]
+        [RelayCommand]
         private void Delete()
         {
             _parentVm.RemoveCharacter(this);

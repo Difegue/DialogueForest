@@ -130,13 +130,13 @@ namespace DialogueForest.Core.ViewModels
 
         public int TotalDialogues => Nodes.Count;
 
-        [ICommand]
+        [RelayCommand]
         private void ShowNode(DialogueNodeViewModel vm)
         {
             _navigationService.OpenDialogueNode(vm);
         }
 
-        [ICommand]
+        [RelayCommand]
         private void AddNode(DialogueNode node = null)
         {
             if (node == null)
@@ -159,7 +159,7 @@ namespace DialogueForest.Core.ViewModels
             Nodes.Remove(nodeVm);
         }
 
-        [ICommand]
+        [RelayCommand]
         private async Task Delete()
         {
             if (await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogDeleteTree, Resources.ContentDialogDeleteTreeDesc,

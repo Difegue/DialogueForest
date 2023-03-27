@@ -85,7 +85,7 @@ namespace DialogueForest.Core.ViewModels
         public int MetadataCount => ForestMetadata.Count;
         public int CharacterCount => ForestCharacters.Count;
 
-        [ICommand]
+        [RelayCommand]
         private void AddCharacter()
         {
             var vm = new CharacterViewModel(this);
@@ -100,7 +100,7 @@ namespace DialogueForest.Core.ViewModels
             SaveForestSettings(this, null);
         }
 
-        [ICommand]
+        [RelayCommand]
         private void AddMetadata()
         {
             var vm = new MetadataViewModel(this) { Kind = MetadataKind.STRING };
@@ -115,7 +115,7 @@ namespace DialogueForest.Core.ViewModels
             SaveForestSettings(this, null);
         }
 
-        [ICommand]
+        [RelayCommand]
         private async Task SwitchTheme()
         {
             if (_hasInstanceBeenInitialized)
@@ -124,7 +124,7 @@ namespace DialogueForest.Core.ViewModels
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void SwitchSizing(string param)
         {
             if (_hasInstanceBeenInitialized)
@@ -133,7 +133,7 @@ namespace DialogueForest.Core.ViewModels
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private async Task RateApp()
         {
             await _interop.OpenStoreReviewUrlAsync();

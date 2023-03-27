@@ -8,7 +8,6 @@ using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using SkiaSharp;
 using DialogueForest.Core.ViewModels;
 using System.IO;
 using Windows.ApplicationModel;
@@ -50,13 +49,6 @@ namespace DialogueForest.Services
         public async Task SetThemeAsync(Theme theme)
         {
             await SetRequestedThemeAsync(GetTheme(theme));
-        }
-
-        public SKColor GetAccentColor()
-        {
-            var accent = (Color)Application.Current.Resources["SystemAccentColor"];
-
-            return new SKColor(accent.R, accent.G, accent.B, accent.A);
         }
 
         public Version GetAppVersion()

@@ -61,7 +61,7 @@ namespace DialogueForest.Core.ViewModels
             }
         }
 
-        [ICommand]
+        [RelayCommand]
         private void RemoveTab(DialogueNodeViewModel item) => Tabs.Remove(item);                
 
     }

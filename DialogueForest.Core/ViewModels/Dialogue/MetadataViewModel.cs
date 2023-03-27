@@ -48,7 +48,7 @@ namespace DialogueForest.Core.ViewModels
             });
         }        
 
-        [ICommand]
+        [RelayCommand]
         private void Delete()
         {
             _parentVm?.RemoveMetadata(this);

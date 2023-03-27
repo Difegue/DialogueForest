@@ -58,10 +58,10 @@ namespace DialogueForest.Core.ViewModels
         [ObservableProperty]
         private bool _isActive;
 
-        [ICommand]
+        [RelayCommand]
         private void Activate() => _parentNodeVm.ActivateDialogue(this);
 
-        [ICommand]
+        [RelayCommand]
         private async Task Remove()
         {
             if (await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogDeleteDialogue, Resources.ContentDialogWillBePermaDeleted,
