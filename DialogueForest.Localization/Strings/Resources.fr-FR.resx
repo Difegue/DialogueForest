@@ -473,8 +473,8 @@ Vous les retrouverez ici.</value>
   <data name="FirstRunFlavorText" xml:space="preserve">
     <value>David Bowie is credited with playing the Stylophone on his 1969 debut hit song "Space Oddity" and also for his 2002 album Heathen track titled "Slip Away," as well as on the song "Heathen (The Rays)".</value>
   </data>
-  <data name="TreeViewGraphView" xml:space="preserve">
-    <value>Ouvrir l'aperçu Graphe</value>
+  <data name="TreeViewToggleButton" xml:space="preserve">
+    <value>Activer/désactiver l'arborescence</value>
   </data>
   <data name="TreeViewSortBy" xml:space="preserve">
     <value>Trier par</value>
@@ -544,5 +544,17 @@ Vous les retrouverez ici.</value>
   </data>
   <data name="EditorCharacterPlaceholder" xml:space="preserve">
     <value>Personnage</value>
+  </data>
+  <data name="SettingsMetadataDelete" xml:space="preserve">
+    <value>Supprimer la propriété</value>
+  </data>
+  <data name="SettingsCharacterAdd" xml:space="preserve">
+    <value>Ajouter personnage</value>
+  </data>
+  <data name="SettingsMetadataAdd" xml:space="preserve">
+    <value>Ajouter propriété</value>
+  </data>
+  <data name="SettingsCharacterDelete" xml:space="preserve">
+    <value>Supprimer personnage</value>
   </data>
 </root>

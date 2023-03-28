@@ -358,7 +358,7 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Custom Properties.
+        ///   Recherche une chaîne localisée semblable à .
         /// </summary>
         public static string EditorHeaderMetadata {
             get {
@@ -935,6 +935,24 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Add character.
+        /// </summary>
+        public static string SettingsCharacterAdd {
+            get {
+                return ResourceManager.GetString("SettingsCharacterAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Remove character.
+        /// </summary>
+        public static string SettingsCharacterDelete {
+            get {
+                return ResourceManager.GetString("SettingsCharacterDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Pre-defined Characters.
         /// </summary>
         public static string SettingsCharactersHeader {
@@ -994,6 +1012,24 @@ namespace DialogueForest.Localization.Strings {
         public static string SettingsGithubLink {
             get {
                 return ResourceManager.GetString("SettingsGithubLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Add property.
+        /// </summary>
+        public static string SettingsMetadataAdd {
+            get {
+                return ResourceManager.GetString("SettingsMetadataAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Remove custom property.
+        /// </summary>
+        public static string SettingsMetadataDelete {
+            get {
+                return ResourceManager.GetString("SettingsMetadataDelete", resourceCulture);
             }
         }
         
@@ -1188,20 +1224,20 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Open Graph Overview.
-        /// </summary>
-        public static string TreeViewGraphView {
-            get {
-                return ResourceManager.GetString("TreeViewGraphView", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Sort By.
         /// </summary>
         public static string TreeViewSortBy {
             get {
                 return ResourceManager.GetString("TreeViewSortBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Toggle Tree View.
+        /// </summary>
+        public static string TreeViewToggleButton {
+            get {
+                return ResourceManager.GetString("TreeViewToggleButton", resourceCulture);
             }
         }
         

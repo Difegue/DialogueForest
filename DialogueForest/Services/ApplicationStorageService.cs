@@ -212,7 +212,7 @@ namespace DialogueForest.Services
                 JsonObject jo = new JsonObject();
                 foreach (var item in _data)
                 {
-                    jo.Add(item.Key, item.Value.ToString());
+                    jo.Add(item.Key, item.Value?.ToString());
                 }
                 File.WriteAllText(_file, jo.ToJsonString());
             }

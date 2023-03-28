@@ -31,10 +31,9 @@
 
             <Grid Style="{StaticResource CardGrid}" CornerRadius="0" BorderThickness="0,0,0,1" >
 
-                <Button Margin="0,-8,0,0" Command="{x:Bind DeleteCommand}" VerticalAlignment="Top" HorizontalAlignment="Right"
-                            ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewDeleteTree}">
-                    <FontIcon Foreground="{ThemeResource DestructiveActionForeground}"
-                                  FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" FontSize="18"/>
+                <Button Margin="0,-8,-8,0" Command="{x:Bind DeleteCommand}" VerticalAlignment="Top" HorizontalAlignment="Right"
+                            ToolTipService.ToolTip="{x:Bind strings:Resources.SettingsMetadataDelete}" Padding="4">
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE711;" FontSize="16"/>
                 </Button>
 
                 <toolkit:WrapPanel VerticalSpacing="8" HorizontalSpacing="8" Orientation="Horizontal"
@@ -54,13 +53,12 @@
         <DataTemplate x:Key="CharacterTemplate" x:DataType="viewmodels:CharacterViewModel">
             <Grid Style="{StaticResource CardGrid}" CornerRadius="0" BorderThickness="0,0,0,1">
 
-                <Button Margin="0,28,0,0" Command="{x:Bind DeleteCommand}" VerticalAlignment="Center" HorizontalAlignment="Right"
-                                            ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewDeleteTree}">
-                    <FontIcon Foreground="{ThemeResource DestructiveActionForeground}"
-                                                  FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" FontSize="18"/>
+                <Button Margin="0,-8,-8,0" Command="{x:Bind DeleteCommand}" VerticalAlignment="Top" HorizontalAlignment="Right"
+                            ToolTipService.ToolTip="{x:Bind strings:Resources.SettingsCharacterDelete}" Padding="4">
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE711;" FontSize="16"/>
                 </Button>
 
-                <TextBox Header="Name" HorizontalAlignment="Stretch" Margin="0,0,60,0" Text="{x:Bind Name, Mode=TwoWay}"/>
+                <TextBox Header="Name" HorizontalAlignment="Stretch" Margin="0,0,0,0" Text="{x:Bind Name, Mode=TwoWay}"/>
             </Grid>
         </DataTemplate>
 
@@ -94,8 +92,8 @@
                             <ListView ItemsSource="{x:Bind ViewModel.ForestCharacters}"
                                       ItemTemplate="{StaticResource CharacterTemplate}"
                                       IsItemClickEnabled="False" SelectionMode="None" Margin="-16,0,-12,0"/>
-                            
-                            <AppBarButton Icon="Add" Label="Add Character" Width="296" HorizontalAlignment="Center"
+
+                            <AppBarButton Icon="Add" Label="{x:Bind strings:Resources.SettingsCharacterAdd}" Width="296" HorizontalAlignment="Center"
                                           Command="{x:Bind ViewModel.AddCharacterCommand}"/>
                         </StackPanel>
                     </local:SettingsBlockControl.ExpandableContent>
@@ -117,7 +115,7 @@
                                       ItemTemplate="{StaticResource MetadataTemplateSettings}"
                                       IsItemClickEnabled="False" SelectionMode="None" Margin="-16,0,-12,0"/>
 
-                            <AppBarButton Icon="Add" Label="Add Metadata" Width="296" HorizontalAlignment="Center"
+                            <AppBarButton Icon="Add" Label="{x:Bind strings:Resources.SettingsMetadataAdd}" Width="296" HorizontalAlignment="Center"
                                           Command="{x:Bind ViewModel.AddMetadataCommand}"/>
                         </StackPanel>
                     </local:SettingsBlockControl.ExpandableContent>
