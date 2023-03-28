@@ -5,11 +5,19 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Windows.ApplicationModel.Core;
 using DialogueForest.ViewModels;
+using AppWindowTitleBar = Microsoft.UI.Windowing.AppWindowTitleBar;
+using System.Collections.Generic;
+using Microsoft.UI;
+using WinRT.Interop;
+using Microsoft.UI.Windowing;
+using WinUIEx;
+using Windows.UI;
 
 namespace DialogueForest.Views
 {
     public sealed partial class ShellPage : Page
     {
+        private AppWindow _appWindow;
 
         public ShellViewModel ViewModel => (ShellViewModel)DataContext;
 
@@ -19,60 +27,39 @@ namespace DialogueForest.Views
             DataContext = ((App)Application.Current).Services.GetService(typeof(ShellViewModel));
             ViewModel.Initialize(shellFrame, navigationView, treeContainer, newTreeItem, notificationHolder, KeyboardAccelerators);
 
-            // Hide default title bar.
-            //var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            //coreTitleBar.ExtendViewIntoTitleBar = true;
-            //UpdateTitleBarLayout(coreTitleBar);
+            if (AppWindowTitleBar.IsCustomizationSupported())
+            {
+                // Enable AppWindow
+                _appWindow = (Application.Current as App)?.Window.GetAppWindow();
+                (Application.Current as App).Window.Activated += Current_Activated;
 
-            // Set XAML element as a draggable region.
-            //Window.Current.SetTitleBar(AppTitleBar);
+                var titleBar = _appWindow.TitleBar;
+                titleBar.ButtonBackgroundColor = Colors.Transparent;
+                titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+                titleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
+                titleBar.ButtonInactiveForegroundColor = (Color)Resources["SystemBaseLowColor"];
+                titleBar.ExtendsContentIntoTitleBar = true;
 
-            // Register a handler for when the size of the overlaid caption control changes.
-            // For example, when the app moves to a screen with a different DPI.
-            //coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
-
-            // Register a handler for when the title bar visibility changes.
-            // For example, when the title bar is invoked in full screen mode.
-            //coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
-
-            //Register a handler for when the window changes focus
-            //Window.Current.Activated += Current_Activated;
+                AppTitleBar.Loaded += AppTitleBar_Loaded;
+                AppTitleBar.SizeChanged += AppTitleBar_SizeChanged;
+            }
 
             tabsView.CustomDragRegion.SizeChanged += Page_SizeChanged;
-            
         }
 
-        private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
+        private void AppTitleBar_Loaded(object sender, object args)
         {
-            UpdateTitleBarLayout(sender);
+            UpdateTitleBarLength(navigationView.IsPaneOpen);
         }
-
-        private void UpdateTitleBarLayout(CoreApplicationViewTitleBar coreTitleBar)
+        private void AppTitleBar_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            // Update title bar control size as needed to account for system size changes.
-            AppTitleBar.Height = coreTitleBar.Height;
-
-            // Ensure the custom title bar does not overlap window caption controls
-            Thickness currMargin = AppTitleBar.Margin;
-            AppTitleBar.Margin = new Thickness(currMargin.Left, currMargin.Top, coreTitleBar.SystemOverlayRightInset, currMargin.Bottom);
-        }
-
-        private void CoreTitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args)
-        {
-            if (sender.IsVisible)
-            {
-                AppTitleBar.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                AppTitleBar.Visibility = Visibility.Collapsed;
-            }
+            UpdateTitleBarLength(navigationView.IsPaneOpen);
         }
 
         // Update the TitleBar based on the inactive/active state of the app
-        private void Current_Activated(object sender, Windows.UI.Core.WindowActivatedEventArgs e)
+        private void Current_Activated(object sender, WindowActivatedEventArgs e)
         {
-            if (e.WindowActivationState == Windows.UI.Core.CoreWindowActivationState.Deactivated)
+            if (e.WindowActivationState == WindowActivationState.Deactivated)
             {
                 AppTitle.Opacity = 0.8;
             }
@@ -83,14 +70,14 @@ namespace DialogueForest.Views
         }
 
         // Update the TitleBar content layout depending on NavigationView DisplayMode
-        private void NavigationViewControl_DisplayModeChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewDisplayModeChangedEventArgs args)
+        private void NavigationViewControl_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
         {
             const int topIndent = 16;
             const int expandedIndent = 48;
             int minimalIndent = 104;
 
             // If the back button is not visible, reduce the TitleBar content indent.
-            if (navigationView.IsBackButtonVisible.Equals(Microsoft.UI.Xaml.Controls.NavigationViewBackButtonVisible.Collapsed))
+            if (navigationView.IsBackButtonVisible.Equals(NavigationViewBackButtonVisible.Collapsed))
             {
                 minimalIndent = 48;
             }
@@ -98,11 +85,11 @@ namespace DialogueForest.Views
             Thickness currMargin = AppTitleBar.Margin;
 
             // Set the TitleBar margin dependent on NavigationView display mode
-            if (sender.PaneDisplayMode == Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.Top)
+            if (sender.PaneDisplayMode == NavigationViewPaneDisplayMode.Top)
             {
                 AppTitleBar.Margin = new Thickness(topIndent, currMargin.Top, currMargin.Right, currMargin.Bottom);
             }
-            else if (sender.DisplayMode == Microsoft.UI.Xaml.Controls.NavigationViewDisplayMode.Minimal)
+            else if (sender.DisplayMode == NavigationViewDisplayMode.Minimal)
             {
                 AppTitleBar.Margin = new Thickness(minimalIndent, currMargin.Top, currMargin.Right, currMargin.Bottom);
             }
@@ -114,16 +101,42 @@ namespace DialogueForest.Views
 
         // Bunch of event listeners to arrange titlebar draggable area
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e) => UpdateTitleBarLength(navigationView.IsPaneOpen);
-        private void NavigationView_PaneOpening(Microsoft.UI.Xaml.Controls.NavigationView sender, object args) => UpdateTitleBarLength(true);
-        private void NavigationView_PaneClosing(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewPaneClosingEventArgs args)
+        private void NavigationView_PaneOpening(NavigationView sender, object args) => UpdateTitleBarLength(true);
+        private void NavigationView_PaneClosing(NavigationView sender, NavigationViewPaneClosingEventArgs args)
             => UpdateTitleBarLength(false);
 
         private void UpdateTitleBarLength(bool isPaneOpen)
         {
             // Awful hardcoded calculations to define the draggable zones
             // CustomDragRegion is calculated by OpenedNodesPage based on the space taken by the opened tabs
-            TitleBarLeftPart.Width = Pane1.ActualWidth + 32 + (isPaneOpen ? navigationView.OpenPaneLength - AppTitleBar.Margin.Left : 0);
-            //TitleBarRightPart.Width = tabsView.CustomDragRegion.ActualWidth - CoreApplication.GetCurrentView().TitleBar.SystemOverlayRightInset;
+            var leftRectWidth = Pane1.ActualWidth + 32 + (isPaneOpen ? navigationView.OpenPaneLength - AppTitleBar.Margin.Left : 0);
+            var rightRectWidth = tabsView.CustomDragRegion.ActualWidth;
+
+            if (AppWindowTitleBar.IsCustomizationSupported())
+            {
+                var win = (Application.Current as App)?.Window;
+                var scaleAdjustment = win.GetDpiForWindow() / 96f;
+
+                List<Windows.Graphics.RectInt32> dragRectsList = new();
+
+                Windows.Graphics.RectInt32 dragRectL;
+                dragRectL.X = (int)(AppTitleBar.Margin.Left * scaleAdjustment);
+                dragRectL.Y = 0;
+                dragRectL.Height = (int)(AppTitleBar.ActualHeight * scaleAdjustment);
+                dragRectL.Width = (int)(leftRectWidth * scaleAdjustment);
+                dragRectsList.Add(dragRectL);
+
+                Windows.Graphics.RectInt32 dragRectR;
+                dragRectR.X = (int)((win.Width - rightRectWidth) * scaleAdjustment);
+                dragRectR.Y = 0;
+                dragRectR.Height = dragRectL.Height;
+                dragRectR.Width = (int)(rightRectWidth * scaleAdjustment);
+                dragRectsList.Add(dragRectR);
+
+                Windows.Graphics.RectInt32[] dragRects = dragRectsList.ToArray();
+
+                _appWindow.TitleBar.SetDragRectangles(dragRects);
+            }
         }
 
         private void NavigationViewItem_DragOver(object sender, DragEventArgs e) => ViewModel.NavigationViewItem_DragOver(sender, e);

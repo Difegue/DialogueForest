@@ -13,37 +13,30 @@ using Windows.ApplicationModel;
 using CommunityToolkit.WinUI.Helpers;
 using DialogueForest.Helpers;
 using Windows.UI.Core;
+using WinUIEx;
+using Microsoft.UI.Xaml.Controls.Primitives;
 
 namespace DialogueForest.Services
 {
     public class InteropService : IInteropService
     {
         private ApplicationTheme _appTheme;
+        private IDispatcherService _dispatcherService;
 
-        public InteropService()
+        public InteropService(IDispatcherService dispatcherService)
         {
+            _dispatcherService = dispatcherService;
             
             UISettings uiSettings = new UISettings();
             uiSettings.ColorValuesChanged += HandleSystemThemeChange;
-
-            // Fallback in case the above fails, we'll check when we get activated next.
-            //Window.Current.CoreWindow.Activated += CoreWindow_Activated;
-        }
-
-        private void CoreWindow_Activated(CoreWindow sender, Windows.UI.Core.WindowActivatedEventArgs args)
-        {
-            if (Window.Current.Content is FrameworkElement frameworkElement && _appTheme != Application.Current.RequestedTheme)
-            {
-                UpdateTitleBar(frameworkElement.RequestedTheme);
-            }
         }
 
         private void HandleSystemThemeChange(UISettings sender, object args)
         {
-            if (Window.Current?.Content is FrameworkElement frameworkElement)
+            if ((Application.Current as App)?.Window.WindowContent is FrameworkElement frameworkElement)
             {
                 UpdateTitleBar(frameworkElement.RequestedTheme);
-            }  
+            }
         }
 
         public async Task SetThemeAsync(Theme theme)
@@ -58,18 +51,16 @@ namespace DialogueForest.Services
 
         private async Task SetRequestedThemeAsync(ElementTheme theme)
         {
-            foreach (var view in CoreApplication.Views)
+            await _dispatcherService.ExecuteOnUIThreadAsync(() =>
             {
-                await view.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                if ((Application.Current as App)?.Window.WindowContent is FrameworkElement frameworkElement)
                 {
-                    if (Window.Current.Content is FrameworkElement frameworkElement)
-                    {
-                        frameworkElement.RequestedTheme = theme;
-                        UpdateTitleBar(theme);
-                    }
-                });
-            }
+                    frameworkElement.RequestedTheme = theme;
+                    UpdateTitleBar(theme);
+                }
+            });
         }
+
         private void UpdateTitleBar(ElementTheme theme)
         {
             // https://stackoverflow.com/questions/48201278/uwp-changing-titlebar-buttonforegroundcolor-with-themeresource
@@ -93,7 +84,7 @@ namespace DialogueForest.Services
                     break;
             }
 
-            ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            var titleBar = (Application.Current as App)?.Window.GetAppWindow().TitleBar;
             titleBar.ButtonForegroundColor = color;
         }
 
@@ -110,12 +101,13 @@ namespace DialogueForest.Services
 
         public async Task OpenStoreReviewUrlAsync()
         {
-            await CoreApplication.GetCurrentView().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => SystemInformation.LaunchStoreForReviewAsync());
+            //await _dispatcherService.ExecuteOnUIThreadAsync(() => SystemInformation.LaunchStoreForReviewAsync());
         }
 
         public void UpdateAppTitle(string title)
         {
-            //ApplicationView.GetForCurrentView().Title = title;
+            if ((Application.Current as App).Window != null)
+                (Application.Current as App).Window.Title = title;
         }
     }
 }

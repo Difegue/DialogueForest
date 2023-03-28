@@ -20,6 +20,7 @@ using Microsoft.UI;
 using WinUIEx;
 using System.Threading.Tasks;
 using System.Threading;
+using Microsoft.UI.Windowing;
 
 namespace DialogueForest
 {
@@ -46,6 +47,8 @@ namespace DialogueForest
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
+            Ioc.Default.GetRequiredService<IDispatcherService>().Initialize();
+
             // Compact sizing
             var isCompactEnabled = Ioc.Default.GetRequiredService<IApplicationStorageService>().GetValue<bool>(nameof(SettingsViewModel.IsCompactSizing));
             if (isCompactEnabled)
@@ -66,27 +69,21 @@ namespace DialogueForest
                     typeof(Analytics), typeof(Crashes));
             }
 #endif
-            /*
-            var viewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            viewTitleBar.ButtonBackgroundColor = Colors.Transparent;
-            viewTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            viewTitleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
-            viewTitleBar.ButtonInactiveForegroundColor = (Color)Resources["SystemBaseHighColor"];
-            */
 
             _window = new WindowEx()
             {
                 MinHeight = 500,
                 MinWidth = 500,
                 Title = "DialogueForest",
-                ExtendsContentIntoTitleBar = true,
+                PersistenceId = "MainWindow",
+                ExtendsContentIntoTitleBar = !AppWindowTitleBar.IsCustomizationSupported(), 
                 Backdrop = new MicaSystemBackdrop(),
             };
+            
 
             var theme = Ioc.Default.GetRequiredService<IApplicationStorageService>().GetValue<string>(nameof(SettingsViewModel.ElementTheme));
             Enum.TryParse(theme, out Theme elementTheme);
             await Ioc.Default.GetRequiredService<IInteropService>().SetThemeAsync(elementTheme);
-            Ioc.Default.GetRequiredService<IDispatcherService>().Initialize();
 
             _ = Task.Run(async () =>
             {

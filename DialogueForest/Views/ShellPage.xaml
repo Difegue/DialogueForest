@@ -54,7 +54,7 @@
         <Grid
             x:Name="AppTitleBar"
             Height="40"
-            Margin="48,4,0,0"
+            Margin="48,0,0,0"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Top"
             Canvas.ZIndex="1"
@@ -75,8 +75,6 @@
                     Text="{x:Bind ViewModel.TitleBarText, Mode=OneWay}"
                     TextTrimming="CharacterEllipsis"/>
             </StackPanel>
-
-            <Border HorizontalAlignment="Right" x:Name="TitleBarRightPart" Background="Transparent"/>
         </Grid>
 
         <muxc:NavigationView
