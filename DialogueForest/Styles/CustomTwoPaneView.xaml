@@ -86,7 +86,7 @@
                         </VisualStateManager.VisualStateGroups>
 
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition x:Name="PART_ColumnLeft" Width="Auto" MinWidth="304" 
+                            <ColumnDefinition x:Name="PART_ColumnLeft" Width="364" MinWidth="304" 
                                               MaxWidth="{Binding RelativeSource={RelativeSource TemplatedParent},Path=MaxWidth, ElementName=Pane1}"/>
                             <ColumnDefinition x:Name="PART_ColumnMiddle" MinWidth="4"/>
                             <ColumnDefinition x:Name="PART_ColumnRight" Width="*" />

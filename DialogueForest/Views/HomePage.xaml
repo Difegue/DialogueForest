@@ -9,7 +9,7 @@
     xmlns:strings="using:DialogueForest.Localization.Strings"
     mc:Ignorable="d">
 
-    <ScrollViewer VerticalAlignment="Top">
+    <ScrollViewer VerticalAlignment="Stretch" MaxWidth="360">
         <StackPanel Spacing="8" HorizontalAlignment="Center" >
 
             <Image Source="ms-appx:///Assets/Square150x150Logo.scale-200.png" Margin="{StaticResource LargeTopMargin}"

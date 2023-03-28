@@ -12,12 +12,17 @@ using WinRT.Interop;
 using Microsoft.UI.Windowing;
 using WinUIEx;
 using Windows.UI;
+using DialogueForest.Core.Interfaces;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using DialogueForest.Services;
+using DialogueForest.Core.ViewModels;
 
 namespace DialogueForest.Views
 {
     public sealed partial class ShellPage : Page
     {
         private AppWindow _appWindow;
+        private INavigationService _navigationService;
 
         public ShellViewModel ViewModel => (ShellViewModel)DataContext;
 
@@ -27,6 +32,9 @@ namespace DialogueForest.Views
             DataContext = ((App)Application.Current).Services.GetService(typeof(ShellViewModel));
             ViewModel.Initialize(shellFrame, navigationView, treeContainer, newTreeItem, notificationHolder, KeyboardAccelerators);
 
+            _navigationService = Ioc.Default.GetRequiredService<INavigationService>();
+            var concreteNavService = (NavigationService)_navigationService;
+            
             if (AppWindowTitleBar.IsCustomizationSupported())
             {
                 // Enable AppWindow
@@ -45,6 +53,20 @@ namespace DialogueForest.Views
             }
 
             tabsView.CustomDragRegion.SizeChanged += Page_SizeChanged;
+
+            concreteNavService.Navigated += (_, _) => UpdatePanePriority();
+            twoPaneView.ModeChanged += (_,_) => UpdatePanePriority();
+        }
+
+        private void UpdatePanePriority()
+        {
+            // Show Pane2 if the current page is a node, pane1 otherwise
+            twoPaneView.PanePriority = _navigationService.CurrentPageViewModelType == typeof(DialogueNodePage) ?
+                TwoPaneViewPriority.Pane2 : TwoPaneViewPriority.Pane1;
+
+            AppTitle.Visibility = twoPaneView.Mode == TwoPaneViewMode.SinglePane && twoPaneView.PanePriority == TwoPaneViewPriority.Pane2 ?
+                    Visibility.Collapsed : Visibility.Visible;
+            UpdateTitleBarLength(navigationView.IsPaneOpen);
         }
 
         private void AppTitleBar_Loaded(object sender, object args)
@@ -107,9 +129,15 @@ namespace DialogueForest.Views
 
         private void UpdateTitleBarLength(bool isPaneOpen)
         {
-            // Awful hardcoded calculations to define the draggable zones
+            // Awful hardcoded calculations to define the draggable zones - Use the entire pane1 width except if we're in compact mode and pane2 is showing
+            var leftRectWidth = twoPaneView.Mode == TwoPaneViewMode.SinglePane && twoPaneView.PanePriority == TwoPaneViewPriority.Pane2 ? 16
+                : Pane1.ActualWidth;
+
+            // Add navview length if present
+            if (isPaneOpen)
+                leftRectWidth += navigationView.OpenPaneLength - AppTitleBar.Margin.Left;
+
             // CustomDragRegion is calculated by OpenedNodesPage based on the space taken by the opened tabs
-            var leftRectWidth = Pane1.ActualWidth + 32 + (isPaneOpen ? navigationView.OpenPaneLength - AppTitleBar.Margin.Left : 0);
             var rightRectWidth = tabsView.CustomDragRegion.ActualWidth;
 
             if (AppWindowTitleBar.IsCustomizationSupported())

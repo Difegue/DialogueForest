@@ -106,7 +106,7 @@
                         <KeyboardAccelerator Key="S" Modifiers="Control"/>
                     </muxc:NavigationViewItem.KeyboardAccelerators>
                     <muxc:NavigationViewItem.InfoBadge>
-                        <muxc:InfoBadge Style="{StaticResource AttentionIconInfoBadgeStyle}" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorUnsavedChanges}"
+                        <muxc:InfoBadge Style="{StaticResource AttentionDotInfoBadgeStyle}" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorUnsavedChanges}"
                                         Visibility="{x:Bind ViewModel.HasUnsavedChanges, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
                     </muxc:NavigationViewItem.InfoBadge>
                 </muxc:NavigationViewItem>
@@ -178,7 +178,8 @@
                     Style="{StaticResource TwoPaneViewWithSplitterStyle}"
                     TallModeConfiguration="SinglePane"
                     MinWideModeWidth="640"
-                    MinTallModeHeight="863">
+                    MinTallModeHeight="863"
+                    Pane1Length="340">
 
                     <muxc:TwoPaneView.Pane1>
                         <Grid
