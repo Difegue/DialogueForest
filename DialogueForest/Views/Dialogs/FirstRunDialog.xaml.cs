@@ -10,7 +10,7 @@ namespace DialogueForest.Views
         public FirstRunDialog()
         {
             XamlRoot = (Application.Current as App)?.XamlRoot;
-            RequestedTheme = ((Application.Current as App)?.Window.Content as FrameworkElement).RequestedTheme;
+            RequestedTheme = ((Application.Current as App)?.Window.WindowContent as FrameworkElement).RequestedTheme;
             InitializeComponent();
         }
     }

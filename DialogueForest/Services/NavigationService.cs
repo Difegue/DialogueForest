@@ -97,7 +97,7 @@ namespace DialogueForest.Services
             {
                 if (_frame == null)
                 {
-                    _frame = (Application.Current as App)?.Window.Content as Frame;
+                    _frame = (Application.Current as App)?.Window.WindowContent as Frame;
                 }
 
                 return _frame;
