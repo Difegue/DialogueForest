@@ -105,8 +105,7 @@ namespace DialogueForest.Core.ViewModels
         {
             if (m.NodeMoved.ID == ID)
             {
-                // TODO reuse existing treeVMs if possible
-                SetParentVm(DialogueTreeViewModel.Create(m.DestinationTree));
+                SetParentVm(_navigationService.ReuseOrCreateTreeVm(m.DestinationTree));
             }
         }
 

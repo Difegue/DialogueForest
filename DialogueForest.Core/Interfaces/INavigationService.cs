@@ -2,6 +2,7 @@
 using DialogueForest.Core.Models;
 using DialogueForest.Core.ViewModels;
 using System;
+using System.Data.Common;
 
 namespace DialogueForest.Core.Interfaces
 {
@@ -19,6 +20,7 @@ namespace DialogueForest.Core.Interfaces
         void OpenDialogueNode(DialogueTree parent, DialogueNode node);
         void OpenDialogueNode(DialogueNodeViewModel existingVm);
         void CloseDialogueNode(DialogueNodeViewModel existingVm);
+        DialogueTreeViewModel ReuseOrCreateTreeVm(DialogueTree t);
     }
 
     public abstract class NavigationServiceBase: INavigationService
@@ -33,6 +35,9 @@ namespace DialogueForest.Core.Interfaces
             ShowViewModel(viewmodel, parameter);
             Navigated?.Invoke(this, new CoreNavigationEventArgs { NavigationTarget = viewmodel, Parameter = parameter});
         }
+        protected void InvokeFakeNavigated(Type viewmodel, object parameter = null) => 
+            Navigated?.Invoke(this, new CoreNavigationEventArgs { NavigationTarget = viewmodel, Parameter = parameter });
+
         public abstract void ShowViewModel(Type viewmodel, object parameter = null);
 
         public bool GoBack()
@@ -50,13 +55,14 @@ namespace DialogueForest.Core.Interfaces
 
         public void OpenDialogueNode(DialogueTree parent, DialogueNode node)
         {
-            var parentVm = DialogueTreeViewModel.Create(parent);
+            DialogueTreeViewModel parentVm = ReuseOrCreateTreeVm(parent);
             var vm = DialogueNodeViewModel.Create(node, parentVm);
             OpenDialogueNode(vm);
         }
 
         public abstract object GoBackImplementation();
 
+        public abstract DialogueTreeViewModel ReuseOrCreateTreeVm(DialogueTree t);
         public abstract Type CurrentPageViewModelType { get; }
         public abstract bool CanGoBack { get; }
         public abstract void SetItemForNextConnectedAnimation(object item);

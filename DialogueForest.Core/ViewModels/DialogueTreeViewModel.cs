@@ -27,7 +27,7 @@ namespace DialogueForest.Core.ViewModels
 
         private DialogueTree _tree;
 
-        // TODO use this constructor less and figure out a way to recycle VMs
+
         public static DialogueTreeViewModel Create(DialogueTree tree, bool canBeRenamed = false)
         {
             var instance = Ioc.Default.GetRequiredService<DialogueTreeViewModel>();
@@ -59,7 +59,7 @@ namespace DialogueForest.Core.ViewModels
             }
         }
 
-        internal List<long> GetIDs() => _tree.Nodes.Keys.ToList();
+        public List<long> GetIDs() => _tree.Nodes.Keys.ToList();
 
         public ObservableCollection<DialogueNodeViewModel> Nodes { get; } = new ObservableCollection<DialogueNodeViewModel>();
 
@@ -155,7 +155,7 @@ namespace DialogueForest.Core.ViewModels
             var trash = _dataService.GetTrash();
 
             _dataService.MoveNode(node, _tree, trash);
-            nodeVm.SetParentVm(Create(_dataService.GetTrash())); // Hand off parenting to a trash treeVM
+            nodeVm.SetParentVm(_navigationService.ReuseOrCreateTreeVm(trash)); // Hand off parenting to a trash treeVM
             Nodes.Remove(nodeVm);
         }
 
