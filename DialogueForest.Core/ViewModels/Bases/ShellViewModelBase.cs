@@ -64,8 +64,8 @@ namespace DialogueForest.Core.ViewModels
             if (file != null)
                 _interopService.UpdateAppTitle(file.Name + file.Extension);
 
-            var displayName = (file == null) ? Resources.NavigationNew : file.Name + file.Extension;
-            TitleBarText = Resources.AppDisplayName + " - " + displayName + (HasUnsavedChanges ? "*" : "");
+            DisplayName = (file == null) ? Resources.NavigationNew : file.Name + file.Extension;
+            TitleBarText = Resources.AppDisplayName + " - " + DisplayName + (HasUnsavedChanges ? "*" : "");
         }
 
         [ObservableProperty]
@@ -74,6 +74,8 @@ namespace DialogueForest.Core.ViewModels
         private bool _isBackEnabled;
         [ObservableProperty]
         private string _titleBarText;
+        [ObservableProperty]
+        private string _displayName;
 
         [RelayCommand]
         private async Task Open()

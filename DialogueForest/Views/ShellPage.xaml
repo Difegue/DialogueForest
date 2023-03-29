@@ -84,6 +84,7 @@
             ExpandedModeThresholdWidth="900"
             CompactModeThresholdWidth="400"
             OpenPaneLength="240"
+            PaneTitle="{x:Bind ViewModel.DisplayName, Mode=OneWay}"
             PaneOpening="NavigationView_PaneOpening"
             PaneClosing="NavigationView_PaneClosing"
             IsBackButtonVisible="Visible"

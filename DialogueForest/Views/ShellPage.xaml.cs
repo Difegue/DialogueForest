@@ -62,7 +62,8 @@ namespace DialogueForest.Views
             twoPaneView.Pane1Length = new GridLength(storageService.GetValue("LeftPaneWidth", 340));
             twoPaneView.PointerReleased += (_, _) =>
             {
-                // PointerReleased happens when the user lets go of the GridSplitter (and a bunch of other times but w/e)
+                // PointerReleased happens when the user lets go of the GridSplitter
+                // (and shouldn't happen when clicking in the panes since the event gets intercepted before landing here)
                 storageService.SetValue("LeftPaneWidth", (int)Pane1.ActualWidth);
                 twoPaneView.Pane1Length = new GridLength(Pane1.ActualWidth);
             };
