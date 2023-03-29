@@ -39,20 +39,27 @@ namespace DialogueForest.Core.ViewModels
 
         public ObservableCollection<string> Characters = new ObservableCollection<string>();
 
+        public int WordCount => _text.WordCount;
+
         public string RtfDialogueText
         {
             get => _text.RichText;
-            set => SetProperty(_text.RichText, value, _text, (u, n) => { u.RichText = n; 
-                    WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage()); 
-            });
+            set => SetProperty(_text.RichText, value, _text, (u, n) => 
+                    {
+                        u.WordCount = RtfHelper.ConvertRtfToPlainText(n).Split(' ').Length;
+                        u.RichText = n; 
+                        WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage()); 
+                    });
         }
 
         public string CharacterName
         {
             get => _text?.Character;
-            set => SetProperty(_text.Character, value, _text, (u, n) => { u.Character = n; 
-                    WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage()); 
-            });
+            set => SetProperty(_text.Character, value, _text, (u, n) => 
+                    {
+                        u.Character = n; 
+                        WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage()); 
+                    });
         }
 
         [ObservableProperty]

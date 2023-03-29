@@ -73,7 +73,9 @@ namespace DialogueForest.Core.ViewModels
 
             Nodes.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsNodesEmpty));
             Nodes.CollectionChanged += (s, e) => OnPropertyChanged(nameof(TotalDialogues));
+            Nodes.CollectionChanged += (s, e) => OnPropertyChanged(nameof(TotalWords));
 
+            WeakReferenceMessenger.Default.Register<DialogueTreeViewModel, UnsavedModificationsMessage>(this, (r, m) => r.OnPropertyChanged(nameof(TotalWords)));
             WeakReferenceMessenger.Default.Register<DialogueTreeViewModel, NodeMovedMessage>(this, (r, m) => r.UpdateNodes(m));
         }
 
@@ -123,12 +125,11 @@ namespace DialogueForest.Core.ViewModels
         private DialogueNodeViewModel _selectedNode;
 
         [ObservableProperty]
-        private int _totalWords;
-
-        [ObservableProperty]
         private bool _canBeRenamed;
 
         public int TotalDialogues => Nodes.Count;
+
+        public int TotalWords => Nodes.Sum(n => n.WordCount);
 
         [RelayCommand]
         private void ShowNode(DialogueNodeViewModel vm)
