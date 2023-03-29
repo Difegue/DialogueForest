@@ -8,7 +8,6 @@ using DialogueForest.ViewModels;
 using AppWindowTitleBar = Microsoft.UI.Windowing.AppWindowTitleBar;
 using System.Collections.Generic;
 using Microsoft.UI;
-using WinRT.Interop;
 using Microsoft.UI.Windowing;
 using WinUIEx;
 using Windows.UI;
@@ -53,9 +52,20 @@ namespace DialogueForest.Views
             }
 
             tabsView.CustomDragRegion.SizeChanged += Page_SizeChanged;
+            _navigationService.Navigate(typeof(WelcomeViewModel));
 
             concreteNavService.Navigated += (_, _) => UpdatePanePriority();
             twoPaneView.ModeChanged += (_,_) => UpdatePanePriority();
+
+            // Super-hackish way to force TwoPaneView to respect user length set by the GridSplitter
+            var storageService = Ioc.Default.GetRequiredService<IApplicationStorageService>();
+            twoPaneView.Pane1Length = new GridLength(storageService.GetValue("LeftPaneWidth", 340));
+            twoPaneView.PointerReleased += (_, _) =>
+            {
+                // PointerReleased happens when the user lets go of the GridSplitter (and a bunch of other times but w/e)
+                storageService.SetValue("LeftPaneWidth", (int)Pane1.ActualWidth);
+                twoPaneView.Pane1Length = new GridLength(Pane1.ActualWidth);
+            };
         }
 
         private void UpdatePanePriority()

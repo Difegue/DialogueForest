@@ -178,8 +178,7 @@
                     Style="{StaticResource TwoPaneViewWithSplitterStyle}"
                     TallModeConfiguration="SinglePane"
                     MinWideModeWidth="640"
-                    MinTallModeHeight="863"
-                    Pane1Length="340">
+                    MinTallModeHeight="863">
 
                     <muxc:TwoPaneView.Pane1>
                         <Grid

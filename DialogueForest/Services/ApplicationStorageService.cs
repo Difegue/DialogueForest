@@ -71,9 +71,12 @@ namespace DialogueForest.Services
                 {
                     Type listType = typeof(T);
 
-                    // Special case for booleans - everything else is strings so no issue there
+                    // Special case for booleans and ints 
                     if (listType == typeof(bool))
                         return (T)(object)bool.Parse(value.ToString());
+
+                    if (listType == typeof(int))
+                        return (T)(object)int.Parse(value.ToString());
 
                     return (T)value;
                 }
