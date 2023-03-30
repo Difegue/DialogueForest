@@ -67,6 +67,8 @@ namespace DialogueForest.Views
                 storageService.SetValue("LeftPaneWidth", (int)Pane1.ActualWidth);
                 twoPaneView.Pane1Length = new GridLength(Pane1.ActualWidth);
             };
+
+            ((App)Application.Current).Window.Closed += (s, e) => ViewModel.ShutdownInitiated();
         }
 
         private void UpdatePanePriority()

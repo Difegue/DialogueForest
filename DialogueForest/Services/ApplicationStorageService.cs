@@ -134,7 +134,7 @@ namespace DialogueForest.Services
 
                 var storageFile = await savePicker.PickSaveFileAsync();
 
-                file = storageFile.Path;
+                file = storageFile?.Path;
             }
             
             if (file != null)

@@ -51,6 +51,11 @@ namespace DialogueForest.Core.ViewModels
             ((NavigationServiceBase)_navigationService).Navigated += OnFrameNavigated;
         }
 
+        public void ShutdownInitiated()
+        {
+            _dataService.SaveForestToStorage();
+        }
+
         private void SetIsDirty(bool isDirty)
         {
             HasUnsavedChanges = isDirty;
