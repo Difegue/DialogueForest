@@ -14,6 +14,9 @@ namespace DialogueForest.Core.Interfaces
         void ShowInAppNotification(string notification, bool autoHide = true);
 
         void ShowErrorNotification(Exception ex);
+
+        void ScheduleNotification(string title, string text, DateTime day, TimeSpan notificationTime);
+        void RemoveScheduledNotifications(bool onlyRemoveToday = false);
     }
 
     public abstract class NotificationServiceBase: INotificationService 
@@ -29,5 +32,7 @@ namespace DialogueForest.Core.Interfaces
 
         public abstract void ShowBasicToastNotification(string title, string description);
         public abstract void ShowInAppNotification(string notification, bool autoHide = true);
+        public abstract void ScheduleNotification(string title, string text, DateTime day, TimeSpan notificationTime);
+        public abstract void RemoveScheduledNotifications(bool onlyRemoveToday = false);
     }
 }

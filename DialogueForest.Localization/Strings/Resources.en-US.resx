@@ -591,4 +591,13 @@ They'll show up here when you do.</value>
   <data name="DailyObjectiveStreakDesc" xml:space="preserve">
     <value>Good job on meeting your goal for today!</value>
   </data>
+  <data name="DailyNotificationDesc" xml:space="preserve">
+    <value>Let's try to write {0} words today!</value>
+  </data>
+  <data name="DailyNotificationTitle" xml:space="preserve">
+    <value>Time to write some dialogue</value>
+  </data>
+  <data name="DailyNotificationDescNoTrack" xml:space="preserve">
+    <value>Open DialogueForest to pen your story!</value>
+  </data>
 </root>

@@ -24,15 +24,17 @@ namespace DialogueForest.Core.ViewModels
     {
         private IApplicationStorageService _applicationStorageService;
         private IInteropService _interop;
+        private INotificationService _notificationService;
         private ForestDataService _dataService;
 
         private bool _hasInstanceBeenInitialized;
 
-        public SettingsViewModel(IApplicationStorageService appStorage, IInteropService interop, ForestDataService dataService)
+        public SettingsViewModel(IApplicationStorageService appStorage, IInteropService interop, INotificationService notifications, ForestDataService dataService)
         {
             _applicationStorageService = appStorage;
             _interop = interop;
             _dataService = dataService;
+            _notificationService = notifications;
 
             PropertyChanged += SaveSettings;
             ForestMetadata.CollectionChanged += (s, e) => OnPropertyChanged(nameof(MetadataCount));
@@ -41,9 +43,21 @@ namespace DialogueForest.Core.ViewModels
 
         private void SaveSettings(object sender, PropertyChangedEventArgs e)
         {
-            _applicationStorageService.SetValue(nameof(ElementTheme), _elementTheme.ToString());
-            _applicationStorageService.SetValue(nameof(IsCompactSizing), _isCompactSizing);
-            _applicationStorageService.SetValue(nameof(EnableAnalytics), _enableAnalytics);
+            _applicationStorageService.SetValue(nameof(ElementTheme), ElementTheme.ToString());
+            _applicationStorageService.SetValue(nameof(IsCompactSizing), IsCompactSizing);
+            _applicationStorageService.SetValue(nameof(EnableAnalytics), EnableAnalytics);
+
+            _applicationStorageService.SetValue(nameof(EnableWordTracking), EnableWordTracking);
+            _applicationStorageService.SetValue(nameof(DailyWordObjective), DailyWordObjective);
+            _applicationStorageService.SetValue(nameof(EnableNotification), EnableNotification);
+            _applicationStorageService.SetValue(nameof(NotificationTime), NotificationTime.Minutes);
+
+            // Send a message to inform VMs the settings changed
+            WeakReferenceMessenger.Default.Send<SettingsChangedMessage>();
+
+            // Update notifications
+            if (e.PropertyName == nameof(EnableNotification) || e.PropertyName == nameof(NotificationTime) || e.PropertyName == nameof(EnableWordTracking) || e.PropertyName == nameof(DailyWordObjective))
+                UpdateNotifications();
         }
 
         private void SaveForestSettings(object sender, PropertyChangedEventArgs e)
@@ -157,11 +171,17 @@ namespace DialogueForest.Core.ViewModels
                 _isCompactSizing = _applicationStorageService.GetValue<bool>(nameof(IsCompactSizing));
                 _enableAnalytics = _applicationStorageService.GetValue(nameof(EnableAnalytics), true);
 
+                _enableWordTracking = _applicationStorageService.GetValue<bool>(nameof(EnableWordTracking));
+                _dailyWordObjective = _applicationStorageService.GetValue<int>(nameof(DailyWordObjective));
+                _enableNotification = _applicationStorageService.GetValue<bool>(nameof(EnableNotification));
+                _notificationTime = TimeSpan.FromMinutes(_applicationStorageService.GetValue<int>(nameof(NotificationTime)));
+
                 Enum.TryParse(_applicationStorageService.GetValue<string>(nameof(ElementTheme)), out _elementTheme);
 
                 VersionDescription = GetVersionDescription();
 
                 LoadCurrentForestSettings();
+                UpdateNotifications();
                 _hasInstanceBeenInitialized = true;
             }
         }
@@ -193,6 +213,32 @@ namespace DialogueForest.Core.ViewModels
                 var vm = new CharacterViewModel(this) { Name = s };
                 vm.PropertyChanged += SaveForestSettings;
                 ForestCharacters.Add(vm);
+            }
+        }
+
+        private void UpdateNotifications()
+        {
+            // Clear out all our previous notifications
+            _notificationService.RemoveScheduledNotifications();
+
+            // Then schedule a new set for the next 10 days
+            if (EnableNotification)
+            {
+                /*
+                 * var currentStreak = _applicationStorageService.GetValue<int>("CurrentStreak");
+                var streakLastDate = DateTime.Parse(_applicationStorageService.GetValue<string>("StreakLastDate"));
+
+                var isStreakValid = streakLastDate.Date == DateTime.Today.Date || streakLastDate.Date == DateTime.Today.Date.AddDays(-1);
+                */
+
+                var title = Resources.DailyNotificationTitle;
+                var description = EnableWordTracking ? string.Format(Resources.DailyNotificationDesc, DailyWordObjective) 
+                                                     : Resources.DailyNotificationDescNoTrack;
+
+                for (var i = 0; i < 10; i++)
+                {
+                    _notificationService.ScheduleNotification(title, description, DateTime.Today.AddDays(i), NotificationTime);
+                }
             }
         }
 

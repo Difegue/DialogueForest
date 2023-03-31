@@ -277,6 +277,33 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Let&apos;s try to write {0} words today!.
+        /// </summary>
+        public static string DailyNotificationDesc {
+            get {
+                return ResourceManager.GetString("DailyNotificationDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Open DialogueForest to pen your story!.
+        /// </summary>
+        public static string DailyNotificationDescNoTrack {
+            get {
+                return ResourceManager.GetString("DailyNotificationDescNoTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Time to write some dialogue.
+        /// </summary>
+        public static string DailyNotificationTitle {
+            get {
+                return ResourceManager.GetString("DailyNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Good job on meeting your goal for today!.
         /// </summary>
         public static string DailyObjectiveStreakDesc {

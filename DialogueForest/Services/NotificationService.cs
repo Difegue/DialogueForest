@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using CommunityToolkit.WinUI.Notifications;
@@ -19,6 +20,38 @@ namespace DialogueForest.Services
         {
             //TODO: check for compact mode
             InvokeInAppNotificationRequested(new InAppNotificationRequestedEventArgs { NotificationText = notification, NotificationTime = autoHide ? 1500 : 0});
+        }
+
+        public override void ScheduleNotification(string title, string text, DateTime day, TimeSpan notificationTime)
+        {
+            new ToastContentBuilder()
+                //.AddArgument("action", "viewItemsDueToday")
+                .AddText(title)
+                .AddText(text)
+                .AddP
+                .Schedule(day.Add(notificationTime), toast =>
+                {
+                    toast.Id = day.ToString("yyyy-MM-dd");
+                    // Group names normally allow us to use RemoveGroup, but that doesn't seem to be in the unpackaged variant.
+                    toast.Group = "dailyNotifications";
+                });
+        }
+
+        public override void RemoveScheduledNotifications(bool onlyRemoveToday = false)
+        {
+            // Create the toast notifier
+            ToastNotifierCompat notifier = ToastNotificationManagerCompat.CreateToastNotifier();
+
+            // Get the list of scheduled toasts that haven't appeared yet
+            IReadOnlyList<ScheduledToastNotification> scheduledToasts = notifier.GetScheduledToastNotifications();
+
+            foreach (var toRemove in scheduledToasts) {
+
+                if (!onlyRemoveToday || toRemove.Id == DateTime.Now.ToString("yyyy-MM-dd"))
+                {
+                    notifier.RemoveFromSchedule(toRemove);
+                }
+            }
         }
 
         public override void ShowBasicToastNotification(string title, string description)
