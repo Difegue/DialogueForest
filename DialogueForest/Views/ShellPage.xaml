@@ -2,17 +2,17 @@
     x:Class="DialogueForest.Views.ShellPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters"
-    xmlns:strings="using:DialogueForest.Localization.Strings"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:helpers="using:DialogueForest.Helpers"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:strings="using:DialogueForest.Localization.Strings"
     xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
     xmlns:views="using:DialogueForest.Views"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
     SizeChanged="Page_SizeChanged"
     mc:Ignorable="d">
 
@@ -24,7 +24,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <converters:StringVisibilityConverter x:Key="StringToVisibilityConverter" />
-            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
             <Style
                 x:Key="CustomInAppNotificationStyle"
@@ -50,7 +50,6 @@
     </i:Interaction.Behaviors>
 
     <Grid>
-
         <Grid
             x:Name="AppTitleBar"
             Height="40"
@@ -59,13 +58,18 @@
             VerticalAlignment="Top"
             Canvas.ZIndex="1"
             IsHitTestVisible="True">
-            <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Left" Background="Transparent"
-                        x:Name="TitleBarLeftPart">
-                <Image VerticalAlignment="Center"
-                        Margin="0,8,0,0"
-                        Width="16"
-                        Height="16"
-                        Source="ms-appx:///Assets/Square44x44Logo.targetsize-24_altform-unplated.png" />
+            <StackPanel
+                x:Name="TitleBarLeftPart"
+                HorizontalAlignment="Left"
+                Background="Transparent"
+                Orientation="Horizontal"
+                Spacing="8">
+                <Image
+                    Width="16"
+                    Height="16"
+                    Margin="0,8,0,0"
+                    VerticalAlignment="Center"
+                    Source="ms-appx:///Assets/Square44x44Logo.targetsize-24_altform-unplated.png" />
                 <TextBlock
                     x:Name="AppTitle"
                     Margin="4,8,0,0"
@@ -73,24 +77,24 @@
                     FontFamily="Segoe UI Variable Display"
                     Style="{StaticResource CaptionTextBlockStyle}"
                     Text="{x:Bind ViewModel.TitleBarText, Mode=OneWay}"
-                    TextTrimming="CharacterEllipsis"/>
+                    TextTrimming="CharacterEllipsis" />
             </StackPanel>
         </Grid>
 
         <muxc:NavigationView
             x:Name="navigationView"
             Canvas.ZIndex="0"
+            CompactModeThresholdWidth="400"
             DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
             ExpandedModeThresholdWidth="900"
-            CompactModeThresholdWidth="400"
-            OpenPaneLength="240"
-            PaneTitle="{x:Bind ViewModel.DisplayName, Mode=OneWay}"
-            PaneOpening="NavigationView_PaneOpening"
-            PaneClosing="NavigationView_PaneClosing"
             IsBackButtonVisible="Visible"
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
             IsSettingsVisible="True"
-            IsTitleBarAutoPaddingEnabled="False">
+            IsTitleBarAutoPaddingEnabled="False"
+            OpenPaneLength="240"
+            PaneClosing="NavigationView_PaneClosing"
+            PaneOpening="NavigationView_PaneOpening"
+            PaneTitle="{x:Bind ViewModel.DisplayName, Mode=OneWay}">
 
             <muxc:NavigationView.MenuItems>
                 <muxc:NavigationViewItem
@@ -99,72 +103,125 @@
                     Icon="Home" />
 
                 <muxc:NavigationViewItem
-                        SelectsOnInvoked="False"
-                        helpers:NavHelper.Command="{x:Bind ViewModel.SaveCommand}"                
-                        Content="{x:Bind strings:Resources.NavigationSave}"
-                        Icon="Save" >
+                    helpers:NavHelper.Command="{x:Bind ViewModel.SaveCommand}"
+                    Content="{x:Bind strings:Resources.NavigationSave}"
+                    Icon="Save"
+                    SelectsOnInvoked="False">
                     <muxc:NavigationViewItem.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="S" Modifiers="Control"/>
+                        <KeyboardAccelerator Key="S" Modifiers="Control" />
                     </muxc:NavigationViewItem.KeyboardAccelerators>
                     <muxc:NavigationViewItem.InfoBadge>
-                        <muxc:InfoBadge Style="{StaticResource AttentionDotInfoBadgeStyle}" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorUnsavedChanges}"
-                                        Visibility="{x:Bind ViewModel.HasUnsavedChanges, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        <muxc:InfoBadge
+                            Style="{StaticResource AttentionDotInfoBadgeStyle}"
+                            ToolTipService.ToolTip="{x:Bind strings:Resources.EditorUnsavedChanges}"
+                            Visibility="{x:Bind ViewModel.HasUnsavedChanges, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                     </muxc:NavigationViewItem.InfoBadge>
                 </muxc:NavigationViewItem>
 
-                <muxc:NavigationViewItem
-                    helpers:NavHelper.NavigateTo="viewmodels:ExportViewModel"
-                    Content="{x:Bind strings:Resources.NavigationExport}">
+                <muxc:NavigationViewItem helpers:NavHelper.NavigateTo="viewmodels:ExportViewModel" Content="{x:Bind strings:Resources.NavigationExport}">
                     <muxc:NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xEA5E;" FontStyle="Italic"/>
+                        <FontIcon Glyph="&#xF714;" />
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
 
                 <muxc:NavigationViewItemSeparator />
 
-                <!--  This menuitem is filled in viewmodel -->
+                <!--  This menuitem is filled in viewmodel  -->
                 <muxc:NavigationViewItem
                     x:Name="treeContainer"
-                    SelectsOnInvoked="False"
+                    Content="{x:Bind strings:Resources.NavigationTrees}"
                     IsExpanded="True"
-                    Content="{x:Bind strings:Resources.NavigationTrees}">
+                    SelectsOnInvoked="False">
                     <muxc:NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE1C3;"/>
+                        <FontIcon FontSize="18" Glyph="&#xE1C3;" />
                     </muxc:NavigationViewItem.Icon>
 
                     <muxc:NavigationViewItem.MenuItems>
 
-                        <muxc:NavigationViewItem x:Name="newTreeItem"
-                            SelectsOnInvoked="False"
-                            helpers:NavHelper.Command="{x:Bind ViewModel.NewTreeCommand}"                
-                            Content="{x:Bind strings:Resources.NavigationNewTree}">
+                        <muxc:NavigationViewItem
+                            x:Name="newTreeItem"
+                            helpers:NavHelper.Command="{x:Bind ViewModel.NewTreeCommand}"
+                            Content="{x:Bind strings:Resources.NavigationNewTree}"
+                            SelectsOnInvoked="False">
                             <muxc:NavigationViewItem.Icon>
-                                <PathIcon Data="M 84.5 0 C 72.8333 0.0001 61.9167 2.2501 51.75 6.75 C 41.5833 11.2501 32.6667 17.3334 25 25 C 17.3333 32.6667 11.25 41.667 6.75 52 C 2.25 62.333 0 73.167 0 84.5 L 0 320 C 0 364.333 8.33333 405.917 25 444.75 C 41.6667 483.583 64.5 517.5 93.5 546.5 C 122.5 575.5 156.417 598.333 195.25 615 C 234.083 631.667 275.667 640 320 640 C 326.333 640 332.583 639.833 338.75 639.5 C 344.917 639.167 351.167 638.667 357.5 638 C 363.5 650 370.167 661.583 377.5 672.75 C 384.833 683.917 392.833 694.667 401.5 705 L 264.5 842 C 258.167 848.333 255 855.833 255 864.5 C 255 873.5 258.167 881.167 264.5 887.5 C 270.833 893.833 278.5 897 287.5 897 C 296.167 897 303.667 893.833 310 887.5 L 435.00977 762.0332 C 431.2251 754.65452 427.59588 747.14972 424.27148 739.39453 C 403.44347 686.003 395.55311 629.46698 400.25781 575.26953 C 400.25581 575.26253 400.253 575.2566 400.25 575.25 C 389.41719 544.41697 384 512.667 384 480 C 384 440.333 391.583 403 406.75 368 C 421.917 333 442.5 302.5 468.5 276.5 C 494.5 250.5 525 229.917 560 214.75 C 595 199.583 632.333 192 672 192 L 934 192 C 941.333 192 947.5 194.5 952.5 199.5 C 957.5 204.5 960 210.667 960 218 L 960 354.62109 C 965.04609 359.1074 970.00221 363.72008 974.81641 368.5332 C 993.79219 387.5047 1010.1023 408.3679 1024 430.94141 L 1024 218 C 1024 205.667 1021.58 194.083 1016.75 183.25 C 1011.92 172.417 1005.42 162.917 997.25 154.75 C 989.083 146.583 979.583 140.083 968.75 135.25 C 957.917 130.417 946.333 128 934 128 L 672 128 C 641.667 128 612.333 131.667 584 139 C 569 117 551.75 97.417 532.25 80.25 C 512.75 63.083 491.75 48.583 469.25 36.75 C 446.75 24.9167 422.917 15.8334 397.75 9.5 C 372.583 3.1667 346.667 0.0001 320 0 L 84.5 0 z M 84.5 64 L 320 64 C 339.667 64 358.917 66.25 377.75 70.75 C 396.583 75.25 414.667 81.667 432 90 C 449.333 98.333 465.583 108.583 480.75 120.75 C 495.917 132.917 509.5 146.667 521.5 162 C 487.167 178.333 456.167 199.583 428.5 225.75 C 400.833 251.917 378.167 281.833 360.5 315.5 L 246.5 201.5 C 240.167 195.167 232.667 192 224 192 C 215.333 192 207.833 195.167 201.5 201.5 C 195.167 207.833 192 215.333 192 224 C 192 232.667 195.167 240.167 201.5 246.5 L 334.5 379.5 C 324.833 412.5 320 446 320 480 C 320 512 324.333 543.833 333 575.5 C 331.333 575.833 329.833 576 328.5 576 L 324 576 L 315 576 C 281.333 576 249.333 569.25 219 555.75 C 188.667 542.25 162 524 139 501 C 116 478 97.75 451.333 84.25 421 C 70.75 390.667 64 358.667 64 325 L 64 84.5 C 64 78.833 66 74 70 70 C 74 66 78.8333 64 84.5 64 z M 736.59375 319.89453 C 696.92675 319.89453 659.59375 327.47753 624.59375 342.64453 C 589.59375 357.81153 559.09375 378.39453 533.09375 404.39453 C 507.09375 430.39453 486.51075 460.89453 471.34375 495.89453 C 442.38045 564.20534 442.04215 645.90563 471.09375 720.39453 C 486.09375 755.39453 506.59375 785.89453 532.59375 811.89453 C 558.59375 837.89453 589.09375 858.39453 624.09375 873.39453 C 659.09375 888.39454 696.59375 895.89453 736.59375 895.89453 C 776.26075 895.89453 813.59375 888.31454 848.59375 873.14453 C 883.59375 857.97753 914.09375 837.39453 940.09375 811.39453 C 966.09375 785.39453 986.67659 754.89453 1001.8438 719.89453 C 1017.0137 684.89453 1024.5938 647.56153 1024.5938 607.89453 C 1024.5937 581.56153 1021.1738 556.14453 1014.3438 531.64453 C 1007.5137 507.14453 997.84375 484.22753 985.34375 462.89453 C 972.84375 441.56153 957.76075 422.06153 940.09375 404.39453 C 922.42675 386.72753 902.92675 371.64453 881.59375 359.14453 C 860.26075 346.64453 837.34375 336.97753 812.84375 330.14453 C 788.34375 323.31153 762.92675 319.89453 736.59375 319.89453 z M 736.59375 447.89453 C 745.26075 447.89453 752.76075 451.06153 759.09375 457.39453 C 765.42675 463.72753 768.59375 471.22753 768.59375 479.89453 L 768.59375 575.89453 L 864.59375 575.89453 C 873.26075 575.89453 880.76075 579.06153 887.09375 585.39453 C 893.42675 591.72753 896.59375 599.22753 896.59375 607.89453 C 896.59375 616.56153 893.42675 624.06153 887.09375 630.39453 C 880.76075 636.72753 873.26075 639.89453 864.59375 639.89453 L 768.59375 639.89453 L 768.59375 735.89453 C 768.59375 744.56153 765.42675 752.06153 759.09375 758.39453 C 752.76075 764.72753 745.26075 767.89453 736.59375 767.89453 C 727.92675 767.89453 720.42675 764.72753 714.09375 758.39453 C 707.76075 752.06153 704.59375 744.56153 704.59375 735.89453 L 704.59375 639.89453 L 608.59375 639.89453 C 599.92675 639.89453 592.42675 636.72753 586.09375 630.39453 C 579.76075 624.06153 576.59375 616.56153 576.59375 607.89453 C 576.59375 599.22753 579.76075 591.72753 586.09375 585.39453 C 592.42675 579.06153 599.92675 575.89453 608.59375 575.89453 L 704.59375 575.89453 L 704.59375 479.89453 C 704.59375 471.22753 707.76075 463.72753 714.09375 457.39453 C 720.42675 451.06153 727.92675 447.89453 736.59375 447.89453 z "/>
+                                <PathIcon Data="M 84.5 0 C 72.8333 0.0001 61.9167 2.2501 51.75 6.75 C 41.5833 11.2501 32.6667 17.3334 25 25 C 17.3333 32.6667 11.25 41.667 6.75 52 C 2.25 62.333 0 73.167 0 84.5 L 0 320 C 0 364.333 8.33333 405.917 25 444.75 C 41.6667 483.583 64.5 517.5 93.5 546.5 C 122.5 575.5 156.417 598.333 195.25 615 C 234.083 631.667 275.667 640 320 640 C 326.333 640 332.583 639.833 338.75 639.5 C 344.917 639.167 351.167 638.667 357.5 638 C 363.5 650 370.167 661.583 377.5 672.75 C 384.833 683.917 392.833 694.667 401.5 705 L 264.5 842 C 258.167 848.333 255 855.833 255 864.5 C 255 873.5 258.167 881.167 264.5 887.5 C 270.833 893.833 278.5 897 287.5 897 C 296.167 897 303.667 893.833 310 887.5 L 435.00977 762.0332 C 431.2251 754.65452 427.59588 747.14972 424.27148 739.39453 C 403.44347 686.003 395.55311 629.46698 400.25781 575.26953 C 400.25581 575.26253 400.253 575.2566 400.25 575.25 C 389.41719 544.41697 384 512.667 384 480 C 384 440.333 391.583 403 406.75 368 C 421.917 333 442.5 302.5 468.5 276.5 C 494.5 250.5 525 229.917 560 214.75 C 595 199.583 632.333 192 672 192 L 934 192 C 941.333 192 947.5 194.5 952.5 199.5 C 957.5 204.5 960 210.667 960 218 L 960 354.62109 C 965.04609 359.1074 970.00221 363.72008 974.81641 368.5332 C 993.79219 387.5047 1010.1023 408.3679 1024 430.94141 L 1024 218 C 1024 205.667 1021.58 194.083 1016.75 183.25 C 1011.92 172.417 1005.42 162.917 997.25 154.75 C 989.083 146.583 979.583 140.083 968.75 135.25 C 957.917 130.417 946.333 128 934 128 L 672 128 C 641.667 128 612.333 131.667 584 139 C 569 117 551.75 97.417 532.25 80.25 C 512.75 63.083 491.75 48.583 469.25 36.75 C 446.75 24.9167 422.917 15.8334 397.75 9.5 C 372.583 3.1667 346.667 0.0001 320 0 L 84.5 0 z M 84.5 64 L 320 64 C 339.667 64 358.917 66.25 377.75 70.75 C 396.583 75.25 414.667 81.667 432 90 C 449.333 98.333 465.583 108.583 480.75 120.75 C 495.917 132.917 509.5 146.667 521.5 162 C 487.167 178.333 456.167 199.583 428.5 225.75 C 400.833 251.917 378.167 281.833 360.5 315.5 L 246.5 201.5 C 240.167 195.167 232.667 192 224 192 C 215.333 192 207.833 195.167 201.5 201.5 C 195.167 207.833 192 215.333 192 224 C 192 232.667 195.167 240.167 201.5 246.5 L 334.5 379.5 C 324.833 412.5 320 446 320 480 C 320 512 324.333 543.833 333 575.5 C 331.333 575.833 329.833 576 328.5 576 L 324 576 L 315 576 C 281.333 576 249.333 569.25 219 555.75 C 188.667 542.25 162 524 139 501 C 116 478 97.75 451.333 84.25 421 C 70.75 390.667 64 358.667 64 325 L 64 84.5 C 64 78.833 66 74 70 70 C 74 66 78.8333 64 84.5 64 z M 736.59375 319.89453 C 696.92675 319.89453 659.59375 327.47753 624.59375 342.64453 C 589.59375 357.81153 559.09375 378.39453 533.09375 404.39453 C 507.09375 430.39453 486.51075 460.89453 471.34375 495.89453 C 442.38045 564.20534 442.04215 645.90563 471.09375 720.39453 C 486.09375 755.39453 506.59375 785.89453 532.59375 811.89453 C 558.59375 837.89453 589.09375 858.39453 624.09375 873.39453 C 659.09375 888.39454 696.59375 895.89453 736.59375 895.89453 C 776.26075 895.89453 813.59375 888.31454 848.59375 873.14453 C 883.59375 857.97753 914.09375 837.39453 940.09375 811.39453 C 966.09375 785.39453 986.67659 754.89453 1001.8438 719.89453 C 1017.0137 684.89453 1024.5938 647.56153 1024.5938 607.89453 C 1024.5937 581.56153 1021.1738 556.14453 1014.3438 531.64453 C 1007.5137 507.14453 997.84375 484.22753 985.34375 462.89453 C 972.84375 441.56153 957.76075 422.06153 940.09375 404.39453 C 922.42675 386.72753 902.92675 371.64453 881.59375 359.14453 C 860.26075 346.64453 837.34375 336.97753 812.84375 330.14453 C 788.34375 323.31153 762.92675 319.89453 736.59375 319.89453 z M 736.59375 447.89453 C 745.26075 447.89453 752.76075 451.06153 759.09375 457.39453 C 765.42675 463.72753 768.59375 471.22753 768.59375 479.89453 L 768.59375 575.89453 L 864.59375 575.89453 C 873.26075 575.89453 880.76075 579.06153 887.09375 585.39453 C 893.42675 591.72753 896.59375 599.22753 896.59375 607.89453 C 896.59375 616.56153 893.42675 624.06153 887.09375 630.39453 C 880.76075 636.72753 873.26075 639.89453 864.59375 639.89453 L 768.59375 639.89453 L 768.59375 735.89453 C 768.59375 744.56153 765.42675 752.06153 759.09375 758.39453 C 752.76075 764.72753 745.26075 767.89453 736.59375 767.89453 C 727.92675 767.89453 720.42675 764.72753 714.09375 758.39453 C 707.76075 752.06153 704.59375 744.56153 704.59375 735.89453 L 704.59375 639.89453 L 608.59375 639.89453 C 599.92675 639.89453 592.42675 636.72753 586.09375 630.39453 C 579.76075 624.06153 576.59375 616.56153 576.59375 607.89453 C 576.59375 599.22753 579.76075 591.72753 586.09375 585.39453 C 592.42675 579.06153 599.92675 575.89453 608.59375 575.89453 L 704.59375 575.89453 L 704.59375 479.89453 C 704.59375 471.22753 707.76075 463.72753 714.09375 457.39453 C 720.42675 451.06153 727.92675 447.89453 736.59375 447.89453 z " />
                             </muxc:NavigationViewItem.Icon>
                         </muxc:NavigationViewItem>
                     </muxc:NavigationViewItem.MenuItems>
                 </muxc:NavigationViewItem>
 
-                <muxc:NavigationViewItem 
+                <muxc:NavigationViewItem
                     helpers:NavHelper.NavigateTo="viewmodels:DialogueTreeViewModel"
-                    Tag="pins"
                     Content="{x:Bind strings:Resources.NavigationPins}"
-                    Icon="Pin" />
-                <muxc:NavigationViewItem 
+                    Icon="Pin"
+                    Tag="pins" />
+                <muxc:NavigationViewItem
                     helpers:NavHelper.NavigateTo="viewmodels:DialogueTreeViewModel"
-                    Tag="notes" AllowDrop="True" DragOver="NavigationViewItem_DragOver" Drop="NavigationViewItem_Drop"
-                    Content="{x:Bind strings:Resources.NavigationNotes}">
+                    AllowDrop="True"
+                    Content="{x:Bind strings:Resources.NavigationNotes}"
+                    DragOver="NavigationViewItem_DragOver"
+                    Drop="NavigationViewItem_Drop"
+                    Tag="notes">
                     <muxc:NavigationViewItem.Icon>
-                        <FontIcon Glyph="&#xE70B;"/>
+                        <FontIcon Glyph="&#xE70B;" />
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
-                <muxc:NavigationViewItem 
+                <muxc:NavigationViewItem
                     helpers:NavHelper.NavigateTo="viewmodels:DialogueTreeViewModel"
-                    Tag="trash" AllowDrop="True" DragOver="NavigationViewItem_DragOver" Drop="NavigationViewItem_Drop"
+                    AllowDrop="True"
                     Content="{x:Bind strings:Resources.NavigationTrash}"
-                    Icon="Delete" />
+                    DragOver="NavigationViewItem_DragOver"
+                    Drop="NavigationViewItem_Drop"
+                    Icon="Delete"
+                    Tag="trash" />
 
             </muxc:NavigationView.MenuItems>
+
+            <muxc:NavigationView.PaneFooter>
+                <Grid>
+                    <muxc:ProgressRing
+                        Width="20"
+                        Height="20"
+                        Margin="14,0,0,8"
+                        HorizontalAlignment="Left"
+                        IsIndeterminate="False"
+                        ToolTipService.ToolTip="{x:Bind strings:Resources.SettingsWordObjective}"
+                        Visibility="{Binding ElementName=navigationView, Path=IsPaneOpen, Converter={StaticResource ReverseBoolToVisibilityConverter}}"
+                        Value="{x:Bind ViewModel.DailyWordCountPercentage, Mode=OneWay}" />
+
+                    <StackPanel Visibility="{Binding ElementName=navigationView, Path=IsPaneOpen, Converter={StaticResource BoolToVisibilityConverter}}">
+
+                        <StackPanel Margin="{StaticResource SmallLeftTopRightBottomMargin}">
+                            <TextBlock Text="{x:Bind strings:Resources.SettingsWordObjective}" />
+                            <Button
+                                Margin="0,-22,0,0"
+                                Padding="8,2"
+                                HorizontalAlignment="Right"
+                                Click="Button_Click">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <muxc:FontIcon FontSize="12" Glyph="&#xF5B0;" />
+                                    <TextBlock FontSize="12" Text="Focus" />
+                                </StackPanel>
+                            </Button>
+                            <muxc:ProgressBar Margin="{StaticResource SmallTopMargin}"
+                                              Value="{x:Bind ViewModel.DailyWordCountPercentage, Mode=OneWay}"/>
+                            <TextBlock
+                                Margin="{StaticResource XXSmallTopMargin}"
+                                FontWeight="SemiBold"
+                                Text="{x:Bind ViewModel.DailyWordCount, Mode=OneWay}" />
+
+                        </StackPanel>
+
+                        <InfoBar
+                            Title="{Binding ViewModel.DailyStreak, Mode=OneWay}"
+                            Margin="3,0"
+                            IsIconVisible="False"
+                            IsOpen="{x:Bind ViewModel.DailyObjectiveComplete, Mode=OneWay}"
+                            Message="{x:Bind strings:Resources.DailyObjectiveStreakDesc}"
+                            Severity="Success" />
+                    </StackPanel>
+                </Grid>
+            </muxc:NavigationView.PaneFooter>
 
             <i:Interaction.Behaviors>
                 <ic:EventTriggerBehavior EventName="ItemInvoked">
@@ -176,10 +233,10 @@
 
                 <muxc:TwoPaneView
                     x:Name="twoPaneView"
-                    Style="{StaticResource TwoPaneViewWithSplitterStyle}"
-                    TallModeConfiguration="SinglePane"
+                    MinTallModeHeight="863"
                     MinWideModeWidth="640"
-                    MinTallModeHeight="863">
+                    Style="{StaticResource TwoPaneViewWithSplitterStyle}"
+                    TallModeConfiguration="SinglePane">
 
                     <muxc:TwoPaneView.Pane1>
                         <Grid
@@ -189,13 +246,15 @@
                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                             BorderThickness="1"
                             CornerRadius="8,8,0,0">
-                            <Frame x:Name="shellFrame"/>
+                            <Frame x:Name="shellFrame" />
                         </Grid>
                     </muxc:TwoPaneView.Pane1>
 
                     <muxc:TwoPaneView.Pane2>
-                        <views:OpenedNodesPage x:Name="tabsView" Margin="2,0,0,0"
-                                               SizeChanged="Page_SizeChanged"/>
+                        <views:OpenedNodesPage
+                            x:Name="tabsView"
+                            Margin="2,0,0,0"
+                            SizeChanged="Page_SizeChanged" />
                     </muxc:TwoPaneView.Pane2>
                 </muxc:TwoPaneView>
 

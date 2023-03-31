@@ -183,5 +183,12 @@ namespace DialogueForest.Views
         private void NavigationViewItem_DragOver(object sender, DragEventArgs e) => ViewModel.NavigationViewItem_DragOver(sender, e);
 
         private void NavigationViewItem_Drop(object sender, DragEventArgs e) => ViewModel.NavigationViewItem_Drop(sender, e);
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            // Quick win-only thing, just open the clock app URL
+            var uri = new Uri("ms-clock:");
+            var success = Windows.System.Launcher.LaunchUriAsync(uri);
+        }
     }
 }

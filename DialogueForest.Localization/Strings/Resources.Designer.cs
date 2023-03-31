@@ -259,6 +259,42 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à {0} dialogues.
+        /// </summary>
+        public static string CountDialogues {
+            get {
+                return ResourceManager.GetString("CountDialogues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à {0} words.
+        /// </summary>
+        public static string CountWords {
+            get {
+                return ResourceManager.GetString("CountWords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Good job on meeting your goal for today!.
+        /// </summary>
+        public static string DailyObjectiveStreakDesc {
+            get {
+                return ResourceManager.GetString("DailyObjectiveStreakDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à ✨ A {0}-day streak!.
+        /// </summary>
+        public static string DailyObjectiveStreakTitle {
+            get {
+                return ResourceManager.GetString("DailyObjectiveStreakTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Add a piece of Dialogue.
         /// </summary>
         public static string EditorAddDialogue {
@@ -1106,6 +1142,33 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Daily reminder.
+        /// </summary>
+        public static string SettingsNotification {
+            get {
+                return ResourceManager.GetString("SettingsNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Sends one notification each day to remind you to open the app..
+        /// </summary>
+        public static string SettingsNotificationDesc {
+            get {
+                return ResourceManager.GetString("SettingsNotificationDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Send at:.
+        /// </summary>
+        public static string SettingsNotificationSendAt {
+            get {
+                return ResourceManager.GetString("SettingsNotificationSendAt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Application Theme.
         /// </summary>
         public static string SettingsTheme {
@@ -1165,6 +1228,42 @@ namespace DialogueForest.Localization.Strings {
         public static string SettingsUIDensityNormal {
             get {
                 return ResourceManager.GetString("SettingsUIDensityNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Set a daily goal to encourage writing..
+        /// </summary>
+        public static string SettingsWordDesc {
+            get {
+                return ResourceManager.GetString("SettingsWordDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Daily objective &amp; Reminders.
+        /// </summary>
+        public static string SettingsWordHeader {
+            get {
+                return ResourceManager.GetString("SettingsWordHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Daily word objective.
+        /// </summary>
+        public static string SettingsWordObjective {
+            get {
+                return ResourceManager.GetString("SettingsWordObjective", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Track word count.
+        /// </summary>
+        public static string SettingsWordTrack {
+            get {
+                return ResourceManager.GetString("SettingsWordTrack", resourceCulture);
             }
         }
         

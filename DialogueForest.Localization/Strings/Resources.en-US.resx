@@ -558,4 +558,37 @@ They'll show up here when you do.</value>
   <data name="SettingsCharacterDelete" xml:space="preserve">
     <value>Remove character</value>
   </data>
+  <data name="CountWords" xml:space="preserve">
+    <value>{0} words</value>
+  </data>
+  <data name="CountDialogues" xml:space="preserve">
+    <value>{0} dialogues</value>
+  </data>
+  <data name="SettingsWordHeader" xml:space="preserve">
+    <value>Daily objective &amp; Reminders</value>
+  </data>
+  <data name="SettingsWordTrack" xml:space="preserve">
+    <value>Track word count</value>
+  </data>
+  <data name="SettingsWordDesc" xml:space="preserve">
+    <value>Set a daily goal to encourage writing.</value>
+  </data>
+  <data name="SettingsWordObjective" xml:space="preserve">
+    <value>Daily word objective</value>
+  </data>
+  <data name="SettingsNotification" xml:space="preserve">
+    <value>Daily reminder</value>
+  </data>
+  <data name="SettingsNotificationDesc" xml:space="preserve">
+    <value>Sends one notification each day to remind you to open the app.</value>
+  </data>
+  <data name="SettingsNotificationSendAt" xml:space="preserve">
+    <value>Send at:</value>
+  </data>
+  <data name="DailyObjectiveStreakTitle" xml:space="preserve">
+    <value>✨ A {0}-day streak!</value>
+  </data>
+  <data name="DailyObjectiveStreakDesc" xml:space="preserve">
+    <value>Good job on meeting your goal for today!</value>
+  </data>
 </root>

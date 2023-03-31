@@ -49,6 +49,9 @@ namespace DialogueForest.Core.ViewModels
 
             ((NotificationServiceBase)_notificationService).InAppNotificationRequested += ShowInAppNotification;
             ((NavigationServiceBase)_navigationService).Navigated += OnFrameNavigated;
+
+            // TODO
+            DailyStreak = String.Format(Resources.DailyObjectiveStreakTitle, 3);
         }
 
         public void ShutdownInitiated()
@@ -81,6 +84,15 @@ namespace DialogueForest.Core.ViewModels
         private string _titleBarText;
         [ObservableProperty]
         private string _displayName;
+
+        [ObservableProperty]
+        private int _dailyWordCountPercentage;
+        [ObservableProperty]
+        private string _dailyWordCount;
+        [ObservableProperty]
+        private string _dailyStreak;
+        [ObservableProperty]
+        private bool _dailyObjectiveComplete;
 
         [RelayCommand]
         private async Task Open()

@@ -76,6 +76,16 @@ namespace DialogueForest.Core.ViewModels
         private bool _isCompactSizing;
         [ObservableProperty]
         private bool _enableAnalytics;
+
+        [ObservableProperty]
+        private bool _enableWordTracking;
+        [ObservableProperty]
+        private int _dailyWordObjective;
+        [ObservableProperty]
+        private bool _enableNotification;
+        [ObservableProperty]
+        private TimeSpan _notificationTime;
+
         [ObservableProperty]
         private string _versionDescription;
 

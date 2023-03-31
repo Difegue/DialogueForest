@@ -557,4 +557,37 @@ Vous les retrouverez ici.</value>
   <data name="SettingsCharacterDelete" xml:space="preserve">
     <value>Supprimer personnage</value>
   </data>
+  <data name="CountWords" xml:space="preserve">
+    <value>{0} mots</value>
+  </data>
+  <data name="CountDialogues" xml:space="preserve">
+    <value>{0} dialogues</value>
+  </data>
+  <data name="SettingsWordHeader" xml:space="preserve">
+    <value>Objectif journalier &amp; Rappels</value>
+  </data>
+  <data name="SettingsWordTrack" xml:space="preserve">
+    <value>Suivre le nombre de mots écrits</value>
+  </data>
+  <data name="SettingsWordDesc" xml:space="preserve">
+    <value>Définissez un objectif journalier pour vous encourager à écrire.</value>
+  </data>
+  <data name="SettingsWordObjective" xml:space="preserve">
+    <value>Objectif de mots journalier</value>
+  </data>
+  <data name="SettingsNotification" xml:space="preserve">
+    <value>Rappel journalier</value>
+  </data>
+  <data name="SettingsNotificationDesc" xml:space="preserve">
+    <value>Envoie une notification par jour pour vous rappeler d'ouvrir l'application.</value>
+  </data>
+  <data name="SettingsNotificationSendAt" xml:space="preserve">
+    <value>Envoyer à:</value>
+  </data>
+  <data name="DailyObjectiveStreakTitle" xml:space="preserve">
+    <value>✨ Une chaîne de {0} jours !</value>
+  </data>
+  <data name="DailyObjectiveStreakDesc" xml:space="preserve">
+    <value>Bravo pour avoir accompli votre objectif aujourd'hui !</value>
+  </data>
 </root>
