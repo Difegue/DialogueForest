@@ -178,7 +178,7 @@
             </muxc:NavigationView.MenuItems>
 
             <muxc:NavigationView.PaneFooter>
-                <Grid>
+                <Grid Visibility="{x:Bind ViewModel.WordTrackingEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                     <muxc:ProgressRing
                         Width="20"
                         Height="20"
@@ -213,7 +213,7 @@
                         </StackPanel>
 
                         <InfoBar
-                            Title="{Binding ViewModel.DailyStreak, Mode=OneWay}"
+                            Title="{x:Bind ViewModel.DailyStreak, Mode=OneWay}"
                             Margin="3,0"
                             IsIconVisible="False"
                             IsOpen="{x:Bind ViewModel.DailyObjectiveComplete, Mode=OneWay}"

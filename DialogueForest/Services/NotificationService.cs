@@ -24,16 +24,20 @@ namespace DialogueForest.Services
 
         public override void ScheduleNotification(string title, string text, DateTime day, TimeSpan notificationTime)
         {
+            // Don't schedule if date is in the past
+            if (day.Add(notificationTime) < DateTime.Now)
+            {
+                return;
+            }
+
             new ToastContentBuilder()
                 //.AddArgument("action", "viewItemsDueToday")
                 .AddText(title)
                 .AddText(text)
-                .AddP
+                //.AddProgressBar()
                 .Schedule(day.Add(notificationTime), toast =>
                 {
                     toast.Id = day.ToString("yyyy-MM-dd");
-                    // Group names normally allow us to use RemoveGroup, but that doesn't seem to be in the unpackaged variant.
-                    toast.Group = "dailyNotifications";
                 });
         }
 

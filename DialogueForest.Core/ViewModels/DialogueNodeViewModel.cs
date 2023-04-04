@@ -119,12 +119,12 @@ namespace DialogueForest.Core.ViewModels
 
         private int CalculateWordCount()
         {
-            var count = NodeTitle.Split(' ').Length;
+            var count = NodeTitle?.Split(' ')?.Length ?? 0;
             foreach (var dialog in Dialogs)
                 count += dialog.WordCount;
 
             foreach (var prompt in Prompts)
-                count += prompt.ReplyText.Split(' ').Length;
+                count += prompt.ReplyText?.Split(' ')?.Length ?? 0;
 
             return count;
         }
@@ -138,8 +138,12 @@ namespace DialogueForest.Core.ViewModels
         public string NodeTitle
         {
             get => _node.Title;
-            set => SetProperty(_node.Title, value, _node, (u, n) => { u.Title = n;
-                    WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage()); 
+            set => SetProperty(_node.Title, value, _node, (u, n) => {
+
+                    var oldCount = NodeTitle?.Split(' ')?.Length ?? 0;
+                    var newCount = n.Split(' ').Length;
+                    u.Title = n;
+                    WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage(newCount - oldCount)); 
             });
         }
 

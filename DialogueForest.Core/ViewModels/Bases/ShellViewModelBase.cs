@@ -23,15 +23,17 @@ namespace DialogueForest.Core.ViewModels
         protected IInteropService _interopService;
         protected IDispatcherService _dispatcherService;
         protected ForestDataService _dataService;
+        protected WordCountingService _wordService;
 
-
-        public ShellViewModelBase(INavigationService navigationService, INotificationService notificationService, IDispatcherService dispatcherService, IDialogService dialogService, IInteropService interopService, ForestDataService dataService)
+        public ShellViewModelBase(INavigationService navigationService, INotificationService notificationService, IDispatcherService dispatcherService, 
+            IDialogService dialogService, IInteropService interopService, ForestDataService dataService, WordCountingService wordService)
         {
             _navigationService = navigationService;
             _notificationService = notificationService;
             _dispatcherService = dispatcherService;
             _dialogService = dialogService;
             _dataService = dataService;
+            _wordService = wordService;
             _interopService = interopService;
 
             // Listeners to set unsaved/saved document status
@@ -45,13 +47,14 @@ namespace DialogueForest.Core.ViewModels
             WeakReferenceMessenger.Default.Register<ShellViewModelBase, ForestSettingsChangedMessage>(this, (r, m) => r.SetIsDirty(true));
             WeakReferenceMessenger.Default.Register<ShellViewModelBase, UnsavedModificationsMessage>(this, (r, m) => r.SetIsDirty(true));
 
+            WeakReferenceMessenger.Default.Register<ShellViewModelBase, SettingsChangedMessage>(this, (r, m) => UpdateWordTrackingInfo());
+
             UpdateTitleBar();
+            UpdateWordTrackingInfo();
 
             ((NotificationServiceBase)_notificationService).InAppNotificationRequested += ShowInAppNotification;
             ((NavigationServiceBase)_navigationService).Navigated += OnFrameNavigated;
-
-            // TODO
-            DailyStreak = String.Format(Resources.DailyObjectiveStreakTitle, 3);
+            _wordService.WordCountUpdated += (s, e) => UpdateWordTrackingInfo();
         }
 
         public void ShutdownInitiated()
@@ -76,6 +79,16 @@ namespace DialogueForest.Core.ViewModels
             TitleBarText = Resources.AppDisplayName + " - " + DisplayName + (HasUnsavedChanges ? "*" : "");
         }
 
+        private void UpdateWordTrackingInfo()
+        {
+            OnPropertyChanged(nameof(WordTrackingEnabled));
+
+            DailyWordCount = $"{_wordService.CurrentWordCount} / {_wordService.CurrentWordObjective}";
+            DailyWordCountPercentage = _wordService.CurrentWordCount / (float)_wordService.CurrentWordObjective * 100f;
+            DailyStreak = String.Format(Resources.DailyObjectiveStreakTitle, _wordService.CurrentStreak);
+            DailyObjectiveComplete = _wordService.CurrentWordCount >= _wordService.CurrentWordObjective;
+        }
+        
         [ObservableProperty]
         private bool _hasUnsavedChanges;
         [ObservableProperty]
@@ -86,13 +99,15 @@ namespace DialogueForest.Core.ViewModels
         private string _displayName;
 
         [ObservableProperty]
-        private int _dailyWordCountPercentage;
+        private float _dailyWordCountPercentage;
         [ObservableProperty]
         private string _dailyWordCount;
         [ObservableProperty]
         private string _dailyStreak;
         [ObservableProperty]
         private bool _dailyObjectiveComplete;
+
+        public bool WordTrackingEnabled => _wordService.IsTrackingEnabled;
 
         [RelayCommand]
         private async Task Open()

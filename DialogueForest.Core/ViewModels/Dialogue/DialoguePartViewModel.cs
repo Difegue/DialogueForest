@@ -46,9 +46,10 @@ namespace DialogueForest.Core.ViewModels
             get => _text.RichText;
             set => SetProperty(_text.RichText, value, _text, (u, n) => 
                     {
+                        var oldWordCount = WordCount;
                         u.WordCount = RtfHelper.ConvertRtfToPlainText(n).Split(' ').Length;
                         u.RichText = n; 
-                        WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage()); 
+                        WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage(u.WordCount - oldWordCount)); 
                     });
         }
 

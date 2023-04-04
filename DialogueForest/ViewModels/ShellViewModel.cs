@@ -31,8 +31,8 @@ namespace DialogueForest.ViewModels
         private InAppNotification _notificationHolder;
 
 
-        public ShellViewModel(INavigationService navigationService, INotificationService notificationService, IDialogService dialogService, IDispatcherService dispatcherService, IInteropService interopService, ForestDataService dataService) :
-            base(navigationService, notificationService, dispatcherService, dialogService, interopService, dataService)
+        public ShellViewModel(INavigationService navigationService, INotificationService notificationService, IDialogService dialogService, IDispatcherService dispatcherService, IInteropService interopService, ForestDataService dataService, WordCountingService wordService) :
+            base(navigationService, notificationService, dispatcherService, dialogService, interopService, dataService, wordService)
         {
         }
 
@@ -47,7 +47,7 @@ namespace DialogueForest.ViewModels
             var concreteNavService = (NavigationService)_navigationService;
             concreteNavService.Frame = frame;
             concreteNavService.Navigated += UpdateNavigationViewSelection;
-
+            
             _navigationView.BackRequested += OnBackRequested;
 
             _altLeftKeyboardAccelerator = BuildKeyboardAccelerator(VirtualKey.Left, GoBack, VirtualKeyModifiers.Menu);

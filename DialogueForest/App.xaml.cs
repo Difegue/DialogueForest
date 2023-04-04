@@ -137,6 +137,7 @@ namespace DialogueForest
             services.AddSingleton<INotificationService, NotificationService>();
             services.AddSingleton<IInteropService, InteropService>();
             services.AddSingleton<ForestDataService>();
+            services.AddSingleton<WordCountingService>();
 
             // Viewmodel Factories
             //services.AddSingleton<AlbumViewModelFactory>();
@@ -149,9 +150,6 @@ namespace DialogueForest
             services.AddSingleton<OpenedNodesViewModel>();
             services.AddSingleton<WelcomeViewModel>();
             services.AddSingleton<ExportViewModel>();
-            //services.AddSingleton<QueueViewModel>();
-            //services.AddSingleton<SearchResultsViewModel>();
-            //services.AddSingleton<LocalPlaybackViewModel>();
 
             services.AddTransient<DialogueTreeViewModel>();
             services.AddTransient<DialogueNodeViewModel>();

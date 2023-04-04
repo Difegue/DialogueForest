@@ -122,7 +122,9 @@
                         <FontIcon Glyph="&#xED53;" />
                     </local:SettingsBlockControl.Icon>
 
-                    <controls:InfoBadge Style="{StaticResource AttentionValueInfoBadgeStyle}" Value="{x:Bind ViewModel.CharacterCount, Mode=OneWay}" />
+                    <controls:InfoBadge Style="{StaticResource AttentionValueInfoBadgeStyle}"
+                                        FontWeight="Bold" 
+                                        Value="{x:Bind ViewModel.CharacterCount, Mode=OneWay}" />
 
                     <local:SettingsBlockControl.ExpandableContent>
                         <StackPanel>
@@ -153,7 +155,9 @@
                         <FontIcon Glyph="&#xE8EC;" />
                     </local:SettingsBlockControl.Icon>
 
-                    <controls:InfoBadge Style="{StaticResource AttentionValueInfoBadgeStyle}" Value="{x:Bind ViewModel.MetadataCount, Mode=OneWay}" />
+                    <controls:InfoBadge Style="{StaticResource AttentionValueInfoBadgeStyle}"
+                                        FontWeight="Bold"
+                                        Value="{x:Bind ViewModel.MetadataCount, Mode=OneWay}" />
 
                     <local:SettingsBlockControl.ExpandableContent>
                         <StackPanel>
@@ -251,16 +255,21 @@
                             CornerRadius="0"
                             Style="{StaticResource CardGrid}">
 
-                            <TextBlock
-                                HorizontalAlignment="Left"
+                            <toolkit:WrapPanel Orientation="Horizontal">
+
+                                <TextBlock
+                                Margin="{StaticResource SmallTopRightBottomMargin}"
                                 VerticalAlignment="Center"
                                 Text="{x:Bind strings:Resources.SettingsNotificationSendAt}" />
 
-                            <TimePicker
-                                HorizontalAlignment="Right"
+                                <TimePicker
                                 ClockIdentifier="24HourClock"
                                 IsEnabled="{x:Bind ViewModel.EnableNotification, Mode=OneWay}"
                                 Time="{x:Bind ViewModel.NotificationTime, Mode=TwoWay}" />
+
+                            </toolkit:WrapPanel>
+
+                            
 
                         </Grid>
 
