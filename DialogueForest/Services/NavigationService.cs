@@ -20,7 +20,8 @@ namespace DialogueForest.Services
             { typeof(SettingsViewModel), typeof(SettingsPage) },
             { typeof(DialogueTreeViewModel), typeof(DialogueTreePage) },
             { typeof(ExportViewModel), typeof(ExportPage) },
-            { typeof(WelcomeViewModel), typeof(HomePage) }
+            { typeof(WelcomeViewModel), typeof(HomePage) },
+            { typeof(PinnedNodesViewModel), typeof(PinsPage) }
         };
 
         public NavigationService()

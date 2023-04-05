@@ -32,6 +32,7 @@ namespace DialogueForest.Services
 
             new ToastContentBuilder()
                 //.AddArgument("action", "viewItemsDueToday")
+                .AddInlineImage(new Uri("ms-appx:///Assets/StoreLogo.png"))
                 .AddText(title)
                 .AddText(text)
                 //.AddProgressBar()

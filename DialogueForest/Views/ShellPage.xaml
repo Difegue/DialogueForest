@@ -151,9 +151,12 @@
                 </muxc:NavigationViewItem>
 
                 <muxc:NavigationViewItem
-                    helpers:NavHelper.NavigateTo="viewmodels:DialogueTreeViewModel"
+                    helpers:NavHelper.NavigateTo="viewmodels:PinnedNodesViewModel"
+                    AllowDrop="True"
                     Content="{x:Bind strings:Resources.NavigationPins}"
                     Icon="Pin"
+                    DragOver="Pins_DragOver"
+                    Drop="NavigationViewItem_Drop"
                     Tag="pins" />
                 <muxc:NavigationViewItem
                     helpers:NavHelper.NavigateTo="viewmodels:DialogueTreeViewModel"

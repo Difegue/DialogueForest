@@ -15,6 +15,7 @@ using DialogueForest.Core.Interfaces;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using DialogueForest.Services;
 using DialogueForest.Core.ViewModels;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace DialogueForest.Views
 {
@@ -181,6 +182,12 @@ namespace DialogueForest.Views
         }
 
         private void NavigationViewItem_DragOver(object sender, DragEventArgs e) => ViewModel.NavigationViewItem_DragOver(sender, e);
+
+        private void Pins_DragOver(object sender, DragEventArgs e)
+        {
+            // For pinning, we use Link instead of move
+            e.AcceptedOperation = (e.DataView.Contains(StandardDataFormats.Text)) ? DataPackageOperation.Link : DataPackageOperation.None;
+        }
 
         private void NavigationViewItem_Drop(object sender, DragEventArgs e) => ViewModel.NavigationViewItem_Drop(sender, e);
 

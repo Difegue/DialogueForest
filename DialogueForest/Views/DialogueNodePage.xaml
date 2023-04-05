@@ -272,13 +272,13 @@
                         </MenuFlyoutSubItem.Icon>
                     </MenuFlyoutSubItem>
                     <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuPin}" Command="{x:Bind ViewModel.PinDialogueCommand}"
-                                            Visibility="{x:Bind ViewModel.IsPinned, Converter={StaticResource ReverseBoolToVisibilityConverter}}"  >
+                                            Visibility="{x:Bind ViewModel.IsPinned, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}"  >
                         <MenuFlyoutItem.Icon>
                             <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE141;" />
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
                     <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuUnpin}" Command="{x:Bind ViewModel.UnpinDialogueCommand}"
-                                            Visibility="{x:Bind ViewModel.IsPinned, Converter={StaticResource BoolToVisibilityConverter}}"  >
+                                            Visibility="{x:Bind ViewModel.IsPinned, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"  >
                         <MenuFlyoutItem.Icon>
                             <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE196;" />
                         </MenuFlyoutItem.Icon>

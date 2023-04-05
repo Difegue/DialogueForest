@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -13,6 +14,7 @@ using DialogueForest.Core.Messages;
 using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
 using DialogueForest.Localization.Strings;
+using RtfPipe.Model;
 
 namespace DialogueForest.Core.ViewModels
 {
@@ -96,6 +98,7 @@ namespace DialogueForest.Core.ViewModels
                 r.OnPropertyChanged(nameof(TreeTitle)));
 
             WeakReferenceMessenger.Default.Register<DialogueNodeViewModel, NodeMovedMessage>(this, (r, m) => r.UpdateParent(m));
+            WeakReferenceMessenger.Default.Register<DialogueNodeViewModel, NodePinnedMessage>(this, (r, m) => { if (m.nodeId == ID) r.OnPropertyChanged(nameof(IsPinned)); });
 
             Prompts.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsPromptsEmpty));
             MetaValues.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsMetaDataEmpty));
@@ -242,19 +245,10 @@ namespace DialogueForest.Core.ViewModels
         }
 
         [RelayCommand]
-        private void PinDialogue()
-        {
-            _dataService.SetPinnedNode(_node, true);
-            _notificationService.ShowInAppNotification(Resources.NotificationPinned);
-        }
-        
+        private void PinDialogue() => WeakReferenceMessenger.Default.Send(new AskToPinNodeMessage(_node, true));       
 
         [RelayCommand]
-        private void UnpinDialogue()
-        {
-            _dataService.SetPinnedNode(_node, false);
-            _notificationService.ShowInAppNotification(Resources.NotificationUnpinned);
-        }
+        private void UnpinDialogue() => WeakReferenceMessenger.Default.Send(new AskToPinNodeMessage(_node, false));
 
         [RelayCommand]
         private void MoveToTrash()

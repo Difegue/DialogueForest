@@ -148,6 +148,7 @@ namespace DialogueForest
             services.AddSingleton<ShellViewModel>();
             services.AddSingleton<SettingsViewModel>();
             services.AddSingleton<OpenedNodesViewModel>();
+            services.AddSingleton<PinnedNodesViewModel>();
             services.AddSingleton<WelcomeViewModel>();
             services.AddSingleton<ExportViewModel>();
 

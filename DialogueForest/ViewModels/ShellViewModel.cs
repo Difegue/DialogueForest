@@ -16,6 +16,8 @@ using DialogueForest.Core.Services;
 using DialogueForest.Core.Models;
 using Windows.ApplicationModel.DataTransfer;
 using CommunityToolkit.WinUI.UI.Controls;
+using CommunityToolkit.Mvvm.Messaging;
+using DialogueForest.Core.Messages;
 
 namespace DialogueForest.ViewModels
 {
@@ -31,8 +33,9 @@ namespace DialogueForest.ViewModels
         private InAppNotification _notificationHolder;
 
 
-        public ShellViewModel(INavigationService navigationService, INotificationService notificationService, IDialogService dialogService, IDispatcherService dispatcherService, IInteropService interopService, ForestDataService dataService, WordCountingService wordService) :
-            base(navigationService, notificationService, dispatcherService, dialogService, interopService, dataService, wordService)
+        public ShellViewModel(INavigationService navigationService, INotificationService notificationService, IDialogService dialogService, IDispatcherService dispatcherService, IInteropService interopService,
+            ForestDataService dataService, WordCountingService wordService, PinnedNodesViewModel pinnedVm) :
+            base(navigationService, notificationService, dispatcherService, dialogService, interopService, dataService, wordService, pinnedVm)
         {
         }
 
@@ -148,6 +151,12 @@ namespace DialogueForest.ViewModels
                     }
                     else if (nvi.Tag is string s)
                     {
+                        if (s == "pins")
+                        {
+                            e.AcceptedOperation = DataPackageOperation.Link;
+                            WeakReferenceMessenger.Default.Send(new AskToPinNodeMessage(node, true));
+                        }
+
                         if (s == "notes")
                             _dataService.MoveNode(node, origin, _dataService.GetNotes());
 
@@ -157,7 +166,9 @@ namespace DialogueForest.ViewModels
 
                 }
 
-                e.AcceptedOperation = DataPackageOperation.Move;
+                // Set operation to move if it wasn't a pin
+                if (e.AcceptedOperation != DataPackageOperation.Link)
+                    e.AcceptedOperation = DataPackageOperation.Move;
                 def.Complete();
             }
         }

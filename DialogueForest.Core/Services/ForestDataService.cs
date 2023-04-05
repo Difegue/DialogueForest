@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using System.Threading;
 using System.Linq;
 using DialogueForest.Core.Messages;
+using DialogueForest.Localization.Strings;
 
 namespace DialogueForest.Core.Services
 {
@@ -21,7 +22,7 @@ namespace DialogueForest.Core.Services
         private INotificationService _notificationService;
 
         private const string STORAGE_NAME = "autosave.json";
-
+        
         private bool _savedFileExists;
         private Timer _autoSaveTimer;
 
@@ -166,6 +167,7 @@ namespace DialogueForest.Core.Services
         public Dictionary<string, MetadataKind> GetMetadataDefinitions() => _currentForest.MetadataDefinitions;
         public List<string> GetCharacters() => _currentForest.CharacterDefinitions;
         public List<DialogueTree> GetDialogueTrees() => _currentForest?.Trees;
+        public List<long> GetPinnedNodes() => _currentForest?.PinnedIDs;
         public DialogueTree GetTrash() => _currentForest.Trash;
         public DialogueTree GetNotes() => _currentForest.Notes;
 
@@ -238,19 +240,6 @@ namespace DialogueForest.Core.Services
             return res;
         }
 
-
-        public DialogueTree GetPins()
-        {
-            // TODO kinda inefficient and prone to bugs
-            var t = new DialogueTree("Pins");
-            t.CannotAddNodes = true;
-
-            foreach (var id in _currentForest.PinnedIDs)
-                t.AddNode(GetNode(id).Item2);
-
-            return t;
-        }
-
         public void MoveNode(DialogueNode node, DialogueTree origin, DialogueTree destination)
         {
             // TODO update lookup table and 
@@ -265,11 +254,16 @@ namespace DialogueForest.Core.Services
         internal void SetPinnedNode(DialogueNode node, bool isPinned)
         {
             if (isPinned)
+            {
                 _currentForest.PinnedIDs.Add(node.ID);
+                _notificationService.ShowInAppNotification(Resources.NotificationPinned);
+            } 
             else
+            {
                 _currentForest.PinnedIDs.Remove(node.ID);
-
-            // TODO: Notify PinnedVM
+                _notificationService.ShowInAppNotification(Resources.NotificationUnpinned);
+            }
+            WeakReferenceMessenger.Default.Send(new NodePinnedMessage(node.ID, isPinned));
         }
 
         internal void SetMetadataDefinitions(Dictionary<string, MetadataKind> data)

@@ -24,9 +24,11 @@ namespace DialogueForest.Core.ViewModels
         protected IDispatcherService _dispatcherService;
         protected ForestDataService _dataService;
         protected WordCountingService _wordService;
+        
+        protected PinnedNodesViewModel _pinnedNodesVm;
 
         public ShellViewModelBase(INavigationService navigationService, INotificationService notificationService, IDispatcherService dispatcherService, 
-            IDialogService dialogService, IInteropService interopService, ForestDataService dataService, WordCountingService wordService)
+            IDialogService dialogService, IInteropService interopService, ForestDataService dataService, WordCountingService wordService, PinnedNodesViewModel pinnedVm)
         {
             _navigationService = navigationService;
             _notificationService = notificationService;
@@ -35,6 +37,8 @@ namespace DialogueForest.Core.ViewModels
             _dataService = dataService;
             _wordService = wordService;
             _interopService = interopService;
+
+            _pinnedNodesVm = pinnedVm;
 
             // Listeners to set unsaved/saved document status
             WeakReferenceMessenger.Default.Register<ShellViewModelBase, TreeUpdatedMessage>(this, (r, m) =>
