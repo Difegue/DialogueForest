@@ -330,11 +330,13 @@ You can always change this later.</value>
     <value>Tracks</value>
   </data>
   <data name="FirstRunText" xml:space="preserve">
-    <value>To get started, please visit the Settings page to key in your MPD server's URL and port.
-Keep in mind Stylophone can send usage data to help diagnose bugs. 
-If you're not okay with this, you can disable telemetry in the Settings.
-Hope you enjoy using the application!  
-</value>
+    <value>To get started, create a new Dialogue Tree using the "New Tree" button on the left, and then start adding Nodes to it!
+
+You can also pin any node by right-clicking it to find it quickly in "My Pins", and use "Notes" to draft dialogue to be later inserted into a Tree.
+
+Keep in mind DialogueForest can send usage data to help diagnose bugs. 
+If you're not okay with this, you can disable telemetry in the Settings page that'll open once you close this popup.
+Hope you enjoy using this silly writing app!  </value>
     <comment>First use prompt message body</comment>
   </data>
   <data name="FirstRunTitle" xml:space="preserve">
@@ -674,7 +676,8 @@ They'll show up here when you do.</value>
     <value>There are unsaved changes</value>
   </data>
   <data name="ContentDialogUnsavedChangesText" xml:space="preserve">
-    <value>The current forest hasn't been saved to disk. Do you want to proceed? \nYour changes will be lost.</value>
+    <value>The current forest hasn't been saved to disk. Do you want to proceed? 
+Your changes will be lost.</value>
   </data>
   <data name="EditorReplyCreateLinked" xml:space="preserve">
     <value>Create and link new Dialogue</value>

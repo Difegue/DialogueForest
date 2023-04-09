@@ -309,11 +309,13 @@ Vous pourrez toujours le changer plus tard.</value>
     <value>Pistes</value>
   </data>
   <data name="FirstRunText" xml:space="preserve">
-    <value>Pour commencer, entrez l'URL et le port de votre serveur MPD dans les Paramètres.
-Stylophone peut envoyer des données d'utilisation pour aider au diagnostic de bugs.
-Il est possible de désactiver l'envoi de ces données dans les Paramètres.
-J'espère que vous apprécierez l'application!  
-</value>
+    <value>Pour commencer, créez un nouvel arbre de Dialogue en utilisant le bouton "Nouvel Arbre" sur la gauche, puis commencez à y ajouter des Noeuds !
+
+Vous pouvez également épingler n'importe quel noeud via clic-droit pour le retrouver rapidement dans "Mes épingles", et utiliser les "Notes" pour écrire vos brouillons.
+
+DialogueForest peut envoyer des données d'utilisation pour aider au diagnostic de bugs.
+Il est possible de désactiver l'envoi de ces données dans les Paramètres, qui vont s'ouvrir une fois ce popup fermé.
+J'espère que vous apprécierez l'application!  </value>
     <comment>First use prompt message body</comment>
   </data>
   <data name="FirstRunTitle" xml:space="preserve">
@@ -600,7 +602,8 @@ Vous les retrouverez ici.</value>
     <value>Il y a des modifications non enregistrées</value>
   </data>
   <data name="ContentDialogUnsavedChangesText" xml:space="preserve">
-    <value>La forêt actuelle n'a pas été sauvegardée sur disque. Voulez vous continuer?\nVos modifications seront perdues.</value>
+    <value>La forêt actuelle n'a pas été sauvegardée sur disque. Voulez vous continuer?
+Vos modifications seront perdues.</value>
   </data>
   <data name="EditorReplyCreateLinked" xml:space="preserve">
     <value>Créer et lier un nouveau Dialogue</value>

@@ -196,7 +196,8 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à The current forest hasn&apos;t been saved to disk. Do you want to proceed? \nYour changes will be lost..
+        ///   Recherche une chaîne localisée semblable à The current forest hasn&apos;t been saved to disk. Do you want to proceed? 
+        ///Your changes will be lost..
         /// </summary>
         public static string ContentDialogUnsavedChangesText {
             get {
@@ -732,11 +733,13 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à To get started, please visit the Settings page to key in your MPD server&apos;s URL and port.
-        ///Keep in mind Stylophone can send usage data to help diagnose bugs. 
-        ///If you&apos;re not okay with this, you can disable telemetry in the Settings.
-        ///Hope you enjoy using the application!  
-        ///.
+        ///   Recherche une chaîne localisée semblable à To get started, create a new Dialogue Tree using the &quot;New Tree&quot; button on the left, and then start adding Nodes to it!
+        ///
+        ///You can also pin any node by right-clicking it to find it quickly in &quot;My Pins&quot;, and use &quot;Notes&quot; to draft dialogue to be later inserted into a Tree.
+        ///
+        ///Keep in mind DialogueForest can send usage data to help diagnose bugs. 
+        ///If you&apos;re not okay with this, you can disable telemetry in the Settings page that&apos;ll open once you close this popup.
+        ///Hope you enjoy using this silly writing app!  .
         /// </summary>
         public static string FirstRunText {
             get {

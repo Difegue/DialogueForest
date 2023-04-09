@@ -230,11 +230,7 @@
     <value>Faixas</value>
   </data>
   <data name="FirstRunText" xml:space="preserve">
-    <value>Para começar, por favor visite a página Definições para introduzir o URL e a porta do seu servidor MPD.
-Tenha em mente que o Stylophone pode enviar dados de utilização para ajudar a diagnosticar bugs. 
-Se não estiver de acordo com isto, pode desativar a telemetria nas Definições.
-Espero que goste de utilizar a aplicação!  
-</value>
+    <value></value>
     <comment>First use prompt message body</comment>
   </data>
   <data name="FirstRunTitle" xml:space="preserve">

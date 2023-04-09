@@ -35,11 +35,10 @@ namespace DialogueForest.Services
         {
             await _dispatcherService.ExecuteOnUIThreadAsync(async () =>
                 {
-                    // TODO packaged
-                    return;
-                    if (SystemInformation.Instance.IsFirstRun && !shownFirstRun)
+                    if (!_storageService.GetValue("shownFirstRun", false) && !shownFirstRun)
                     {
                         shownFirstRun = true;
+                        _storageService.SetValue("shownFirstRun", true);
                         var dialog = new FirstRunDialog();
 
                         await dialog.ShowAsync();
