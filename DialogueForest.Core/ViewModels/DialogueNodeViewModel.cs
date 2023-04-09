@@ -99,6 +99,8 @@ namespace DialogueForest.Core.ViewModels
 
             WeakReferenceMessenger.Default.Register<DialogueNodeViewModel, NodeMovedMessage>(this, (r, m) => r.UpdateParent(m));
             WeakReferenceMessenger.Default.Register<DialogueNodeViewModel, NodePinnedMessage>(this, (r, m) => { if (m.nodeId == ID) r.OnPropertyChanged(nameof(IsPinned)); });
+            // TODO is this too heavy?
+            WeakReferenceMessenger.Default.Register<DialogueNodeViewModel, UnsavedModificationsMessage>(this, (r, m) => r.OnPropertyChanged(nameof(NodeChildren)));
 
             Prompts.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsPromptsEmpty));
             MetaValues.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsMetaDataEmpty));
@@ -191,6 +193,8 @@ namespace DialogueForest.Core.ViewModels
 
             Dialogs.Add(dialogVm);
         }
+
+        public List<DialogueNodeViewModel> NodeChildren => GetNodesLinkedByUs().Select(n => Create(n, _parentVm)).ToList();
 
         public List<DialogueNode> GetNodesLinkedByUs()
         {

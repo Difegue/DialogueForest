@@ -14,6 +14,7 @@ using DialogueForest.Core.Services;
 using DialogueForest.Localization.Strings;
 using DialogueForest.Core.Messages;
 using CommunityToolkit.Mvvm.Messaging;
+using RtfPipe.Tokens;
 
 namespace DialogueForest.Core.ViewModels
 {
@@ -23,6 +24,7 @@ namespace DialogueForest.Core.ViewModels
         private OpenedNodesViewModel _openedNodes;
         private INavigationService _navigationService;
         private INotificationService _notificationService;
+        private IApplicationStorageService _storageService;
         private ForestDataService _dataService;
 
         private DialogueTree _tree;
@@ -63,13 +65,17 @@ namespace DialogueForest.Core.ViewModels
 
         public ObservableCollection<DialogueNodeViewModel> Nodes { get; } = new ObservableCollection<DialogueNodeViewModel>();
 
-        public DialogueTreeViewModel(IDialogService dialogService, OpenedNodesViewModel openedNodes, INavigationService navigationService, INotificationService notificationService, ForestDataService forestService)
+        public DialogueTreeViewModel(IDialogService dialogService, OpenedNodesViewModel openedNodes, INavigationService navigationService, INotificationService notificationService, 
+            IApplicationStorageService storageService, ForestDataService forestService)
         {
             _dialogService = dialogService;
             _navigationService = navigationService;
             _openedNodes = openedNodes;
             _notificationService = notificationService;
+            _storageService = storageService;
             _dataService = forestService;
+
+            _showTreeView = _storageService.GetValue(nameof(ShowTreeView), false);
 
             Nodes.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsNodesEmpty));
             Nodes.CollectionChanged += (s, e) => OnPropertyChanged(nameof(TotalDialogues));
@@ -121,11 +127,23 @@ namespace DialogueForest.Core.ViewModels
             }
         }
 
+        // Dumb property that only serves to trigger opening nodes selected in treeview
         [ObservableProperty]
         private DialogueNodeViewModel _selectedNode;
 
+        partial void OnSelectedNodeChanged(DialogueNodeViewModel value)
+        {
+            if (value != null) 
+                _navigationService.OpenDialogueNode(value);
+        }
+
         [ObservableProperty]
         private bool _canBeRenamed;
+
+        [ObservableProperty]
+        private bool _showTreeView;
+
+        partial void OnShowTreeViewChanged(bool value) => _storageService.SetValue(nameof(ShowTreeView), value);
 
         public int TotalDialogues => Nodes.Count;
 

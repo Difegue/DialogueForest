@@ -23,11 +23,13 @@ namespace DialogueForest.Core.ViewModels
         public bool NoPinnedNodes => Nodes.Count == 0;
 
         // Dumb property that only serves to trigger opening nodes selected in datagrid
+        [ObservableProperty]
         private DialogueNodeViewModel _selectedPin;
-        public DialogueNodeViewModel SelectedPin
+
+        partial void OnSelectedPinChanged(DialogueNodeViewModel value)
         {
-            get => _selectedPin;
-            set { if (value != null) _navigationService.OpenDialogueNode(value); }
+            if (value != null)
+                _navigationService.OpenDialogueNode(value);
         }
 
         public PinnedNodesViewModel(INavigationService navService, ForestDataService dataService)
