@@ -63,12 +63,14 @@ namespace DialogueForest.Core.ViewModels
 
         public void ShutdownInitiated()
         {
+            // Always autosave on shutdown
             _dataService.SaveForestToStorage();
         }
 
         private void SetIsDirty(bool isDirty)
         {
-            HasUnsavedChanges = isDirty;
+            _dataService.SetForestDirty(isDirty);
+            OnPropertyChanged(nameof(HasUnsavedChanges));
             UpdateTitleBar();
         }
 
@@ -94,8 +96,6 @@ namespace DialogueForest.Core.ViewModels
         }
         
         [ObservableProperty]
-        private bool _hasUnsavedChanges;
-        [ObservableProperty]
         private bool _isBackEnabled;
         [ObservableProperty]
         private string _titleBarText;
@@ -111,6 +111,7 @@ namespace DialogueForest.Core.ViewModels
         [ObservableProperty]
         private bool _dailyObjectiveComplete;
 
+        public bool HasUnsavedChanges => _dataService.CurrentForestHasUnsavedChanges;
         public bool WordTrackingEnabled => _wordService.IsTrackingEnabled;
 
         [RelayCommand]

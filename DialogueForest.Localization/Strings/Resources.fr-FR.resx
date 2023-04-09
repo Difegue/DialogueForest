@@ -308,9 +308,6 @@ Vous pourrez toujours le changer plus tard.</value>
   <data name="SearchTracksToggle" xml:space="preserve">
     <value>Pistes</value>
   </data>
-  <data name="WelcomeFlavorText" xml:space="preserve">
-    <value>Aucun résultat trouvé...</value>
-  </data>
   <data name="FirstRunText" xml:space="preserve">
     <value>Pour commencer, entrez l'URL et le port de votre serveur MPD dans les Paramètres.
 Stylophone peut envoyer des données d'utilisation pour aider au diagnostic de bugs.
@@ -470,7 +467,7 @@ Vous les retrouverez ici.</value>
   <data name="TreeViewAddNode" xml:space="preserve">
     <value>Ajouter un noeud de Dialogue</value>
   </data>
-  <data name="FirstRunFlavorText" xml:space="preserve">
+  <data name="WelcomeFlavorText" xml:space="preserve">
     <value>David Bowie is credited with playing the Stylophone on his 1969 debut hit song "Space Oddity" and also for his 2002 album Heathen track titled "Slip Away," as well as on the song "Heathen (The Rays)".</value>
   </data>
   <data name="TreeViewToggleButton" xml:space="preserve">
@@ -598,5 +595,11 @@ Vous les retrouverez ici.</value>
   </data>
   <data name="DailyNotificationDescNoTrack" xml:space="preserve">
     <value>Ouvrez DialogueForest pour enrichir votre histoire !</value>
+  </data>
+  <data name="ContentDialogUnsavedChanges" xml:space="preserve">
+    <value>Il y a des modifications non enregistrées</value>
+  </data>
+  <data name="ContentDialogUnsavedChangesText" xml:space="preserve">
+    <value>La forêt actuelle n'a pas été sauvegardée sur disque. Voulez vous continuer?\nVos modifications seront perdues.</value>
   </data>
 </root>

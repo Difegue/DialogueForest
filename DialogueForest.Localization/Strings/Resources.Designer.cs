@@ -187,6 +187,24 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à There are unsaved changes.
+        /// </summary>
+        public static string ContentDialogUnsavedChanges {
+            get {
+                return ResourceManager.GetString("ContentDialogUnsavedChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à The current forest hasn&apos;t been saved to disk. Do you want to proceed? \nYour changes will be lost..
+        /// </summary>
+        public static string ContentDialogUnsavedChangesText {
+            get {
+                return ResourceManager.GetString("ContentDialogUnsavedChangesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à It will be permanently deleted!.
         /// </summary>
         public static string ContentDialogWillBePermaDeleted {
@@ -701,15 +719,6 @@ namespace DialogueForest.Localization.Strings {
         public static string ExportSeparateFilesTitle {
             get {
                 return ResourceManager.GetString("ExportSeparateFilesTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à David Bowie is credited with playing the Stylophone on his 1969 debut hit song &quot;Space Oddity&quot; and also for his 2002 album Heathen track titled &quot;Slip Away,&quot; as well as on the song &quot;Heathen (The Rays)&quot;..
-        /// </summary>
-        public static string FirstRunFlavorText {
-            get {
-                return ResourceManager.GetString("FirstRunFlavorText", resourceCulture);
             }
         }
         
@@ -1368,7 +1377,7 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à No Results have been found....
+        ///   Recherche une chaîne localisée semblable à David Bowie is credited with playing the Stylophone on his 1969 debut hit song &quot;Space Oddity&quot; and also for his 2002 album Heathen track titled &quot;Slip Away,&quot; as well as on the song &quot;Heathen (The Rays)&quot;..
         /// </summary>
         public static string WelcomeFlavorText {
             get {

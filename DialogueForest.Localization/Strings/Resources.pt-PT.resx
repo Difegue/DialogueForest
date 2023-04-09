@@ -229,9 +229,6 @@
   <data name="SearchTracksToggle" xml:space="preserve">
     <value>Faixas</value>
   </data>
-  <data name="WelcomeFlavorText" xml:space="preserve">
-    <value>Não foram encontrados resultados...</value>
-  </data>
   <data name="FirstRunText" xml:space="preserve">
     <value>Para começar, por favor visite a página Definições para introduzir o URL e a porta do seu servidor MPD.
 Tenha em mente que o Stylophone pode enviar dados de utilização para ajudar a diagnosticar bugs. 
@@ -278,7 +275,7 @@ Espero que goste de utilizar a aplicação!
   <data name="ButtonNoText" xml:space="preserve">
     <value>Não</value>
   </data>
-  <data name="FirstRunFlavorText" xml:space="preserve">
+  <data name="WelcomeFlavorText" xml:space="preserve">
     <value>David Bowie é creditado por ter tocado o Stylophone na sua canção de sucesso de 1969 "Space Oddity" e também pelo seu álbum de 2002 "Heathen track" intitulado "Slip Away", bem como na canção "Heathen (The Rays)".</value>
   </data>
 </root>

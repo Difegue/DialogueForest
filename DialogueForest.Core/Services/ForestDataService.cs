@@ -27,6 +27,7 @@ namespace DialogueForest.Core.Services
         private Timer _autoSaveTimer;
 
         public FileAbstraction LastSavedFile { get; private set; }
+        public bool CurrentForestHasUnsavedChanges { get; private set; }
 
         public ForestDataService(IApplicationStorageService storageService, INotificationService notificationService)
         {
@@ -75,7 +76,22 @@ namespace DialogueForest.Core.Services
             }
         }
 
+        public void ResetDatabase()
+        {
+            _currentForest = new DialogueDatabase();
+            _storageService.DeleteFileAsync(STORAGE_NAME);
+            CurrentForestHasUnsavedChanges = false;
+            WeakReferenceMessenger.Default.Send(new TreeUpdatedMessage(false));
+        }
+
         #region FileSystem stuff
+
+        public void SetForestDirty(bool isDirty)
+        {
+            CurrentForestHasUnsavedChanges = isDirty;
+            _storageService.SetValue(nameof(CurrentForestHasUnsavedChanges), isDirty);
+        }
+
         public async Task LoadForestFromFileAsync()
         {
             var res = await _storageService.LoadDataFromExternalFileAsync(".frst");
@@ -99,11 +115,12 @@ namespace DialogueForest.Core.Services
 
         public async Task LoadForestFromStorageAsync()
         {
+            CurrentForestHasUnsavedChanges = _storageService.GetValue(nameof(CurrentForestHasUnsavedChanges), false);
             using (var stream = await _storageService.OpenFileAsync(STORAGE_NAME))
             {
                 _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(stream);
             }   
-            WeakReferenceMessenger.Default.Send(new TreeUpdatedMessage(false)); // Notify listeners we're loaded
+            WeakReferenceMessenger.Default.Send(new TreeUpdatedMessage(CurrentForestHasUnsavedChanges)); // Notify listeners we're loaded
         }
 
         public void SaveForestToStorage()
