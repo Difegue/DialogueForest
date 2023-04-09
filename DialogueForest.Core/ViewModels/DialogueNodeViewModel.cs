@@ -49,6 +49,12 @@ namespace DialogueForest.Core.ViewModels
             return allIDs;
         }
 
+        internal long CreateNewDialogue()
+        {
+            DialogueNodeViewModel newVm = _parentVm.AddAndReturnNode();
+            return newVm.ID;
+        }
+
         private void LoadFromNode(DialogueNode node)
         {
             _node = node;

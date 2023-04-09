@@ -69,6 +69,12 @@ namespace DialogueForest.Core.ViewModels
         }
 
         [RelayCommand]
+        private void CreateNewLinkedDialogue()
+        {
+            LinkedID = _parentNodeVm.CreateNewDialogue();
+        }
+
+        [RelayCommand]
         private void GoToLinkedDialogue()
         {
             if (LinkedID < 0 || LinkedID == _parentNodeVm.ID) return;

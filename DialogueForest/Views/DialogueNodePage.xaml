@@ -160,9 +160,16 @@
                                   SelectedItem="{Binding LinkedID, Mode=TwoWay}"
                                   ItemsSource="{x:Bind LinkableIDs, Mode=OneWay}"
                                   />
+                        <Button ToolTipService.ToolTip="{x:Bind strings:Resources.EditorReplyCreateLinked}"
+                                Visibility="{x:Bind HasLinkedID, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}"
+                                Command="{x:Bind CreateNewLinkedDialogueCommand}">
+                            <Button.Content>
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE710;" FontSize="18"/>
+                            </Button.Content>
+                        </Button>
                         <Button ToolTipService.ToolTip="{x:Bind strings:Resources.EditorReplyGoToLinked}"
-                                IsEnabled="{x:Bind HasLinkedID, Mode=OneWay}"
-                                Command="{x:Bind GoToLinkedDialogueCommand}">
+                                Visibility="{x:Bind HasLinkedID, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                                Command="{x:Bind GoToLinkedDialogueCommand}" Margin="-8,0,0,0">
                             <Button.Content>
                                 <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF716;" FontSize="18"/>
                             </Button.Content>

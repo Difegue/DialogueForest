@@ -156,7 +156,9 @@ namespace DialogueForest.Core.ViewModels
         }
 
         [RelayCommand]
-        private void AddNode(DialogueNode node = null)
+        private void AddNode(DialogueNode node = null) => AddAndReturnNode(node);
+
+        internal DialogueNodeViewModel AddAndReturnNode(DialogueNode node = null)
         {
             if (node == null)
             {
@@ -167,6 +169,8 @@ namespace DialogueForest.Core.ViewModels
 
             var nodeVm = DialogueNodeViewModel.Create(node, this);
             Nodes.Add(nodeVm);
+
+            return nodeVm;
         }
 
         internal void MoveNodeToTrash(DialogueNodeViewModel nodeVm, DialogueNode node)

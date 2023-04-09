@@ -399,7 +399,7 @@ They'll show up here when you do.</value>
     <value>Linked to:</value>
   </data>
   <data name="EditorReplyGoToLinked" xml:space="preserve">
-    <value>Go to Linked Dialogue</value>
+    <value>Go to linked Dialogue</value>
   </data>
   <data name="EditorDeleteReply" xml:space="preserve">
     <value>Delete Reply</value>
@@ -602,5 +602,8 @@ They'll show up here when you do.</value>
   </data>
   <data name="ContentDialogUnsavedChangesText" xml:space="preserve">
     <value>The current forest hasn't been saved to disk. Do you want to proceed? \nYour changes will be lost.</value>
+  </data>
+  <data name="EditorReplyCreateLinked" xml:space="preserve">
+    <value>Create and link new Dialogue</value>
   </data>
 </root>

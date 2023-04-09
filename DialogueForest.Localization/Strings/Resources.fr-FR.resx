@@ -398,7 +398,7 @@ Vous les retrouverez ici.</value>
     <value>Relié à:</value>
   </data>
   <data name="EditorReplyGoToLinked" xml:space="preserve">
-    <value>Aller au dialogue lié</value>
+    <value>Aller au Dialogue lié</value>
   </data>
   <data name="EditorDeleteReply" xml:space="preserve">
     <value>Supprimer cette réponse</value>
@@ -601,5 +601,8 @@ Vous les retrouverez ici.</value>
   </data>
   <data name="ContentDialogUnsavedChangesText" xml:space="preserve">
     <value>La forêt actuelle n'a pas été sauvegardée sur disque. Voulez vous continuer?\nVos modifications seront perdues.</value>
+  </data>
+  <data name="EditorReplyCreateLinked" xml:space="preserve">
+    <value>Créer et lier un nouveau Dialogue</value>
   </data>
 </root>

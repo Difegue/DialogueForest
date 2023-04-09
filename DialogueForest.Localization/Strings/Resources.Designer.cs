@@ -475,7 +475,16 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Go to Linked Dialogue.
+        ///   Recherche une chaîne localisée semblable à Create and link new Dialogue.
+        /// </summary>
+        public static string EditorReplyCreateLinked {
+            get {
+                return ResourceManager.GetString("EditorReplyCreateLinked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Go to linked Dialogue.
         /// </summary>
         public static string EditorReplyGoToLinked {
             get {
