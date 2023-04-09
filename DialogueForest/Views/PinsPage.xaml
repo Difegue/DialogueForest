@@ -13,80 +13,46 @@
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:helpers="using:DialogueForest.Helpers"
     xmlns:local="using:DialogueForest.Controls"
-    xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters"
+    xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters" xmlns:models="using:DialogueForest.Core.Models"
     mc:Ignorable="d">
 
     <Page.Resources>
-        <media:AttachedCardShadow x:Key="CommonShadow" Offset="0,-2" Opacity="0.8" Color="Black" BlurRadius="10" />
+        <media:AttachedCardShadow x:Key="CommonShadow" Offset="0,4" Opacity="0.8" Color="Black" BlurRadius="10" />
         <converters:StringFormatConverter x:Key="StringFormatConverter"/>
 
-        <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="Width" Value="270"/>
-            <Setter Property="Margin" Value="12,14,12,0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Grid>
-                            <ContentPresenter x:Name="itemContent">
-                                <ui:Effects.Shadow>
-                                    <media:AttachedCardShadow Offset="0,2" Opacity="0.2" Color="Black" BlurRadius="10" />
-                                </ui:Effects.Shadow>
-                            </ContentPresenter>
+        <DataTemplate x:Key="NodeCardTemplate" x:DataType="viewmodels:DialogueNodeViewModel">
+            <Grid Style="{StaticResource CardGrid}" Margin="-1">
 
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal" />
-                                    <VisualState x:Name="Pressed">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemContent" Storyboard.TargetProperty="Margin">
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.02" Value="0,-2,0,2" />
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.05" Value="0,-1,0,1" />
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.08" Value="0,2,0,-2" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                        <VisualState.Setters>
-                                            <Setter Target="itemContent.(ui:Effects.Shadow).Opacity" Value="0"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="24" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-                                            <Setter Target="itemContent.BorderBrush" Value="{ThemeResource SubtleFillColorTertiaryBrush}" />
-                                            <Setter Target="itemContent.Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="PointerOver">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemContent" Storyboard.TargetProperty="Margin">
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.01" Value="0,0,0,0" />
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.03" Value="0,-1,0,1" />
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.12" Value="0,-2,0,2" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                        <VisualState.Setters>
-                                            <Setter Target="itemContent.(ui:Effects.Shadow).Opacity" Value="0.4"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                </Grid.ColumnDefinitions>
+                
 
-                                            <Setter Target="itemContent.BorderBrush" Value="{ThemeResource ButtonBackgroundPointerOver}" />
-                                            <Setter Target="itemContent.Foreground" Value="{ThemeResource GridViewItemForegroundPointerOver}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="PointerOverSelected">
-                                        <VisualState.Setters>
-                                            <Setter Target="itemContent.BorderBrush" Value="{ThemeResource SubtleFillColorSecondaryBrush}" />
-                                            <Setter Target="itemContent.Foreground" Value="{ThemeResource GridViewItemForegroundPointerOver}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
+                <Border Background="{ThemeResource SystemAccentColor}" Grid.RowSpan="2" Width="4" HorizontalAlignment="Left" Margin="-17" CornerRadius="4,0,0,4"/>
 
-                            </VisualStateManager.VisualStateGroups>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}"
+                               Text="{x:Bind NodeTitle, Mode=OneWay}" TextTrimming="CharacterEllipsis"/>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1"
+                            Padding="4,0" Margin="0,-8,-8,8" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <TextBlock Text="#"/>
+                    <TextBlock Text="{x:Bind ID}"/>
+                </StackPanel>
+
+            </Grid>
+        </DataTemplate>
 
     </Page.Resources>
 
     <Grid x:Name="ContentArea" >
         <Grid.RowDefinitions>
-            <RowDefinition Height="136" />
+            <RowDefinition Height="96" />
             <RowDefinition Height="*" />
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
@@ -97,7 +63,7 @@
             <TextBlock Style="{StaticResource SubtitleTextBlockStyle}"
                        Text="Pins" HorizontalAlignment="Center" Margin="0,-8,0,0"/>
             
-            <AutoSuggestBox PlaceholderText="Search Nodes..." QueryIcon="Zoom"/>
+            <AutoSuggestBox PlaceholderText="Search Pins..." QueryIcon="Zoom"/>
 
             <Grid HorizontalAlignment="Stretch" >
 
@@ -115,73 +81,119 @@
 
         </StackPanel>
 
+        <Border Grid.Row="1" Margin="{StaticResource SmallLeftRightMargin}">
+            <Grid Style="{StaticResource CardGrid}" Padding="0">
 
-        <controls:AdaptiveGridView Grid.Row="1"
-                    ItemsSource="{x:Bind ViewModel.Nodes}"
-                    IsItemClickEnabled="True"
-                    StretchContentForSingleRow="True"
-                    DesiredWidth="270"
-                    ItemHeight="96" CanDragItems="True"
-                    CanReorderItems="True" SelectionMode="None"
-                    ItemClickCommand="{x:Bind ViewModel.ShowNodeCommand}"/>
+                <controls:DataGrid x:Name="dataGrid" Margin="0,4,0,0"
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                AlternatingRowBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                HorizontalScrollBarVisibility="Auto"
+                VerticalScrollBarVisibility="Auto"
+                AutoGenerateColumns="False"
+                CanUserSortColumns="True"
+                Sorting="dg_Sorting"
+                CanUserReorderColumns="False"
+                CanUserResizeColumns="True"
+                MinColumnWidth="46"
+                MaxColumnWidth="400"
+                ColumnHeaderHeight="32"
+                GridLinesVisibility="Vertical"
+                HeadersVisibility="Column"
+                SelectionMode="Single"
+                ItemsSource="{x:Bind ViewModel.Nodes}"
+                SelectedItem="{x:Bind ViewModel.SelectedPin, Mode=TwoWay}">
+                    <controls:DataGrid.Columns>
+                        <controls:DataGridTextColumn Header="ID" Binding="{Binding ID}" Tag="ID" CanUserResize="False" />
+                        <controls:DataGridTextColumn Header="Title" Binding="{Binding NodeTitle}" Tag="Title" />
+                        <controls:DataGridTextColumn Header="Tree" Binding="{Binding TreeTitle}" Tag="Tree" />
+                    </controls:DataGrid.Columns>
+                    <controls:DataGrid.RowStyle>
+                        <Style TargetType="controls:DataGridRow">
+                            <Setter Property="controls:DataGridRow.ContextFlyout">
+                                <Setter.Value>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem Command="{Binding ShowInTreeCommand}" Text="{x:Bind strings:Resources.EditorShowInTree}" >
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEC0A;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+                                        <MenuFlyoutItem Command="{Binding UnpinDialogueCommand}" Text="{x:Bind strings:Resources.ContextMenuUnpin}" >
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE196;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+                                    </MenuFlyout>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </controls:DataGrid.RowStyle>
 
+                </controls:DataGrid>
 
-        <StackPanel Grid.Row="1"
+                <Border Background="{ThemeResource SystemAccentColor}" 
+                    Height="4" HorizontalAlignment="Stretch" VerticalAlignment="Top" CornerRadius="4,4,0,0"/>
+
+                <StackPanel Grid.Row="1"
                     Visibility="{x:Bind ViewModel.NoPinnedNodes, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
 
-            <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg4" Width="90" Height="90">
-                <Canvas.RenderTransform>
-                    <CompositeTransform ScaleX="0.085" ScaleY="0.085" />
-                </Canvas.RenderTransform>
-                <Canvas.Resources>
-                    <LinearGradientBrush xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Key="linearGradient3233" MappingMode="RelativeToBoundingBox" StartPoint="0,0" EndPoint="1,1">
-                        <LinearGradientBrush.GradientStops>
-                            <GradientStopCollection>
-                                <GradientStop Color="#FF5AA02C" Offset="0"/>
-                                <GradientStop Color="#FF66FF00" Offset="1"/>
-                            </GradientStopCollection>
-                        </LinearGradientBrush.GradientStops>
-                    </LinearGradientBrush>
-                    <LinearGradientBrush xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Key="linearGradient3235" MappingMode="Absolute" StartPoint="620,730" EndPoint="973,-11">
-                        <LinearGradientBrush.GradientStops>
-                            <GradientStopCollection>
-                                <GradientStop Color="#FF5AA02C" Offset="0"/>
-                                <GradientStop Color="#FF66FF00" Offset="1"/>
-                            </GradientStopCollection>
-                        </LinearGradientBrush.GradientStops>
-                    </LinearGradientBrush>
-                    <LinearGradientBrush xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Key="linearGradient3693" MappingMode="Absolute" StartPoint="160,493" EndPoint="553,75">
-                        <LinearGradientBrush.GradientStops>
-                            <GradientStopCollection>
-                                <GradientStop Color="#FF5AA02C" Offset="0"/>
-                                <GradientStop Color="#FF66FF00" Offset="1"/>
-                            </GradientStopCollection>
-                        </LinearGradientBrush.GradientStops>
-                    </LinearGradientBrush>
-                </Canvas.Resources>
-                <!--Unknown tag: sodipodi:namedview-->
-                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path65" Fill="{StaticResource linearGradient3693}" StrokeThickness="1.02749" Data="M 286.88336 573.8306 C 260.46332 570.63391 235.62023 563.13115 210.63574 550.8034 182.99259 537.16383 163.97908 523.82204 142.44942 502.95704 101.19301 462.9743 75.825511 414.23072 66.541349 357.09984 65.068076 348.03393 64.818393 330.84195 64.488829 215.7732 64.21723 120.94336 64.433126 83.491265 65.270673 80.14433 c 1.561226 -6.238842 5.507971 -11.138391 10.890138 -13.519179 4.336972 -1.918449 8.131416 -1.962524 138.309039 -1.606563 132.18642 0.361454 133.99326 0.393614 145.39897 2.587955 63.78603 12.271768 115.23791 41.108637 154.27556 86.465747 l 6.45097 7.49525 -12.42871 6.55446 c -55.9021 29.48077 -102.38 72.32389 -135.14064 124.57205 -4.20304 6.7032 -8.68839 14.34164 -9.96744 16.97432 l -2.32556 4.78669 -58.60877 -58.53609 c -65.93036 -65.84862 -63.82474 -64.12057 -78.1311 -64.12057 -22.93677 0 -38.20165 22.36676 -30.1856 44.22921 2.06534 5.63287 5.81519 9.58935 71.07336 74.98973 l 68.89298 69.04311 -2.2378 8.16557 c -14.48284 52.84667 -15.62225 115.64784 -3.09653 170.67281 1.7296 7.59806 3.37626 14.41803 3.65926 15.1555 0.69207 1.80354 -29.70353 1.65312 -45.21544 -0.22373 z">
-                    <Path.RenderTransform>
-                        <TranslateTransform X="0" Y="64"/>
-                    </Path.RenderTransform>
-                </Path>
-                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path104" Fill="{StaticResource linearGradient3235}" StrokeThickness="1.02749" Data="m 652.97079 766.92773 c -1.97792 -0.234 -8.21993 -0.91238 -13.87113 -1.5075 -49.43467 -5.20592 -104.83059 -27.79182 -143.33506 -58.44025 l -2.56872 -2.04462 103.40355 -103.55789 C 696.63335 501.19425 700.07671 497.61869 702.26525 491.65464 c 4.49671 -12.25409 1.74432 -25.00912 -7.41146 -34.34589 -6.61038 -6.74106 -12.90872 -9.30242 -22.87441 -9.30242 -14.85384 0 -6.97854 -6.97522 -121.89877 107.96659 l -102.954 102.97332 -2.45753 -2.98773 c -4.79811 -5.83326 -19.71177 -28.8134 -24.6109 -37.92243 -16.44969 -30.5851 -27.69569 -64.33206 -32.76706 -98.32728 -2.24143 -15.02515 -3.05711 -50.02463 -1.54153 -66.14433 7.45248 -79.26406 47.62116 -151.87066 111.2284 -201.05004 40.57764 -31.37352 89.1018 -51.32243 142.12167 -58.42807 12.92971 -1.73282 292.11171 -2.56128 300.15881 -0.89071 7.45837 1.54835 13.52796 6.26231 17.07916 13.26455 l 2.8256 5.57152 -10e-4 143.40767 c -10e-4 155.81282 -0.004 155.90328 -5.7997 183.43976 -15.2421 72.42081 -60.09528 138.53748 -121.91427 179.70999 -37.47639 24.95991 -77.9984 40.49989 -120.9377 46.37902 -11.26306 1.5421 -49.93574 2.85914 -57.53952 1.95957 z">
-                    <Path.RenderTransform>
-                        <TranslateTransform X="0" Y="64"/>
-                    </Path.RenderTransform>
-                </Path>
-            </Canvas>
+                    <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg4" Width="90" Height="90">
+                        <Canvas.RenderTransform>
+                            <CompositeTransform ScaleX="0.085" ScaleY="0.085" />
+                        </Canvas.RenderTransform>
+                        <Canvas.Resources>
+                            <LinearGradientBrush xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Key="linearGradient3233" MappingMode="RelativeToBoundingBox" StartPoint="0,0" EndPoint="1,1">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStopCollection>
+                                        <GradientStop Color="#FF5AA02C" Offset="0"/>
+                                        <GradientStop Color="#FF66FF00" Offset="1"/>
+                                    </GradientStopCollection>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                            <LinearGradientBrush xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Key="linearGradient3235" MappingMode="Absolute" StartPoint="620,730" EndPoint="973,-11">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStopCollection>
+                                        <GradientStop Color="#FF5AA02C" Offset="0"/>
+                                        <GradientStop Color="#FF66FF00" Offset="1"/>
+                                    </GradientStopCollection>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                            <LinearGradientBrush xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Key="linearGradient3693" MappingMode="Absolute" StartPoint="160,493" EndPoint="553,75">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStopCollection>
+                                        <GradientStop Color="#FF5AA02C" Offset="0"/>
+                                        <GradientStop Color="#FF66FF00" Offset="1"/>
+                                    </GradientStopCollection>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </Canvas.Resources>
+                        <!--Unknown tag: sodipodi:namedview-->
+                        <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path65" Fill="{StaticResource linearGradient3693}" StrokeThickness="1.02749" Data="M 286.88336 573.8306 C 260.46332 570.63391 235.62023 563.13115 210.63574 550.8034 182.99259 537.16383 163.97908 523.82204 142.44942 502.95704 101.19301 462.9743 75.825511 414.23072 66.541349 357.09984 65.068076 348.03393 64.818393 330.84195 64.488829 215.7732 64.21723 120.94336 64.433126 83.491265 65.270673 80.14433 c 1.561226 -6.238842 5.507971 -11.138391 10.890138 -13.519179 4.336972 -1.918449 8.131416 -1.962524 138.309039 -1.606563 132.18642 0.361454 133.99326 0.393614 145.39897 2.587955 63.78603 12.271768 115.23791 41.108637 154.27556 86.465747 l 6.45097 7.49525 -12.42871 6.55446 c -55.9021 29.48077 -102.38 72.32389 -135.14064 124.57205 -4.20304 6.7032 -8.68839 14.34164 -9.96744 16.97432 l -2.32556 4.78669 -58.60877 -58.53609 c -65.93036 -65.84862 -63.82474 -64.12057 -78.1311 -64.12057 -22.93677 0 -38.20165 22.36676 -30.1856 44.22921 2.06534 5.63287 5.81519 9.58935 71.07336 74.98973 l 68.89298 69.04311 -2.2378 8.16557 c -14.48284 52.84667 -15.62225 115.64784 -3.09653 170.67281 1.7296 7.59806 3.37626 14.41803 3.65926 15.1555 0.69207 1.80354 -29.70353 1.65312 -45.21544 -0.22373 z">
+                            <Path.RenderTransform>
+                                <TranslateTransform X="0" Y="64"/>
+                            </Path.RenderTransform>
+                        </Path>
+                        <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path104" Fill="{StaticResource linearGradient3235}" StrokeThickness="1.02749" Data="m 652.97079 766.92773 c -1.97792 -0.234 -8.21993 -0.91238 -13.87113 -1.5075 -49.43467 -5.20592 -104.83059 -27.79182 -143.33506 -58.44025 l -2.56872 -2.04462 103.40355 -103.55789 C 696.63335 501.19425 700.07671 497.61869 702.26525 491.65464 c 4.49671 -12.25409 1.74432 -25.00912 -7.41146 -34.34589 -6.61038 -6.74106 -12.90872 -9.30242 -22.87441 -9.30242 -14.85384 0 -6.97854 -6.97522 -121.89877 107.96659 l -102.954 102.97332 -2.45753 -2.98773 c -4.79811 -5.83326 -19.71177 -28.8134 -24.6109 -37.92243 -16.44969 -30.5851 -27.69569 -64.33206 -32.76706 -98.32728 -2.24143 -15.02515 -3.05711 -50.02463 -1.54153 -66.14433 7.45248 -79.26406 47.62116 -151.87066 111.2284 -201.05004 40.57764 -31.37352 89.1018 -51.32243 142.12167 -58.42807 12.92971 -1.73282 292.11171 -2.56128 300.15881 -0.89071 7.45837 1.54835 13.52796 6.26231 17.07916 13.26455 l 2.8256 5.57152 -10e-4 143.40767 c -10e-4 155.81282 -0.004 155.90328 -5.7997 183.43976 -15.2421 72.42081 -60.09528 138.53748 -121.91427 179.70999 -37.47639 24.95991 -77.9984 40.49989 -120.9377 46.37902 -11.26306 1.5421 -49.93574 2.85914 -57.53952 1.95957 z">
+                            <Path.RenderTransform>
+                                <TranslateTransform X="0" Y="64"/>
+                            </Path.RenderTransform>
+                        </Path>
+                    </Canvas>
 
-            <TextBlock Margin="{StaticResource SmallTopMargin}"
+                    <TextBlock Margin="{StaticResource SmallTopMargin}"
                     HorizontalAlignment="Center"
                     Style="{StaticResource SubtitleTextBlockStyle}"
                     Text="no pins" />
-            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"
+                    <TextBlock HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"
                        Margin="{StaticResource SmallLeftTopRightBottomMargin}"
                        Text="bruh" />
 
-        </StackPanel>
+                </StackPanel>
+            </Grid>
+            <ui:Effects.Shadow>
+                <media:AttachedCardShadow Offset="0,2" Opacity="0.2" Color="Black" BlurRadius="10" />
+            </ui:Effects.Shadow>
+        </Border>
     </Grid>
 </Page>

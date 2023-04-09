@@ -9,6 +9,10 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using DialogueForest.ViewModels;
 using Microsoft.UI.Xaml;
+using CommunityToolkit.WinUI.UI.Controls;
+using System.Collections.ObjectModel;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace DialogueForest.Views
 {
@@ -22,24 +26,27 @@ namespace DialogueForest.Views
             DataContext = ((App)Application.Current).Services.GetService(typeof(PinnedNodesViewModel));
         }
 
-        private void NodeList_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
+        private void dg_Sorting(object sender, DataGridColumnEventArgs e)
         {
-            if (e.Items.Count == 1 && e.Items[0] is DialogueNodeViewModel vm)
+            if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Descending)
             {
-                // Set the content of the DataPackage to the ID of the node we're dragging
-                e.Data.SetText(vm.ID.ToString());
-
-                // We can either Link (when dragging to a Reply Prompt) or Move (when dragging to another Tree)
-                e.Data.RequestedOperation = DataPackageOperation.Link | DataPackageOperation.Move;
+                ViewModel.SortPins("Asc", e.Column.Tag.ToString());
+                e.Column.SortDirection = DataGridSortDirection.Ascending;
+            }
+            else
+            {
+                ViewModel.SortPins("Desc", e.Column.Tag.ToString());
+                e.Column.SortDirection = DataGridSortDirection.Descending;
+            }
+            
+            // Remove sorting indicators from other columns
+            foreach (var dgColumn in dataGrid.Columns)
+            {
+                if (dgColumn.Tag.ToString() != e.Column.Tag.ToString())
+                {
+                    dgColumn.SortDirection = null;
+                }
             }
         }
-
-        private void AddLinkFlyoutHandler(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
-        {
-            var menu = sender as MenuFlyoutSubItem;
-            menu.AddHandler(PointerEnteredEvent, new PointerEventHandler((sender, e) =>
-                            Helpers.UWPHelpers.LoadLinkedNodesIntoMenuFlyout(menu, menu.DataContext as DialogueNodeViewModel)), true);
-        }
-            
     }
 }

@@ -13,14 +13,23 @@ using DialogueForest.Localization.Strings;
 
 namespace DialogueForest.Core.ViewModels
 {
+
     public partial class PinnedNodesViewModel : ObservableObject
     {
         private readonly ForestDataService _dataService;
         private readonly INavigationService _navigationService;
 
-        public ObservableCollection<DialogueNode> Nodes { get; } = new ObservableCollection<DialogueNode>();
+        public ObservableCollection<DialogueNodeViewModel> Nodes { get; } = new();
         public bool NoPinnedNodes => Nodes.Count == 0;
-        
+
+        // Dumb property that only serves to trigger opening nodes selected in datagrid
+        private DialogueNodeViewModel _selectedPin;
+        public DialogueNodeViewModel SelectedPin
+        {
+            get => _selectedPin;
+            set { if (value != null) _navigationService.OpenDialogueNode(value); }
+        }
+
         public PinnedNodesViewModel(INavigationService navService, ForestDataService dataService)
         {
             _navigationService = navService;
@@ -44,17 +53,23 @@ namespace DialogueForest.Core.ViewModels
         {
             Nodes.Clear();
 
-            foreach (var n in _dataService.GetPinnedNodes().Select(id => _dataService.GetNode(id).Item2))
+            foreach (var tuple in _dataService.GetPinnedNodes().Select(id => _dataService.GetNode(id)))
             {
-                Nodes.Add(n);
+                var node = tuple.Item2;
+                var treeVm = _navigationService.ReuseOrCreateTreeVm(tuple.Item1);
+
+                Nodes.Add(DialogueNodeViewModel.Create(node, treeVm));
             }
         }
 
         private void PinNode(DialogueNode node)
         {
-            if (!Nodes.Contains(node))
+            if (!Nodes.Select(vm => vm.ID).Contains(node.ID))
             {
-                Nodes.Add(node);
+                var tuple = _dataService.GetNode(node.ID);
+                var treeVm = _navigationService.ReuseOrCreateTreeVm(tuple.Item1);
+
+                Nodes.Add(DialogueNodeViewModel.Create(node, treeVm));
                 _dataService.SetPinnedNode(node, true);
             }
         }
@@ -62,7 +77,7 @@ namespace DialogueForest.Core.ViewModels
         [RelayCommand]
         private void UnpinNode(DialogueNode node)
         {
-            Nodes.Remove(node);
+            Nodes.Remove(Nodes.Where(vm => vm.ID == node.ID).FirstOrDefault());
             _dataService.SetPinnedNode(node, false);
         }
 
@@ -75,5 +90,16 @@ namespace DialogueForest.Core.ViewModels
                 _navigationService.OpenDialogueNode(tuple.Item1, tuple.Item2);
         }
 
+        public void SortPins(string order, string tag)
+        {
+            // Sort the Nodes collection by tag (ID, Name or Tree) and order (Asc or Desc)
+            var sortedList = order == "Asc" ? Nodes.OrderBy(n => tag == "ID" ? n.ID.ToString() : tag == "Title" ? n.NodeTitle : n.TreeTitle).ToList() :
+                                    Nodes.OrderByDescending(n => tag == "ID" ? n.ID.ToString() : tag == "Title" ? n.NodeTitle : n.TreeTitle).ToList();
+
+            Nodes.Clear();
+            foreach (var node in sortedList)
+                Nodes.Add(node);
+        }
     }
+
 }
