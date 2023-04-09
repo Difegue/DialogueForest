@@ -117,7 +117,7 @@ namespace DialogueForest.Core.ViewModels
                     var forestBytes = JsonSerializer.SerializeToUtf8Bytes(nodes);
                     var savedFile = new FileAbstraction
                     {
-                        Name = _dataService.LastSavedFile.Name,
+                        Name = _dataService.LastSavedFile?.Name ?? "Exported Forest",
                         Extension = ".json",
                         Type = "DialogueForest Export",
                         Path = _exportFolder

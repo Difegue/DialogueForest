@@ -40,7 +40,7 @@
                         <TextBlock Text="{x:Bind strings:Resources.WelcomeSaveAs}" TextWrapping="Wrap" TextAlignment="Center"/>
                     </StackPanel>
                 </Button>
-                <Button Width="128" Height="96" Command="{x:Bind ViewModel.ShowWhatsNewCommand}">
+                <Button Width="128" Height="96" Command="{x:Bind ViewModel.ShowWhatsNewCommand}" Visibility="Collapsed"> <!-- TODO -->
                     <StackPanel Spacing="8">
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE1D7;" FontSize="24" />
                         <TextBlock Text="{x:Bind strings:Resources.WelcomeWhatsNew}" TextWrapping="Wrap" TextAlignment="Center"/>

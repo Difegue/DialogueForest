@@ -34,18 +34,17 @@ namespace DialogueForest.Core.Services
             _storageService = storageService;
             _notificationService = notificationService;
 
-            LastSavedFile = new FileAbstraction
-            {
-                Extension = ".frst",
-                Type = "Dialogue Forest",
-                Name = _storageService.GetValue("lastSavedName", "MyForest"),
-                Path = _storageService.GetValue<string>("lastSavedFolder", null)
-            };
-
 
             if (_storageService.GetValue<string>("lastSavedFolder", null) != null)
             {
                 _savedFileExists = true;
+                LastSavedFile = new FileAbstraction
+                {
+                    Extension = ".frst",
+                    Type = "Dialogue Forest",
+                    Name = _storageService.GetValue("lastSavedName", "MyForest"),
+                    Path = _storageService.GetValue<string>("lastSavedFolder", null)
+                };
                 WeakReferenceMessenger.Default.Send(new SavedFileMessage(LastSavedFile));
             }
         }
@@ -80,6 +79,11 @@ namespace DialogueForest.Core.Services
         {
             _currentForest = new DialogueDatabase();
             _storageService.DeleteFileAsync(STORAGE_NAME);
+            _storageService.SetValue<string>("lastSavedName", null);
+            _storageService.SetValue<string>("lastSavedFolder", null);
+
+            LastSavedFile = null;
+
             CurrentForestHasUnsavedChanges = false;
             WeakReferenceMessenger.Default.Send(new TreeUpdatedMessage(false));
         }
@@ -157,24 +161,26 @@ namespace DialogueForest.Core.Services
         {
             var bytes = JsonSerializer.SerializeToUtf8Bytes(_currentForest);
 
-            var promptUser = promptNewFile ? true : !_savedFileExists;
-
             // Don't prompt the user if the savedFile already exists
-            LastSavedFile = await _storageService.SaveDataToExternalFileAsync(bytes, LastSavedFile, promptUser);
+            var promptUser = promptNewFile ? true : !_savedFileExists;
+            
+            var savedFile = await _storageService.SaveDataToExternalFileAsync(bytes, LastSavedFile, promptUser);
 
-            if (LastSavedFile != null)
+            if (savedFile != null)
             {
+                LastSavedFile = savedFile;
                 _savedFileExists = true;
                 _storageService.SetValue("lastSavedFolder", LastSavedFile.Path);
                 _storageService.SetValue("lastSavedName", LastSavedFile.Name);
 
                 // Send a message to inform VMs we saved to disk
                 WeakReferenceMessenger.Default.Send(new SavedFileMessage(LastSavedFile));
-            }
+            } 
             else
             {
-                _notificationService.ShowInAppNotification("Couldn't save!");
-                LastSavedFile = null;
+                // If we used "Save As", we don't need to reset the lastSavedFile since the OG is still present
+                if (!promptNewFile) 
+                    LastSavedFile = null;
             }
 
         }

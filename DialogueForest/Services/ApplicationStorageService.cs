@@ -66,6 +66,7 @@ namespace DialogueForest.Services
         {
 
             if (!_settingsStorage.ContainsKey(key)) _settingsStorage.Add(key, value);
+            else if (value == null) _settingsStorage.Remove(key);
             else _settingsStorage[key] = value;
         }
 
@@ -122,13 +123,15 @@ namespace DialogueForest.Services
         public async Task<FileAbstraction> SaveDataToExternalFileAsync(byte[] bytes, FileAbstraction suggestedFile, bool promptUser = true)
         {
             string file = suggestedFile?.FullPath;
+            var type = suggestedFile?.Type ?? "Dialogue Forest";
+            var extension = suggestedFile?.Extension ?? ".frst";
 
             // We'll prompt the user no matter what if there's no previous suggestedFile to use
             if (promptUser || file == null)
             {
                 var savePicker = new FileSavePicker
                 {
-                    SuggestedFileName = suggestedFile.Name,
+                    SuggestedFileName = suggestedFile?.Name ?? "",
                     SuggestedStartLocation = PickerLocationId.DocumentsLibrary
                 };
 
@@ -136,7 +139,7 @@ namespace DialogueForest.Services
                 WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hwnd);
 
                 // Dropdown of file types the user can save the file as
-                savePicker.FileTypeChoices.Add(suggestedFile.Type, new List<string>() { suggestedFile.Extension });
+                savePicker.FileTypeChoices.Add(type, new List<string>() { extension });
 
                 var storageFile = await savePicker.PickSaveFileAsync();
 
@@ -151,15 +154,15 @@ namespace DialogueForest.Services
                 return new FileAbstraction
                 {
                     Name = Path.GetFileNameWithoutExtension(file),
-                    Type = suggestedFile.Type,
-                    Extension = suggestedFile.Extension,
+                    Type = type,
+                    Extension = extension,
                     Path = Path.GetDirectoryName(file)
                 };
             }
             else
             {
                 // Cancelled
-                return suggestedFile;
+                return null;
             }
         }
 
@@ -258,7 +261,7 @@ namespace DialogueForest.Services
 
             public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => throw new NotImplementedException(); // TODO
 
-            public bool Remove(string key) => throw new NotImplementedException(); // TODO
+            public bool Remove(string key) => _data.Remove(key);
 
             public bool Remove(KeyValuePair<string, object> item) => throw new NotImplementedException(); // TODO
 

@@ -79,7 +79,9 @@ namespace DialogueForest.Core.ViewModels
             var file = _dataService.LastSavedFile;
 
             if (file != null)
-                _interopService.UpdateAppTitle(file.Name + file.Extension);
+                _interopService.UpdateAppTitle(file.Name + file.Extension + " - " + Resources.AppDisplayName);
+            else
+                _interopService.UpdateAppTitle(Resources.AppDisplayName);
 
             DisplayName = (file == null) ? Resources.NavigationNew : file.Name + file.Extension;
             TitleBarText = Resources.AppDisplayName + " - " + DisplayName + (HasUnsavedChanges ? "*" : "");
