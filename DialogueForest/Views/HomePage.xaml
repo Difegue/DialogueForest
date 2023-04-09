@@ -20,9 +20,9 @@
                    FontFamily="Segoe UI Variable Display"/>
 
 
-            <controls:WrapPanel HorizontalSpacing="12" VerticalSpacing="12" Orientation="Horizontal" Margin="12,36,0,0" >
+            <controls:WrapPanel HorizontalSpacing="12" VerticalSpacing="12" Orientation="Horizontal" HorizontalAlignment="Center" Margin="12,36,0,0" >
 
-                <Button Width="128" Height="96">
+                <Button Width="128" Height="96" Command="{x:Bind ViewModel.NewFileCommand}">
                     <StackPanel Spacing="8">
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF4A5;" FontSize="24" />
                         <TextBlock Text="{x:Bind strings:Resources.WelcomeNewButton}" TextWrapping="Wrap" TextAlignment="Center"/>

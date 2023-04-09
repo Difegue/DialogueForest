@@ -104,12 +104,7 @@ namespace DialogueForest.Services
             };
 
             // Add the content to the toast
-            var toast = new ToastNotification(content.GetXml())
-            {
-                // TODO WTS: Set a unique identifier for this notification within the notification group. (optional)
-                // More details at https://docs.microsoft.com/uwp/api/windows.ui.notifications.toastnotification.tag
-                Tag = "ToastTag"
-            };
+            var toast = new ToastNotification(content.GetXml());
 
             // And show the toast
             ShowToastNotification(toast);
@@ -121,9 +116,9 @@ namespace DialogueForest.Services
             {
                 ToastNotificationManager.CreateToastNotifier().Show(toastNotification);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                // TODO WTS: Adding ToastNotification can fail in rare conditions, please handle exceptions as appropriate to your scenario.
+                ShowInAppNotification("Error showing notification: " + e, false);
             }
         }
 

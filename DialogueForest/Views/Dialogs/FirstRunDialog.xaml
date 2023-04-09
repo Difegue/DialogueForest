@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:strings="using:DialogueForest.Localization.Strings"
     x:Uid="FirstRunDialog"
     d:DesignHeight="345"
     d:DesignWidth="550"
@@ -18,13 +19,13 @@
                 <TextBlock
                     Margin="{StaticResource SmallLeftMargin}"
                     VerticalAlignment="Center"
-                    Text="{x:Bind}" />
+                    Text="{x:Bind strings:Resources.FirstRunTitle}" />
             </StackPanel>
         </DataTemplate>
     </ContentDialog.TitleTemplate>
     <ScrollViewer>
         <StackPanel>
-            <TextBlock x:Uid="FirstRun_Body" TextWrapping="WrapWholeWords" />
+            <TextBlock TextWrapping="WrapWholeWords" Text="{x:Bind strings:Resources.FirstRunText}" />
         </StackPanel>
     </ScrollViewer>
 </ContentDialog>

@@ -50,6 +50,12 @@ namespace DialogueForest.Services
             return File.OpenRead(path);
         }
 
+        public async Task DeleteFileAsync(string fileName, string parentFolder = "")
+        {
+            var path = Path.Combine(_appDataFolder, parentFolder, fileName);
+            File.Delete(path);
+        }
+
         public async Task DeleteFolderAsync(string folderName)
         {
             var path = Path.Combine(_appDataFolder, folderName);

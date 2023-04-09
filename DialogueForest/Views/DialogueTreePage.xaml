@@ -197,7 +197,8 @@
                         <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8A4;" FontSize="18" />
                     </Button>
 
-                    <muxc:DropDownButton ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewSortBy}">
+                    <!-- TODO -->
+                    <muxc:DropDownButton ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewSortBy}" Visibility="Collapsed">
                         <muxc:DropDownButton.Content>
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE174;" FontSize="18"/>
                         </muxc:DropDownButton.Content>
