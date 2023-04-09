@@ -135,7 +135,9 @@
 
                 <Border Background="{ThemeResource SystemAccentColor}" Grid.RowSpan="2" Width="4" HorizontalAlignment="Left" Margin="-17" CornerRadius="4,0,0,4"/>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}"
+                <muxc:FontIcon Glyph="&#xE8BE;" Grid.Row="0" Grid.Column="0" FontSize="16"
+                               VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,-4,0,0"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" Margin="20,0,0,0"
                                Text="{x:Bind NodeTitle, Mode=OneWay}" TextTrimming="CharacterEllipsis"/>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1"

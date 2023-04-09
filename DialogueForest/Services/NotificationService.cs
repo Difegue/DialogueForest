@@ -24,6 +24,8 @@ namespace DialogueForest.Services
 
         public override void ScheduleNotification(string title, string text, DateTime day, TimeSpan notificationTime)
         {
+            var assetUri = AppDomain.CurrentDomain.BaseDirectory + "Assets";
+
             // Don't schedule if date is in the past
             if (day.Add(notificationTime) < DateTime.Now)
             {
@@ -32,7 +34,7 @@ namespace DialogueForest.Services
 
             new ToastContentBuilder()
                 //.AddArgument("action", "viewItemsDueToday")
-                .AddInlineImage(new Uri("ms-appx:///Assets/StoreLogo.png"))
+                .AddHeroImage(new Uri("ms-appx:///Assets/StoreLogo.png"))
                 .AddText(title)
                 .AddText(text)
                 //.AddProgressBar()
