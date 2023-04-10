@@ -4,8 +4,10 @@ using System.Threading.Tasks;
 
 using CommunityToolkit.WinUI.Notifications;
 using DialogueForest.Core.Interfaces;
+using RtfPipe.Tokens;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Notifications;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DialogueForest.Services
 {
@@ -34,7 +36,7 @@ namespace DialogueForest.Services
 
             new ToastContentBuilder()
                 //.AddArgument("action", "viewItemsDueToday")
-                .AddHeroImage(new Uri("ms-appx:///Assets/StoreLogo.png"))
+                .AddHeroImage(new Uri("file:///" + assetUri + "/StoreLogo.png"))
                 .AddText(title)
                 .AddText(text)
                 //.AddProgressBar()
@@ -63,63 +65,13 @@ namespace DialogueForest.Services
 
         public override void ShowBasicToastNotification(string title, string description)
         {
-            // Create the toast content
-            var content = new ToastContent()
-            {
-                // More about the Launch property at https://docs.microsoft.com/dotnet/api/CommunityToolkit.WinUI.notifications.toastcontent
-                Launch = "ToastContentActivationParams",
+            var assetUri = AppDomain.CurrentDomain.BaseDirectory + "Assets";
 
-                Visual = new ToastVisual()
-                {
-                    BindingGeneric = new ToastBindingGeneric()
-                    {
-                        Children =
-                        {
-                            new AdaptiveText()
-                            {
-                                Text = title
-                            },
-
-                            new AdaptiveText()
-                            {
-                                 Text = description
-                            }
-                        }
-                    }
-                },
-
-                Actions = new ToastActionsCustom()
-                {
-                    Buttons =
-                    {
-                        // More about Toast Buttons at https://docs.microsoft.com/dotnet/api/CommunityToolkit.WinUI.notifications.toastbutton
-                        new ToastButton("OK", "ToastButtonActivationArguments")
-                        {
-                            ActivationType = ToastActivationType.Foreground
-                        },
-
-                        new ToastButtonDismiss("Cancel")
-                    }
-                }
-            };
-
-            // Add the content to the toast
-            var toast = new ToastNotification(content.GetXml());
-
-            // And show the toast
-            ShowToastNotification(toast);
-        }
-
-        public void ShowToastNotification(ToastNotification toastNotification)
-        {
-            try
-            {
-                ToastNotificationManager.CreateToastNotifier().Show(toastNotification);
-            }
-            catch (Exception e)
-            {
-                ShowInAppNotification("Error showing notification: " + e, false);
-            }
+            new ToastContentBuilder()
+                .AddInlineImage(new Uri("file:///" + assetUri + "/StoreLogo.png"))
+                .AddText(title)
+                .AddText(description)
+                .Show();
         }
 
     }

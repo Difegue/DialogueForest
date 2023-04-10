@@ -34,7 +34,6 @@ namespace DialogueForest.Core.Services
             _storageService = storageService;
             _notificationService = notificationService;
 
-
             if (_storageService.GetValue<string>("lastSavedFolder", null) != null)
             {
                 _savedFileExists = true;
@@ -105,6 +104,8 @@ namespace DialogueForest.Core.Services
                 try
                 {
                     LastSavedFile = res.Item1;
+                    _storageService.SetValue("lastSavedFolder", LastSavedFile.Path);
+                    _storageService.SetValue("lastSavedName", LastSavedFile.Name);
                     _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(res.Item2);
                     WeakReferenceMessenger.Default.Send(new SavedFileMessage(LastSavedFile));
                     WeakReferenceMessenger.Default.Send(new TreeUpdatedMessage(false)); // Notify listeners we're loaded
