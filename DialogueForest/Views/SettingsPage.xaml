@@ -193,7 +193,7 @@
                     Margin="{StaticResource SmallTopMargin}"
                     Description="{x:Bind strings:Resources.SettingsWordDesc}">
                     <local:SettingsBlockControl.Icon>
-                        <FontIcon Glyph="&#xEADF;" />
+                        <FontIcon Glyph="&#xEE56;" />
                     </local:SettingsBlockControl.Icon>
 
                     <local:SettingsBlockControl.SettingsActionableElement>

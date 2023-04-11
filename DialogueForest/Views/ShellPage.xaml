@@ -182,15 +182,23 @@
 
             <muxc:NavigationView.PaneFooter>
                 <Grid Visibility="{x:Bind ViewModel.WordTrackingEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <muxc:ProgressRing
+
+                    <Grid Background="#01FFFFFF"
+                          ToolTipService.ToolTip="{x:Bind strings:Resources.SettingsWordObjective}"
+                          Visibility="{Binding ElementName=navigationView, Path=IsPaneOpen, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
+                        <muxc:ProgressRing
                         Width="20"
                         Height="20"
                         Margin="14,0,0,8"
                         HorizontalAlignment="Left"
                         IsIndeterminate="False"
-                        ToolTipService.ToolTip="{x:Bind strings:Resources.SettingsWordObjective}"
-                        Visibility="{Binding ElementName=navigationView, Path=IsPaneOpen, Converter={StaticResource ReverseBoolToVisibilityConverter}}"
                         Value="{x:Bind ViewModel.DailyWordCountPercentage, Mode=OneWay}" />
+
+                        <FontIcon Glyph="&#xEE56;" FontSize="10" Margin="14,0,0,8" 
+                                  Visibility="{x:Bind ViewModel.DailyObjectiveComplete, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
+                        <FontIcon Glyph="&#xE735;" FontSize="8" Margin="14,0,0,8" Foreground="Goldenrod"
+                                  Visibility="{x:Bind ViewModel.DailyObjectiveComplete, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    </Grid>
 
                     <StackPanel Visibility="{Binding ElementName=navigationView, Path=IsPaneOpen, Converter={StaticResource BoolToVisibilityConverter}}">
 

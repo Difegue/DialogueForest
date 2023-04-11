@@ -49,7 +49,7 @@
             </controls:WrapPanel>
 
             <TextBlock Text="{x:Bind strings:Resources.WelcomeFlavorText}" TextWrapping="Wrap" FontStyle="Italic"
-                       TextAlignment="Center"
+                       TextAlignment="Center" FontSize="12"
                        Margin="12,36"/>
         </StackPanel>
     </ScrollViewer>

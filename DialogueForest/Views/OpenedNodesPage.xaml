@@ -80,7 +80,7 @@
                     Style="{StaticResource SubtitleTextBlockStyle}"
                     Text="{x:Bind strings:Resources.EmptyViewDocumentsTitle}" />
                 <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Margin="{StaticResource SmallTopMargin}"
-                           Text="{x:Bind strings:Resources.EmptyViewDocumentsDesc}" />
+                           Text="{x:Bind strings:Resources.EmptyViewDocumentsDesc}" TextWrapping="Wrap"/>
             </StackPanel>
             
 

@@ -61,7 +61,7 @@
         <StackPanel Grid.Row="0" Spacing="12" Margin="{StaticResource SmallLeftTopRightMargin}">
 
             <TextBlock Style="{StaticResource SubtitleTextBlockStyle}"
-                       Text="Pins" HorizontalAlignment="Center" />
+                       Text="{x:Bind strings:Resources.NavigationPins}" HorizontalAlignment="Center" />
 
             <AutoSuggestBox PlaceholderText="{x:Bind strings:Resources.SearchPinsPlaceholderText}"
                             Text="{x:Bind ViewModel.SearchString, Mode=TwoWay}"

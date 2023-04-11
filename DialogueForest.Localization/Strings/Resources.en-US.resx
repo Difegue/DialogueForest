@@ -471,7 +471,8 @@ They'll show up here when you do.</value>
     <value>Add Dialogue Node</value>
   </data>
   <data name="WelcomeFlavorText" xml:space="preserve">
-    <value>David Bowie is credited with playing the Stylophone on his 1969 debut hit song "Space Oddity" and also for his 2002 album Heathen track titled "Slip Away," as well as on the song "Heathen (The Rays)".</value>
+    <value>"I’m always worrying 'I used to be able to write for six hours straight, but now I can’t concentrate after three hours. Is my productive power going down?' But seeing the people who have been at it ten years longer than me still creating amazing things proves to me that I can keep going another ten years." 
+- Kinoko Nasu</value>
   </data>
   <data name="TreeViewToggleButton" xml:space="preserve">
     <value>Toggle Tree View</value>
