@@ -197,7 +197,7 @@ namespace DialogueForest.Core.ViewModels
         internal void DeleteNode(DialogueNodeViewModel nodeVm, DialogueNode node)
         {
             _dataService.DeleteNode(node);
-            Nodes.Remove(nodeVm);
+            Nodes.Remove(nodeVm); // This is the trash treeVM, so we can just remove the node
         }
 
         [RelayCommand]

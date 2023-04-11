@@ -10,6 +10,8 @@ using System.Threading;
 using System.Linq;
 using DialogueForest.Core.Messages;
 using DialogueForest.Localization.Strings;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using DialogueForest.Core.ViewModels;
 
 namespace DialogueForest.Core.Services
 {
@@ -67,6 +69,9 @@ namespace DialogueForest.Core.Services
                 {
                     SaveForestToStorage();
                 }, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
+
+                // HACK: init settings here just to make sure notifications are rehydrated on every app launch
+                Ioc.Default.GetRequiredService<SettingsViewModel>().EnsureInstanceInitialized();
             }
             catch (Exception ex)
             {
@@ -196,7 +201,7 @@ namespace DialogueForest.Core.Services
         public DialogueTree GetNotes() => _currentForest.Notes;
 
         internal bool IsNodeTrashed(DialogueNode node) => GetTrash().Nodes.ContainsValue(node);
-        internal void DeleteNode(DialogueNode node) => GetTrash().RemoveNode(node); // TODO update trash
+        internal void DeleteNode(DialogueNode node) => GetTrash().RemoveNode(node);
         internal void DeleteTree(DialogueTree tree)
         {
             var nodeList = tree.Nodes.Values;

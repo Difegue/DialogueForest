@@ -219,25 +219,29 @@ namespace DialogueForest.Services
                 }
                 catch { }
             }
+            private object _writeLock = new object();
             private void Save()
             {
-                JsonObject jo = new JsonObject();
-                foreach (var item in _data)
+                lock (_writeLock)
                 {
-                    jo.Add(item.Key, item.Value?.ToString());
-                }
-                
-                // Save to file, and retry if it's locked
-                for (int i = 0; i < 5; i++)
-                {
-                    try
+                    JsonObject jo = new JsonObject();
+                    foreach (var item in _data)
                     {
-                        File.WriteAllText(_file, jo.ToJsonString());
-                        return;
+                        jo.Add(item.Key, item.Value?.ToString());
                     }
-                    catch (IOException)
+                
+                    // Save to file, and retry if it's locked
+                    for (int i = 0; i < 5; i++)
                     {
-                        System.Threading.Thread.Sleep(100);
+                        try
+                        {
+                            File.WriteAllText(_file, jo.ToJsonString());
+                            return;
+                        }
+                        catch (IOException)
+                        {
+                            System.Threading.Thread.Sleep(100);
+                        }
                     }
                 }
             }
