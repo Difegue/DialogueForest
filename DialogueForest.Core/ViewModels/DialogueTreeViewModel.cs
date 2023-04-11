@@ -128,13 +128,12 @@ namespace DialogueForest.Core.ViewModels
         }
 
         // Dumb property that only serves to trigger opening nodes selected in treeview
-        [ObservableProperty]
         private DialogueNodeViewModel _selectedNode;
+        public DialogueNodeViewModel SelectedNode
 
-        partial void OnSelectedNodeChanged(DialogueNodeViewModel value)
         {
-            if (value != null) 
-                _navigationService.OpenDialogueNode(value);
+            get => _selectedNode;
+            set { if (value != null) _navigationService.OpenDialogueNode(value); }
         }
 
         [ObservableProperty]

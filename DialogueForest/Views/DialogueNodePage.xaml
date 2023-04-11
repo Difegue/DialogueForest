@@ -261,7 +261,7 @@
                      FontFamily="Segoe UI Variable Display" Background="Transparent" BorderThickness="0"/>
         </StackPanel>
 
-        <AppBarButton IsCompact="True"
+        <AppBarButton IsCompact="True" Label="{x:Bind ViewModel.ID, Mode=OneWay}"
                       Grid.Row="0" Grid.Column="1" Margin="0,24,8,0">
             <AppBarButton.Icon>
                 <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE10C;" FontSize="16"/>

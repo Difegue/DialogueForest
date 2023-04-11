@@ -94,6 +94,8 @@ namespace DialogueForest.Services
 
         public override void OpenDialogueNode(DialogueNodeViewModel vm)
         {
+            if (_currentFocusedVm == vm) return;
+
             // Add the previous node to the backstack
             if (NodeTabContainer.SelectedItem != null)
                 Frame.BackStack.Add(new Microsoft.UI.Xaml.Navigation.PageStackEntry(typeof(DialogueNodePage), NodeTabContainer.SelectedItem, null));

@@ -101,6 +101,10 @@ namespace DialogueForest.Services
 
         public async Task OpenStoreReviewUrlAsync()
         {
+            // Open url
+            await Windows.System.Launcher.LaunchUriAsync(new Uri("https://difegue.itch.io/dialogueforest"));
+
+            // TODO packaged ver
             //await _dispatcherService.ExecuteOnUIThreadAsync(() => SystemInformation.LaunchStoreForReviewAsync());
         }
 
