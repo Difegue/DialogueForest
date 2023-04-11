@@ -4,16 +4,21 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
-    xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI"
+    xmlns:media="using:CommunityToolkit.WinUI.UI.Media"
     xmlns:strings="using:DialogueForest.Localization.Strings"
     xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:i="using:Microsoft.Xaml.Interactivity" xmlns:ic="using:Microsoft.Xaml.Interactions.Core" xmlns:helpers="using:DialogueForest.Helpers" xmlns:local="using:DialogueForest.Controls"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:helpers="using:DialogueForest.Helpers"
+    xmlns:local="using:DialogueForest.Controls"
+    xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters"
     mc:Ignorable="d">
 
     <Page.Resources>
         <media:AttachedCardShadow x:Key="CommonShadow" Offset="0,-2" Opacity="0.8" Color="Black" BlurRadius="10" />
+        <converters:StringFormatConverter x:Key="StringFormatConverter"/>
 
         <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -77,8 +82,45 @@
             </Setter>
         </Style>
 
+        <MenuFlyout x:Key="NodeContextMenu">
+            <MenuFlyoutSubItem Text="{x:Bind strings:Resources.ContextMenuLinksTo}" Tag="links_to" Loaded="AddLinkFlyoutHandler">
+                <MenuFlyoutSubItem.Icon>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEA54;" />
+                </MenuFlyoutSubItem.Icon>
+            </MenuFlyoutSubItem>
+            <MenuFlyoutSubItem Text="{x:Bind strings:Resources.ContextMenuLinkedBy}" Tag="linked_by" Loaded="AddLinkFlyoutHandler">
+                <MenuFlyoutSubItem.Icon>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE11F;" />
+                </MenuFlyoutSubItem.Icon>
+            </MenuFlyoutSubItem>
+            <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuPin}" Command="{Binding PinDialogueCommand}"
+                            Visibility="{Binding IsPinned, Converter={StaticResource ReverseBoolToVisibilityConverter}}"  >
+                <MenuFlyoutItem.Icon>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE141;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuUnpin}" Command="{Binding UnpinDialogueCommand}"
+                            Visibility="{Binding IsPinned, Converter={StaticResource BoolToVisibilityConverter}}"  >
+                <MenuFlyoutItem.Icon>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE196;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuTrash}" Command="{Binding MoveToTrashCommand}"
+                            Visibility="{Binding IsTrashed, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" Foreground="{ThemeResource DestructiveActionForeground}" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuDelete}" Command="{Binding DeleteCommand}"
+                            Visibility="{Binding IsTrashed, Converter={StaticResource BoolToVisibilityConverter}}">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xECAD;" Foreground="{ThemeResource DestructiveActionForeground}"/>
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+        </MenuFlyout>
+        
         <DataTemplate x:Key="NodeCardTemplate" x:DataType="viewmodels:DialogueNodeViewModel">
-            <Grid Style="{StaticResource CardGrid}" Margin="-1">
+            <Grid Style="{StaticResource CardGrid}" Margin="-1" ContextFlyout="{StaticResource NodeContextMenu}">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="24" />
@@ -89,48 +131,12 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="40" />
                 </Grid.ColumnDefinitions>
-                <Grid.ContextFlyout>
-                    <MenuFlyout>
-                        <MenuFlyoutSubItem Text="{x:Bind strings:Resources.ContextMenuLinksTo}" Tag="links_to" Loaded="AddLinkFlyoutHandler">
-                            <MenuFlyoutSubItem.Icon>
-                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEA54;" />
-                            </MenuFlyoutSubItem.Icon>
-                        </MenuFlyoutSubItem>
-                        <MenuFlyoutSubItem Text="{x:Bind strings:Resources.ContextMenuLinkedBy}" Tag="linked_by" Loaded="AddLinkFlyoutHandler">
-                            <MenuFlyoutSubItem.Icon>
-                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE11F;" />
-                            </MenuFlyoutSubItem.Icon>
-                        </MenuFlyoutSubItem>
-                        <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuPin}" Command="{x:Bind PinDialogueCommand}"
-                                            Visibility="{x:Bind IsPinned, Converter={StaticResource ReverseBoolToVisibilityConverter}}"  >
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE141;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuUnpin}" Command="{x:Bind UnpinDialogueCommand}"
-                                            Visibility="{x:Bind IsPinned, Converter={StaticResource BoolToVisibilityConverter}}"  >
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE196;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuTrash}" Command="{x:Bind MoveToTrashCommand}"
-                                            Visibility="{x:Bind IsTrashed, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" Foreground="{ThemeResource DestructiveActionForeground}" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuDelete}" Command="{x:Bind DeleteCommand}"
-                                            Visibility="{x:Bind IsTrashed, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE621;" Foreground="{ThemeResource DestructiveActionForeground}"/>
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-                    </MenuFlyout>
-                </Grid.ContextFlyout>
 
                 <Border Background="{ThemeResource SystemAccentColor}" Grid.RowSpan="2" Width="4" HorizontalAlignment="Left" Margin="-17" CornerRadius="4,0,0,4"/>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}"
+                <muxc:FontIcon Glyph="&#xE8BE;" Grid.Row="0" Grid.Column="0" FontSize="16"
+                               VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,-4,0,0"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" Margin="20,0,0,0"
                                Text="{x:Bind NodeTitle, Mode=OneWay}" TextTrimming="CharacterEllipsis"/>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1"
@@ -165,7 +171,9 @@
                        Text="{x:Bind ViewModel.Title}" HorizontalAlignment="Center" Margin="0,-8,0,0"
                        Visibility="{x:Bind ViewModel.CanBeRenamed, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
             
-            <AutoSuggestBox PlaceholderText="Search Nodes..." QueryIcon="Zoom"/>
+            <AutoSuggestBox PlaceholderText="{x:Bind strings:Resources.SearchTreePlaceholderText}"
+                            Text="{x:Bind ViewModel.SearchString, Mode=TwoWay}"
+                            QueryIcon="Zoom"/>
 
             <Grid HorizontalAlignment="Stretch" >
 
@@ -185,28 +193,30 @@
                 </Button>
 
                 <StackPanel Orientation="Horizontal" Spacing="8" Grid.Column="2" HorizontalAlignment="Right">
-                    <Button Command="{x:Bind ViewModel.AddNodeCommand}"
-                                    ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewGraphView}">
-                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF22C;" FontSize="18" />
-                    </Button>
+                    <ToggleButton IsChecked="{x:Bind ViewModel.ShowTreeView, Mode=TwoWay}"
+                                  Margin="0,0,-8,0"
+                                  ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewToggleButton}">
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8A4;" FontSize="18" />
+                    </ToggleButton>
 
-                    <muxc:DropDownButton ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewSortBy}">
+                    <!-- TODO -->
+                    <muxc:DropDownButton ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewSortBy}" Visibility="Collapsed">
                         <muxc:DropDownButton.Content>
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE174;" FontSize="18"/>
                         </muxc:DropDownButton.Content>
                         <muxc:DropDownButton.Flyout>
                             <MenuFlyout Placement="Bottom">
-                                <MenuFlyoutItem Text="Send">
+                                <MenuFlyoutItem Text="ID">
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE725;"/>
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem Text="Reply">
+                                <MenuFlyoutItem Text="Name">
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8CA;"/>
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
-                                <MenuFlyoutItem Text="Reply All">
+                                <MenuFlyoutItem Text="Custom Property (TODO)">
                                     <MenuFlyoutItem.Icon>
                                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8C2;"/>
                                     </MenuFlyoutItem.Icon>
@@ -224,48 +234,67 @@
                         <FontIcon Foreground="{ThemeResource DestructiveActionForeground}"
                                   FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" FontSize="18"/>
                     </Button>
-                    <Button Command="{x:Bind ViewModel.DeleteCommand}"
+                    <Button Command="{x:Bind ViewModel.EmptyTrashCommand}"
                             Visibility="{x:Bind ViewModel.IsTrash, Converter={StaticResource BoolToVisibilityConverter}}"
-                            ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewDeleteTree}"
+                            ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewEmptyTrash}"
                             Margin="-8,0,0,0">
                         <FontIcon Foreground="{ThemeResource DestructiveActionForeground}"
-                                  FontFamily="Segoe Fluent Icons" Glyph="&#xE2AC;" FontSize="18"/>
+                                  FontFamily="Segoe Fluent Icons" Glyph="&#xECAD;" FontSize="18"/>
                     </Button>
                 </StackPanel>
-
                 
-
             </Grid>
 
         </StackPanel>
 
 
-            <controls:AdaptiveGridView Grid.Row="1"
-                    ItemsSource="{x:Bind ViewModel.Nodes}"
-                    ItemTemplate="{StaticResource NodeCardTemplate}"
-                    IsItemClickEnabled="True"
-                    SelectionMode="None"
-                    StretchContentForSingleRow="True"
-                    DesiredWidth="270"
-                    ItemHeight="96" CanDragItems="True"
-                    DragItemsStarting="NodeList_DragItemsStarting"
-                    SelectedItem="{x:Bind ViewModel.SelectedNode, Mode=TwoWay}"
-                    ItemClickCommand="{x:Bind ViewModel.ShowNodeCommand}">
-                <i:Interaction.Behaviors>
-                    <helpers:ScrollSelectedItemIntoViewBehavior />
-                </i:Interaction.Behaviors>
-            </controls:AdaptiveGridView>
+        <controls:AdaptiveGridView Grid.Row="1" Margin="0,12,0,-16"
+                ItemsSource="{x:Bind ViewModel.Nodes}"
+                ItemTemplate="{StaticResource NodeCardTemplate}"
+                IsItemClickEnabled="True"
+                SelectionMode="None"
+                StretchContentForSingleRow="True"
+                DesiredWidth="270"
+                ItemHeight="96" CanDragItems="True"
+                DragItemsStarting="NodeList_DragItemsStarting"
+                ItemClickCommand="{x:Bind ViewModel.ShowNodeCommand}"
+                SelectedItem="{x:Bind ViewModel.SelectedNode, Mode=TwoWay}"
+                Visibility="{x:Bind ViewModel.ShowTreeView, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
+            <i:Interaction.Behaviors>
+                <helpers:ScrollSelectedItemIntoViewBehavior />
+            </i:Interaction.Behaviors>
+        </controls:AdaptiveGridView>
 
+        <Border Grid.Row="1" Margin="10,12,10,24"
+                Visibility="{x:Bind ViewModel.ShowTreeView, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid Style="{StaticResource CardGrid}" Padding="0,8">
+        
+                <TreeView ItemsSource="{x:Bind ViewModel.Nodes, Mode=OneWay}" Grid.Row="1" 
+                          SelectedItem="{x:Bind ViewModel.SelectedNode, Mode=TwoWay}">
+                    <TreeView.ItemTemplate>
+                        <DataTemplate x:DataType="viewmodels:DialogueNodeViewModel">
+                            <TreeViewItem ItemsSource="{x:Bind NodeChildren, Mode=OneWay}" Content="{x:Bind NodeTitle}" ContextFlyout="{StaticResource NodeContextMenu}"/>
+                        </DataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </Grid>
+            <ui:Effects.Shadow>
+                <media:AttachedCardShadow Offset="0,2" Opacity="0.2" Color="Black" BlurRadius="10" />
+            </ui:Effects.Shadow>
+        </Border>
 
+        <!-- TODO use localized string formats -->
         <StackPanel Orientation="Horizontal" Spacing="8" Grid.Row="2" Margin="8, -8">
             <Grid Background="{ThemeResource AccentFillColorDefaultBrush}" CornerRadius="8" Padding="8,4"
                   BorderBrush="{ThemeResource ControlElevationBorderBrush}" BorderThickness="0,2">
-                <TextBlock Text="1337 words" FontWeight="SemiBold" FontFamily="Segoe UI Variable Display" Margin="0,-2"
+                <TextBlock Text="{x:Bind ViewModel.TotalWords, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0} words', Mode=OneWay}"
+                           FontWeight="SemiBold" FontFamily="Segoe UI Variable Display" Margin="0,-2"
                            Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
             </Grid>
             <Grid Background="{ThemeResource AccentFillColorDefaultBrush}" CornerRadius="8" Padding="8,4"
                   BorderBrush="{ThemeResource ControlElevationBorderBrush}" BorderThickness="0,2">
-                <TextBlock Text="45 dialogues" FontWeight="SemiBold" FontFamily="Segoe UI Variable Display" Margin="0,-2"
+                <TextBlock Text="{x:Bind ViewModel.TotalDialogues, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0} dialogues', Mode=OneWay}"
+                           FontWeight="SemiBold" FontFamily="Segoe UI Variable Display" Margin="0,-2"
                            Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"/>
             </Grid>
         </StackPanel>

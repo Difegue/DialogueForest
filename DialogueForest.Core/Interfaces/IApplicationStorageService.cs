@@ -11,6 +11,7 @@ namespace DialogueForest.Core.Interfaces
         Task<bool> DoesFileExistAsync(string fileName, string parentFolder = "");
         Task SaveDataToFileAsync(string fileName, byte[] data, string parentFolder = "");
         Task<Stream> OpenFileAsync(string fileName, string parentFolder = "");
+        Task DeleteFileAsync(string fileName, string parentFolder = "");
         Task DeleteFolderAsync(string folderName);
 
         void SetValue<T>(string key, T value);
@@ -28,6 +29,6 @@ namespace DialogueForest.Core.Interfaces
         public string Extension { get; set; }
 
         public string Type { get; set; }
-        public string FullPath => System.IO.Path.Combine(Path, Name + Extension);
+        public string FullPath => Path == null ? null : System.IO.Path.Combine(Path, Name + Extension);
     }
 }

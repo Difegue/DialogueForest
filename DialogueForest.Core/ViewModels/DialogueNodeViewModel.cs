@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -13,6 +14,7 @@ using DialogueForest.Core.Messages;
 using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
 using DialogueForest.Localization.Strings;
+using RtfPipe.Model;
 
 namespace DialogueForest.Core.ViewModels
 {
@@ -29,6 +31,8 @@ namespace DialogueForest.Core.ViewModels
 
         internal static DialogueNodeViewModel Create(DialogueNode node, DialogueTreeViewModel parentVm)
         {
+            if (node == null) return null;
+
             var instance = Ioc.Default.GetRequiredService<DialogueNodeViewModel>();
             instance.SetParentVm(parentVm);
             instance.LoadFromNode(node);
@@ -45,6 +49,12 @@ namespace DialogueForest.Core.ViewModels
             var allIDs = _parentVm.GetIDs();
             allIDs.Remove(ID); // Remove ourselves
             return allIDs;
+        }
+
+        internal long CreateNewDialogue()
+        {
+            DialogueNodeViewModel newVm = _parentVm.AddAndReturnNode();
+            return newVm.ID;
         }
 
         private void LoadFromNode(DialogueNode node)
@@ -96,6 +106,9 @@ namespace DialogueForest.Core.ViewModels
                 r.OnPropertyChanged(nameof(TreeTitle)));
 
             WeakReferenceMessenger.Default.Register<DialogueNodeViewModel, NodeMovedMessage>(this, (r, m) => r.UpdateParent(m));
+            WeakReferenceMessenger.Default.Register<DialogueNodeViewModel, NodePinnedMessage>(this, (r, m) => { if (m.nodeId == ID) r.OnPropertyChanged(nameof(IsPinned)); });
+            // TODO is this too heavy?
+            WeakReferenceMessenger.Default.Register<DialogueNodeViewModel, UnsavedModificationsMessage>(this, (r, m) => r.OnPropertyChanged(nameof(NodeChildren)));
 
             Prompts.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsPromptsEmpty));
             MetaValues.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsMetaDataEmpty));
@@ -105,8 +118,7 @@ namespace DialogueForest.Core.ViewModels
         {
             if (m.NodeMoved.ID == ID)
             {
-                // TODO reuse existing treeVMs if possible
-                SetParentVm(DialogueTreeViewModel.Create(m.DestinationTree));
+                SetParentVm(_navigationService.ReuseOrCreateTreeVm(m.DestinationTree));
             }
         }
 
@@ -115,6 +127,20 @@ namespace DialogueForest.Core.ViewModels
         public ObservableCollection<MetadataViewModel> MetaValues { get; } = new ObservableCollection<MetadataViewModel>();
 
         public long ID => _node.ID;
+
+        public int WordCount => CalculateWordCount();
+
+        private int CalculateWordCount()
+        {
+            var count = NodeTitle?.Split(' ')?.Length ?? 0;
+            foreach (var dialog in Dialogs.ToList())
+                count += dialog.WordCount;
+
+            foreach (var prompt in Prompts.ToList())
+                count += prompt.ReplyText?.Split(' ')?.Length ?? 0;
+
+            return count;
+        }
 
         public bool IsPromptsEmpty => Prompts.Count == 0;
         public bool IsMetaDataEmpty => MetaValues.Count == 0;
@@ -125,8 +151,12 @@ namespace DialogueForest.Core.ViewModels
         public string NodeTitle
         {
             get => _node.Title;
-            set => SetProperty(_node.Title, value, _node, (u, n) => { u.Title = n;
-                    WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage()); 
+            set => SetProperty(_node.Title, value, _node, (u, n) => {
+
+                    var oldCount = NodeTitle?.Split(' ')?.Length ?? 0;
+                    var newCount = n.Split(' ').Length;
+                    u.Title = n;
+                    WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage(newCount - oldCount)); 
             });
         }
 
@@ -172,11 +202,14 @@ namespace DialogueForest.Core.ViewModels
             Dialogs.Add(dialogVm);
         }
 
+        public List<DialogueNodeViewModel> NodeChildren => GetNodesLinkedByUs().Select(n => Create(n, _parentVm)).ToList();
+
         public List<DialogueNode> GetNodesLinkedByUs()
         {
             return Prompts.Select(p => p.LinkedID)
                 .Where(i => i!= 0 && i!= ID) // Filter out no linked IDs and ourselves
-                .Select(i => _dataService.GetNode(i).Item2) // Get DialogueNode
+                .Select(i => _dataService.GetNode(i)?.Item2) // Get DialogueNode
+                .Where(y => y != null) //Check for nulls in case a linked node was deleted
                 .ToList();
         }
 
@@ -225,19 +258,10 @@ namespace DialogueForest.Core.ViewModels
         }
 
         [RelayCommand]
-        private void PinDialogue()
-        {
-            _dataService.SetPinnedNode(_node, true);
-            _notificationService.ShowInAppNotification(Resources.NotificationPinned);
-        }
-        
+        private void PinDialogue() => WeakReferenceMessenger.Default.Send(new AskToPinNodeMessage(_node, true));       
 
         [RelayCommand]
-        private void UnpinDialogue()
-        {
-            _dataService.SetPinnedNode(_node, false);
-            _notificationService.ShowInAppNotification(Resources.NotificationUnpinned);
-        }
+        private void UnpinDialogue() => WeakReferenceMessenger.Default.Send(new AskToPinNodeMessage(_node, false));
 
         [RelayCommand]
         private void MoveToTrash()
@@ -252,9 +276,14 @@ namespace DialogueForest.Core.ViewModels
             if (await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogueDeleteNode, Resources.ContentDialogWillBePermaDeleted,
                         Resources.ButtonYesText, Resources.ButtonCancelText))
             {
-                _dataService.DeleteNode(_node);
-                _navigationService.CloseDialogueNode(this);
+                DeleteNode();
             }
+        }
+
+        internal void DeleteNode()
+        {
+            _parentVm.DeleteNode(this, _node);
+            _navigationService.CloseDialogueNode(this);
         }
 
         internal void SetParentVm(DialogueTreeViewModel treeViewModel)
@@ -265,7 +294,7 @@ namespace DialogueForest.Core.ViewModels
 
         internal void ActivateDialogue(DialoguePartViewModel dialogVm)
         {
-            foreach (var vm in Dialogs)
+            foreach (var vm in Dialogs.ToList())
             {
                 vm.IsActive = false;
             }

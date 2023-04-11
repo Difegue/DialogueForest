@@ -7,14 +7,14 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:strings="using:DialogueForest.Localization.Strings" 
     xmlns:local="using:DialogueForest.Controls"
     xmlns:views="using:DialogueForest.Views"
     xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
     xmlns:converters="using:DialogueForest.Converters"
-    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Converters"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -75,7 +75,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="240"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="280"/>
+                            <ColumnDefinition Width="240"/>
                         </Grid.ColumnDefinitions>
 
                         <StackPanel x:Name="EditorControls" Orientation="Horizontal" Spacing="8" Grid.Column="0" Margin="{StaticResource SmallLeftMargin}">
@@ -160,9 +160,16 @@
                                   SelectedItem="{Binding LinkedID, Mode=TwoWay}"
                                   ItemsSource="{x:Bind LinkableIDs, Mode=OneWay}"
                                   />
+                        <Button ToolTipService.ToolTip="{x:Bind strings:Resources.EditorReplyCreateLinked}"
+                                Visibility="{x:Bind HasLinkedID, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}"
+                                Command="{x:Bind CreateNewLinkedDialogueCommand}">
+                            <Button.Content>
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE710;" FontSize="18"/>
+                            </Button.Content>
+                        </Button>
                         <Button ToolTipService.ToolTip="{x:Bind strings:Resources.EditorReplyGoToLinked}"
-                                IsEnabled="{x:Bind HasLinkedID, Mode=OneWay}"
-                                Command="{x:Bind GoToLinkedDialogueCommand}">
+                                Visibility="{x:Bind HasLinkedID, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                                Command="{x:Bind GoToLinkedDialogueCommand}" Margin="-8,0,0,0">
                             <Button.Content>
                                 <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF716;" FontSize="18"/>
                             </Button.Content>
@@ -254,7 +261,7 @@
                      FontFamily="Segoe UI Variable Display" Background="Transparent" BorderThickness="0"/>
         </StackPanel>
 
-        <AppBarButton IsCompact="True"
+        <AppBarButton IsCompact="True" Label="{x:Bind ViewModel.ID, Mode=OneWay}"
                       Grid.Row="0" Grid.Column="1" Margin="0,24,8,0">
             <AppBarButton.Icon>
                 <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE10C;" FontSize="16"/>
@@ -272,13 +279,13 @@
                         </MenuFlyoutSubItem.Icon>
                     </MenuFlyoutSubItem>
                     <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuPin}" Command="{x:Bind ViewModel.PinDialogueCommand}"
-                                            Visibility="{x:Bind ViewModel.IsPinned, Converter={StaticResource ReverseBoolToVisibilityConverter}}"  >
+                                            Visibility="{x:Bind ViewModel.IsPinned, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}"  >
                         <MenuFlyoutItem.Icon>
                             <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE141;" />
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
                     <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuUnpin}" Command="{x:Bind ViewModel.UnpinDialogueCommand}"
-                                            Visibility="{x:Bind ViewModel.IsPinned, Converter={StaticResource BoolToVisibilityConverter}}"  >
+                                            Visibility="{x:Bind ViewModel.IsPinned, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"  >
                         <MenuFlyoutItem.Icon>
                             <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE196;" />
                         </MenuFlyoutItem.Icon>

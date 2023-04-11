@@ -4,9 +4,9 @@ using DialogueForest.Core.Services;
 using DialogueForest.Core.ViewModels;
 using System;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Navigation;
 
 namespace DialogueForest.Views
 {
@@ -42,9 +42,6 @@ namespace DialogueForest.Views
                     case "trash":
                         tree = dataService.GetTrash();
                         break;
-                    case "pins":
-                        tree = dataService.GetPins();
-                        break;
                     default: throw new Exception("Unknown tag!");
                 }
 
@@ -60,12 +57,12 @@ namespace DialogueForest.Views
                 // Set the content of the DataPackage to the ID of the node we're dragging
                 e.Data.SetText(vm.ID.ToString());
 
-                // We can either Link (when dragging to a Reply Prompt) or Move (when dragging to another Tree)
+                // We can either Link (when dragging to a Reply Prompt or pinning) or Move (when dragging to another Tree)
                 e.Data.RequestedOperation = DataPackageOperation.Link | DataPackageOperation.Move;
             }
         }
 
-        private void AddLinkFlyoutHandler(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void AddLinkFlyoutHandler(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             var menu = sender as MenuFlyoutSubItem;
             menu.AddHandler(PointerEnteredEvent, new PointerEventHandler((sender, e) =>

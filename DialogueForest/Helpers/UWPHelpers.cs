@@ -1,15 +1,11 @@
 ﻿using DialogueForest.Core.Models;
 using DialogueForest.Core.ViewModels;
-using Microsoft.Toolkit.Uwp;
+using CommunityToolkit.WinUI;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.System;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Dispatching;
 
 namespace DialogueForest.Helpers
 {

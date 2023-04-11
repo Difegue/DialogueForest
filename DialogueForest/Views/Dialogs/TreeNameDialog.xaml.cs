@@ -5,8 +5,8 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 
 namespace DialogueForest.Views
@@ -17,7 +17,7 @@ namespace DialogueForest.Views
         public TreeNameDialog()
         {
             this.InitializeComponent();
-
+            XamlRoot = (Application.Current as App)?.XamlRoot;
             //TreeName = Localization.Strings.Resources.TreeNameDialogDefaultName;
         }
 

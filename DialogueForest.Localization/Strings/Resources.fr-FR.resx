@@ -305,18 +305,17 @@ Vous pourrez toujours le changer plus tard.</value>
   <data name="WelcomeOpenButton" xml:space="preserve">
     <value>Ouvrir une Forêt existante</value>
   </data>
-  <data name="SearchTracksToggle" xml:space="preserve">
-    <value>Pistes</value>
-  </data>
-  <data name="WelcomeFlavorText" xml:space="preserve">
-    <value>Aucun résultat trouvé...</value>
+  <data name="SearchPinsPlaceholderText" xml:space="preserve">
+    <value>Rechercher des noeuds épinglés...</value>
   </data>
   <data name="FirstRunText" xml:space="preserve">
-    <value>Pour commencer, entrez l'URL et le port de votre serveur MPD dans les Paramètres.
-Stylophone peut envoyer des données d'utilisation pour aider au diagnostic de bugs.
-Il est possible de désactiver l'envoi de ces données dans les Paramètres.
-J'espère que vous apprécierez l'application!  
-</value>
+    <value>Pour commencer, créez un nouvel arbre de Dialogue en utilisant le bouton "Nouvel Arbre" sur la gauche, puis commencez à y ajouter des Noeuds !
+
+Vous pouvez également épingler n'importe quel noeud via clic-droit pour le retrouver rapidement dans "Mes épingles", et utiliser les "Notes" pour écrire vos brouillons.
+
+DialogueForest peut envoyer des données d'utilisation pour aider au diagnostic de bugs.
+Il est possible de désactiver l'envoi de ces données dans les Paramètres, qui vont s'ouvrir une fois ce popup fermé.
+J'espère que vous apprécierez l'application!  </value>
     <comment>First use prompt message body</comment>
   </data>
   <data name="FirstRunTitle" xml:space="preserve">
@@ -401,7 +400,7 @@ Vous les retrouverez ici.</value>
     <value>Relié à:</value>
   </data>
   <data name="EditorReplyGoToLinked" xml:space="preserve">
-    <value>Aller au dialogue lié</value>
+    <value>Aller au Dialogue lié</value>
   </data>
   <data name="EditorDeleteReply" xml:space="preserve">
     <value>Supprimer cette réponse</value>
@@ -470,11 +469,12 @@ Vous les retrouverez ici.</value>
   <data name="TreeViewAddNode" xml:space="preserve">
     <value>Ajouter un noeud de Dialogue</value>
   </data>
-  <data name="FirstRunFlavorText" xml:space="preserve">
-    <value>David Bowie is credited with playing the Stylophone on his 1969 debut hit song "Space Oddity" and also for his 2002 album Heathen track titled "Slip Away," as well as on the song "Heathen (The Rays)".</value>
+  <data name="WelcomeFlavorText" xml:space="preserve">
+    <value>"I’m always worrying 'I used to be able to write for six hours straight, but now I can’t concentrate after three hours. Is my productive power going down?' But seeing the people who have been at it ten years longer than me still creating amazing things proves to me that I can keep going another ten years." 
+- Kinoko Nasu</value>
   </data>
-  <data name="TreeViewGraphView" xml:space="preserve">
-    <value>Ouvrir l'aperçu Graphe</value>
+  <data name="TreeViewToggleButton" xml:space="preserve">
+    <value>Activer/désactiver l'arborescence</value>
   </data>
   <data name="TreeViewSortBy" xml:space="preserve">
     <value>Trier par</value>
@@ -492,7 +492,7 @@ Vous les retrouverez ici.</value>
     <value>, vous pourrez leur donner des valeurs ici.</value>
   </data>
   <data name="EmptyViewTrashDesc" xml:space="preserve">
-    <value>Les Dialogues supprimées arriveront ici.</value>
+    <value>Les Dialogues supprimés arriveront ici.</value>
   </data>
   <data name="WelcomeSaveAs" xml:space="preserve">
     <value>Enregistrer sous...</value>
@@ -544,5 +544,81 @@ Vous les retrouverez ici.</value>
   </data>
   <data name="EditorCharacterPlaceholder" xml:space="preserve">
     <value>Personnage</value>
+  </data>
+  <data name="SettingsMetadataDelete" xml:space="preserve">
+    <value>Supprimer la propriété</value>
+  </data>
+  <data name="SettingsCharacterAdd" xml:space="preserve">
+    <value>Ajouter personnage</value>
+  </data>
+  <data name="SettingsMetadataAdd" xml:space="preserve">
+    <value>Ajouter propriété</value>
+  </data>
+  <data name="SettingsCharacterDelete" xml:space="preserve">
+    <value>Supprimer personnage</value>
+  </data>
+  <data name="CountWords" xml:space="preserve">
+    <value>{0} mots</value>
+  </data>
+  <data name="CountDialogues" xml:space="preserve">
+    <value>{0} dialogues</value>
+  </data>
+  <data name="SettingsWordHeader" xml:space="preserve">
+    <value>Objectif journalier &amp; Rappels</value>
+  </data>
+  <data name="SettingsWordTrack" xml:space="preserve">
+    <value>Suivre le nombre de mots écrits</value>
+  </data>
+  <data name="SettingsWordDesc" xml:space="preserve">
+    <value>Définissez un objectif journalier pour vous encourager à écrire.</value>
+  </data>
+  <data name="SettingsWordObjective" xml:space="preserve">
+    <value>Objectif de mots</value>
+  </data>
+  <data name="SettingsNotification" xml:space="preserve">
+    <value>Rappel journalier</value>
+  </data>
+  <data name="SettingsNotificationDesc" xml:space="preserve">
+    <value>Envoie une notification par jour pour vous rappeler d'ouvrir l'application.</value>
+  </data>
+  <data name="SettingsNotificationSendAt" xml:space="preserve">
+    <value>Envoyer à:</value>
+  </data>
+  <data name="DailyObjectiveStreakTitle" xml:space="preserve">
+    <value>✨ Une chaîne de {0} jours !</value>
+  </data>
+  <data name="DailyObjectiveStreakDesc" xml:space="preserve">
+    <value>Bravo pour avoir accompli votre objectif aujourd'hui !</value>
+  </data>
+  <data name="DailyNotificationDesc" xml:space="preserve">
+    <value>Essayons d'écrire {0} mots aujourd'hui !</value>
+  </data>
+  <data name="DailyNotificationTitle" xml:space="preserve">
+    <value>C'est l'heure d'écrire un peu de dialogue</value>
+  </data>
+  <data name="DailyNotificationDescNoTrack" xml:space="preserve">
+    <value>Ouvrez DialogueForest pour enrichir votre histoire !</value>
+  </data>
+  <data name="ContentDialogUnsavedChanges" xml:space="preserve">
+    <value>Il y a des modifications non enregistrées</value>
+  </data>
+  <data name="ContentDialogUnsavedChangesText" xml:space="preserve">
+    <value>La forêt actuelle n'a pas été sauvegardée sur disque. Voulez vous continuer?
+Vos modifications seront perdues.</value>
+  </data>
+  <data name="EditorReplyCreateLinked" xml:space="preserve">
+    <value>Créer et lier un nouveau Dialogue</value>
+  </data>
+  <data name="TreeViewEmptyTrash" xml:space="preserve">
+    <value>Vider la corbeille</value>
+  </data>
+  <data name="ContentDialogEmptyTrash" xml:space="preserve">
+    <value>Vider la corbeille ?</value>
+  </data>
+  <data name="ContentDialogEmptyTrashDesc" xml:space="preserve">
+    <value>Tous les noeuds seront supprimés définitivement.</value>
+  </data>
+  <data name="NotificationTrashEmptied" xml:space="preserve">
+    <value>La corbeille a été vidée.</value>
   </data>
 </root>

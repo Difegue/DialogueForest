@@ -9,6 +9,9 @@ using CommunityToolkit.Mvvm.Messaging;
 using System.Threading;
 using System.Linq;
 using DialogueForest.Core.Messages;
+using DialogueForest.Localization.Strings;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using DialogueForest.Core.ViewModels;
 
 namespace DialogueForest.Core.Services
 {
@@ -21,30 +24,28 @@ namespace DialogueForest.Core.Services
         private INotificationService _notificationService;
 
         private const string STORAGE_NAME = "autosave.json";
-
+        
         private bool _savedFileExists;
-        private bool _isSavingToStorage;
         private Timer _autoSaveTimer;
 
         public FileAbstraction LastSavedFile { get; private set; }
+        public bool CurrentForestHasUnsavedChanges { get; private set; }
 
         public ForestDataService(IApplicationStorageService storageService, INotificationService notificationService)
         {
             _storageService = storageService;
             _notificationService = notificationService;
 
-            LastSavedFile = new FileAbstraction
-            {
-                Extension = ".frst",
-                Type = "Dialogue Forest",
-                Name = _storageService.GetValue("lastSavedName", "MyForest"),
-                Path = _storageService.GetValue<string>("lastSavedFolder", null)
-            };
-
-
             if (_storageService.GetValue<string>("lastSavedFolder", null) != null)
             {
                 _savedFileExists = true;
+                LastSavedFile = new FileAbstraction
+                {
+                    Extension = ".frst",
+                    Type = "Dialogue Forest",
+                    Name = _storageService.GetValue("lastSavedName", "MyForest"),
+                    Path = _storageService.GetValue<string>("lastSavedFolder", null)
+                };
                 WeakReferenceMessenger.Default.Send(new SavedFileMessage(LastSavedFile));
             }
         }
@@ -68,6 +69,9 @@ namespace DialogueForest.Core.Services
                 {
                     SaveForestToStorage();
                 }, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
+
+                // HACK: init settings here just to make sure notifications are rehydrated on every app launch
+                Ioc.Default.GetRequiredService<SettingsViewModel>().EnsureInstanceInitialized();
             }
             catch (Exception ex)
             {
@@ -75,7 +79,27 @@ namespace DialogueForest.Core.Services
             }
         }
 
+        public void ResetDatabase()
+        {
+            _currentForest = new DialogueDatabase();
+            _storageService.DeleteFileAsync(STORAGE_NAME);
+            _storageService.SetValue<string>("lastSavedName", null);
+            _storageService.SetValue<string>("lastSavedFolder", null);
+
+            LastSavedFile = null;
+
+            CurrentForestHasUnsavedChanges = false;
+            WeakReferenceMessenger.Default.Send(new TreeUpdatedMessage(false));
+        }
+
         #region FileSystem stuff
+
+        public void SetForestDirty(bool isDirty)
+        {
+            CurrentForestHasUnsavedChanges = isDirty;
+            _storageService.SetValue(nameof(CurrentForestHasUnsavedChanges), isDirty);
+        }
+
         public async Task LoadForestFromFileAsync()
         {
             var res = await _storageService.LoadDataFromExternalFileAsync(".frst");
@@ -85,6 +109,8 @@ namespace DialogueForest.Core.Services
                 try
                 {
                     LastSavedFile = res.Item1;
+                    _storageService.SetValue("lastSavedFolder", LastSavedFile.Path);
+                    _storageService.SetValue("lastSavedName", LastSavedFile.Name);
                     _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(res.Item2);
                     WeakReferenceMessenger.Default.Send(new SavedFileMessage(LastSavedFile));
                     WeakReferenceMessenger.Default.Send(new TreeUpdatedMessage(false)); // Notify listeners we're loaded
@@ -99,9 +125,12 @@ namespace DialogueForest.Core.Services
 
         public async Task LoadForestFromStorageAsync()
         {
-            var stream = await _storageService.OpenFileAsync(STORAGE_NAME);
-            _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(stream);
-            WeakReferenceMessenger.Default.Send(new TreeUpdatedMessage(false)); // Notify listeners we're loaded
+            CurrentForestHasUnsavedChanges = _storageService.GetValue(nameof(CurrentForestHasUnsavedChanges), false);
+            using (var stream = await _storageService.OpenFileAsync(STORAGE_NAME))
+            {
+                _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(stream);
+            }   
+            WeakReferenceMessenger.Default.Send(new TreeUpdatedMessage(CurrentForestHasUnsavedChanges)); // Notify listeners we're loaded
         }
 
         public void SaveForestToStorage()
@@ -118,14 +147,19 @@ namespace DialogueForest.Core.Services
             });
         }
 
+        private SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
         public async Task SaveForestToStorageAsync()
         {
-            if (!_isSavingToStorage)
+            await _semaphore.WaitAsync();
+            try
             {
-                _isSavingToStorage = true;
                 var bytes = JsonSerializer.SerializeToUtf8Bytes(_currentForest);
                 await _storageService.SaveDataToFileAsync(STORAGE_NAME, bytes);
-                _isSavingToStorage = false;
+                _storageService.SetValue("lastAutoSave", DateTime.UtcNow.ToString());
+            }
+            finally
+            {
+                _semaphore.Release();
             }
         }
 
@@ -133,24 +167,26 @@ namespace DialogueForest.Core.Services
         {
             var bytes = JsonSerializer.SerializeToUtf8Bytes(_currentForest);
 
-            var promptUser = promptNewFile ? true : !_savedFileExists;
-
             // Don't prompt the user if the savedFile already exists
-            LastSavedFile = await _storageService.SaveDataToExternalFileAsync(bytes, LastSavedFile, promptUser);
+            var promptUser = promptNewFile ? true : !_savedFileExists;
+            
+            var savedFile = await _storageService.SaveDataToExternalFileAsync(bytes, LastSavedFile, promptUser);
 
-            if (LastSavedFile != null)
+            if (savedFile != null)
             {
+                LastSavedFile = savedFile;
                 _savedFileExists = true;
                 _storageService.SetValue("lastSavedFolder", LastSavedFile.Path);
                 _storageService.SetValue("lastSavedName", LastSavedFile.Name);
 
                 // Send a message to inform VMs we saved to disk
                 WeakReferenceMessenger.Default.Send(new SavedFileMessage(LastSavedFile));
-            }
+            } 
             else
             {
-                _notificationService.ShowInAppNotification("Couldn't save!");
-                LastSavedFile = null;
+                // If we used "Save As", we don't need to reset the lastSavedFile since the OG is still present
+                if (!promptNewFile) 
+                    LastSavedFile = null;
             }
 
         }
@@ -160,11 +196,12 @@ namespace DialogueForest.Core.Services
         public Dictionary<string, MetadataKind> GetMetadataDefinitions() => _currentForest.MetadataDefinitions;
         public List<string> GetCharacters() => _currentForest.CharacterDefinitions;
         public List<DialogueTree> GetDialogueTrees() => _currentForest?.Trees;
+        public List<long> GetPinnedNodes() => _currentForest?.PinnedIDs;
         public DialogueTree GetTrash() => _currentForest.Trash;
         public DialogueTree GetNotes() => _currentForest.Notes;
 
         internal bool IsNodeTrashed(DialogueNode node) => GetTrash().Nodes.ContainsValue(node);
-        internal void DeleteNode(DialogueNode node) => GetTrash().RemoveNode(node); // TODO update trash
+        internal void DeleteNode(DialogueNode node) => GetTrash().RemoveNode(node);
         internal void DeleteTree(DialogueTree tree)
         {
             var nodeList = tree.Nodes.Values;
@@ -232,19 +269,6 @@ namespace DialogueForest.Core.Services
             return res;
         }
 
-
-        public DialogueTree GetPins()
-        {
-            // TODO kinda inefficient and prone to bugs
-            var t = new DialogueTree("Pins");
-            t.CannotAddNodes = true;
-
-            foreach (var id in _currentForest.PinnedIDs)
-                t.AddNode(GetNode(id).Item2);
-
-            return t;
-        }
-
         public void MoveNode(DialogueNode node, DialogueTree origin, DialogueTree destination)
         {
             // TODO update lookup table and 
@@ -259,11 +283,16 @@ namespace DialogueForest.Core.Services
         internal void SetPinnedNode(DialogueNode node, bool isPinned)
         {
             if (isPinned)
+            {
                 _currentForest.PinnedIDs.Add(node.ID);
+                _notificationService.ShowInAppNotification(Resources.NotificationPinned);
+            } 
             else
+            {
                 _currentForest.PinnedIDs.Remove(node.ID);
-
-            // TODO: Notify PinnedVM
+                _notificationService.ShowInAppNotification(Resources.NotificationUnpinned);
+            }
+            WeakReferenceMessenger.Default.Send(new NodePinnedMessage(node.ID, isPinned));
         }
 
         internal void SetMetadataDefinitions(Dictionary<string, MetadataKind> data)

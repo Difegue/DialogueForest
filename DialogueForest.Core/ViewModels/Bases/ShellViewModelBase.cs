@@ -23,16 +23,22 @@ namespace DialogueForest.Core.ViewModels
         protected IInteropService _interopService;
         protected IDispatcherService _dispatcherService;
         protected ForestDataService _dataService;
+        protected WordCountingService _wordService;
+        
+        protected PinnedNodesViewModel _pinnedNodesVm;
 
-
-        public ShellViewModelBase(INavigationService navigationService, INotificationService notificationService, IDispatcherService dispatcherService, IDialogService dialogService, IInteropService interopService, ForestDataService dataService)
+        public ShellViewModelBase(INavigationService navigationService, INotificationService notificationService, IDispatcherService dispatcherService, 
+            IDialogService dialogService, IInteropService interopService, ForestDataService dataService, WordCountingService wordService, PinnedNodesViewModel pinnedVm)
         {
             _navigationService = navigationService;
             _notificationService = notificationService;
             _dispatcherService = dispatcherService;
             _dialogService = dialogService;
             _dataService = dataService;
+            _wordService = wordService;
             _interopService = interopService;
+
+            _pinnedNodesVm = pinnedVm;
 
             // Listeners to set unsaved/saved document status
             WeakReferenceMessenger.Default.Register<ShellViewModelBase, TreeUpdatedMessage>(this, (r, m) =>
@@ -45,15 +51,26 @@ namespace DialogueForest.Core.ViewModels
             WeakReferenceMessenger.Default.Register<ShellViewModelBase, ForestSettingsChangedMessage>(this, (r, m) => r.SetIsDirty(true));
             WeakReferenceMessenger.Default.Register<ShellViewModelBase, UnsavedModificationsMessage>(this, (r, m) => r.SetIsDirty(true));
 
+            WeakReferenceMessenger.Default.Register<ShellViewModelBase, SettingsChangedMessage>(this, (r, m) => UpdateWordTrackingInfo());
+
             UpdateTitleBar();
+            UpdateWordTrackingInfo();
 
             ((NotificationServiceBase)_notificationService).InAppNotificationRequested += ShowInAppNotification;
             ((NavigationServiceBase)_navigationService).Navigated += OnFrameNavigated;
+            _wordService.WordCountUpdated += (s, e) => UpdateWordTrackingInfo();
+        }
+
+        public void ShutdownInitiated()
+        {
+            // Always autosave on shutdown
+            _dataService.SaveForestToStorage();
         }
 
         private void SetIsDirty(bool isDirty)
         {
-            HasUnsavedChanges = isDirty;
+            _dataService.SetForestDirty(isDirty);
+            OnPropertyChanged(nameof(HasUnsavedChanges));
             UpdateTitleBar();
         }
 
@@ -62,18 +79,42 @@ namespace DialogueForest.Core.ViewModels
             var file = _dataService.LastSavedFile;
 
             if (file != null)
-                _interopService.UpdateAppTitle(file.Name + file.Extension);
+                _interopService.UpdateAppTitle(file.Name + file.Extension + " - " + Resources.AppDisplayName);
+            else
+                _interopService.UpdateAppTitle(Resources.AppDisplayName);
 
-            var displayName = (file == null) ? Resources.NavigationNew : file.Name + file.Extension;
-            TitleBarText = Resources.AppDisplayName + " - " + displayName + (HasUnsavedChanges ? "*" : "");
+            DisplayName = (file == null) ? Resources.NavigationNew : file.Name + file.Extension;
+            TitleBarText = Resources.AppDisplayName + " - " + DisplayName + (HasUnsavedChanges ? "*" : "");
         }
 
-        [ObservableProperty]
-        private bool _hasUnsavedChanges;
+        private void UpdateWordTrackingInfo()
+        {
+            OnPropertyChanged(nameof(WordTrackingEnabled));
+
+            DailyWordCount = $"{_wordService.CurrentWordCount} / {_wordService.CurrentWordObjective}";
+            DailyWordCountPercentage = _wordService.CurrentWordCount / (float)_wordService.CurrentWordObjective * 100f;
+            DailyStreak = String.Format(Resources.DailyObjectiveStreakTitle, _wordService.CurrentStreak);
+            DailyObjectiveComplete = _wordService.CurrentWordCount >= _wordService.CurrentWordObjective;
+        }
+        
         [ObservableProperty]
         private bool _isBackEnabled;
         [ObservableProperty]
         private string _titleBarText;
+        [ObservableProperty]
+        private string _displayName;
+
+        [ObservableProperty]
+        private float _dailyWordCountPercentage;
+        [ObservableProperty]
+        private string _dailyWordCount;
+        [ObservableProperty]
+        private string _dailyStreak;
+        [ObservableProperty]
+        private bool _dailyObjectiveComplete;
+
+        public bool HasUnsavedChanges => _dataService.CurrentForestHasUnsavedChanges;
+        public bool WordTrackingEnabled => _wordService.IsTrackingEnabled;
 
         [RelayCommand]
         private async Task Open()

@@ -4,6 +4,8 @@
     {
         public string RichText { get; set; }
 
+        public int WordCount { get; set; }
+
         public string Character { get; set; }
     }
 }

@@ -13,6 +13,23 @@ namespace DialogueForest.Core
         public static string ConvertRtfBlackTextToWhite(this string s)
             => s?.Replace("\\red0\\green0\\blue0", "\\red255\\green255\\blue255");
 
+        public static string ConvertRtfToPlainText(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return s;
+
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            // Use RtfPipe to have an HTML converted text as a base
+            var settings = new RtfHtmlSettings
+            {
+                Indent = false,
+                NewLineOnAttributes = false
+            };
+            var html = Rtf.ToHtml(s, settings);
+
+            return Html.ToPlainText(html);
+        }
+
         internal static string Convert(string rtf, OutputFormat format)
         {
             if (rtf == null) return "";

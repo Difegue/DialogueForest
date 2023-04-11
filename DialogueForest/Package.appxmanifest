@@ -11,14 +11,14 @@
 
   <Identity
     Name="EF594FB1-3D9D-4B40-9A74-5147ABB39246"
-    Publisher="CN=Vincent"
+    Publisher="CN=dfug"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="EF594FB1-3D9D-4B40-9A74-5147ABB39246" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>DialogueForest</DisplayName>
-    <PublisherDisplayName>Vincent</PublisherDisplayName>
+    <PublisherDisplayName>Difegue</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -55,12 +55,4 @@
     <Capability Name="internetClient" />
   </Capabilities>
 
-  <genTemplate:Metadata>
-    <genTemplate:Item Name="generator" Value="Template Studio for UWP"/>
-    <genTemplate:Item Name="wizardVersion" Version="v0.4.1.0" />
-    <genTemplate:Item Name="templatesVersion" Version="v2.1.0" />
-    <genTemplate:Item Name="projectType" Value="MenuBar" />
-    <genTemplate:Item Name="framework" Value="MVVMToolkit" />
-    <genTemplate:Item Name="platform" Value="Uwp" />
-  </genTemplate:Metadata>
 </Package>

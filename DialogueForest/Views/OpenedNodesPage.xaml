@@ -7,9 +7,9 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:views="using:DialogueForest.Views" xmlns:strings="using:DialogueForest.Localization.Strings"
+    xmlns:views="using:DialogueForest.Views"
+    xmlns:strings="using:DialogueForest.Localization.Strings"
     xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
-    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d">
 
     <Grid>
@@ -80,7 +80,7 @@
                     Style="{StaticResource SubtitleTextBlockStyle}"
                     Text="{x:Bind strings:Resources.EmptyViewDocumentsTitle}" />
                 <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Margin="{StaticResource SmallTopMargin}"
-                           Text="{x:Bind strings:Resources.EmptyViewDocumentsDesc}" />
+                           Text="{x:Bind strings:Resources.EmptyViewDocumentsDesc}" TextWrapping="Wrap"/>
             </StackPanel>
             
 
@@ -91,12 +91,13 @@
             IsAddTabButtonVisible="False"
             SelectedItem="{x:Bind ViewModel.SelectedItem, Mode=TwoWay}"
             TabItemsSource="{x:Bind ViewModel.Tabs}"
+            Margin="6,0"
             TabCloseRequested="TabView_TabCloseRequested">
             <muxc:TabView.TabStripHeader>
-                <Grid Width="16"/>
+                <Grid Width="8"/>
             </muxc:TabView.TabStripHeader>
             <muxc:TabView.TabStripFooter>
-                <Grid x:Name="CustomDragRegion" x:FieldModifier="Public" />
+                <Grid x:Name="CustomDragRegion" x:FieldModifier="Public" MinWidth="150"/>
             </muxc:TabView.TabStripFooter>
             <muxc:TabView.TabItemTemplate>
                 <DataTemplate x:DataType="viewmodels:DialogueNodeViewModel">

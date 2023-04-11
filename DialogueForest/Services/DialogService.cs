@@ -2,14 +2,14 @@
 using System.Threading.Tasks;
 
 using DialogueForest.Views;
-using Microsoft.Toolkit.Uwp.Helpers;
+using CommunityToolkit.WinUI.Helpers;
 using DialogueForest.Core.Interfaces;
 using DialogueForest.Core.ViewModels;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Strings = DialogueForest.Localization.Strings.Resources;
 using Windows.Services.Store;
-using Windows.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media;
 using System.Linq;
 
 namespace DialogueForest.Services
@@ -35,10 +35,12 @@ namespace DialogueForest.Services
         {
             await _dispatcherService.ExecuteOnUIThreadAsync(async () =>
                 {
-                    if (SystemInformation.Instance.IsFirstRun && !shownFirstRun)
+                    if (!_storageService.GetValue("shownFirstRun", false) && !shownFirstRun)
                     {
                         shownFirstRun = true;
+                        _storageService.SetValue("shownFirstRun", true);
                         var dialog = new FirstRunDialog();
+
                         await dialog.ShowAsync();
                         _navigationService.Navigate<SettingsViewModel>();
                     }
@@ -63,6 +65,8 @@ namespace DialogueForest.Services
             var storeContext = StoreContext.GetDefault();
             await _dispatcherService.ExecuteOnUIThreadAsync(async () =>
             {
+                // TODO packaged
+                return;
                 if (SystemInformation.Instance.LaunchCount >=4 && !_storageService.GetValue<bool>("HasSeenRateAppPrompt"))
                 {
                     if (await ShowConfirmDialogAsync(Strings.RateAppPromptTitle, Strings.RateAppPromptText, Strings.ButtonYesText, Strings.ButtonNoText))
@@ -110,6 +114,7 @@ namespace DialogueForest.Services
         public async Task<string> ShowTreeNameDialogAsync()
         {
             var dialog = new TreeNameDialog();
+
             var result = await _dispatcherService.EnqueueAsync(async () => await dialog.ShowAsync());
 
             // Return new playlist name if checked, selected playlist otherwise
@@ -119,11 +124,13 @@ namespace DialogueForest.Services
         public async Task<bool> ShowConfirmDialogAsync(string title, string text, string primaryButtonText = null, string cancelButtonText = null)
         {
             // If a ContentDialog is already open, stop here and return false
-            if (VisualTreeHelper.GetOpenPopups(Window.Current).Where(p => p.Child is ContentDialog).Any())
+            if (VisualTreeHelper.GetOpenPopups((Application.Current as App)?.Window)
+                .Where(p => p.Child is ContentDialog).Any())
                 return false;
 
             ContentDialog confirmDialog = new ContentDialog
             {
+                XamlRoot = (Application.Current as App)?.XamlRoot,
                 Title = title,
                 Content = text,
                 PrimaryButtonText = primaryButtonText,

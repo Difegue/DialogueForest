@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DialogueForest.Core.Interfaces;
 using DialogueForest.Core.Services;
+using DialogueForest.Localization.Strings;
 
 namespace DialogueForest.Core.ViewModels
 {
@@ -11,13 +12,32 @@ namespace DialogueForest.Core.ViewModels
     {
 
         [RelayCommand]
-        private void NewFile()
+        private async Task NewFile()
         {
+            if (_dataService.CurrentForestHasUnsavedChanges)
+            {
+                var confirm = await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogUnsavedChanges, Resources.ContentDialogUnsavedChangesText,
+                    Resources.ButtonYesText, Resources.ButtonCancelText);
 
+                if (!confirm) return;
+            }
+
+            _dataService.ResetDatabase();
         }
 
         [RelayCommand]
-        private async Task OpenFile() => await _dataService.LoadForestFromFileAsync();
+        private async Task OpenFile()
+        {
+            if (_dataService.CurrentForestHasUnsavedChanges)
+            {
+                var confirm = await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogUnsavedChanges, Resources.ContentDialogUnsavedChangesText, 
+                    Resources.ButtonYesText, Resources.ButtonCancelText);
+
+                if (!confirm) return;
+            }
+
+            await _dataService.LoadForestFromFileAsync();
+        }
 
         [RelayCommand]
         private async Task SaveFileAs() => await _dataService.SaveForestToFileAsync(true);

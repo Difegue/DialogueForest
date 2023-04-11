@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="32.031109mm"
+   height="70.148109mm"
+   viewBox="0 0 32.031109 70.14811"
+   version="1.1"
+   id="svg4936"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="dessin-1.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview4938"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="21.523008"
+     inkscape:cx="102.88989"
+     inkscape:cy="226.40888"
+     inkscape:window-width="3840"
+     inkscape:window-height="2126"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs4933" />
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-69.076912,-175.53041)">
+    <path
+       d="m 97.66427,231.9836 -0.02459,-2.56971 c -2.455838,-0.0458 -6.376916,-0.40724 -6.487581,-3.10566 2.085175,-0.12024 4.787069,0.64449 6.512167,-0.43993 v -4.80005 -3.16507 h -1.5875 -1.5875 v 0.70894 -0.92603 h 3.307291 c 3.566443,-0.16106 3.307293,0.0474 3.307293,-3.55353 V 201.94347 175.53041 H 93.695516 69.076912 v 35.54119 34.60692 h 22.898815 3.838561 1.849978 l 0,-1.34393 3e-6,-7.21602 z m -4.970518,-36.72086 0.0757,-2.57969 h 0.926039 0.926039 l 0.0757,2.57969 0.0757,2.57968 h -1.077489 -1.077499 z"
+       style="fill:#000000;stroke-width:0.0700042"
+       id="path3350"
+       sodipodi:nodetypes="ccccccccccccccccccccccccccccccccc" />
+  </g>
+</svg>

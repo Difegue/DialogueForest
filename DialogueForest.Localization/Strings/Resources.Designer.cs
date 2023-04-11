@@ -178,11 +178,48 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Empty trash?.
+        /// </summary>
+        public static string ContentDialogEmptyTrash {
+            get {
+                return ResourceManager.GetString("ContentDialogEmptyTrash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Every node will be permanently deleted..
+        /// </summary>
+        public static string ContentDialogEmptyTrashDesc {
+            get {
+                return ResourceManager.GetString("ContentDialogEmptyTrashDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Delete this Dialogue?.
         /// </summary>
         public static string ContentDialogueDeleteNode {
             get {
                 return ResourceManager.GetString("ContentDialogueDeleteNode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à There are unsaved changes.
+        /// </summary>
+        public static string ContentDialogUnsavedChanges {
+            get {
+                return ResourceManager.GetString("ContentDialogUnsavedChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à The current forest hasn&apos;t been saved to disk. Do you want to proceed? 
+        ///Your changes will be lost..
+        /// </summary>
+        public static string ContentDialogUnsavedChangesText {
+            get {
+                return ResourceManager.GetString("ContentDialogUnsavedChangesText", resourceCulture);
             }
         }
         
@@ -255,6 +292,69 @@ namespace DialogueForest.Localization.Strings {
         public static string ContextMenuUnpin {
             get {
                 return ResourceManager.GetString("ContextMenuUnpin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à {0} dialogues.
+        /// </summary>
+        public static string CountDialogues {
+            get {
+                return ResourceManager.GetString("CountDialogues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à {0} words.
+        /// </summary>
+        public static string CountWords {
+            get {
+                return ResourceManager.GetString("CountWords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Let&apos;s try to write {0} words today!.
+        /// </summary>
+        public static string DailyNotificationDesc {
+            get {
+                return ResourceManager.GetString("DailyNotificationDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Open DialogueForest to pen your story!.
+        /// </summary>
+        public static string DailyNotificationDescNoTrack {
+            get {
+                return ResourceManager.GetString("DailyNotificationDescNoTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Time to write some dialogue.
+        /// </summary>
+        public static string DailyNotificationTitle {
+            get {
+                return ResourceManager.GetString("DailyNotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Good job on meeting your goal for today!.
+        /// </summary>
+        public static string DailyObjectiveStreakDesc {
+            get {
+                return ResourceManager.GetString("DailyObjectiveStreakDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à ✨ A {0}-day streak!.
+        /// </summary>
+        public static string DailyObjectiveStreakTitle {
+            get {
+                return ResourceManager.GetString("DailyObjectiveStreakTitle", resourceCulture);
             }
         }
         
@@ -394,7 +494,16 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Go to Linked Dialogue.
+        ///   Recherche une chaîne localisée semblable à Create and link new Dialogue.
+        /// </summary>
+        public static string EditorReplyCreateLinked {
+            get {
+                return ResourceManager.GetString("EditorReplyCreateLinked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Go to linked Dialogue.
         /// </summary>
         public static string EditorReplyGoToLinked {
             get {
@@ -642,20 +751,13 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à David Bowie is credited with playing the Stylophone on his 1969 debut hit song &quot;Space Oddity&quot; and also for his 2002 album Heathen track titled &quot;Slip Away,&quot; as well as on the song &quot;Heathen (The Rays)&quot;..
-        /// </summary>
-        public static string FirstRunFlavorText {
-            get {
-                return ResourceManager.GetString("FirstRunFlavorText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à To get started, please visit the Settings page to key in your MPD server&apos;s URL and port.
-        ///Keep in mind Stylophone can send usage data to help diagnose bugs. 
-        ///If you&apos;re not okay with this, you can disable telemetry in the Settings.
-        ///Hope you enjoy using the application!  
-        ///.
+        ///   Recherche une chaîne localisée semblable à To get started, create a new Dialogue Tree using the &quot;New Tree&quot; button on the left, and then start adding Nodes to it!
+        ///
+        ///You can also pin any node by right-clicking it to find it quickly in &quot;My Pins&quot;, and use &quot;Notes&quot; to draft dialogue to be later inserted into a Tree.
+        ///
+        ///Keep in mind DialogueForest can send usage data to help diagnose bugs. 
+        ///If you&apos;re not okay with this, you can disable telemetry in the Settings page that&apos;ll open once you close this popup.
+        ///Hope you enjoy using this silly writing app!  .
         /// </summary>
         public static string FirstRunText {
             get {
@@ -817,6 +919,15 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Trash has been emptied..
+        /// </summary>
+        public static string NotificationTrashEmptied {
+            get {
+                return ResourceManager.GetString("NotificationTrashEmptied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Unpinned!.
         /// </summary>
         public static string NotificationUnpinned {
@@ -863,20 +974,20 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Search Pins....
+        /// </summary>
+        public static string SearchPinsPlaceholderText {
+            get {
+                return ResourceManager.GetString("SearchPinsPlaceholderText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Search....
         /// </summary>
         public static string SearchPlaceholderText {
             get {
                 return ResourceManager.GetString("SearchPlaceholderText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Tracks.
-        /// </summary>
-        public static string SearchTracksToggle {
-            get {
-                return ResourceManager.GetString("SearchTracksToggle", resourceCulture);
             }
         }
         
@@ -931,6 +1042,24 @@ namespace DialogueForest.Localization.Strings {
         public static string SettingsApplyOnRestart {
             get {
                 return ResourceManager.GetString("SettingsApplyOnRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Add character.
+        /// </summary>
+        public static string SettingsCharacterAdd {
+            get {
+                return ResourceManager.GetString("SettingsCharacterAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Remove character.
+        /// </summary>
+        public static string SettingsCharacterDelete {
+            get {
+                return ResourceManager.GetString("SettingsCharacterDelete", resourceCulture);
             }
         }
         
@@ -994,6 +1123,24 @@ namespace DialogueForest.Localization.Strings {
         public static string SettingsGithubLink {
             get {
                 return ResourceManager.GetString("SettingsGithubLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Add property.
+        /// </summary>
+        public static string SettingsMetadataAdd {
+            get {
+                return ResourceManager.GetString("SettingsMetadataAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Remove custom property.
+        /// </summary>
+        public static string SettingsMetadataDelete {
+            get {
+                return ResourceManager.GetString("SettingsMetadataDelete", resourceCulture);
             }
         }
         
@@ -1070,6 +1217,33 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Daily reminder.
+        /// </summary>
+        public static string SettingsNotification {
+            get {
+                return ResourceManager.GetString("SettingsNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Sends one notification each day to remind you to open the app..
+        /// </summary>
+        public static string SettingsNotificationDesc {
+            get {
+                return ResourceManager.GetString("SettingsNotificationDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Send at:.
+        /// </summary>
+        public static string SettingsNotificationSendAt {
+            get {
+                return ResourceManager.GetString("SettingsNotificationSendAt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Application Theme.
         /// </summary>
         public static string SettingsTheme {
@@ -1133,6 +1307,42 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Set a daily goal to encourage writing..
+        /// </summary>
+        public static string SettingsWordDesc {
+            get {
+                return ResourceManager.GetString("SettingsWordDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Daily objective &amp; Reminders.
+        /// </summary>
+        public static string SettingsWordHeader {
+            get {
+                return ResourceManager.GetString("SettingsWordHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Daily word objective.
+        /// </summary>
+        public static string SettingsWordObjective {
+            get {
+                return ResourceManager.GetString("SettingsWordObjective", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Track word count.
+        /// </summary>
+        public static string SettingsWordTrack {
+            get {
+                return ResourceManager.GetString("SettingsWordTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à New Tree.
         /// </summary>
         public static string TreeNameDialogDefaultName {
@@ -1188,11 +1398,11 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Open Graph Overview.
+        ///   Recherche une chaîne localisée semblable à Empty Trash.
         /// </summary>
-        public static string TreeViewGraphView {
+        public static string TreeViewEmptyTrash {
             get {
-                return ResourceManager.GetString("TreeViewGraphView", resourceCulture);
+                return ResourceManager.GetString("TreeViewEmptyTrash", resourceCulture);
             }
         }
         
@@ -1206,7 +1416,17 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à No Results have been found....
+        ///   Recherche une chaîne localisée semblable à Toggle Tree View.
+        /// </summary>
+        public static string TreeViewToggleButton {
+            get {
+                return ResourceManager.GetString("TreeViewToggleButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à &quot;I’m always worrying &apos;I used to be able to write for six hours straight, but now I can’t concentrate after three hours. Is my productive power going down?&apos; But seeing the people who have been at it ten years longer than me still creating amazing things proves to me that I can keep going another ten years.&quot; 
+        ///- Kinoko Nasu.
         /// </summary>
         public static string WelcomeFlavorText {
             get {

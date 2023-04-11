@@ -14,6 +14,7 @@ using DialogueForest.Core.Services;
 using DialogueForest.Localization.Strings;
 using DialogueForest.Core.Messages;
 using CommunityToolkit.Mvvm.Messaging;
+using YA;
 
 namespace DialogueForest.Core.ViewModels
 {
@@ -23,11 +24,12 @@ namespace DialogueForest.Core.ViewModels
         private OpenedNodesViewModel _openedNodes;
         private INavigationService _navigationService;
         private INotificationService _notificationService;
+        private IApplicationStorageService _storageService;
         private ForestDataService _dataService;
 
         private DialogueTree _tree;
 
-        // TODO use this constructor less and figure out a way to recycle VMs
+
         public static DialogueTreeViewModel Create(DialogueTree tree, bool canBeRenamed = false)
         {
             var instance = Ioc.Default.GetRequiredService<DialogueTreeViewModel>();
@@ -59,21 +61,27 @@ namespace DialogueForest.Core.ViewModels
             }
         }
 
-        internal List<long> GetIDs() => _tree.Nodes.Keys.ToList();
+        public List<long> GetIDs() => _tree.Nodes.Keys.ToList();
 
-        public ObservableCollection<DialogueNodeViewModel> Nodes { get; } = new ObservableCollection<DialogueNodeViewModel>();
+        public FilterableObservableCollection<DialogueNodeViewModel> Nodes { get; } = new();
 
-        public DialogueTreeViewModel(IDialogService dialogService, OpenedNodesViewModel openedNodes, INavigationService navigationService, INotificationService notificationService, ForestDataService forestService)
+        public DialogueTreeViewModel(IDialogService dialogService, OpenedNodesViewModel openedNodes, INavigationService navigationService, INotificationService notificationService, 
+            IApplicationStorageService storageService, ForestDataService forestService)
         {
             _dialogService = dialogService;
             _navigationService = navigationService;
             _openedNodes = openedNodes;
             _notificationService = notificationService;
+            _storageService = storageService;
             _dataService = forestService;
+
+            _showTreeView = _storageService.GetValue(nameof(ShowTreeView), false);
 
             Nodes.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsNodesEmpty));
             Nodes.CollectionChanged += (s, e) => OnPropertyChanged(nameof(TotalDialogues));
+            Nodes.CollectionChanged += (s, e) => OnPropertyChanged(nameof(TotalWords));
 
+            WeakReferenceMessenger.Default.Register<DialogueTreeViewModel, UnsavedModificationsMessage>(this, (r, m) => r.OnPropertyChanged(nameof(TotalWords)));
             WeakReferenceMessenger.Default.Register<DialogueTreeViewModel, NodeMovedMessage>(this, (r, m) => r.UpdateNodes(m));
         }
 
@@ -119,16 +127,35 @@ namespace DialogueForest.Core.ViewModels
             }
         }
 
-        [ObservableProperty]
+        // Dumb property that only serves to trigger opening nodes selected in treeview
         private DialogueNodeViewModel _selectedNode;
+        public DialogueNodeViewModel SelectedNode
 
-        [ObservableProperty]
-        private int _totalWords;
+        {
+            get => _selectedNode;
+            set { if (value != null) _navigationService.OpenDialogueNode(value); }
+        }
 
         [ObservableProperty]
         private bool _canBeRenamed;
 
+        [ObservableProperty]
+        private bool _showTreeView;
+
+        partial void OnShowTreeViewChanged(bool value) => _storageService.SetValue(nameof(ShowTreeView), value);
+
+        [ObservableProperty]
+        private string _searchString;
+
+        partial void OnSearchStringChanged(string value)
+        {
+            Nodes.Filter = (node) => (node.ID.ToString() + node.NodeTitle?.ToLowerInvariant() + node.TextSummary?.ToLowerInvariant())
+                                        .Contains(value.ToLowerInvariant());
+        }
+
         public int TotalDialogues => Nodes.Count;
+
+        public int TotalWords => Nodes.Sum(n => n.WordCount);
 
         [RelayCommand]
         private void ShowNode(DialogueNodeViewModel vm)
@@ -139,6 +166,12 @@ namespace DialogueForest.Core.ViewModels
         [RelayCommand]
         private void AddNode(DialogueNode node = null)
         {
+            var newNode = AddAndReturnNode(node);
+            _navigationService.OpenDialogueNode(newNode);
+        }
+
+        internal DialogueNodeViewModel AddAndReturnNode(DialogueNode node = null)
+        {
             if (node == null)
             {
                 node = _dataService.CreateNewNode();
@@ -148,6 +181,8 @@ namespace DialogueForest.Core.ViewModels
 
             var nodeVm = DialogueNodeViewModel.Create(node, this);
             Nodes.Add(nodeVm);
+
+            return nodeVm;
         }
 
         internal void MoveNodeToTrash(DialogueNodeViewModel nodeVm, DialogueNode node)
@@ -155,13 +190,20 @@ namespace DialogueForest.Core.ViewModels
             var trash = _dataService.GetTrash();
 
             _dataService.MoveNode(node, _tree, trash);
-            nodeVm.SetParentVm(Create(_dataService.GetTrash())); // Hand off parenting to a trash treeVM
+            nodeVm.SetParentVm(_navigationService.ReuseOrCreateTreeVm(trash)); // Hand off parenting to a trash treeVM
             Nodes.Remove(nodeVm);
+        }
+
+        internal void DeleteNode(DialogueNodeViewModel nodeVm, DialogueNode node)
+        {
+            _dataService.DeleteNode(node);
+            Nodes.Remove(nodeVm); // This is the trash treeVM, so we can just remove the node
         }
 
         [RelayCommand]
         private async Task Delete()
         {
+
             if (await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogDeleteTree, Resources.ContentDialogDeleteTreeDesc,
                        Resources.ButtonYesText, Resources.ButtonCancelText))
             {
@@ -172,6 +214,22 @@ namespace DialogueForest.Core.ViewModels
                
         }
 
-        
+        [RelayCommand]
+        private async Task EmptyTrash()
+        {
+
+            if (await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogEmptyTrash, Resources.ContentDialogEmptyTrashDesc,
+                       Resources.ButtonYesText, Resources.ButtonCancelText))
+            {
+                foreach (var nodeVm in Nodes.ToList())
+                {
+                    // Slightly roundabout way but easier since nodeVm will give us the node model
+                    nodeVm.DeleteNode();
+                }
+                
+                _notificationService.ShowInAppNotification(Resources.NotificationTrashEmptied);
+            }
+
+        }
     }
 }

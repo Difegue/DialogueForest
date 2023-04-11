@@ -1,20 +1,14 @@
 ﻿using System;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using DialogueForest.Controls;
 using DialogueForest.Core.Models;
 using DialogueForest.Core.ViewModels;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Text;
-using Microsoft.Toolkit.Uwp.UI.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Text;
+using CommunityToolkit.WinUI.UI.Controls;
 using Windows.ApplicationModel.DataTransfer;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Windows.System;
-using Microsoft.Toolkit.Uwp;
-using System.Linq;
-using Windows.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Input;
 
 namespace DialogueForest.Views
 {

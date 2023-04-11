@@ -9,25 +9,22 @@ using Microsoft.Extensions.DependencyInjection;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using DialogueForest.Core.Interfaces;
 using DialogueForest.Core.ViewModels;
-using Windows.ApplicationModel.Activation;
-using Windows.UI.Xaml;
-using Microsoft.Toolkit.Uwp.Helpers;
-using Windows.UI.ViewManagement;
-using Windows.Foundation;
-using Windows.UI;
+using Microsoft.UI.Xaml;
 using DialogueForest.ViewModels;
 using DialogueForest.Core.Services;
+using WinUIEx;
+using System.Threading.Tasks;
+using System.Threading;
+using Microsoft.UI.Windowing;
+using System.Collections.Generic;
 
 namespace DialogueForest
 {
     public sealed partial class App : Application
     {
-        private Lazy<ActivationService> _activationService;
-
-        private ActivationService ActivationService
-        {
-            get { return _activationService.Value; }
-        }
+        private WindowEx _window;
+        public WindowEx Window => _window;
+        public XamlRoot XamlRoot { get; private set; }
 
         /// <summary>
         /// Gets the <see cref="IServiceProvider"/> instance to resolve application services.
@@ -42,16 +39,11 @@ namespace DialogueForest
 
             InitializeComponent();
             UnhandledException += OnAppUnhandledException;
-
-            // Deferred execution until used. Check https://docs.microsoft.com/dotnet/api/system.lazy-1 for further info on Lazy<T> class.
-            _activationService = new Lazy<ActivationService>(CreateActivationService);
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
-            Windows.ApplicationModel.Core.CoreApplication.EnablePrelaunch(true);
-
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(500, 500));
+            Ioc.Default.GetRequiredService<IDispatcherService>().Initialize();
 
             // Compact sizing
             var isCompactEnabled = Ioc.Default.GetRequiredService<IApplicationStorageService>().GetValue<bool>(nameof(SettingsViewModel.IsCompactSizing));
@@ -62,7 +54,7 @@ namespace DialogueForest
             }
 
             // Analytics
-            SystemInformation.Instance.TrackAppUse(args);
+            //SystemInformation.Instance.TrackAppUse(args);
 #if DEBUG
 #else
             var enableAnalytics = Ioc.Default.GetRequiredService<IApplicationStorageService>().GetValue<bool>(nameof(SettingsViewModel.EnableAnalytics), true);
@@ -74,24 +66,41 @@ namespace DialogueForest
             }
 #endif
 
-            var viewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            viewTitleBar.ButtonBackgroundColor = Colors.Transparent;
-            viewTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            viewTitleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
-            viewTitleBar.ButtonInactiveForegroundColor = (Color)Resources["SystemBaseHighColor"];
-
-            if (!args.PrelaunchActivated)
+            _window = new WindowEx()
             {
-                await ActivationService.ActivateAsync(args);
-            }
+                MinHeight = 500,
+                MinWidth = 500,
+                Title = "DialogueForest",
+                PersistenceId = "MainWindow",
+                ExtendsContentIntoTitleBar = !AppWindowTitleBar.IsCustomizationSupported(),
+                Backdrop = new MicaSystemBackdrop(),
+            };
+
+            _window.GetAppWindow().SetIcon("Assets\\icon.ico");
+
+            var theme = Ioc.Default.GetRequiredService<IApplicationStorageService>().GetValue<string>(nameof(SettingsViewModel.ElementTheme));
+            Enum.TryParse(theme, out Theme elementTheme);
+            await Ioc.Default.GetRequiredService<IInteropService>().SetThemeAsync(elementTheme);
+
+            _ = Task.Run(async () =>
+            {
+                Thread.Sleep(60000);
+                await Ioc.Default.GetRequiredService<IDialogService>().ShowRateAppDialogIfAppropriateAsync();
+            });
+
+            var shell = new Views.ShellPage();
+
+            shell.Loaded += async (s, e) =>
+            {
+                XamlRoot = shell.XamlRoot;
+                await Ioc.Default.GetRequiredService<IDialogService>().ShowFirstRunDialogIfAppropriateAsync();
+            };
+
+            _window.WindowContent = shell;
+            _window.Activate();
         }
 
-        protected override async void OnActivated(IActivatedEventArgs args)
-        {
-            await ActivationService.ActivateAsync(args);
-        }
-
-        private void OnAppUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        private void OnAppUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
         {
 #if DEBUG
 #else
@@ -110,16 +119,6 @@ namespace DialogueForest
             e.Handled = true;
         }
 
-        private ActivationService CreateActivationService()
-        {
-            return new ActivationService(this, typeof(WelcomeViewModel), new Lazy<UIElement>(CreateShell));
-        }
-
-        private UIElement CreateShell()
-        {
-            return new Views.ShellPage();
-        }
-
         /// <summary>
         /// Configures the services for the application.
         /// </summary>
@@ -135,6 +134,7 @@ namespace DialogueForest
             services.AddSingleton<INotificationService, NotificationService>();
             services.AddSingleton<IInteropService, InteropService>();
             services.AddSingleton<ForestDataService>();
+            services.AddSingleton<WordCountingService>();
 
             // Viewmodel Factories
             //services.AddSingleton<AlbumViewModelFactory>();
@@ -145,11 +145,9 @@ namespace DialogueForest
             services.AddSingleton<ShellViewModel>();
             services.AddSingleton<SettingsViewModel>();
             services.AddSingleton<OpenedNodesViewModel>();
+            services.AddSingleton<PinnedNodesViewModel>();
             services.AddSingleton<WelcomeViewModel>();
             services.AddSingleton<ExportViewModel>();
-            //services.AddSingleton<QueueViewModel>();
-            //services.AddSingleton<SearchResultsViewModel>();
-            //services.AddSingleton<LocalPlaybackViewModel>();
 
             services.AddTransient<DialogueTreeViewModel>();
             services.AddTransient<DialogueNodeViewModel>();

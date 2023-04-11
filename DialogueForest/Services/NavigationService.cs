@@ -1,14 +1,14 @@
 ﻿using DialogueForest.Core.ViewModels;
 using DialogueForest.Views;
-using Microsoft.Toolkit.Uwp.UI.Animations;
+using CommunityToolkit.WinUI.UI.Animations;
 using DialogueForest.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using System.Reflection.Metadata;
 using DialogueForest.Core.Models;
-using DialogueForest.ViewModels;
 
 namespace DialogueForest.Services
 {
@@ -20,7 +20,8 @@ namespace DialogueForest.Services
             { typeof(SettingsViewModel), typeof(SettingsPage) },
             { typeof(DialogueTreeViewModel), typeof(DialogueTreePage) },
             { typeof(ExportViewModel), typeof(ExportPage) },
-            { typeof(WelcomeViewModel), typeof(HomePage) }
+            { typeof(WelcomeViewModel), typeof(HomePage) },
+            { typeof(PinnedNodesViewModel), typeof(PinsPage) }
         };
 
         public NavigationService()
@@ -30,14 +31,37 @@ namespace DialogueForest.Services
 
         public override bool CanGoBack => Frame.BackStack.Count > 0;
 
-        public override Type CurrentPageViewModelType => _viewModelToPageDictionary.Keys.Where(
-            k => _viewModelToPageDictionary[k] == Frame.CurrentSourcePageType).FirstOrDefault();
+        // Specific case for Dialogue Nodes as they're not opened using Frame.Navigate
+        public override Type CurrentPageViewModelType => _currentFocusedVm is DialogueNodeViewModel ? typeof(DialogueNodePage) :
+            _viewModelToPageDictionary.Keys.Where(k => _viewModelToPageDictionary[k] == Frame.CurrentSourcePageType).FirstOrDefault();
 
-        private object _lastParamUsed;
+        private object _lastParamUsed; // Only the actual frame parameter
+        private object _currentFocusedVm; // Includes DialogueNodeVMs
         public override void ShowViewModel(Type viewmodelType, object parameter = null)
         {
             // Get the matching page and navigate to it
             var pageType = _viewModelToPageDictionary.GetValueOrDefault(viewmodelType);
+
+            // Avoid navigating to the same tree if we can help it (sometimes the parameter is a tree, sometimes a treevm...)
+            // Still update the focusedVm so that CurrentPageViewModelType is correct
+            if (parameter is DialogueTree t && _lastParamUsed is DialogueTreeViewModel vm)
+                if (!vm.GetIDs().Except(t.Nodes.Keys).Any())
+                {
+                    _currentFocusedVm = vm;
+                    return;
+                }
+            if (parameter is DialogueTreeViewModel vmp && _lastParamUsed is DialogueTree t2)
+                if (!vmp.GetIDs().Except(t2.Nodes.Keys).Any())
+                {
+                    _currentFocusedVm = vmp;
+                    return;
+                }
+            if (parameter is DialogueTreeViewModel vm1 && _lastParamUsed is DialogueTreeViewModel vm2)
+                if (!vm1.GetIDs().Except(vm2.GetIDs()).Any())
+                {
+                    _currentFocusedVm = vm2;
+                    return;
+                }
 
             // Don't open the same page multiple times
             if (Frame.Content?.GetType() != pageType || (parameter != null && !parameter.Equals(_lastParamUsed)))
@@ -48,16 +72,39 @@ namespace DialogueForest.Services
                     _lastParamUsed = parameter;
                 }
             }
+            _currentFocusedVm = parameter;
         }
 
         public override void SetItemForNextConnectedAnimation(object item) => Frame.SetListDataItemForNextConnectedAnimation(item);
 
+        public override DialogueTreeViewModel ReuseOrCreateTreeVm(DialogueTree t)
+        {
+            // Try to find an existing VM for this tree
+            var existingVm = Frame.BackStack.Select(b => b.Parameter).OfType<DialogueTreeViewModel>()
+                .FirstOrDefault(vm => !vm.GetIDs().Except(t.Nodes.Keys).Any()); // We check for equality by verifying both threes have the same node IDs
+
+            if (existingVm == null)
+            {
+                // If we didn't find one, create a new one
+                existingVm = DialogueTreeViewModel.Create(t);
+            }
+
+            return existingVm;
+        }
+
         public override void OpenDialogueNode(DialogueNodeViewModel vm)
         {
+            if (_currentFocusedVm == vm) return;
+
             // Add the previous node to the backstack
-            Frame.BackStack.Add(new Windows.UI.Xaml.Navigation.PageStackEntry(typeof(DialogueNodePage), NodeTabContainer.SelectedItem, null));
+            if (NodeTabContainer.SelectedItem != null)
+                Frame.BackStack.Add(new Microsoft.UI.Xaml.Navigation.PageStackEntry(typeof(DialogueNodePage), NodeTabContainer.SelectedItem, null));
+            
             NodeTabContainer.OpenNode(vm);
-            //TODO invoke navigated here so CanGoBack updates
+            _currentFocusedVm = vm;
+
+            // Trigger Navigated event so the UI updates
+            InvokeFakeNavigated(typeof(DialogueNodePage), vm);
         }
 
         public override void CloseDialogueNode(DialogueNodeViewModel vm)
@@ -69,26 +116,27 @@ namespace DialogueForest.Services
         {
             if (CanGoBack)
             {
-                var param = Frame.BackStack.Last().Parameter;
+                _currentFocusedVm = Frame.BackStack.Last().Parameter;
 
                 // Nodes are a special case and use the tabcontainer instead of the frame
-                if (param is DialogueNodeViewModel vm)
+                if (_currentFocusedVm is DialogueNodeViewModel vm)
                 {
                     NodeTabContainer.OpenNode(vm);
                     Frame.BackStack.Remove(Frame.BackStack.Last());
+                    InvokeFakeNavigated(typeof(DialogueNodePage), vm);
                     return null;
                 }
                 else
                 {
                     Frame.GoBack();
-                    return param;
+                    _lastParamUsed = _currentFocusedVm;
+                    return _currentFocusedVm;
                 }
                 
             }
 
             return null;
         }
-        
 
         public OpenedNodesViewModel NodeTabContainer { get; set; }
 
@@ -99,7 +147,7 @@ namespace DialogueForest.Services
             {
                 if (_frame == null)
                 {
-                    _frame = Window.Current.Content as Frame;
+                    _frame = (Application.Current as App)?.Window.WindowContent as Frame;
                 }
 
                 return _frame;

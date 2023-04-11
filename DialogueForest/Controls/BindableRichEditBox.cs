@@ -1,6 +1,6 @@
-﻿using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml;
-using Windows.UI.Text;
+﻿using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Text;
 using DialogueForest.Core;
 using Windows.Foundation;
 using System;
@@ -88,7 +88,7 @@ namespace DialogueForest.Controls
                 var options = TextSetOptions.FormatRtf | TextSetOptions.ApplyRtfDocumentDefaults;
 
                 // Make black text white if dark theme is requested
-                var text = Window.Current.Content is FrameworkElement fe
+                var text = (Application.Current as App)?.Window.WindowContent is FrameworkElement fe
                     ? fe.ActualTheme == ElementTheme.Light
                         ? rtb.RtfText.ConvertRtfWhiteTextToBlack()
                         : rtb.RtfText.ConvertRtfBlackTextToWhite()

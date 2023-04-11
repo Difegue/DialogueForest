@@ -37,9 +37,13 @@ namespace DialogueForest.Core.ViewModels
         public string ReplyText
         {
             get => _reply.Text;
-            set => SetProperty(_reply.Text, value, _reply, (u, n) => { u.Text = n; 
-                    WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage()); 
-            });
+            set => SetProperty(_reply.Text, value, _reply, (u, n) => 
+                {
+                    var oldCount = ReplyText?.Split(' ')?.Length ?? 0;
+                    var newCount = n.Split(' ').Length;
+                    u.Text = n; 
+                    WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage(newCount - oldCount));
+                });
         }
 
         public bool HasLinkedID => LinkedID > 0 && LinkedID != _parentNodeVm.ID;
@@ -62,6 +66,12 @@ namespace DialogueForest.Core.ViewModels
             if (await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogDeleteReply, Resources.ContentDialogWillBePermaDeleted, 
                         Resources.ButtonYesText, Resources.ButtonCancelText))
                 _parentNodeVm.RemovePrompt(this, _reply);
+        }
+
+        [RelayCommand]
+        private void CreateNewLinkedDialogue()
+        {
+            LinkedID = _parentNodeVm.CreateNewDialogue();
         }
 
         [RelayCommand]

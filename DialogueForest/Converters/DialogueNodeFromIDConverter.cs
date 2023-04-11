@@ -1,7 +1,7 @@
 ﻿using System;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using DialogueForest.Core.Services;
-using Windows.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Data;
 
 namespace DialogueForest.Converters
 {

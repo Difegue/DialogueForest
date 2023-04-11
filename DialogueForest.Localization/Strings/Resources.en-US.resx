@@ -306,18 +306,17 @@ You can always change this later.</value>
   <data name="WelcomeOpenButton" xml:space="preserve">
     <value>Open existing Forest</value>
   </data>
-  <data name="SearchTracksToggle" xml:space="preserve">
-    <value>Tracks</value>
-  </data>
-  <data name="WelcomeFlavorText" xml:space="preserve">
-    <value>No Results have been found...</value>
+  <data name="SearchPinsPlaceholderText" xml:space="preserve">
+    <value>Search Pins...</value>
   </data>
   <data name="FirstRunText" xml:space="preserve">
-    <value>To get started, please visit the Settings page to key in your MPD server's URL and port.
-Keep in mind Stylophone can send usage data to help diagnose bugs. 
-If you're not okay with this, you can disable telemetry in the Settings.
-Hope you enjoy using the application!  
-</value>
+    <value>To get started, create a new Dialogue Tree using the "New Tree" button on the left, and then start adding Nodes to it!
+
+You can also pin any node by right-clicking it to find it quickly in "My Pins", and use "Notes" to draft dialogue to be later inserted into a Tree.
+
+Keep in mind DialogueForest can send usage data to help diagnose bugs. 
+If you're not okay with this, you can disable telemetry in the Settings page that'll open once you close this popup.
+Hope you enjoy using this silly writing app!  </value>
     <comment>First use prompt message body</comment>
   </data>
   <data name="FirstRunTitle" xml:space="preserve">
@@ -402,7 +401,7 @@ They'll show up here when you do.</value>
     <value>Linked to:</value>
   </data>
   <data name="EditorReplyGoToLinked" xml:space="preserve">
-    <value>Go to Linked Dialogue</value>
+    <value>Go to linked Dialogue</value>
   </data>
   <data name="EditorDeleteReply" xml:space="preserve">
     <value>Delete Reply</value>
@@ -471,11 +470,12 @@ They'll show up here when you do.</value>
   <data name="TreeViewAddNode" xml:space="preserve">
     <value>Add Dialogue Node</value>
   </data>
-  <data name="FirstRunFlavorText" xml:space="preserve">
-    <value>David Bowie is credited with playing the Stylophone on his 1969 debut hit song "Space Oddity" and also for his 2002 album Heathen track titled "Slip Away," as well as on the song "Heathen (The Rays)".</value>
+  <data name="WelcomeFlavorText" xml:space="preserve">
+    <value>"I’m always worrying 'I used to be able to write for six hours straight, but now I can’t concentrate after three hours. Is my productive power going down?' But seeing the people who have been at it ten years longer than me still creating amazing things proves to me that I can keep going another ten years." 
+- Kinoko Nasu</value>
   </data>
-  <data name="TreeViewGraphView" xml:space="preserve">
-    <value>Open Graph Overview</value>
+  <data name="TreeViewToggleButton" xml:space="preserve">
+    <value>Toggle Tree View</value>
   </data>
   <data name="TreeViewSortBy" xml:space="preserve">
     <value>Sort By</value>
@@ -545,5 +545,81 @@ They'll show up here when you do.</value>
   </data>
   <data name="EditorCharacterPlaceholder" xml:space="preserve">
     <value>Character</value>
+  </data>
+  <data name="SettingsMetadataDelete" xml:space="preserve">
+    <value>Remove custom property</value>
+  </data>
+  <data name="SettingsCharacterAdd" xml:space="preserve">
+    <value>Add character</value>
+  </data>
+  <data name="SettingsMetadataAdd" xml:space="preserve">
+    <value>Add property</value>
+  </data>
+  <data name="SettingsCharacterDelete" xml:space="preserve">
+    <value>Remove character</value>
+  </data>
+  <data name="CountWords" xml:space="preserve">
+    <value>{0} words</value>
+  </data>
+  <data name="CountDialogues" xml:space="preserve">
+    <value>{0} dialogues</value>
+  </data>
+  <data name="SettingsWordHeader" xml:space="preserve">
+    <value>Daily objective &amp; Reminders</value>
+  </data>
+  <data name="SettingsWordTrack" xml:space="preserve">
+    <value>Track word count</value>
+  </data>
+  <data name="SettingsWordDesc" xml:space="preserve">
+    <value>Set a daily goal to encourage writing.</value>
+  </data>
+  <data name="SettingsWordObjective" xml:space="preserve">
+    <value>Daily word objective</value>
+  </data>
+  <data name="SettingsNotification" xml:space="preserve">
+    <value>Daily reminder</value>
+  </data>
+  <data name="SettingsNotificationDesc" xml:space="preserve">
+    <value>Sends one notification each day to remind you to open the app.</value>
+  </data>
+  <data name="SettingsNotificationSendAt" xml:space="preserve">
+    <value>Send at:</value>
+  </data>
+  <data name="DailyObjectiveStreakTitle" xml:space="preserve">
+    <value>✨ A {0}-day streak!</value>
+  </data>
+  <data name="DailyObjectiveStreakDesc" xml:space="preserve">
+    <value>Good job on meeting your goal for today!</value>
+  </data>
+  <data name="DailyNotificationDesc" xml:space="preserve">
+    <value>Let's try to write {0} words today!</value>
+  </data>
+  <data name="DailyNotificationTitle" xml:space="preserve">
+    <value>Time to write some dialogue</value>
+  </data>
+  <data name="DailyNotificationDescNoTrack" xml:space="preserve">
+    <value>Open DialogueForest to pen your story!</value>
+  </data>
+  <data name="ContentDialogUnsavedChanges" xml:space="preserve">
+    <value>There are unsaved changes</value>
+  </data>
+  <data name="ContentDialogUnsavedChangesText" xml:space="preserve">
+    <value>The current forest hasn't been saved to disk. Do you want to proceed? 
+Your changes will be lost.</value>
+  </data>
+  <data name="EditorReplyCreateLinked" xml:space="preserve">
+    <value>Create and link new Dialogue</value>
+  </data>
+  <data name="TreeViewEmptyTrash" xml:space="preserve">
+    <value>Empty Trash</value>
+  </data>
+  <data name="ContentDialogEmptyTrash" xml:space="preserve">
+    <value>Empty trash?</value>
+  </data>
+  <data name="ContentDialogEmptyTrashDesc" xml:space="preserve">
+    <value>Every node will be permanently deleted.</value>
+  </data>
+  <data name="NotificationTrashEmptied" xml:space="preserve">
+    <value>Trash has been emptied.</value>
   </data>
 </root>

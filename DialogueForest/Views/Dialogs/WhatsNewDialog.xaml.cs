@@ -1,7 +1,7 @@
 ﻿using System;
 
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace DialogueForest.Views
 {
@@ -9,8 +9,8 @@ namespace DialogueForest.Views
     {
         public WhatsNewDialog()
         {
-            // TODO WTS: Update the contents of this dialog every time you release a new version of the app
-            RequestedTheme = (Window.Current.Content as FrameworkElement).RequestedTheme;
+            XamlRoot = (Application.Current as App)?.XamlRoot;
+            RequestedTheme = ((Application.Current as App)?.Window.WindowContent as FrameworkElement).RequestedTheme;
             InitializeComponent();
         }
     }

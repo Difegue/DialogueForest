@@ -226,18 +226,11 @@
   <data name="SearchPlaceholderText" xml:space="preserve">
     <value>Procurar...</value>
   </data>
-  <data name="SearchTracksToggle" xml:space="preserve">
+  <data name="SearchPinsPlaceholderText" xml:space="preserve">
     <value>Faixas</value>
   </data>
-  <data name="WelcomeFlavorText" xml:space="preserve">
-    <value>Não foram encontrados resultados...</value>
-  </data>
   <data name="FirstRunText" xml:space="preserve">
-    <value>Para começar, por favor visite a página Definições para introduzir o URL e a porta do seu servidor MPD.
-Tenha em mente que o Stylophone pode enviar dados de utilização para ajudar a diagnosticar bugs. 
-Se não estiver de acordo com isto, pode desativar a telemetria nas Definições.
-Espero que goste de utilizar a aplicação!  
-</value>
+    <value></value>
     <comment>First use prompt message body</comment>
   </data>
   <data name="FirstRunTitle" xml:space="preserve">
@@ -278,7 +271,8 @@ Espero que goste de utilizar a aplicação!
   <data name="ButtonNoText" xml:space="preserve">
     <value>Não</value>
   </data>
-  <data name="FirstRunFlavorText" xml:space="preserve">
-    <value>David Bowie é creditado por ter tocado o Stylophone na sua canção de sucesso de 1969 "Space Oddity" e também pelo seu álbum de 2002 "Heathen track" intitulado "Slip Away", bem como na canção "Heathen (The Rays)".</value>
+  <data name="WelcomeFlavorText" xml:space="preserve">
+    <value>"I’m always worrying 'I used to be able to write for six hours straight, but now I can’t concentrate after three hours. Is my productive power going down?' But seeing the people who have been at it ten years longer than me still creating amazing things proves to me that I can keep going another ten years." 
+- Kinoko Nasu</value>
   </data>
 </root>

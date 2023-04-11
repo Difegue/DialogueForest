@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Microsoft.Toolkit.Uwp.Notifications;
+using CommunityToolkit.WinUI.Notifications;
 using DialogueForest.Core.Interfaces;
+using RtfPipe.Tokens;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Notifications;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DialogueForest.Services
 {
@@ -21,70 +24,54 @@ namespace DialogueForest.Services
             InvokeInAppNotificationRequested(new InAppNotificationRequestedEventArgs { NotificationText = notification, NotificationTime = autoHide ? 1500 : 0});
         }
 
-        public override void ShowBasicToastNotification(string title, string description)
+        public override void ScheduleNotification(string title, string text, DateTime day, TimeSpan notificationTime)
         {
-            // Create the toast content
-            var content = new ToastContent()
+            var assetUri = AppDomain.CurrentDomain.BaseDirectory + "Assets";
+
+            // Don't schedule if date is in the past
+            if (day.Add(notificationTime) < DateTime.Now)
             {
-                // More about the Launch property at https://docs.microsoft.com/dotnet/api/microsoft.toolkit.uwp.notifications.toastcontent
-                Launch = "ToastContentActivationParams",
+                return;
+            }
 
-                Visual = new ToastVisual()
+            new ToastContentBuilder()
+                //.AddArgument("action", "viewItemsDueToday")
+                .AddInlineImage(new Uri("file:///" + assetUri + "/Icon_Exclamation.png"))
+                .AddText(title)
+                .AddText(text)
+                //.AddProgressBar()
+                .Schedule(day.Add(notificationTime), toast =>
                 {
-                    BindingGeneric = new ToastBindingGeneric()
-                    {
-                        Children =
-                        {
-                            new AdaptiveText()
-                            {
-                                Text = title
-                            },
-
-                            new AdaptiveText()
-                            {
-                                 Text = description
-                            }
-                        }
-                    }
-                },
-
-                Actions = new ToastActionsCustom()
-                {
-                    Buttons =
-                    {
-                        // More about Toast Buttons at https://docs.microsoft.com/dotnet/api/microsoft.toolkit.uwp.notifications.toastbutton
-                        new ToastButton("OK", "ToastButtonActivationArguments")
-                        {
-                            ActivationType = ToastActivationType.Foreground
-                        },
-
-                        new ToastButtonDismiss("Cancel")
-                    }
-                }
-            };
-
-            // Add the content to the toast
-            var toast = new ToastNotification(content.GetXml())
-            {
-                // TODO WTS: Set a unique identifier for this notification within the notification group. (optional)
-                // More details at https://docs.microsoft.com/uwp/api/windows.ui.notifications.toastnotification.tag
-                Tag = "ToastTag"
-            };
-
-            // And show the toast
-            ShowToastNotification(toast);
+                    toast.Id = day.ToString("yyyy-MM-dd");
+                });
         }
 
-        public void ShowToastNotification(ToastNotification toastNotification)
+        public override void RemoveScheduledNotifications(bool onlyRemoveToday = false)
         {
-            try
-            {
-                ToastNotificationManager.CreateToastNotifier().Show(toastNotification);
+            // Create the toast notifier
+            ToastNotifierCompat notifier = ToastNotificationManagerCompat.CreateToastNotifier();
+
+            // Get the list of scheduled toasts that haven't appeared yet
+            IReadOnlyList<ScheduledToastNotification> scheduledToasts = notifier.GetScheduledToastNotifications();
+
+            foreach (var toRemove in scheduledToasts) {
+
+                if (!onlyRemoveToday || toRemove.Id == DateTime.Now.ToString("yyyy-MM-dd"))
+                {
+                    notifier.RemoveFromSchedule(toRemove);
+                }
             }
-            catch (Exception)
-            {
-                // TODO WTS: Adding ToastNotification can fail in rare conditions, please handle exceptions as appropriate to your scenario.
-            }
+        }
+
+        public override void ShowBasicToastNotification(string title, string description)
+        {
+            var assetUri = AppDomain.CurrentDomain.BaseDirectory + "Assets";
+
+            new ToastContentBuilder()
+                .AddInlineImage(new Uri("file:///" + assetUri + "/Icon_Nice.png"))
+                .AddText(title)
+                .AddText(description)
+                .Show();
         }
 
     }
