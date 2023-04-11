@@ -221,7 +221,7 @@ namespace DialogueForest.Core.ViewModels
             if (await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogEmptyTrash, Resources.ContentDialogEmptyTrashDesc,
                        Resources.ButtonYesText, Resources.ButtonCancelText))
             {
-                foreach (var nodeVm in Nodes)
+                foreach (var nodeVm in Nodes.ToList())
                 {
                     // Slightly roundabout way but easier since nodeVm will give us the node model
                     nodeVm.DeleteNode();

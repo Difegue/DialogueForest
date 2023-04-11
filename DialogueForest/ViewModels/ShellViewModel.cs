@@ -140,6 +140,8 @@ namespace DialogueForest.ViewModels
                 if (long.TryParse(text, out var nodeId))
                 {
                     var source = _dataService.GetNode(nodeId);
+                    if (source == null) return; // sanity check, shouldn't happen but who knows
+                    
                     var node = source.Item2;
                     var origin = source.Item1;
 

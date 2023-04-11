@@ -65,10 +65,13 @@ namespace DialogueForest.Core.ViewModels
 
             foreach (var tuple in _dataService.GetPinnedNodes().Select(id => _dataService.GetNode(id)))
             {
-                var node = tuple.Item2;
-                var treeVm = _navigationService.ReuseOrCreateTreeVm(tuple.Item1);
+                if (tuple != null)
+                {
+                    var node = tuple.Item2;
+                    var treeVm = _navigationService.ReuseOrCreateTreeVm(tuple.Item1);
 
-                Nodes.Add(DialogueNodeViewModel.Create(node, treeVm));
+                    Nodes.Add(DialogueNodeViewModel.Create(node, treeVm));
+                }
             }
         }
 
@@ -77,6 +80,8 @@ namespace DialogueForest.Core.ViewModels
             if (!Nodes.Select(vm => vm.ID).Contains(node.ID))
             {
                 var tuple = _dataService.GetNode(node.ID);
+                if (tuple == null) return;
+                
                 var treeVm = _navigationService.ReuseOrCreateTreeVm(tuple.Item1);
 
                 Nodes.Add(DialogueNodeViewModel.Create(node, treeVm));

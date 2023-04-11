@@ -31,6 +31,8 @@ namespace DialogueForest.Core.ViewModels
 
         internal static DialogueNodeViewModel Create(DialogueNode node, DialogueTreeViewModel parentVm)
         {
+            if (node == null) return null;
+
             var instance = Ioc.Default.GetRequiredService<DialogueNodeViewModel>();
             instance.SetParentVm(parentVm);
             instance.LoadFromNode(node);
@@ -131,10 +133,10 @@ namespace DialogueForest.Core.ViewModels
         private int CalculateWordCount()
         {
             var count = NodeTitle?.Split(' ')?.Length ?? 0;
-            foreach (var dialog in Dialogs)
+            foreach (var dialog in Dialogs.ToList())
                 count += dialog.WordCount;
 
-            foreach (var prompt in Prompts)
+            foreach (var prompt in Prompts.ToList())
                 count += prompt.ReplyText?.Split(' ')?.Length ?? 0;
 
             return count;
@@ -206,7 +208,8 @@ namespace DialogueForest.Core.ViewModels
         {
             return Prompts.Select(p => p.LinkedID)
                 .Where(i => i!= 0 && i!= ID) // Filter out no linked IDs and ourselves
-                .Select(i => _dataService.GetNode(i).Item2) // Get DialogueNode
+                .Select(i => _dataService.GetNode(i)?.Item2) // Get DialogueNode
+                .Where(y => y != null) //Check for nulls in case a linked node was deleted
                 .ToList();
         }
 
@@ -291,7 +294,7 @@ namespace DialogueForest.Core.ViewModels
 
         internal void ActivateDialogue(DialoguePartViewModel dialogVm)
         {
-            foreach (var vm in Dialogs)
+            foreach (var vm in Dialogs.ToList())
             {
                 vm.IsActive = false;
             }

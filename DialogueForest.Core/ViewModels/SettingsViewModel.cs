@@ -66,7 +66,7 @@ namespace DialogueForest.Core.ViewModels
         {
             var data = new Dictionary<string, MetadataKind>();
 
-            foreach (var vm in ForestMetadata)
+            foreach (var vm in ForestMetadata.ToList())
             {
                 if (vm.Name != null)
                 {
@@ -190,13 +190,13 @@ namespace DialogueForest.Core.ViewModels
 
         private void LoadCurrentForestSettings()
         {
-            foreach (var vm in ForestMetadata)
+            foreach (var vm in ForestMetadata.ToList())
             {
                 vm.PropertyChanged -= SaveForestSettings;
                 ForestMetadata.Remove(vm);
             }
 
-            foreach (var vm in ForestCharacters)
+            foreach (var vm in ForestCharacters.ToList())
             {
                 vm.PropertyChanged -= SaveForestSettings;
                 ForestCharacters.Remove(vm);
