@@ -7,7 +7,7 @@ You can easily write multiple long text exchanges in a node, then link said node
 I wrote this tool as I wasn't satisfied with any existing software to write text/dialogues for my games (my best functioning setup was an excel sheet with macros so you can guess how messy that was).  
 As such, it's laid out in a very personal way, but I thought I'd release it if it can help anyone else.  
 
-## Features:  
+## Features  
 
 - Write Dialogue Nodes with multiple text blocks and customizable per-block characters, and link them to each other through prompts  
 - Store your nodes in Dialogue Trees, where they can be displayed either as cards or in tree form  
@@ -27,7 +27,7 @@ You can easily contribute translations to DialogueForest! To help translate, fol
 - Create a new issue with the subject `[Translation] fr-CA` where you replace `fr-CA` with whatever language-region code you'll be translating into.
     - If an issue already exists, then don't do this step.
 - Fork and clone this repo
-- Open in VS
+- Open in Visual Studio
 - In the `DialogueForest.Localization` project, find the `Strings` folder.
 - Create a new file inside `Strings` that looks like this: `Resources.en-US.resx` but using the language you're translating into.
 - Copy all the existing data from `Resources.en-US.resx` into your new `Resources.[language].resx`
@@ -41,3 +41,7 @@ You can easily contribute translations to DialogueForest! To help translate, fol
 - Commit > push > create pull request!
 
 ## Screenshots
+
+![](Assets/Screenshot_1.png)  
+![](Assets/Screenshot_2.png)  
+![](Assets/Screenshot_3.png)  
