@@ -12,7 +12,7 @@
     <ScrollViewer VerticalAlignment="Stretch" MaxWidth="360">
         <StackPanel Spacing="8" HorizontalAlignment="Center" >
 
-            <Image Source="ms-appx:///Assets/Square150x150Logo.scale-200.png" Margin="{StaticResource LargeTopMargin}"
+            <Image Source="ms-appx:///Assets/Icon_Base.png" Margin="{StaticResource LargeTopMargin}"
                Width="196" Height="196"/>
 
             <TextBlock Text="{x:Bind ViewModel.WelcomeText}" TextAlignment="Center"
