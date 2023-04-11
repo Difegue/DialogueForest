@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -9,7 +8,7 @@ using DialogueForest.Core.Interfaces;
 using DialogueForest.Core.Messages;
 using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
-using DialogueForest.Localization.Strings;
+using YA;
 
 namespace DialogueForest.Core.ViewModels
 {
@@ -19,7 +18,7 @@ namespace DialogueForest.Core.ViewModels
         private readonly ForestDataService _dataService;
         private readonly INavigationService _navigationService;
 
-        public ObservableCollection<DialogueNodeViewModel> Nodes { get; } = new();
+        public FilterableObservableCollection<DialogueNodeViewModel> Nodes { get; } = new();
         public bool NoPinnedNodes => Nodes.Count == 0;
 
         // Dumb property that only serves to trigger opening nodes selected in datagrid
@@ -30,6 +29,15 @@ namespace DialogueForest.Core.ViewModels
         {
             if (value != null)
                 _navigationService.OpenDialogueNode(value);
+        }
+
+        [ObservableProperty]
+        private string _searchString;
+
+        partial void OnSearchStringChanged(string value)
+        {
+            Nodes.Filter = (node) => (node.ID.ToString() + node.NodeTitle?.ToLowerInvariant() + node.TextSummary?.ToLowerInvariant())
+                                        .Contains(value.ToLowerInvariant());
         }
 
         public PinnedNodesViewModel(INavigationService navService, ForestDataService dataService)

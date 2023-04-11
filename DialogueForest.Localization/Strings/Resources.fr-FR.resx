@@ -305,8 +305,8 @@ Vous pourrez toujours le changer plus tard.</value>
   <data name="WelcomeOpenButton" xml:space="preserve">
     <value>Ouvrir une Forêt existante</value>
   </data>
-  <data name="SearchTracksToggle" xml:space="preserve">
-    <value>Pistes</value>
+  <data name="SearchPinsPlaceholderText" xml:space="preserve">
+    <value>Rechercher des noeuds épinglés...</value>
   </data>
   <data name="FirstRunText" xml:space="preserve">
     <value>Pour commencer, créez un nouvel arbre de Dialogue en utilisant le bouton "Nouvel Arbre" sur la gauche, puis commencez à y ajouter des Noeuds !
@@ -491,7 +491,7 @@ Vous les retrouverez ici.</value>
     <value>, vous pourrez leur donner des valeurs ici.</value>
   </data>
   <data name="EmptyViewTrashDesc" xml:space="preserve">
-    <value>Les Dialogues supprimées arriveront ici.</value>
+    <value>Les Dialogues supprimés arriveront ici.</value>
   </data>
   <data name="WelcomeSaveAs" xml:space="preserve">
     <value>Enregistrer sous...</value>

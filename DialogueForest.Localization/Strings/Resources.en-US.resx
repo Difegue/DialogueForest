@@ -306,8 +306,8 @@ You can always change this later.</value>
   <data name="WelcomeOpenButton" xml:space="preserve">
     <value>Open existing Forest</value>
   </data>
-  <data name="SearchTracksToggle" xml:space="preserve">
-    <value>Tracks</value>
+  <data name="SearchPinsPlaceholderText" xml:space="preserve">
+    <value>Search Pins...</value>
   </data>
   <data name="FirstRunText" xml:space="preserve">
     <value>To get started, create a new Dialogue Tree using the "New Tree" button on the left, and then start adding Nodes to it!

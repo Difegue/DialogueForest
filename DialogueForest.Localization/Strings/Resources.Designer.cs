@@ -440,7 +440,7 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à .
+        ///   Recherche une chaîne localisée semblable à Custom Properties.
         /// </summary>
         public static string EditorHeaderMetadata {
             get {
@@ -947,20 +947,20 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Search Pins....
+        /// </summary>
+        public static string SearchPinsPlaceholderText {
+            get {
+                return ResourceManager.GetString("SearchPinsPlaceholderText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Search....
         /// </summary>
         public static string SearchPlaceholderText {
             get {
                 return ResourceManager.GetString("SearchPlaceholderText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Tracks.
-        /// </summary>
-        public static string SearchTracksToggle {
-            get {
-                return ResourceManager.GetString("SearchTracksToggle", resourceCulture);
             }
         }
         

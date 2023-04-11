@@ -226,7 +226,7 @@
   <data name="SearchPlaceholderText" xml:space="preserve">
     <value>Procurar...</value>
   </data>
-  <data name="SearchTracksToggle" xml:space="preserve">
+  <data name="SearchPinsPlaceholderText" xml:space="preserve">
     <value>Faixas</value>
   </data>
   <data name="FirstRunText" xml:space="preserve">

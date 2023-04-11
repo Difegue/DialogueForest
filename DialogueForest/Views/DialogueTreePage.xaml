@@ -171,7 +171,9 @@
                        Text="{x:Bind ViewModel.Title}" HorizontalAlignment="Center" Margin="0,-8,0,0"
                        Visibility="{x:Bind ViewModel.CanBeRenamed, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
             
-            <AutoSuggestBox PlaceholderText="Search Nodes..." QueryIcon="Zoom"/>
+            <AutoSuggestBox PlaceholderText="{x:Bind strings:Resources.SearchTreePlaceholderText}"
+                            Text="{x:Bind ViewModel.SearchString, Mode=TwoWay}"
+                            QueryIcon="Zoom"/>
 
             <Grid HorizontalAlignment="Stretch" >
 

@@ -63,7 +63,9 @@
             <TextBlock Style="{StaticResource SubtitleTextBlockStyle}"
                        Text="Pins" HorizontalAlignment="Center" />
 
-            <AutoSuggestBox PlaceholderText="Search Pins..." QueryIcon="Zoom"/>
+            <AutoSuggestBox PlaceholderText="{x:Bind strings:Resources.SearchPinsPlaceholderText}"
+                            Text="{x:Bind ViewModel.SearchString, Mode=TwoWay}"
+                            QueryIcon="Zoom"/>
 
         </StackPanel>
 
@@ -170,10 +172,10 @@
                     <TextBlock Margin="{StaticResource SmallTopMargin}"
                     HorizontalAlignment="Center"
                     Style="{StaticResource SubtitleTextBlockStyle}"
-                    Text="no pins" />
+                    Text="{x:Bind strings:Resources.EmptyViewPinsTitle}" />
                     <TextBlock HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"
                        Margin="{StaticResource SmallLeftTopRightBottomMargin}"
-                       Text="bruh" />
+                       Text="{x:Bind strings:Resources.EmptyViewPinsDesc}" />
 
                 </StackPanel>
             </Grid>

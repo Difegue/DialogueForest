@@ -14,7 +14,7 @@ using DialogueForest.Core.Services;
 using DialogueForest.Localization.Strings;
 using DialogueForest.Core.Messages;
 using CommunityToolkit.Mvvm.Messaging;
-using RtfPipe.Tokens;
+using YA;
 
 namespace DialogueForest.Core.ViewModels
 {
@@ -63,7 +63,7 @@ namespace DialogueForest.Core.ViewModels
 
         public List<long> GetIDs() => _tree.Nodes.Keys.ToList();
 
-        public ObservableCollection<DialogueNodeViewModel> Nodes { get; } = new ObservableCollection<DialogueNodeViewModel>();
+        public FilterableObservableCollection<DialogueNodeViewModel> Nodes { get; } = new();
 
         public DialogueTreeViewModel(IDialogService dialogService, OpenedNodesViewModel openedNodes, INavigationService navigationService, INotificationService notificationService, 
             IApplicationStorageService storageService, ForestDataService forestService)
@@ -143,6 +143,15 @@ namespace DialogueForest.Core.ViewModels
         private bool _showTreeView;
 
         partial void OnShowTreeViewChanged(bool value) => _storageService.SetValue(nameof(ShowTreeView), value);
+
+        [ObservableProperty]
+        private string _searchString;
+
+        partial void OnSearchStringChanged(string value)
+        {
+            Nodes.Filter = (node) => (node.ID.ToString() + node.NodeTitle?.ToLowerInvariant() + node.TextSummary?.ToLowerInvariant())
+                                        .Contains(value.ToLowerInvariant());
+        }
 
         public int TotalDialogues => Nodes.Count;
 

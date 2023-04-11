@@ -326,8 +326,8 @@ You can always change this later.</value>
     <value>Open existing Forest</value>
     <comment>Open button</comment>
   </data>
-  <data name="SearchTracksToggle" xml:space="preserve">
-    <value>Tracks</value>
+  <data name="SearchPinsPlaceholderText" xml:space="preserve">
+    <value>Search Pins...</value>
   </data>
   <data name="FirstRunText" xml:space="preserve">
     <value>To get started, create a new Dialogue Tree using the "New Tree" button on the left, and then start adding Nodes to it!
@@ -473,7 +473,7 @@ They'll show up here when you do.</value>
     <comment>Reply prompt editor add reply</comment>
   </data>
   <data name="EditorHeaderMetadata" xml:space="preserve">
-    <value></value>
+    <value>Custom Properties</value>
     <comment>Dialogue metadata header</comment>
   </data>
   <data name="EditorUnsavedChanges" xml:space="preserve">
