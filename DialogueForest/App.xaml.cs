@@ -10,17 +10,13 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using DialogueForest.Core.Interfaces;
 using DialogueForest.Core.ViewModels;
 using Microsoft.UI.Xaml;
-using CommunityToolkit.WinUI.Helpers;
-using Windows.UI.ViewManagement;
-using Windows.Foundation;
-using Windows.UI;
 using DialogueForest.ViewModels;
 using DialogueForest.Core.Services;
-using Microsoft.UI;
 using WinUIEx;
 using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.UI.Windowing;
+using System.Collections.Generic;
 
 namespace DialogueForest
 {
