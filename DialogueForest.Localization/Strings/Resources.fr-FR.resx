@@ -608,4 +608,16 @@ Vos modifications seront perdues.</value>
   <data name="EditorReplyCreateLinked" xml:space="preserve">
     <value>Créer et lier un nouveau Dialogue</value>
   </data>
+  <data name="TreeViewEmptyTrash" xml:space="preserve">
+    <value>Vider la corbeille</value>
+  </data>
+  <data name="ContentDialogEmptyTrash" xml:space="preserve">
+    <value>Vider la corbeille ?</value>
+  </data>
+  <data name="ContentDialogEmptyTrashDesc" xml:space="preserve">
+    <value>Tous les noeuds seront supprimés définitivement.</value>
+  </data>
+  <data name="NotificationTrashEmptied" xml:space="preserve">
+    <value>La corbeille a été vidée.</value>
+  </data>
 </root>

@@ -178,6 +178,24 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Empty trash?.
+        /// </summary>
+        public static string ContentDialogEmptyTrash {
+            get {
+                return ResourceManager.GetString("ContentDialogEmptyTrash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Every node will be permanently deleted..
+        /// </summary>
+        public static string ContentDialogEmptyTrashDesc {
+            get {
+                return ResourceManager.GetString("ContentDialogEmptyTrashDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Delete this Dialogue?.
         /// </summary>
         public static string ContentDialogueDeleteNode {
@@ -901,6 +919,15 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Trash has been emptied..
+        /// </summary>
+        public static string NotificationTrashEmptied {
+            get {
+                return ResourceManager.GetString("NotificationTrashEmptied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Unpinned!.
         /// </summary>
         public static string NotificationUnpinned {
@@ -1367,6 +1394,15 @@ namespace DialogueForest.Localization.Strings {
         public static string TreeViewDeleteTree {
             get {
                 return ResourceManager.GetString("TreeViewDeleteTree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Empty Trash.
+        /// </summary>
+        public static string TreeViewEmptyTrash {
+            get {
+                return ResourceManager.GetString("TreeViewEmptyTrash", resourceCulture);
             }
         }
         

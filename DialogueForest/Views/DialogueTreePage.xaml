@@ -114,7 +114,7 @@
             <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuDelete}" Command="{Binding DeleteCommand}"
                             Visibility="{Binding IsTrashed, Converter={StaticResource BoolToVisibilityConverter}}">
                 <MenuFlyoutItem.Icon>
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE621;" Foreground="{ThemeResource DestructiveActionForeground}"/>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xECAD;" Foreground="{ThemeResource DestructiveActionForeground}"/>
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
         </MenuFlyout>
@@ -234,12 +234,12 @@
                         <FontIcon Foreground="{ThemeResource DestructiveActionForeground}"
                                   FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" FontSize="18"/>
                     </Button>
-                    <Button Command="{x:Bind ViewModel.DeleteCommand}"
+                    <Button Command="{x:Bind ViewModel.EmptyTrashCommand}"
                             Visibility="{x:Bind ViewModel.IsTrash, Converter={StaticResource BoolToVisibilityConverter}}"
-                            ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewDeleteTree}"
+                            ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewEmptyTrash}"
                             Margin="-8,0,0,0">
                         <FontIcon Foreground="{ThemeResource DestructiveActionForeground}"
-                                  FontFamily="Segoe Fluent Icons" Glyph="&#xE2AC;" FontSize="18"/>
+                                  FontFamily="Segoe Fluent Icons" Glyph="&#xECAD;" FontSize="18"/>
                     </Button>
                 </StackPanel>
                 

@@ -609,4 +609,16 @@ Your changes will be lost.</value>
   <data name="EditorReplyCreateLinked" xml:space="preserve">
     <value>Create and link new Dialogue</value>
   </data>
+  <data name="TreeViewEmptyTrash" xml:space="preserve">
+    <value>Empty Trash</value>
+  </data>
+  <data name="ContentDialogEmptyTrash" xml:space="preserve">
+    <value>Empty trash?</value>
+  </data>
+  <data name="ContentDialogEmptyTrashDesc" xml:space="preserve">
+    <value>Every node will be permanently deleted.</value>
+  </data>
+  <data name="NotificationTrashEmptied" xml:space="preserve">
+    <value>Trash has been emptied.</value>
+  </data>
 </root>

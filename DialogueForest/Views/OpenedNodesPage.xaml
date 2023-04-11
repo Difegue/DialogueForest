@@ -91,9 +91,10 @@
             IsAddTabButtonVisible="False"
             SelectedItem="{x:Bind ViewModel.SelectedItem, Mode=TwoWay}"
             TabItemsSource="{x:Bind ViewModel.Tabs}"
+            Margin="6,0"
             TabCloseRequested="TabView_TabCloseRequested">
             <muxc:TabView.TabStripHeader>
-                <Grid Width="16"/>
+                <Grid Width="8"/>
             </muxc:TabView.TabStripHeader>
             <muxc:TabView.TabStripFooter>
                 <Grid x:Name="CustomDragRegion" x:FieldModifier="Public" MinWidth="150"/>

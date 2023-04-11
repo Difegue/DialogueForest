@@ -273,7 +273,7 @@ namespace DialogueForest.Core.ViewModels
             if (await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogueDeleteNode, Resources.ContentDialogWillBePermaDeleted,
                         Resources.ButtonYesText, Resources.ButtonCancelText))
             {
-                _dataService.DeleteNode(_node);
+                _parentVm.DeleteNode(this, _node);
                 _navigationService.CloseDialogueNode(this);
             }
         }

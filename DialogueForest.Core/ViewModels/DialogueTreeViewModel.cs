@@ -164,7 +164,11 @@ namespace DialogueForest.Core.ViewModels
         }
 
         [RelayCommand]
-        private void AddNode(DialogueNode node = null) => AddAndReturnNode(node);
+        private void AddNode(DialogueNode node = null)
+        {
+            var newNode = AddAndReturnNode(node);
+            _navigationService.OpenDialogueNode(newNode);
+        }
 
         internal DialogueNodeViewModel AddAndReturnNode(DialogueNode node = null)
         {
@@ -190,9 +194,16 @@ namespace DialogueForest.Core.ViewModels
             Nodes.Remove(nodeVm);
         }
 
+        internal void DeleteNode(DialogueNodeViewModel nodeVm, DialogueNode node)
+        {
+            _dataService.DeleteNode(node);
+            Nodes.Remove(nodeVm);
+        }
+
         [RelayCommand]
         private async Task Delete()
         {
+
             if (await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogDeleteTree, Resources.ContentDialogDeleteTreeDesc,
                        Resources.ButtonYesText, Resources.ButtonCancelText))
             {
@@ -203,6 +214,22 @@ namespace DialogueForest.Core.ViewModels
                
         }
 
-        
+        [RelayCommand]
+        private async Task EmptyTrash()
+        {
+
+            if (await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogEmptyTrash, Resources.ContentDialogEmptyTrashDesc,
+                       Resources.ButtonYesText, Resources.ButtonCancelText))
+            {
+                foreach (var nodeVm in Nodes)
+                {
+                    // Slightly roundabout way but easier since nodeVm will give us the node model
+                    nodeVm.DeleteCommand.Execute(this);
+                }
+                
+                _notificationService.ShowInAppNotification(Resources.NotificationTrashEmptied);
+            }
+
+        }
     }
 }
