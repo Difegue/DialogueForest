@@ -36,7 +36,7 @@ namespace DialogueForest.Services
 
             new ToastContentBuilder()
                 //.AddArgument("action", "viewItemsDueToday")
-                .AddHeroImage(new Uri("file:///" + assetUri + "/StoreLogo.png"))
+                .AddInlineImage(new Uri("file:///" + assetUri + "/Icon_Exclamation.png"))
                 .AddText(title)
                 .AddText(text)
                 //.AddProgressBar()
@@ -68,7 +68,7 @@ namespace DialogueForest.Services
             var assetUri = AppDomain.CurrentDomain.BaseDirectory + "Assets";
 
             new ToastContentBuilder()
-                .AddInlineImage(new Uri("file:///" + assetUri + "/StoreLogo.png"))
+                .AddInlineImage(new Uri("file:///" + assetUri + "/Icon_Nice.png"))
                 .AddText(title)
                 .AddText(description)
                 .Show();

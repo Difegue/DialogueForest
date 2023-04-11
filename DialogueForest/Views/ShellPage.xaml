@@ -69,7 +69,7 @@
                     Height="16"
                     Margin="0,8,0,0"
                     VerticalAlignment="Center"
-                    Source="ms-appx:///Assets/Square44x44Logo.targetsize-24_altform-unplated.png" />
+                    Source="ms-appx:///Assets/icon.ico" />
                 <TextBlock
                     x:Name="AppTitle"
                     Margin="4,8,0,0"

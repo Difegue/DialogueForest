@@ -369,7 +369,7 @@
                         <controls:ImageIcon
                             Width="48"
                             Height="48"
-                            Source="ms-appx:///Assets/Square44x44Logo.altform-unplated_targetsize-256.png" />
+                            Source="ms-appx:///Assets/icon.ico" />
                     </local:SettingsBlockControl.Icon>
 
                     <local:SettingsBlockControl.ExpandableContent>
