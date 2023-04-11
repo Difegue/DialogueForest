@@ -226,7 +226,20 @@ namespace DialogueForest.Services
                 {
                     jo.Add(item.Key, item.Value?.ToString());
                 }
-                File.WriteAllText(_file, jo.ToJsonString());
+                
+                // Save to file, and retry if it's locked
+                for (int i = 0; i < 5; i++)
+                {
+                    try
+                    {
+                        File.WriteAllText(_file, jo.ToJsonString());
+                        return;
+                    }
+                    catch (IOException)
+                    {
+                        System.Threading.Thread.Sleep(100);
+                    }
+                }
             }
             public object this[string key] { get => _data[key]; set { _data[key] = value; Save(); } }
 

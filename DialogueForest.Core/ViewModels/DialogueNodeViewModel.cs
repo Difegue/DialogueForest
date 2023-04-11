@@ -273,9 +273,14 @@ namespace DialogueForest.Core.ViewModels
             if (await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogueDeleteNode, Resources.ContentDialogWillBePermaDeleted,
                         Resources.ButtonYesText, Resources.ButtonCancelText))
             {
-                _parentVm.DeleteNode(this, _node);
-                _navigationService.CloseDialogueNode(this);
+                DeleteNode();
             }
+        }
+
+        internal void DeleteNode()
+        {
+            _parentVm.DeleteNode(this, _node);
+            _navigationService.CloseDialogueNode(this);
         }
 
         internal void SetParentVm(DialogueTreeViewModel treeViewModel)

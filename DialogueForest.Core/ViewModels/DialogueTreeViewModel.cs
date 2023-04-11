@@ -224,7 +224,7 @@ namespace DialogueForest.Core.ViewModels
                 foreach (var nodeVm in Nodes)
                 {
                     // Slightly roundabout way but easier since nodeVm will give us the node model
-                    nodeVm.DeleteCommand.Execute(this);
+                    nodeVm.DeleteNode();
                 }
                 
                 _notificationService.ShowInAppNotification(Resources.NotificationTrashEmptied);
