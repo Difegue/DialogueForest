@@ -12,6 +12,8 @@
     <EnableMsixTooling>true</EnableMsixTooling>
 	<WindowsPackageType>None</WindowsPackageType>
 	<ApplicationIcon>Assets\icon.ico</ApplicationIcon>
+	<Authors>Difegue</Authors>
+	<Company>TVC-16</Company>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Common">
