@@ -12,6 +12,10 @@
     xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <!-- Remove TabView brush as it interferes with our card strokes -->
+        <SolidColorBrush x:Key="TabViewBorderBrush" Color="Transparent" />
+    </Page.Resources>
     <Grid>
 
         <Grid Padding="{StaticResource MediumLeftTopRightBottomMargin}"
@@ -91,7 +95,7 @@
             IsAddTabButtonVisible="False"
             SelectedItem="{x:Bind ViewModel.SelectedItem, Mode=TwoWay}"
             TabItemsSource="{x:Bind ViewModel.Tabs}"
-            Margin="6,0"
+            Margin="6,0"  
             TabCloseRequested="TabView_TabCloseRequested">
             <muxc:TabView.TabStripHeader>
                 <Grid Width="8"/>
