@@ -55,6 +55,7 @@ namespace DialogueForest.Services
             {
                 if ((Application.Current as App)?.Window.WindowContent is FrameworkElement frameworkElement)
                 {
+                    // TODO: Settings Default here after having changed the RequestedTheme once doesn't work. (I blame winappsdk)
                     frameworkElement.RequestedTheme = theme;
                     UpdateTitleBar(theme);
                 }

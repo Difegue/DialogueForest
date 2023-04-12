@@ -43,7 +43,7 @@
 
         <DataTemplate x:Key="DialogPartTemplate" x:DataType="viewmodels:DialoguePartViewModel">
             <Grid>
-                <Grid Style="{StaticResource CardGrid}" ui:FrameworkElementExtensions.Cursor="IBeam" Margin="-1,1"
+                <Grid Style="{StaticResource CardGrid}" ui:FrameworkElementExtensions.Cursor="IBeam" Margin="0,1"
                       Visibility="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -57,7 +57,7 @@
                                Grid.Column="0" />
 
                     <local:BindableRichEditBox Background="Transparent" BorderThickness="0" IsHitTestVisible="False" 
-                                               Padding="0" Grid.Column="1" 
+                                               Padding="0" Grid.Column="1" TextWrapping="Wrap"
                                                RtfText="{x:Bind RtfDialogueText, Mode=OneWay}" />
                     <i:Interaction.Behaviors>
                         <ic:EventTriggerBehavior EventName="Tapped">

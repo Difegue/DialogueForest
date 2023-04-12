@@ -80,7 +80,6 @@ namespace DialogueForest
 
             var theme = Ioc.Default.GetRequiredService<IApplicationStorageService>().GetValue<string>(nameof(SettingsViewModel.ElementTheme));
             Enum.TryParse(theme, out Theme elementTheme);
-            await Ioc.Default.GetRequiredService<IInteropService>().SetThemeAsync(elementTheme);
 
             _ = Task.Run(async () =>
             {
@@ -98,6 +97,9 @@ namespace DialogueForest
 
             _window.WindowContent = shell;
             _window.Activate();
+
+            // We can only set the theme after the window has activated
+            await Ioc.Default.GetRequiredService<IInteropService>().SetThemeAsync(elementTheme);
         }
 
         private void OnAppUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
