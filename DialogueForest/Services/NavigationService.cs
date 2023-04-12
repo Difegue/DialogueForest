@@ -94,7 +94,7 @@ namespace DialogueForest.Services
 
         public override void OpenDialogueNode(DialogueNodeViewModel vm)
         {
-            if (_currentFocusedVm == vm) return;
+            if (_currentFocusedVm == vm && !NodeTabContainer.NoTabsOpen) return;
 
             // Add the previous node to the backstack
             if (NodeTabContainer.SelectedItem != null)
