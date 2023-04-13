@@ -27,21 +27,21 @@ namespace DialogueForest.Core.ViewModels
             _dataService = dataService;
             _dialogService = dialogService;
 
-            PropertyChanged += SaveExportSettings;
-
             ExportFolder = _applicationStorageService.GetValue<string>(nameof(ExportFolder), null);
             ExportSeparateFiles = _applicationStorageService.GetValue(nameof(ExportSeparateFiles), false);
 
             var rtfParameter = _applicationStorageService.GetValue(nameof(RtfConversionParameter), OutputFormat.HTML.ToString());
             Enum.TryParse(rtfParameter, out OutputFormat format);
             RtfConversionParameter = format;
-        }
 
+            PropertyChanged += SaveExportSettings;
+        }
+        
         private void SaveExportSettings(object sender, PropertyChangedEventArgs e)
         {
-            _applicationStorageService.SetValue(nameof(ExportFolder), _exportFolder);
-            _applicationStorageService.SetValue(nameof(ExportSeparateFiles), _exportSeparateFiles);
-            _applicationStorageService.SetValue(nameof(RtfConversionParameter), _rtfConversionParameter.ToString());
+            _applicationStorageService.SetValue(nameof(ExportFolder), ExportFolder);
+            _applicationStorageService.SetValue(nameof(ExportSeparateFiles), ExportSeparateFiles);
+            _applicationStorageService.SetValue(nameof(RtfConversionParameter), RtfConversionParameter.ToString());
         }
 
         [ObservableProperty]

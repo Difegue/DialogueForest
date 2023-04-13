@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using DialogueForest.Core.Interfaces;
@@ -39,6 +40,9 @@ namespace DialogueForest.Core.ViewModels
             _interopService = interopService;
 
             _pinnedNodesVm = pinnedVm;
+
+            // HACK: init settings here just to make sure notifications are rehydrated on every app launch
+            Ioc.Default.GetRequiredService<SettingsViewModel>().EnsureInstanceInitialized();
 
             // Listeners to set unsaved/saved document status
             WeakReferenceMessenger.Default.Register<ShellViewModelBase, TreeUpdatedMessage>(this, (r, m) =>

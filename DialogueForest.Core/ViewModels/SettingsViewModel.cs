@@ -45,6 +45,8 @@ namespace DialogueForest.Core.ViewModels
 
         private void SaveSettings(object sender, PropertyChangedEventArgs e)
         {
+            if (e.PropertyName == nameof(MetadataCount) || e.PropertyName == nameof(CharacterCount)) return;
+
             _applicationStorageService.SetValue(nameof(ElementTheme), ElementTheme.ToString());
             _applicationStorageService.SetValue(nameof(IsCompactSizing), IsCompactSizing);
             _applicationStorageService.SetValue(nameof(EnableAnalytics), EnableAnalytics);

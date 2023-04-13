@@ -69,9 +69,6 @@ namespace DialogueForest.Core.Services
                 {
                     SaveForestToStorage();
                 }, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
-
-                // HACK: init settings here just to make sure notifications are rehydrated on every app launch
-                Ioc.Default.GetRequiredService<SettingsViewModel>().EnsureInstanceInitialized();
             }
             catch (Exception ex)
             {
@@ -131,12 +128,13 @@ namespace DialogueForest.Core.Services
 
         public async Task LoadForestFromStorageAsync()
         {
-            CurrentForestHasUnsavedChanges = _storageService.GetValue(nameof(CurrentForestHasUnsavedChanges), false);
+            var unsavedStatus = _storageService.GetValue(nameof(CurrentForestHasUnsavedChanges), false);
             using (var stream = await _storageService.OpenFileAsync(STORAGE_NAME))
             {
                 _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(stream);
             }
             Ioc.Default.GetRequiredService<SettingsViewModel>().LoadCurrentForestSettings();
+            CurrentForestHasUnsavedChanges = unsavedStatus; // Reset status here as it's likely been changed while loading everything
             WeakReferenceMessenger.Default.Send(new TreeUpdatedMessage(CurrentForestHasUnsavedChanges)); // Notify listeners we're loaded
         }
 
