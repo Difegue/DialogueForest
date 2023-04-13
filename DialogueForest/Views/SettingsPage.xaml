@@ -222,6 +222,7 @@
                                 IsEnabled="{x:Bind ViewModel.EnableWordTracking, Mode=OneWay}"
                                 LargeChange="100"
                                 SmallChange="10"
+                                Minimum="10"
                                 SpinButtonPlacementMode="Compact"
                                 Value="{x:Bind ViewModel.DailyWordObjective, Mode=TwoWay}" />
 

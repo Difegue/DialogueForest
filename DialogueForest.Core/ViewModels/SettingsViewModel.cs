@@ -174,7 +174,9 @@ namespace DialogueForest.Core.ViewModels
                 _enableAnalytics = _applicationStorageService.GetValue(nameof(EnableAnalytics), true);
 
                 _enableWordTracking = _applicationStorageService.GetValue<bool>(nameof(EnableWordTracking), true);
-                _dailyWordObjective = _applicationStorageService.GetValue(nameof(DailyWordObjective), DEFAULT_WORD_OBJECTIVE);
+
+                var objective = _applicationStorageService.GetValue(nameof(DailyWordObjective), DEFAULT_WORD_OBJECTIVE);
+                _dailyWordObjective = objective == 0 ? DEFAULT_WORD_OBJECTIVE : objective;
                 _enableNotification = _applicationStorageService.GetValue<bool>(nameof(EnableNotification));
 
                 var time = _applicationStorageService.GetValue(nameof(NotificationTime), 0);
