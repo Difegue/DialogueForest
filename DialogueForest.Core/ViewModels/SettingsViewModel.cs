@@ -52,7 +52,7 @@ namespace DialogueForest.Core.ViewModels
             _applicationStorageService.SetValue(nameof(EnableWordTracking), EnableWordTracking);
             _applicationStorageService.SetValue(nameof(DailyWordObjective), DailyWordObjective);
             _applicationStorageService.SetValue(nameof(EnableNotification), EnableNotification);
-            _applicationStorageService.SetValue(nameof(NotificationTime), NotificationTime.Minutes);
+            _applicationStorageService.SetValue(nameof(NotificationTime), NotificationTime.TotalMinutes);
 
             // Send a message to inform VMs the settings changed
             WeakReferenceMessenger.Default.Send<SettingsChangedMessage>();
@@ -176,19 +176,20 @@ namespace DialogueForest.Core.ViewModels
                 _enableWordTracking = _applicationStorageService.GetValue<bool>(nameof(EnableWordTracking), true);
                 _dailyWordObjective = _applicationStorageService.GetValue(nameof(DailyWordObjective), DEFAULT_WORD_OBJECTIVE);
                 _enableNotification = _applicationStorageService.GetValue<bool>(nameof(EnableNotification));
-                _notificationTime = TimeSpan.FromMinutes(_applicationStorageService.GetValue(nameof(NotificationTime), TimeSpan.FromHours(12).Minutes));
 
+                var time = _applicationStorageService.GetValue(nameof(NotificationTime), 0);
+                _notificationTime = TimeSpan.FromMinutes(time);
+                
                 Enum.TryParse(_applicationStorageService.GetValue<string>(nameof(ElementTheme)), out _elementTheme);
 
                 VersionDescription = GetVersionDescription();
 
-                LoadCurrentForestSettings();
                 UpdateNotifications();
                 _hasInstanceBeenInitialized = true;
             }
         }
 
-        private void LoadCurrentForestSettings()
+        internal void LoadCurrentForestSettings()
         {
             foreach (var vm in ForestMetadata.ToList())
             {
@@ -244,5 +245,6 @@ namespace DialogueForest.Core.ViewModels
 
             return $"{appName} - {version.Major}.{version.Minor}.{(version.Build > -1 ? version.Build : 0)}.{(version.Revision > -1 ? version.Revision : 0)}";
         }
+
     }
 }

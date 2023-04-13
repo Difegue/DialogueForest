@@ -88,7 +88,10 @@ namespace DialogueForest.Core.Services
 
             LastSavedFile = null;
 
+            Ioc.Default.GetRequiredService<SettingsViewModel>().LoadCurrentForestSettings();
             CurrentForestHasUnsavedChanges = false;
+            _storageService.SetValue(nameof(CurrentForestHasUnsavedChanges), false);
+
             WeakReferenceMessenger.Default.Send(new TreeUpdatedMessage(false));
         }
 
@@ -112,6 +115,9 @@ namespace DialogueForest.Core.Services
                     _storageService.SetValue("lastSavedFolder", LastSavedFile.Path);
                     _storageService.SetValue("lastSavedName", LastSavedFile.Name);
                     _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(res.Item2);
+
+                    // Reload settings
+                    Ioc.Default.GetRequiredService<SettingsViewModel>().LoadCurrentForestSettings();
                     WeakReferenceMessenger.Default.Send(new SavedFileMessage(LastSavedFile));
                     WeakReferenceMessenger.Default.Send(new TreeUpdatedMessage(false)); // Notify listeners we're loaded
                 }
@@ -129,7 +135,8 @@ namespace DialogueForest.Core.Services
             using (var stream = await _storageService.OpenFileAsync(STORAGE_NAME))
             {
                 _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(stream);
-            }   
+            }
+            Ioc.Default.GetRequiredService<SettingsViewModel>().LoadCurrentForestSettings();
             WeakReferenceMessenger.Default.Send(new TreeUpdatedMessage(CurrentForestHasUnsavedChanges)); // Notify listeners we're loaded
         }
 
