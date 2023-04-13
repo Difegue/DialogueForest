@@ -15,6 +15,7 @@ using DialogueForest.Helpers;
 using Windows.UI.Core;
 using WinUIEx;
 using Microsoft.UI.Xaml.Controls.Primitives;
+using System.Reflection;
 
 namespace DialogueForest.Services
 {
@@ -46,7 +47,9 @@ namespace DialogueForest.Services
 
         public Version GetAppVersion()
         {
-            return new Version(1,0); // TODO
+            // Return the Assembly version.
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            return AssemblyName.GetAssemblyName(assembly.Location).Version ?? new Version(1, 0);
         }
 
         private async Task SetRequestedThemeAsync(ElementTheme theme)
