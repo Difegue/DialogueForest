@@ -48,7 +48,7 @@ namespace DialogueForest.Services
         public Version GetAppVersion()
         {
             // Return the Assembly version.
-            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            var assembly = Assembly.GetExecutingAssembly();
             return AssemblyName.GetAssemblyName(assembly.Location).Version ?? new Version(1, 0);
         }
 

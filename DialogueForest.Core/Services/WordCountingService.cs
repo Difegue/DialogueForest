@@ -17,6 +17,7 @@ namespace DialogueForest.Core.Services
         private INotificationService _notificationService;
 
         private DateTime _streakLastDate;
+        private bool _hasCompletedObjective;
 
         public int CurrentStreak { get; private set; }
         public int CurrentWordCount { get; private set; }
@@ -51,12 +52,21 @@ namespace DialogueForest.Core.Services
             if (!IsTrackingEnabled)
                 return;
 
+            // Special case when the app runs past midnight with a completed objective
+            // (If the objective wasn't met before we rolled over, let's be nice and not reset the streak)
+            if (_hasCompletedObjective && _streakLastDate != DateTime.Today.Date)
+            {
+                // Reset
+                _hasCompletedObjective = false;
+                CurrentWordCount = 0;
+            }
+
             CurrentWordCount += newWords;
 
             if (CurrentWordCount < 0)
                 CurrentWordCount = 0;
 
-            if (CurrentWordCount > CurrentWordObjective)
+            if (CurrentWordCount >= CurrentWordObjective)
                 WordObjectiveReached();
 
             _storageService.SetValue("CurrentWordCount", CurrentWordCount);
@@ -70,6 +80,7 @@ namespace DialogueForest.Core.Services
             if (_streakLastDate != DateTime.Today.Date)
             {
                 CurrentStreak++;
+                _hasCompletedObjective = true;
                 _streakLastDate = DateTime.Today.Date;
 
                 _storageService.SetValue("CurrentStreak", CurrentStreak);
