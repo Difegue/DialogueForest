@@ -25,6 +25,7 @@ namespace DialogueForest.Views
         private AppWindow _appWindow;
         private INavigationService _navigationService;
 
+        private bool _isResizingPanes;
         public ShellViewModel ViewModel => (ShellViewModel)DataContext;
 
         public ShellPage()
@@ -62,18 +63,24 @@ namespace DialogueForest.Views
             // Super-hackish way to force TwoPaneView to respect user length set by the GridSplitter
             var storageService = Ioc.Default.GetRequiredService<IApplicationStorageService>();
             twoPaneView.Pane1Length = new GridLength(storageService.GetValue("LeftPaneWidth", 340));
-            twoPaneView.PointerReleased += (s, e) =>
+            twoPaneView.PointerPressed += (s, e) =>
             {
                 var point = e.GetCurrentPoint(null).Position;
+
                 // Check if mouse isn't in pane1 or pane2
-                if (!VisualTreeHelper.FindElementsInHostCoordinates(point,Pane1).Any() && !VisualTreeHelper.FindElementsInHostCoordinates(point, tabsView).Any())
+                _isResizingPanes = !VisualTreeHelper.FindElementsInHostCoordinates(point, Pane1).Any()
+                                && !VisualTreeHelper.FindElementsInHostCoordinates(point, tabsView).Any();
+            };
+
+            // PointerReleased happens when the user lets go of the GridSplitter
+            twoPaneView.PointerReleased += (s, e) =>
+            {
+                if (_isResizingPanes)
                 {
-                    // PointerReleased happens when the user lets go of the GridSplitter
-                    // (and shouldn't happen when clicking in the panes since the event gets intercepted before landing here)
+                    _isResizingPanes = false;
                     storageService.SetValue("LeftPaneWidth", (int)Pane1.ActualWidth);
                     twoPaneView.Pane1Length = new GridLength(Pane1.ActualWidth);
                 }
-                
             };
 
             ((App)Application.Current).Window.Closed += (s, e) => ViewModel.ShutdownInitiated();
