@@ -43,7 +43,7 @@
 
         <DataTemplate x:Key="DialogPartTemplate" x:DataType="viewmodels:DialoguePartViewModel">
             <Grid>
-                <Grid Style="{StaticResource CardGrid}" ui:FrameworkElementExtensions.Cursor="IBeam" Margin="0,1"
+                <Grid Style="{StaticResource CardGrid}" ui:FrameworkElementExtensions.Cursor="IBeam" Margin="0,1" 
                       Visibility="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -57,11 +57,20 @@
                                Grid.Column="0" />
 
                     <local:BindableRichEditBox Background="Transparent" BorderThickness="0" IsHitTestVisible="False" 
-                                               Padding="0" Grid.Column="1" TextWrapping="Wrap"
+                                               Padding="0" Grid.Column="1" TextWrapping="Wrap" 
                                                RtfText="{x:Bind RtfDialogueText, Mode=OneWay}" />
                     <i:Interaction.Behaviors>
+                        <ic:EventTriggerBehavior EventName="PointerEntered">
+                            <ic:ChangePropertyAction PropertyName="Background" Value="{ThemeResource ControlStrongFillColorDisabledBrush}"/>
+                        </ic:EventTriggerBehavior>
+                        <ic:EventTriggerBehavior EventName="PointerExited">
+                            <ic:ChangePropertyAction PropertyName="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
+                        </ic:EventTriggerBehavior>
                         <ic:EventTriggerBehavior EventName="Tapped">
-                            <ic:InvokeCommandAction Command="{x:Bind ActivateCommand}"></ic:InvokeCommandAction>
+                            <ic:InvokeCommandAction Command="{x:Bind ActivateCommand}"/>
+                        </ic:EventTriggerBehavior>
+                        <ic:EventTriggerBehavior EventName="GotFocus">
+                            <ic:InvokeCommandAction Command="{x:Bind ActivateCommand}"/>
                         </ic:EventTriggerBehavior>
                     </i:Interaction.Behaviors>
                 </Grid>
@@ -111,7 +120,7 @@
                             
                             <AutoSuggestBox PlaceholderText="{x:Bind strings:Resources.EditorCharacterPlaceholder}"
                                             ItemsSource="{x:Bind Characters}" TextBoxStyle="{StaticResource CharacterAutoSuggestBoxStyle}"
-                                            Width="160" Height="27" VerticalAlignment="Top" Margin="0,5,0,0"
+                                            Width="160" Height="27" VerticalAlignment="Top" Margin="0,5,0,0" IsTabStop="False"
                                             Text="{x:Bind CharacterName, Mode=TwoWay}" >
                                 <AutoSuggestBox.Resources>
                                     <ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/DensityStyles/Compact.xaml" />
@@ -326,7 +335,7 @@
                         </StackPanel>
                     </controls:HeaderedContentControl.Header>
 
-                    <ListView ItemsSource="{x:Bind ViewModel.Dialogs}"
+                    <ListView ItemsSource="{x:Bind ViewModel.Dialogs}" TabNavigation="Local"
                     SelectionMode="None" ItemContainerStyle="{StaticResource ListViewItemStretchStyle}"
                     ItemTemplate="{StaticResource DialogPartTemplate}"/>
 
