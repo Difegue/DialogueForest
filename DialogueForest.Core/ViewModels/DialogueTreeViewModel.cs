@@ -34,7 +34,7 @@ namespace DialogueForest.Core.ViewModels
         {
             var instance = Ioc.Default.GetRequiredService<DialogueTreeViewModel>();
             instance.LoadFromTree(tree);
-            instance._canBeRenamed = canBeRenamed;
+            instance.CanBeRenamed = canBeRenamed;
 
             return instance;
         }
@@ -64,6 +64,7 @@ namespace DialogueForest.Core.ViewModels
         public List<long> GetIDs() => _tree.Nodes.Keys.ToList();
 
         public FilterableObservableCollection<DialogueNodeViewModel> Nodes { get; } = new();
+        public IEnumerable<DialogueNodeViewModel> ParentNodes => Nodes.Where(n => n.GetNodesLinkingToUs().Count == 0);
 
         public DialogueTreeViewModel(IDialogService dialogService, OpenedNodesViewModel openedNodes, INavigationService navigationService, INotificationService notificationService, 
             IApplicationStorageService storageService, ForestDataService forestService)
@@ -77,9 +78,13 @@ namespace DialogueForest.Core.ViewModels
 
             _showTreeView = _storageService.GetValue(nameof(ShowTreeView), false);
 
-            Nodes.CollectionChanged += (s, e) => OnPropertyChanged(nameof(IsNodesEmpty));
-            Nodes.CollectionChanged += (s, e) => OnPropertyChanged(nameof(TotalDialogues));
-            Nodes.CollectionChanged += (s, e) => OnPropertyChanged(nameof(TotalWords));
+            Nodes.CollectionChanged += (s, e) =>
+            {
+                OnPropertyChanged(nameof(IsNodesEmpty));
+                OnPropertyChanged(nameof(TotalDialogues));
+                OnPropertyChanged(nameof(TotalWords));
+                OnPropertyChanged(nameof(ParentNodes));
+            };
 
             WeakReferenceMessenger.Default.Register<DialogueTreeViewModel, UnsavedModificationsMessage>(this, (r, m) => r.OnPropertyChanged(nameof(TotalWords)));
             WeakReferenceMessenger.Default.Register<DialogueTreeViewModel, NodeMovedMessage>(this, (r, m) => r.UpdateNodes(m));

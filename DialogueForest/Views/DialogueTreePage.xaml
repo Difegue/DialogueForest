@@ -268,14 +268,25 @@
         <Border Grid.Row="1" Margin="10,12,10,24"
                 Visibility="{x:Bind ViewModel.ShowTreeView, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid Style="{StaticResource CardGrid}" Padding="0,8">
-        
-                <TreeView ItemsSource="{x:Bind ViewModel.Nodes, Mode=OneWay}" Grid.Row="1" 
+
+                <TreeView ItemsSource="{x:Bind ViewModel.ParentNodes, Mode=OneWay}" Grid.Row="1" 
                           SelectedItem="{x:Bind ViewModel.SelectedNode, Mode=TwoWay}"
                           DragItemsStarting="TreeView_DragItemsStarting"
                           CanReorderItems="False">
                     <TreeView.ItemTemplate>
                         <DataTemplate x:DataType="viewmodels:DialogueNodeViewModel">
-                            <TreeViewItem ItemsSource="{x:Bind NodeChildren, Mode=OneWay}" Content="{x:Bind NodeTitle}" ContextFlyout="{StaticResource NodeContextMenu}"/>
+                            <TreeViewItem ItemsSource="{x:Bind NodeChildren, Mode=OneWay}" 
+                                          ContextFlyout="{StaticResource NodeContextMenu}">
+                                <TreeViewItem.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="#"/>
+                                        <TextBlock Text="{x:Bind ID}"/>
+                                        <TextBlock Text="-" Margin="4,0"/>
+                                        <TextBlock Text="{x:Bind NodeTitle, Mode=OneWay}" FontWeight="SemiBold"/>
+                                    </StackPanel>
+                                </TreeViewItem.Content>
+
+                            </TreeViewItem>
                         </DataTemplate>
                     </TreeView.ItemTemplate>
                 </TreeView>
