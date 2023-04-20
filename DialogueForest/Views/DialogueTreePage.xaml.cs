@@ -62,12 +62,24 @@ namespace DialogueForest.Views
             }
         }
 
+        private void TreeView_DragItemsStarting(TreeView sender, TreeViewDragItemsStartingEventArgs e)
+        {
+            if (e.Items.Count == 1 && e.Items[0] is DialogueNodeViewModel vm)
+            {
+                // Set the content of the DataPackage to the ID of the node we're dragging
+                e.Data.SetText(vm.ID.ToString());
+
+                // We can either Link (when dragging to a Reply Prompt or pinning) or Move (when dragging to another Tree)
+                e.Data.RequestedOperation = DataPackageOperation.Link | DataPackageOperation.Move;
+            }
+        }
+
         private void AddLinkFlyoutHandler(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             var menu = sender as MenuFlyoutSubItem;
             menu.AddHandler(PointerEnteredEvent, new PointerEventHandler((sender, e) =>
                             Helpers.UWPHelpers.LoadLinkedNodesIntoMenuFlyout(menu, menu.DataContext as DialogueNodeViewModel)), true);
         }
-            
+
     }
 }

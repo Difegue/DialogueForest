@@ -270,7 +270,9 @@
             <Grid Style="{StaticResource CardGrid}" Padding="0,8">
         
                 <TreeView ItemsSource="{x:Bind ViewModel.Nodes, Mode=OneWay}" Grid.Row="1" 
-                          SelectedItem="{x:Bind ViewModel.SelectedNode, Mode=TwoWay}">
+                          SelectedItem="{x:Bind ViewModel.SelectedNode, Mode=TwoWay}"
+                          DragItemsStarting="TreeView_DragItemsStarting"
+                          CanReorderItems="False">
                     <TreeView.ItemTemplate>
                         <DataTemplate x:DataType="viewmodels:DialogueNodeViewModel">
                             <TreeViewItem ItemsSource="{x:Bind NodeChildren, Mode=OneWay}" Content="{x:Bind NodeTitle}" ContextFlyout="{StaticResource NodeContextMenu}"/>
