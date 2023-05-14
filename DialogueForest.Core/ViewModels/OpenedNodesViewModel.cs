@@ -4,6 +4,7 @@ using System.Linq;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using RtfPipe.Tokens;
 
 namespace DialogueForest.Core.ViewModels
 {
@@ -22,6 +23,8 @@ namespace DialogueForest.Core.ViewModels
 
         public bool NoTabsOpen => Tabs.Count == 0;
 
+        public bool IsNodeOpen(DialogueNodeViewModel vm) => Tabs.Contains(vm) || Tabs.Select(t => t.ID).Contains(vm.ID);
+
         public void OpenNode(DialogueNodeViewModel vm)
         {
             // Check if this node isn't already open
@@ -30,7 +33,7 @@ namespace DialogueForest.Core.ViewModels
                 // Make 'really' sure
                 if (!Tabs.Select(t => t.ID).Contains(vm.ID))
                 {
-                    // TODO: Remove the current SelectedVM, unless it has unsaved changes?
+                    // TODO: Remove the current SelectedVM, unless it has been written to?
                     Tabs.Add(vm);
                 }
                 else
