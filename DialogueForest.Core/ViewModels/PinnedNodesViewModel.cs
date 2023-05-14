@@ -17,6 +17,7 @@ namespace DialogueForest.Core.ViewModels
     {
         private readonly ForestDataService _dataService;
         private readonly INavigationService _navigationService;
+        private readonly IDispatcherService _dispatcherService;
 
         public FilterableObservableCollection<DialogueNodeViewModel> Nodes { get; } = new();
         public bool NoPinnedNodes => Nodes.Count == 0;
@@ -40,16 +41,17 @@ namespace DialogueForest.Core.ViewModels
                                         .Contains(value.ToLowerInvariant());
         }
 
-        public PinnedNodesViewModel(INavigationService navService, ForestDataService dataService)
+        public PinnedNodesViewModel(INavigationService navService, IDispatcherService dispatcherService, ForestDataService dataService)
         {
             _navigationService = navService;
+            _dispatcherService = dispatcherService;
             _dataService = dataService;
             
             Nodes = new();
             Nodes.CollectionChanged += (s, e) => OnPropertyChanged(nameof(NoPinnedNodes));
 
-            WeakReferenceMessenger.Default.Register<PinnedNodesViewModel, TreeUpdatedMessage>(this, (r,m) => r.RefreshPinnedNodes());
-            WeakReferenceMessenger.Default.Register<PinnedNodesViewModel, UnsavedModificationsMessage>(this, (r, m) => r.OnPropertyChanged(nameof(Nodes)));
+            WeakReferenceMessenger.Default.Register<PinnedNodesViewModel, TreeUpdatedMessage>(this, (r,m) => _dispatcherService.ExecuteOnUIThreadAsync(() => r.RefreshPinnedNodes()));
+            WeakReferenceMessenger.Default.Register<PinnedNodesViewModel, UnsavedModificationsMessage>(this, (r, m) => _dispatcherService.ExecuteOnUIThreadAsync(() => r.OnPropertyChanged(nameof(Nodes))));
             WeakReferenceMessenger.Default.Register<PinnedNodesViewModel, AskToPinNodeMessage>(this, (r, m) => 
             { 
                 if (m.pinStatus) 

@@ -12,6 +12,7 @@ using DialogueForest.Core.Messages;
 using DialogueForest.Localization.Strings;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using DialogueForest.Core.ViewModels;
+using System.IO;
 
 namespace DialogueForest.Core.Services
 {
@@ -22,6 +23,8 @@ namespace DialogueForest.Core.Services
 
         private IApplicationStorageService _storageService;
         private INotificationService _notificationService;
+        private IInteropService _interopService;
+        private IDialogService _dialogService;
 
         private const string STORAGE_NAME = "autosave.json";
         
@@ -31,10 +34,12 @@ namespace DialogueForest.Core.Services
         public FileAbstraction LastSavedFile { get; private set; }
         public bool CurrentForestHasUnsavedChanges { get; private set; }
 
-        public ForestDataService(IApplicationStorageService storageService, INotificationService notificationService)
+        public ForestDataService(IApplicationStorageService storageService, INotificationService notificationService, IInteropService interopService, IDialogService dialogService)
         {
             _storageService = storageService;
             _notificationService = notificationService;
+            _interopService = interopService;
+            _dialogService = dialogService;
 
             if (_storageService.GetValue<string>("lastSavedFolder", null) != null)
             {
@@ -99,10 +104,12 @@ namespace DialogueForest.Core.Services
             CurrentForestHasUnsavedChanges = isDirty;
             _storageService.SetValue(nameof(CurrentForestHasUnsavedChanges), isDirty);
         }
-
-        public async Task LoadForestFromFileAsync()
+        
+        public async Task LoadForestFromFileAsync(FileAbstraction file = null)
         {
-            var res = await _storageService.LoadDataFromExternalFileAsync(".frst");
+            // Load from the provided file if there's one, or open the filepicker
+            var res = file != null ? Tuple.Create(file, (Stream)File.OpenRead(file.FullPath)) : 
+                                     await _storageService.LoadDataFromExternalFileAsync(".frst");
 
             if (res != null)
             {
@@ -142,6 +149,25 @@ namespace DialogueForest.Core.Services
         {
             Task.Run(async () =>
             {
+                await _semaphore.WaitAsync();
+                var lastAutoSave = DateTime.Parse(_storageService.GetValue("lastAutoSave", DateTime.Today.ToString()));
+                var diskLastModifiedTime = _interopService.GetLastModifiedTime(LastSavedFile);
+
+                if (diskLastModifiedTime > lastAutoSave)
+                {
+                    var confirm = await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogOldAutosave, string.Format(Resources.ContentDialogOldAutosaveDesc, LastSavedFile.FullPath), 
+                        Resources.ButtonYesText, Resources.ButtonNoText);
+
+                    if (confirm)
+                    {
+                        await LoadForestFromFileAsync(LastSavedFile);
+                        _storageService.SetValue("lastAutoSave", DateTime.UtcNow.ToString());
+                        _semaphore.Release();
+                        return;
+                    }
+                    _semaphore.Release();
+                }
+
                 try { await SaveForestToStorageAsync(); }
                 catch (Exception ex)
                 {

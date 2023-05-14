@@ -105,26 +105,29 @@ namespace DialogueForest.ViewModels
             // Update the navigationview by hand - It ain't clean but partial databinding would be an even bigger mess...
             var trees = _dataService.GetDialogueTrees();
 
-            // Remove all menuitems in the "Trees" menu
-            _treeContainer.MenuItems.Clear();
-
-            foreach (var tree in trees)
+            _dispatcherService.ExecuteOnUIThreadAsync(() =>
             {
-                var navigationViewItem = new NavigationViewItem();
-                navigationViewItem.Icon = new FontIcon { Glyph = "\uEC0A" };
-                navigationViewItem.Content = tree.Name;
-                navigationViewItem.Tag = tree;
+                // Remove all menuitems in the "Trees" menu
+                _treeContainer.MenuItems.Clear();
 
-                // Setup the item to accept dropped nodes
-                navigationViewItem.AllowDrop = true;
-                navigationViewItem.DragOver += NavigationViewItem_DragOver;
-                navigationViewItem.Drop += NavigationViewItem_Drop;
+                foreach (var tree in trees)
+                {
+                    var navigationViewItem = new NavigationViewItem();
+                    navigationViewItem.Icon = new FontIcon { Glyph = "\uEC0A" };
+                    navigationViewItem.Content = tree.Name;
+                    navigationViewItem.Tag = tree;
 
-                NavHelper.SetNavigateTo(navigationViewItem, typeof(DialogueTreeViewModel));
-                _treeContainer.MenuItems.Add(navigationViewItem);
-            }
+                    // Setup the item to accept dropped nodes
+                    navigationViewItem.AllowDrop = true;
+                    navigationViewItem.DragOver += NavigationViewItem_DragOver;
+                    navigationViewItem.Drop += NavigationViewItem_Drop;
 
-            _treeContainer.MenuItems.Add(_newTreeItem);
+                    NavHelper.SetNavigateTo(navigationViewItem, typeof(DialogueTreeViewModel));
+                    _treeContainer.MenuItems.Add(navigationViewItem);
+                }
+
+                _treeContainer.MenuItems.Add(_newTreeItem);
+            });
         }
 
         public async void NavigationViewItem_Drop(object sender, Microsoft.UI.Xaml.DragEventArgs e)

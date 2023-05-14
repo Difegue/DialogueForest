@@ -74,8 +74,10 @@ namespace DialogueForest.Core.ViewModels
         private void SetIsDirty(bool isDirty)
         {
             _dataService.SetForestDirty(isDirty);
-            OnPropertyChanged(nameof(HasUnsavedChanges));
-            UpdateTitleBar();
+            _dispatcherService.ExecuteOnUIThreadAsync(() => {
+                OnPropertyChanged(nameof(HasUnsavedChanges));
+                UpdateTitleBar();
+            });
         }
 
         private void UpdateTitleBar()
@@ -93,7 +95,7 @@ namespace DialogueForest.Core.ViewModels
 
         private void UpdateWordTrackingInfo()
         {
-            OnPropertyChanged(nameof(WordTrackingEnabled));
+            _dispatcherService.ExecuteOnUIThreadAsync(() => OnPropertyChanged(nameof(WordTrackingEnabled)));
 
             DailyWordCount = $"{_wordService.CurrentWordCount} / {_wordService.CurrentWordObjective}";
             DailyWordCountPercentage = _wordService.CurrentWordCount / (float)_wordService.CurrentWordObjective * 100f;

@@ -621,4 +621,11 @@ Vos modifications seront perdues.</value>
   <data name="NotificationTrashEmptied" xml:space="preserve">
     <value>La corbeille a été vidée.</value>
   </data>
+  <data name="ContentDialogOldAutosave" xml:space="preserve">
+    <value>La version sur disque est plus récente</value>
+  </data>
+  <data name="ContentDialogOldAutosaveDesc" xml:space="preserve">
+    <value>L'emplacement de sauvegarde "{0}" semble contenir une version plus récente du fichier que celle de la sauvegarde automatique.
+Voulez-vous recharger le fichier depuis le disque ?</value>
+  </data>
 </root>

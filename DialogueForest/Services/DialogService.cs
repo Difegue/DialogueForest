@@ -123,27 +123,36 @@ namespace DialogueForest.Services
 
         public async Task<bool> ShowConfirmDialogAsync(string title, string text, string primaryButtonText = null, string cancelButtonText = null)
         {
-            // If a ContentDialog is already open, stop here and return false
-            if (VisualTreeHelper.GetOpenPopups((Application.Current as App)?.Window)
-                .Where(p => p.Child is ContentDialog).Any())
-                return false;
-
-            ContentDialog confirmDialog = new ContentDialog
+            return await _dispatcherService.EnqueueAsync(async () =>
             {
-                XamlRoot = (Application.Current as App)?.XamlRoot,
-                Title = title,
-                Content = text,
-                PrimaryButtonText = primaryButtonText,
-                CloseButtonText = cancelButtonText
-            };
+                // If XamlRoot is null, wait
+                while ((Application.Current as App)?.XamlRoot == null)
+                {
+                    await Task.Delay(100);
+                }
 
-            var theme = _storageService.GetValue<string>(nameof(SettingsViewModel.ElementTheme));
-            Enum.TryParse(theme, out ElementTheme elementTheme); // We can parse the enum directly to ElementTheme since the names are the same!
+                // If a ContentDialog is already open, stop here and return false
+                if (VisualTreeHelper.GetOpenPopups((Application.Current as App)?.Window)
+                .Where(p => p.Child is ContentDialog).Any())
+                    return false;   
 
-            confirmDialog.RequestedTheme = elementTheme;
+                ContentDialog confirmDialog = new ContentDialog
+                {
+                    XamlRoot = (Application.Current as App)?.XamlRoot,
+                    Title = title,
+                    Content = text,
+                    PrimaryButtonText = primaryButtonText,
+                    CloseButtonText = cancelButtonText
+                };
 
-            ContentDialogResult result = await confirmDialog.ShowAsync();
-            return result == ContentDialogResult.Primary;
+                var theme = _storageService.GetValue<string>(nameof(SettingsViewModel.ElementTheme));
+                Enum.TryParse(theme, out ElementTheme elementTheme); // We can parse the enum directly to ElementTheme since the names are the same!
+
+                confirmDialog.RequestedTheme = elementTheme;
+
+                ContentDialogResult result = await confirmDialog.ShowAsync();
+                return result == ContentDialogResult.Primary;
+            });
         }
 
     }

@@ -622,4 +622,11 @@ Your changes will be lost.</value>
   <data name="NotificationTrashEmptied" xml:space="preserve">
     <value>Trash has been emptied.</value>
   </data>
+  <data name="ContentDialogOldAutosave" xml:space="preserve">
+    <value>Version on disk is more recent</value>
+  </data>
+  <data name="ContentDialogOldAutosaveDesc" xml:space="preserve">
+    <value>The file saved to disk at "{0}" seems to be more recent than the autosave. 
+Would you like to reload the file from disk?</value>
+  </data>
 </root>

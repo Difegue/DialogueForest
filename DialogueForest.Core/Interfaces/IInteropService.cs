@@ -25,5 +25,6 @@ namespace DialogueForest.Core.Interfaces
         Task OpenStoreReviewUrlAsync();
 
         void UpdateAppTitle(string v);
+        DateTime GetLastModifiedTime(FileAbstraction lastSavedFile);
     }
 }

@@ -196,6 +196,25 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Version on disk is more recent.
+        /// </summary>
+        public static string ContentDialogOldAutosave {
+            get {
+                return ResourceManager.GetString("ContentDialogOldAutosave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à The file saved to disk at &quot;{0}&quot; seems to be more recent than the autosave. 
+        ///Would you like to reload the file from disk?.
+        /// </summary>
+        public static string ContentDialogOldAutosaveDesc {
+            get {
+                return ResourceManager.GetString("ContentDialogOldAutosaveDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Delete this Dialogue?.
         /// </summary>
         public static string ContentDialogueDeleteNode {

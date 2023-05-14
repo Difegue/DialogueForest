@@ -117,5 +117,15 @@ namespace DialogueForest.Services
             if ((Application.Current as App).Window != null)
                 (Application.Current as App).Window.Title = title;
         }
+
+        public DateTime GetLastModifiedTime(FileAbstraction lastSavedFile)
+        {
+            var filePath = lastSavedFile?.FullPath;
+
+            if (string.IsNullOrEmpty(filePath))
+                return DateTime.MinValue;
+            else
+                return File.GetLastWriteTime(filePath);
+        }
     }
 }
