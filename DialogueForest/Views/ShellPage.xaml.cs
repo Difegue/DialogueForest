@@ -207,8 +207,8 @@ namespace DialogueForest.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // Quick win-only thing, just open the clock app URL
-            var uri = new Uri("ms-clock:");
+            // Quick win-only thing, just open the settings app in focus
+            var uri = new Uri("ms-settings:quiethours");
             var success = Windows.System.Launcher.LaunchUriAsync(uri);
         }
     }
