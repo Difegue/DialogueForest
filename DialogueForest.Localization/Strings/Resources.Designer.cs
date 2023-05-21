@@ -1444,6 +1444,15 @@ namespace DialogueForest.Localization.Strings {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à {0} Deleted nodes.
+        /// </summary>
+        public static string WelcomeDeletedCount {
+            get {
+                return ResourceManager.GetString("WelcomeDeletedCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à &quot;I’m always worrying &apos;I used to be able to write for six hours straight, but now I can’t concentrate after three hours. Is my productive power going down?&apos; But seeing the people who have been at it ten years longer than me still creating amazing things proves to me that I can keep going another ten years.&quot; 
         ///- Kinoko Nasu.
         /// </summary>
@@ -1513,6 +1522,24 @@ namespace DialogueForest.Localization.Strings {
         public static string WelcomeSaveAs {
             get {
                 return ResourceManager.GetString("WelcomeSaveAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à {0} Dialogue nodes.
+        /// </summary>
+        public static string WelcomeTotalDialogueCount {
+            get {
+                return ResourceManager.GetString("WelcomeTotalDialogueCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à {0} Total words.
+        /// </summary>
+        public static string WelcomeTotalWordCount {
+            get {
+                return ResourceManager.GetString("WelcomeTotalWordCount", resourceCulture);
             }
         }
         

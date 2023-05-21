@@ -48,9 +48,35 @@
                 </Button>
             </controls:WrapPanel>
 
+            <!--FontIcon Glyph="&#xE9F9;"/-->
+            <TextBlock Text="Current Forest Statistics" FontWeight="SemiBold" Margin="0,32,0,0" HorizontalAlignment="Center"/>
+            
+            <Grid Width="270"
+                Style="{StaticResource CardGrid}">
+
+                <StackPanel Orientation="Vertical">
+
+                    <StackPanel Orientation="Horizontal" Spacing="4" >
+                        <FontIcon Glyph="&#xE8BE;" FontSize="16" />
+                        <TextBlock Text="{x:Bind ViewModel.TotalDialogues}" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Spacing="4" Margin="0,8">
+                        <FontIcon Glyph="&#xE74D;" FontSize="16"/>
+                        <TextBlock Text="{x:Bind ViewModel.DeletedDialogues}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Spacing="4" >
+                        <FontIcon Glyph="&#xEDFB;" FontSize="16"/>
+                        <TextBlock Text="{x:Bind ViewModel.TotalWordCount}"/>
+                    </StackPanel>
+                </StackPanel>
+                
+            </Grid>
+
             <TextBlock Text="{x:Bind strings:Resources.WelcomeFlavorText}" TextWrapping="Wrap" FontStyle="Italic"
                        TextAlignment="Center" FontSize="12"
-                       Margin="12,36"/>
+                       Margin="12,8"/>
         </StackPanel>
     </ScrollViewer>
 </Page>

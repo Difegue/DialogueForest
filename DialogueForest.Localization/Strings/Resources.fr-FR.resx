@@ -628,4 +628,13 @@ Vos modifications seront perdues.</value>
     <value>L'emplacement de sauvegarde "{0}" semble contenir une version plus récente du fichier que celle de la sauvegarde automatique.
 Voulez-vous recharger le fichier depuis le disque ?</value>
   </data>
+  <data name="WelcomeTotalDialogueCount" xml:space="preserve">
+    <value>{0} noeuds de Dialogue</value>
+  </data>
+  <data name="WelcomeTotalWordCount" xml:space="preserve">
+    <value>{0} mots</value>
+  </data>
+  <data name="WelcomeDeletedCount" xml:space="preserve">
+    <value>{0} noeuds Supprimés</value>
+  </data>
 </root>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace DialogueForest.Core.Models
 {
@@ -28,6 +29,18 @@ namespace DialogueForest.Core.Models
 
             Prompts = new List<DialogueReply>();
             Metadata = new List<DialogueMetadataValue>();
+        }
+
+        public int CalculateWordCount()
+        {
+            var count = Title?.Split(' ')?.Length ?? 0;
+            foreach (var dialog in DialogueLines.ToList())
+                count += dialog.WordCount;
+
+            foreach (var prompt in Prompts.ToList())
+                count += prompt.Text?.Split(' ')?.Length ?? 0;
+
+            return count;
         }
 
     }

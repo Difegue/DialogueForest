@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using DialogueForest.Core.Interfaces;
+using DialogueForest.Core.Messages;
+using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
 using DialogueForest.Localization.Strings;
 
@@ -48,6 +53,14 @@ namespace DialogueForest.Core.ViewModels
         [ObservableProperty]
         private string _welcomeText;
 
+        [ObservableProperty]
+        private string _totalWordCount;
+
+        [ObservableProperty]
+        private string _totalDialogues;
+
+        [ObservableProperty]
+        private string _deletedDialogues;
 
         private ForestDataService _dataService;
         private IDialogService _dialogService;
@@ -56,30 +69,63 @@ namespace DialogueForest.Core.ViewModels
         {
             _dataService = dataService;
             _dialogService = dialogService;
+
+            WeakReferenceMessenger.Default.Register<WelcomeViewModel, TreeUpdatedMessage>(this, (r, m) =>
+            {
+                UpdateForestStats();
+            });
         }
 
         public void UpdateWelcomeText()
         {
             var dt = DateTime.Now;
             int hours = dt.Hour;
-
+            
             if (hours > 6 && hours < 12)
             {
-                _welcomeText = Localization.Strings.Resources.WelcomeGreetingMorning;
+                WelcomeText = Resources.WelcomeGreetingMorning;
             }
             else if (hours > 12 && hours < 16)
             {
-                _welcomeText = Localization.Strings.Resources.WelcomeGreetingAfternoon;
+                WelcomeText = Resources.WelcomeGreetingAfternoon;
             }
             else if (hours > 16 && hours < 21)
             {
-                _welcomeText = Localization.Strings.Resources.WelcomeGreetingEvening;
+                WelcomeText = Resources.WelcomeGreetingEvening;
             }
             else 
             {
-                _welcomeText = Localization.Strings.Resources.WelcomeGreetingNight;
+                WelcomeText = Resources.WelcomeGreetingNight;
             }
 
         }
-    }
+
+        public void UpdateForestStats()
+        {
+            int dialogues = 0;
+            int words = 0;
+
+            if (_dataService.GetDialogueTrees() == null)
+                return;
+
+            var lastId = _dataService.GetLastID();
+            var trees = new List<DialogueTree>(_dataService.GetDialogueTrees());
+            trees.Add(_dataService.GetNotes());
+            trees.Add(_dataService.GetTrash());
+
+            foreach (var t in trees)
+            {
+                dialogues += t.Nodes.Count;
+
+                foreach (var n in t.Nodes)
+                {
+                    words += n.Value.CalculateWordCount();
+                }
+            }
+
+            TotalDialogues = string.Format(Resources.WelcomeTotalDialogueCount, dialogues.ToString("n0"));
+            TotalWordCount = string.Format(Resources.WelcomeTotalWordCount, words.ToString("n0"));
+            DeletedDialogues = string.Format(Resources.WelcomeDeletedCount, lastId - dialogues);
+        }
+    };
 }

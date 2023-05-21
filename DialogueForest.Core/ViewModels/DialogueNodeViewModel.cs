@@ -128,19 +128,7 @@ namespace DialogueForest.Core.ViewModels
 
         public long ID => _node.ID;
 
-        public int WordCount => CalculateWordCount();
-
-        private int CalculateWordCount()
-        {
-            var count = NodeTitle?.Split(' ')?.Length ?? 0;
-            foreach (var dialog in Dialogs.ToList())
-                count += dialog.WordCount;
-
-            foreach (var prompt in Prompts.ToList())
-                count += prompt.ReplyText?.Split(' ')?.Length ?? 0;
-
-            return count;
-        }
+        public int WordCount => _node.CalculateWordCount();
 
         public bool IsPromptsEmpty => Prompts.Count == 0;
         public bool IsMetaDataEmpty => MetaValues.Count == 0;

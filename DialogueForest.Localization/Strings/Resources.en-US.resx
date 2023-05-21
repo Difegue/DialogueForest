@@ -629,4 +629,13 @@ Your changes will be lost.</value>
     <value>The file saved to disk at "{0}" seems to be more recent than the autosave. 
 Would you like to reload the file from disk?</value>
   </data>
+  <data name="WelcomeTotalDialogueCount" xml:space="preserve">
+    <value>{0} Dialogue nodes</value>
+  </data>
+  <data name="WelcomeTotalWordCount" xml:space="preserve">
+    <value>{0} Total words</value>
+  </data>
+  <data name="WelcomeDeletedCount" xml:space="preserve">
+    <value>{0} Deleted nodes</value>
+  </data>
 </root>

@@ -230,6 +230,7 @@ namespace DialogueForest.Core.Services
         public List<long> GetPinnedNodes() => _currentForest?.PinnedIDs;
         public DialogueTree GetTrash() => _currentForest.Trash;
         public DialogueTree GetNotes() => _currentForest.Notes;
+        public long GetLastID() => _currentForest?.LastID ?? 0;
 
         internal bool IsNodeTrashed(DialogueNode node) => GetTrash().Nodes.ContainsValue(node);
         internal void DeleteNode(DialogueNode node) => GetTrash().RemoveNode(node);

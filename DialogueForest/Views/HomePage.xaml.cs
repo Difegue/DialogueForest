@@ -27,6 +27,7 @@ namespace DialogueForest.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ViewModel.UpdateWelcomeText();
+            ViewModel.UpdateForestStats();
         }
     }
 }
