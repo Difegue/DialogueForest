@@ -153,7 +153,8 @@ namespace DialogueForest.Core.Services
                 var lastAutoSave = DateTime.Parse(_storageService.GetValue("lastAutoSave", DateTime.Today.ToString()));
                 var diskLastModifiedTime = _interopService.GetLastModifiedTime(LastSavedFile);
 
-                if (diskLastModifiedTime > lastAutoSave)
+                // Allow for 5 seconds of leeway to avoid the prompt popping up right after you save
+                if (diskLastModifiedTime > lastAutoSave.AddSeconds(5))
                 {
                     var confirm = await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogOldAutosave, string.Format(Resources.ContentDialogOldAutosaveDesc, LastSavedFile.FullPath), 
                         Resources.ButtonYesText, Resources.ButtonNoText);
@@ -161,12 +162,11 @@ namespace DialogueForest.Core.Services
                     if (confirm)
                     {
                         await LoadForestFromFileAsync(LastSavedFile);
-                        _storageService.SetValue("lastAutoSave", DateTime.UtcNow.ToString());
                         _semaphore.Release();
                         return;
                     }
-                    _semaphore.Release();
                 }
+                _semaphore.Release();
 
                 try { await SaveForestToStorageAsync(); }
                 catch (Exception ex)
@@ -186,7 +186,7 @@ namespace DialogueForest.Core.Services
             {
                 var bytes = JsonSerializer.SerializeToUtf8Bytes(_currentForest);
                 await _storageService.SaveDataToFileAsync(STORAGE_NAME, bytes);
-                _storageService.SetValue("lastAutoSave", DateTime.UtcNow.ToString());
+                _storageService.SetValue("lastAutoSave", DateTime.Now.ToString());
             }
             finally
             {
