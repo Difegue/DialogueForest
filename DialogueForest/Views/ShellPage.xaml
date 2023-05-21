@@ -292,7 +292,7 @@
                         <AdaptiveTrigger MinWindowWidth="960" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="Pane1.MaxWidth" Value="496" />
+                        <Setter Target="Pane1.MaxWidth" Value="768" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
