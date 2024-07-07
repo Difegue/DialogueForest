@@ -73,7 +73,7 @@ namespace DialogueForest
                 Title = "DialogueForest",
                 PersistenceId = "MainWindow",
                 ExtendsContentIntoTitleBar = !AppWindowTitleBar.IsCustomizationSupported(),
-                Backdrop = new MicaSystemBackdrop(),
+                SystemBackdrop = new Microsoft.UI.Xaml.Media.MicaBackdrop(),
             };
 
             _window.GetAppWindow().SetIcon("Assets\\icon.ico");
