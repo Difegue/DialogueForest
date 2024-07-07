@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DialogueForest (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "DialogueForest": {
+      "commandName": "Project"
+    }
+  }
+}

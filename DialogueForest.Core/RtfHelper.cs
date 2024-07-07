@@ -5,6 +5,18 @@ using System.Text;
 
 namespace DialogueForest.Core
 {
+    public class CnEncodingProvider : EncodingProvider
+    {
+        public override Encoding GetEncoding(int codepage) => null;
+
+        // Fix for this encoding being dropped from modern .NET but still used in BracketPipe 
+        public override Encoding GetEncoding(string name)
+        {
+            if (name == "iso-2022-cn") return Encoding.GetEncoding("x-cp50227");
+            return null;
+        }
+    }
+
     public static class RtfHelper
     {
         public static string ConvertRtfWhiteTextToBlack(this string s)
@@ -18,6 +30,7 @@ namespace DialogueForest.Core
             if (string.IsNullOrEmpty(s)) return s;
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Encoding.RegisterProvider(new CnEncodingProvider());
 
             // Use RtfPipe to have an HTML converted text as a base
             var settings = new RtfHtmlSettings
