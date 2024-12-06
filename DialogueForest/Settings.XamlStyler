@@ -1,13 +1,14 @@
 {
-    "AttributesTolerance": 2,
-    "KeepFirstAttributeOnSameLine": false,
-    "MaxAttributeCharactersPerLine": 0,
-    "MaxAttributesPerLine": 1,
-    "NewlineExemptionElements": "RadialGradientBrush, GradientStop, LinearGradientBrush, ScaleTransfom, SkewTransform, RotateTransform, TranslateTransform, Trigger, Condition, Setter",
+    "AttributesTolerance": 3,
+    "KeepFirstAttributeOnSameLine": true,
+    "MaxAttributeCharactersPerLine": 30,
+    "MaxAttributesPerLine": 3,
+    "NewlineExemptionElements": "RadialGradientBrush, GradientStop, LinearGradientBrush, ScaleTransform, SkewTransform, RotateTransform, TranslateTransform, Trigger, Condition, Setter",
     "SeparateByGroups": false,
     "AttributeIndentation": 0,
     "AttributeIndentationStyle": 1,
-    "RemoveDesignTimeReferences":  false,
+    "RemoveDesignTimeReferences": false,
+    "IgnoreDesignTimeReferencePrefix": false,
     "EnableAttributeReordering": true,
     "AttributeOrderingRuleGroups": [
         "x:Class",
@@ -22,7 +23,7 @@
         "mc:Ignorable, d:IsDataSource, d:LayoutOverrides, d:IsStaticText",
         "Storyboard.*, From, To, Duration"
     ],
-    "FirstLineAttributes": "",
+    "FirstLineAttributes": "x:Name",
     "OrderAttributesByName": true,
     "PutEndingBracketOnNewLine": false,
     "RemoveEndingTagOfEmptyElement": true,
@@ -33,9 +34,9 @@
     "ReorderCanvasChildren": false,
     "ReorderSetters": 0,
     "FormatMarkupExtension": true,
-    "NoNewLineMarkupExtensions": "x:Bind, Binding",
+    "NoNewLineMarkupExtensions": "",
     "ThicknessSeparator": 2,
     "ThicknessAttributes": "Margin, Padding, BorderThickness, ThumbnailClipMargin",
     "FormatOnSave": true,
-    "CommentPadding": 2,
+    "CommentPadding": 2
 }
