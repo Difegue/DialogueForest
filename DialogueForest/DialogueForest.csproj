@@ -11,7 +11,7 @@
 	<PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
-	  
+	<WindowsSdkPackageVersion>10.0.22621.38</WindowsSdkPackageVersion>
 	<ApplicationIcon>Assets\icon.ico</ApplicationIcon>
 	<Authors>Difegue</Authors>
 	<Company>TVC-16</Company>
