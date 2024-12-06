@@ -1,18 +1,16 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Light">
-            <SolidColorBrush x:Key="DestructiveActionForeground" Color="#ff3b30"></SolidColorBrush>
+            <SolidColorBrush x:Key="DestructiveActionForeground" Color="#ff3b30" />
         </ResourceDictionary>
         <ResourceDictionary x:Key="Dark">
-            <SolidColorBrush x:Key="DestructiveActionForeground" Color="#ff453a"></SolidColorBrush>
+            <SolidColorBrush x:Key="DestructiveActionForeground" Color="#ff453a" />
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 
-    <SolidColorBrush x:Key="ThemeControlForegroundBaseHighBrush" Color="{ThemeResource SystemBaseHighColor}"></SolidColorBrush>
-    <!-- Ink -->
-    <SolidColorBrush x:Key="InkCanvasBackground" Color="#FFFFFF"></SolidColorBrush>
-    <SolidColorBrush x:Key="InkToolbarButtonBackgroundThemeBrush" Color="Transparent"></SolidColorBrush>
+    <SolidColorBrush x:Key="ThemeControlForegroundBaseHighBrush" Color="{ThemeResource SystemBaseHighColor}" />
+    <!--  Ink  -->
+    <SolidColorBrush x:Key="InkCanvasBackground" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="InkToolbarButtonBackgroundThemeBrush" Color="Transparent" />
 </ResourceDictionary>
