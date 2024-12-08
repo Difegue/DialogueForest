@@ -88,7 +88,7 @@ namespace DialogueForest.Services
                     break;
             }
 
-            var titleBar = (Application.Current as App)?.Window.GetAppWindow().TitleBar;
+            var titleBar = (Application.Current as App)?.Window.AppWindow.TitleBar;
             titleBar.ButtonForegroundColor = color;
         }
 

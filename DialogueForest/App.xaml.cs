@@ -76,7 +76,7 @@ namespace DialogueForest
                 SystemBackdrop = new Microsoft.UI.Xaml.Media.MicaBackdrop(),
             };
 
-            _window.GetAppWindow().SetIcon("Assets\\icon.ico");
+            _window.AppWindow.SetIcon("Assets\\icon.ico");
 
             var theme = Ioc.Default.GetRequiredService<IApplicationStorageService>().GetValue<string>(nameof(SettingsViewModel.ElementTheme));
             Enum.TryParse(theme, out Theme elementTheme);

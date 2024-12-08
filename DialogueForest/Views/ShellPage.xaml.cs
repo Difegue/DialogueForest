@@ -40,7 +40,7 @@ namespace DialogueForest.Views
             if (AppWindowTitleBar.IsCustomizationSupported())
             {
                 // Enable AppWindow
-                _appWindow = (Application.Current as App)?.Window.GetAppWindow();
+                _appWindow = (Application.Current as App)?.Window.AppWindow;
                 (Application.Current as App).Window.Activated += Current_Activated;
 
                 var titleBar = _appWindow.TitleBar;
