@@ -211,5 +211,10 @@ namespace DialogueForest.Views
             var uri = new Uri("ms-settings:quiethours");
             var success = Windows.System.Launcher.LaunchUriAsync(uri);
         }
+
+        private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            ViewModel.ItemInvokedCommand.Execute(args);
+        }
     }
 }
