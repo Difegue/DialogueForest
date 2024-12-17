@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -14,7 +13,6 @@ using DialogueForest.Core.Messages;
 using DialogueForest.Core.Models;
 using DialogueForest.Core.Services;
 using DialogueForest.Localization.Strings;
-using RtfPipe.Model;
 
 namespace DialogueForest.Core.ViewModels
 {

@@ -118,7 +118,7 @@ namespace DialogueForest.Core.Services
                     LastSavedFile = res.Item1;
                     _storageService.SetValue("lastSavedFolder", LastSavedFile.Path);
                     _storageService.SetValue("lastSavedName", LastSavedFile.Name);
-                    _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(res.Item2);
+                    _currentForest = await JsonSerializer.DeserializeAsync(res.Item2, JsonSourceGenerationContext.Default.DialogueDatabase);
 
                     // Reload settings
                     Ioc.Default.GetRequiredService<SettingsViewModel>().LoadCurrentForestSettings();
@@ -138,7 +138,7 @@ namespace DialogueForest.Core.Services
             var unsavedStatus = _storageService.GetValue(nameof(CurrentForestHasUnsavedChanges), false);
             using (var stream = await _storageService.OpenFileAsync(STORAGE_NAME))
             {
-                _currentForest = await JsonSerializer.DeserializeAsync<DialogueDatabase>(stream);
+                _currentForest = await JsonSerializer.DeserializeAsync(stream, JsonSourceGenerationContext.Default.DialogueDatabase);
             }
             Ioc.Default.GetRequiredService<SettingsViewModel>().LoadCurrentForestSettings();
             CurrentForestHasUnsavedChanges = unsavedStatus; // Reset status here as it's likely been changed while loading everything
@@ -184,7 +184,7 @@ namespace DialogueForest.Core.Services
             await _semaphore.WaitAsync();
             try
             {
-                var bytes = JsonSerializer.SerializeToUtf8Bytes(_currentForest);
+                var bytes = JsonSerializer.SerializeToUtf8Bytes(_currentForest, JsonSourceGenerationContext.Default.DialogueDatabase);
                 await _storageService.SaveDataToFileAsync(STORAGE_NAME, bytes);
                 _storageService.SetValue("lastAutoSave", DateTime.Now.ToString());
             }
@@ -196,7 +196,7 @@ namespace DialogueForest.Core.Services
 
         public async Task SaveForestToFileAsync(bool promptNewFile = false)
         {
-            var bytes = JsonSerializer.SerializeToUtf8Bytes(_currentForest);
+            var bytes = JsonSerializer.SerializeToUtf8Bytes(_currentForest, JsonSourceGenerationContext.Default.DialogueDatabase);
 
             // Don't prompt the user if the savedFile already exists
             var promptUser = promptNewFile ? true : !_savedFileExists;
