@@ -2,13 +2,12 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Text;
 using DialogueForest.Core;
-using Windows.Foundation;
 using System;
 using System.Linq;
 
 namespace DialogueForest.Controls
 {
-    public class BindableRichEditBox : RichEditBox
+    public partial class BindableRichEditBox : RichEditBox
     {
         public static readonly DependencyProperty RtfTextProperty =
             DependencyProperty.Register(

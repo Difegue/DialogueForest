@@ -5,7 +5,7 @@ using Microsoft.UI.Xaml.Data;
 
 namespace DialogueForest.Converters
 {
-    public class DialogueNodeFromIDConverter : IValueConverter
+    public partial class DialogueNodeFromIDConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {

@@ -2,7 +2,6 @@
 using DialogueForest.Core.ViewModels;
 using CommunityToolkit.WinUI;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Dispatching;

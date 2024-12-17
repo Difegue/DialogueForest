@@ -2,19 +2,10 @@
 using System.Threading.Tasks;
 
 using DialogueForest.Core.Interfaces;
-using Windows.ApplicationModel.Core;
-using Windows.Storage;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Microsoft.UI.Xaml;
-using DialogueForest.Core.ViewModels;
 using System.IO;
-using Windows.ApplicationModel;
-using CommunityToolkit.WinUI.Helpers;
-using DialogueForest.Helpers;
-using Windows.UI.Core;
-using WinUIEx;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using System.Reflection;
 
 namespace DialogueForest.Services

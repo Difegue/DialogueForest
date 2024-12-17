@@ -21,7 +21,7 @@ using DialogueForest.Core.Messages;
 
 namespace DialogueForest.ViewModels
 {
-    public class ShellViewModel : ShellViewModelBase
+    public partial class ShellViewModel : ShellViewModelBase
     {
         private IList<KeyboardAccelerator> _keyboardAccelerators;
         private KeyboardAccelerator _altLeftKeyboardAccelerator;

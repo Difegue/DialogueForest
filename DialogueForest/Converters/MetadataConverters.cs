@@ -1,4 +1,5 @@
 ﻿using System;
+using CommunityToolkit.WinUI.Helpers;
 using Microsoft.UI.Xaml.Data;
 
 namespace DialogueForest.Converters
@@ -6,26 +7,31 @@ namespace DialogueForest.Converters
     /// <summary>
     ///     Converts objects to Windows.UI.Color
     /// </summary>
-    public class ColorMetadataConverter : IValueConverter
+    public partial class ColorMetadataConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value is Windows.UI.Color color)
                 return color;
+            else if (value is string s)
+                return s.ToColor();
             else
                 return Windows.UI.Color.FromArgb(1, 1, 1, 1);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return value;
+            if (value is Windows.UI.Color color)
+                return color.ToHex();
+            else
+                return value;
         }
     }
 
     /// <summary>
     ///     Converts objects to boolean
     /// </summary>
-    public class BoolMetadataConverter : IValueConverter
+    public partial class BoolMetadataConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -44,7 +50,7 @@ namespace DialogueForest.Converters
     /// <summary>
     ///     Converts objects to string
     /// </summary>
-    public class StringMetadataConverter : IValueConverter
+    public partial class StringMetadataConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {

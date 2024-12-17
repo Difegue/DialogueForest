@@ -124,7 +124,7 @@ namespace DialogueForest.Views
     /// <summary>
     /// Custom DataTemplate selector to show the correct UI depending on MetadataKind.
     /// </summary>
-    public class MetadataTemplateSelector : DataTemplateSelector
+    public partial class MetadataTemplateSelector : DataTemplateSelector
     {
         public DataTemplate MetadataBoolTemplate { get; set; }
         public DataTemplate MetadataStringTemplate { get; set; }
