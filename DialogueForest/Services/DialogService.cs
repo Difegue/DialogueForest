@@ -11,6 +11,7 @@ using Strings = DialogueForest.Localization.Strings.Resources;
 using Windows.Services.Store;
 using Microsoft.UI.Xaml.Media;
 using System.Linq;
+using Windows.ApplicationModel;
 
 namespace DialogueForest.Services
 {
@@ -65,21 +66,30 @@ namespace DialogueForest.Services
             var storeContext = StoreContext.GetDefault();
             await _dispatcherService.ExecuteOnUIThreadAsync(async () =>
             {
-                // TODO packaged
-                return;
-                if (SystemInformation.Instance.LaunchCount >=4 && !_storageService.GetValue<bool>("HasSeenRateAppPrompt"))
-                {
-                    if (await ShowConfirmDialogAsync(Strings.RateAppPromptTitle, Strings.RateAppPromptText, Strings.ButtonYesText, Strings.ButtonNoText))
-                    {
-                        var rateResult = await PromptUserToRateAppAsync(storeContext);
+                // Don't do anything if the app isn't running in a packaged context
+                if (Package.Current == null)
+                    return;
 
-                        if (rateResult.HasValue)
-                            _storageService.SetValue("HasSeenRateAppPrompt", true);
-                    }
-                    else
+                try
+                {
+                    if (SystemInformation.Instance.LaunchCount >= 4 && !_storageService.GetValue<bool>("HasSeenRateAppPrompt"))
                     {
-                        _storageService.SetValue("HasSeenRateAppPrompt", true);
-                    }   
+                        if (await ShowConfirmDialogAsync(Strings.RateAppPromptTitle, Strings.RateAppPromptText, Strings.ButtonYesText, Strings.ButtonNoText))
+                        {
+                            var rateResult = await PromptUserToRateAppAsync(storeContext);
+
+                            if (rateResult.HasValue)
+                                _storageService.SetValue("HasSeenRateAppPrompt", true);
+                        }
+                        else
+                        {
+                            _storageService.SetValue("HasSeenRateAppPrompt", true);
+                        }
+                    }
+                }
+                catch
+                {
+                    // This can potentially fail with debug packages, just ignore the exception
                 }
             });
         }
