@@ -1,8 +1,12 @@
-![](DialogueForest/Assets/StoreLogo.png)
+![](DialogueForest/Assets/SmallTile.scale-200.png)
 # DialogueForest  
 
 DialogueForest is an [Outliner](https://en.wikipedia.org/wiki/Outliner) tool that is focused towards writing game dialogue:  
 You can easily write multiple long text exchanges in a node, then link said node to other ones through VN-style prompts.  
+
+<a href="https://apps.microsoft.com/detail/9P7MWMG1V6M6?cid=github-badge&mode=full">
+	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
+</a>
 
 ## Features  
 
@@ -47,7 +51,7 @@ You can easily contribute translations to DialogueForest! To help translate, fol
 
 ## Privacy Policy  
 
-If Telemetry is enabled in the app's settings, the application will send detailed crash reports using [App Center](https://appcenter.ms).  
+If Telemetry is enabled in the app's settings, the application will send detailed crash reports using [Sentry](https://sentry.io).  
 Those reports can contain information about your hardware. (Motherboard type, etc)  
 
 DialogueForest collects no other data from your device.  
