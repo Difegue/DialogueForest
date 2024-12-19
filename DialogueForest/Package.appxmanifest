@@ -12,7 +12,7 @@
   <Identity
     Name="13459Difegue.20217AC591290"
     Publisher="CN=B2F6FFCA-07C7-479C-AC33-2C75463C7DCE"
-    Version="1.0.2.0" />
+    Version="1.0.4.0" />
 
   <mp:PhoneIdentity PhoneProductId="c199dc30-d970-471b-8f5c-24f1b979655c" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
