@@ -98,7 +98,7 @@ namespace DialogueForest.Core.ViewModels
                     // If export to split files is on, export to a JSON now and clear out the nodelist
                     if (_exportSeparateFiles)
                     {
-                        var treeBytes = JsonSerializer.SerializeToUtf8Bytes(nodes);
+                        var treeBytes = JsonSerializer.SerializeToUtf8Bytes(nodes, JsonSourceGenerationContext.Default.ListDictionaryStringObject);
                         var savedFile = new FileAbstraction
                         {
                             Name = tree.Name,
@@ -114,7 +114,7 @@ namespace DialogueForest.Core.ViewModels
                 // Export the entire nodelist in one file
                 if (!_exportSeparateFiles)
                 {
-                    var forestBytes = JsonSerializer.SerializeToUtf8Bytes(nodes);
+                    var forestBytes = JsonSerializer.SerializeToUtf8Bytes(nodes, JsonSourceGenerationContext.Default.ListDictionaryStringObject);
                     var savedFile = new FileAbstraction
                     {
                         Name = _dataService.LastSavedFile?.Name ?? "Exported Forest",

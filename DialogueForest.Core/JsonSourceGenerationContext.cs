@@ -1,4 +1,5 @@
 ﻿using DialogueForest.Core.Models;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -14,6 +15,7 @@ namespace DialogueForest.Core
     [JsonSerializable(typeof(bool))]
     [JsonSerializable(typeof(string))]
     [JsonSerializable(typeof(JsonElement))]
+    [JsonSerializable(typeof(List<Dictionary<string, object>>))]
     internal partial class JsonSourceGenerationContext : JsonSerializerContext
     {
     }
