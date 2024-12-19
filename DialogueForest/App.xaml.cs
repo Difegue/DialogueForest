@@ -2,9 +2,6 @@
 
 using DialogueForest.Services;
 
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
 using Microsoft.Extensions.DependencyInjection;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using DialogueForest.Core.Interfaces;
@@ -16,7 +13,9 @@ using WinUIEx;
 using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.UI.Windowing;
-using System.Collections.Generic;
+using CommunityToolkit.WinUI.Helpers;
+using Sentry;
+using System.Reflection;
 
 namespace DialogueForest
 {
@@ -53,18 +52,15 @@ namespace DialogueForest
                    new ResourceDictionary { Source = new Uri(@"ms-appx:///Microsoft.UI.Xaml/DensityStyles/Compact.xaml", UriKind.Absolute) });
             }
 
-            // Analytics
-            //SystemInformation.Instance.TrackAppUse(args);
-#if DEBUG
-#else
             var enableAnalytics = Ioc.Default.GetRequiredService<IApplicationStorageService>().GetValue<bool>(nameof(SettingsViewModel.EnableAnalytics), true);
             if (enableAnalytics)
             {
-                // Initialize AppCenter
-                AppCenter.Start("a8f16b52-8b3b-4159-8b54-96d412867493",
-                    typeof(Analytics), typeof(Crashes));
+                SentrySdk.Init(o =>
+                {
+                    // Tells which project in Sentry to send events to:
+                    o.Dsn = "https://b00ea101ce53a91f7df754a02fe56328@o4508492455149568.ingest.de.sentry.io/4508492464783440";
+                });
             }
-#endif
 
             _window = new WindowEx()
             {
@@ -92,6 +88,49 @@ namespace DialogueForest
             shell.Loaded += async (s, e) =>
             {
                 XamlRoot = shell.XamlRoot;
+
+                // Analytics
+                if (enableAnalytics)
+                {
+                    var assembly = Assembly.GetExecutingAssembly().GetName();
+                    var isUnpackaged = false;
+
+                    SentrySdk.ConfigureScope(scope =>
+                    {
+                        scope.Release = assembly.Version.ToString();
+
+                        try
+                        {
+                            scope.Release = SystemInformation.Instance.ApplicationVersion.ToFormattedString();
+                            scope.Contexts.Device.Brand = SystemInformation.Instance.DeviceManufacturer;
+                            scope.Contexts.Device.Name = SystemInformation.Instance.DeviceModel;
+                            scope.Contexts.Device.Family = SystemInformation.Instance.DeviceFamily;
+                            scope.Contexts.Device.Architecture = SystemInformation.Instance.OperatingSystemArchitecture.ToString();
+
+                            scope.SetTag("total_launch_count", SystemInformation.Instance.TotalLaunchCount.ToString());
+                            scope.SetTag("unpackaged", "false");
+                        }
+                        catch
+                        {
+                            // SystemInformation will fail in unpackaged scenarios
+                            scope.SetTag("unpackaged", "true");
+                            isUnpackaged = true;
+                        }
+                    });
+
+                    try
+                    {
+                        SystemInformation.Instance.TrackAppUse(args.UWPLaunchActivatedEventArgs, XamlRoot);
+                    }
+                    catch 
+                    {
+                        // SystemInformation will fail in unpackaged scenarios, disregard the exception
+                        isUnpackaged = true;
+                    }
+                    
+                    SentrySdk.CaptureMessage($"{assembly.Name} - {assembly.Version} " + (isUnpackaged ? "(Unpackaged)" : ""));
+                }
+
                 await Ioc.Default.GetRequiredService<IDialogService>().ShowFirstRunDialogIfAppropriateAsync();
             };
 
@@ -109,9 +148,7 @@ namespace DialogueForest
             var enableAnalytics = Ioc.Default.GetRequiredService<IApplicationStorageService>().GetValue<bool>(nameof(SettingsViewModel.EnableAnalytics), true);
             if (enableAnalytics)
             {
-                var dict = new Dictionary<string, string>();
-                dict.Add("exception", e.Exception.ToString());
-                Analytics.TrackEvent("UnhandledCrash", dict);
+                SentrySdk.CaptureException(e.Exception);
             }
 #endif
             var notificationService = Ioc.Default.GetRequiredService<INotificationService>();
