@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
-using CommunityToolkit.WinUI.Notifications;
+using CommunityToolkit.Notifications;
 using DialogueForest.Core.Interfaces;
-using RtfPipe.Tokens;
-using Windows.ApplicationModel.Activation;
 using Windows.UI.Notifications;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace DialogueForest.Services
 {
