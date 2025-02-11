@@ -89,6 +89,8 @@ namespace DialogueForest
             {
                 XamlRoot = shell.XamlRoot;
 
+#if DEBUG
+#else
                 // Analytics
                 if (enableAnalytics)
                 {
@@ -132,6 +134,7 @@ namespace DialogueForest
                 }
 
                 await Ioc.Default.GetRequiredService<IDialogService>().ShowFirstRunDialogIfAppropriateAsync();
+#endif
             };
 
             _window.WindowContent = shell;
@@ -143,6 +146,7 @@ namespace DialogueForest
 
         private void OnAppUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
         {
+
 #if DEBUG
 #else
             var enableAnalytics = Ioc.Default.GetRequiredService<IApplicationStorageService>().GetValue<bool>(nameof(SettingsViewModel.EnableAnalytics), true);
