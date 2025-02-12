@@ -1,21 +1,19 @@
-﻿<Page
-    x:Class="DialogueForest.Views.DialogueNodePage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:ui="using:CommunityToolkit.WinUI.UI"
-    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
-    xmlns:strings="using:DialogueForest.Localization.Strings" 
-    xmlns:local="using:DialogueForest.Controls"
-    xmlns:views="using:DialogueForest.Views"
-    xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
-    xmlns:converters="using:DialogueForest.Converters"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Converters"
-    mc:Ignorable="d">
+﻿<Page x:Class="DialogueForest.Views.DialogueNodePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+      xmlns:converters="using:DialogueForest.Converters"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:i="using:Microsoft.Xaml.Interactivity"
+      xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:local="using:DialogueForest.Controls"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      xmlns:strings="using:DialogueForest.Localization.Strings"
+      xmlns:toolkit="using:CommunityToolkit.WinUI.Converters"
+      xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
+      xmlns:views="using:DialogueForest.Views"
+      mc:Ignorable="d">
 
     <Page.Resources>
 
@@ -25,127 +23,163 @@
             <Setter Property="Padding" Value="0" />
         </Style>
 
-        <converters:BoolMetadataConverter x:Key="BoolMetadataConverter"/>
-        <converters:ColorMetadataConverter x:Key="ColorMetadataConverter"/>
-        <converters:StringMetadataConverter x:Key="StringMetadataConverter"/>
+        <converters:BoolMetadataConverter x:Key="BoolMetadataConverter" />
+        <converters:ColorMetadataConverter x:Key="ColorMetadataConverter" />
+        <converters:StringMetadataConverter x:Key="StringMetadataConverter" />
 
-        <toolkit:StringFormatConverter x:Key="CharacterNameConverter"/>
+        <toolkit:StringFormatConverter x:Key="CharacterNameConverter" />
 
         <Style x:Key="ColorPickerStyle" TargetType="controls:ColorPicker">
-            <Setter Property="ColorSpectrumShape" Value="Ring"/>
-            <Setter Property="IsAlphaEnabled" Value="False"/>
-            <Setter Property="IsHexInputVisible" Value="True"/>
+            <Setter Property="ColorSpectrumShape" Value="Ring" />
+            <Setter Property="IsAlphaEnabled" Value="False" />
+            <Setter Property="IsHexInputVisible" Value="True" />
         </Style>
 
         <Style x:Key="CharacterAutoSuggestBoxStyle" TargetType="TextBox">
-            <Setter Property="Padding" Value="8,0,0,0"/>
+            <Setter Property="Padding" Value="8,0,0,0" />
         </Style>
 
         <DataTemplate x:Key="DialogPartTemplate" x:DataType="viewmodels:DialoguePartViewModel">
             <Grid>
-                <Grid Style="{StaticResource CardGrid}" ui:FrameworkElementExtensions.Cursor="IBeam" Margin="0,1" 
-                      Visibility="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
+                <!--  ui:FrameworkElementExtensions.Cursor="IBeam" is unavailable on toolkit v8 + WASDK for now  -->
+                <Grid Margin="0,1" Style="{StaticResource CardGrid}" Visibility="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <!-- &#10240; is a braille blank character to break the converter's not-useful-here trimming behavior -->
-                    <TextBlock Text="{x:Bind CharacterName, Mode=OneWay, Converter={StaticResource CharacterNameConverter},
-                                             ConverterParameter=' {0} :&#10240;'}" 
-                               Style="{StaticResource BaseTextBlockStyle}"
-                               Grid.Column="0" />
+                    <!--  &#10240; is a braille blank character to break the converter's not-useful-here trimming behavior  -->
+                    <TextBlock Grid.Column="0" Style="{StaticResource BaseTextBlockStyle}" Text="{x:Bind CharacterName, Mode=OneWay, Converter={StaticResource CharacterNameConverter}, ConverterParameter=' {0} :&#10240;'}" />
 
-                    <local:BindableRichEditBox Background="Transparent" BorderThickness="0" IsHitTestVisible="False" 
-                                               Padding="0" Grid.Column="1" TextWrapping="Wrap" 
-                                               RtfText="{x:Bind RtfDialogueText, Mode=OneWay}" />
+                    <local:BindableRichEditBox Grid.Column="1" Padding="0"
+                                               Background="Transparent"
+                                               BorderThickness="0"
+                                               IsHitTestVisible="False"
+                                               RtfText="{x:Bind RtfDialogueText,
+                                                                Mode=OneWay}"
+                                               TextWrapping="Wrap" />
                     <i:Interaction.Behaviors>
                         <ic:EventTriggerBehavior EventName="PointerEntered">
-                            <ic:ChangePropertyAction PropertyName="Background" Value="{ThemeResource ControlStrongFillColorDisabledBrush}"/>
+                            <ic:ChangePropertyAction PropertyName="Background" Value="{ThemeResource ControlStrongFillColorDisabledBrush}" />
                         </ic:EventTriggerBehavior>
                         <ic:EventTriggerBehavior EventName="PointerExited">
-                            <ic:ChangePropertyAction PropertyName="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
+                            <ic:ChangePropertyAction PropertyName="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
                         </ic:EventTriggerBehavior>
                         <ic:EventTriggerBehavior EventName="Tapped">
-                            <ic:InvokeCommandAction Command="{x:Bind ActivateCommand}"/>
+                            <!--  This breaks with Trimming  -->
+                            <ic:InvokeCommandAction Command="{x:Bind ActivateCommand}" />
                         </ic:EventTriggerBehavior>
                         <ic:EventTriggerBehavior EventName="GotFocus">
-                            <ic:InvokeCommandAction Command="{x:Bind ActivateCommand}"/>
+                            <ic:InvokeCommandAction Command="{x:Bind ActivateCommand}" />
                         </ic:EventTriggerBehavior>
                     </i:Interaction.Behaviors>
                 </Grid>
 
-                <StackPanel Margin="0,2" 
-                            Visibility="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel Margin="0,2" Visibility="{x:Bind IsActive, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
 
-                    <Grid HorizontalAlignment="Stretch" Height="40" BorderBrush="{ThemeResource ControlStrokeColorDefault}"
-                          BorderThickness="1,1,1,0" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" CornerRadius="4,4,0,0" >
+                    <Grid Height="40"
+                          HorizontalAlignment="Stretch"
+                          Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                          BorderBrush="{ThemeResource ControlStrokeColorDefault}"
+                          BorderThickness="1,1,1,0"
+                          CornerRadius="4,4,0,0">
 
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="240"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="240"/>
+                            <ColumnDefinition Width="240" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="240" />
                         </Grid.ColumnDefinitions>
 
-                        <StackPanel x:Name="EditorControls" Orientation="Horizontal" Spacing="8" Grid.Column="0" Margin="{StaticResource SmallLeftMargin}">
-                            <ToggleButton x:Name="Bold" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorBold}"
-                                          Click="Toggle_Bold" Tag="{Binding ElementName=Editor}">
+                        <StackPanel x:Name="EditorControls"
+                                    Grid.Column="0"
+                                    Margin="{StaticResource SmallLeftMargin}"
+                                    Orientation="Horizontal"
+                                    Spacing="8">
+                            <ToggleButton x:Name="Bold"
+                                          Click="Toggle_Bold"
+                                          Tag="{Binding ElementName=Editor}"
+                                          ToolTipService.ToolTip="{x:Bind strings:Resources.EditorBold}">
                                 <ToggleButton.Content>
-                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8DD;" FontSize="14"/>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14" Glyph="&#xE8DD;" />
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="Italic" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorItalic}"
-                                          Click="Toggle_Italic" Tag="{Binding ElementName=Editor}">
+                            <ToggleButton x:Name="Italic"
+                                          Click="Toggle_Italic"
+                                          Tag="{Binding ElementName=Editor}"
+                                          ToolTipService.ToolTip="{x:Bind strings:Resources.EditorItalic}">
                                 <ToggleButton.Content>
-                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8DB;" FontSize="14"/>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14" Glyph="&#xE8DB;" />
                                 </ToggleButton.Content>
                             </ToggleButton>
-                            <ToggleButton x:Name="Underline" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorUnderline}"
-                                          Click="Toggle_Underline" Tag="{Binding ElementName=Editor}">
+                            <ToggleButton x:Name="Underline"
+                                          Click="Toggle_Underline"
+                                          Tag="{Binding ElementName=Editor}"
+                                          ToolTipService.ToolTip="{x:Bind strings:Resources.EditorUnderline}">
                                 <ToggleButton.Content>
-                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE19A;" FontSize="14"/>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="14" Glyph="&#xE19A;" />
                                 </ToggleButton.Content>
                             </ToggleButton>
 
                             <AppBarSeparator />
 
-                            <controls:ColorPickerButton x:Name="Color" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorFontColor}"
-                                                        ColorPickerStyle="{StaticResource ColorPickerStyle}" Height="28"
+                            <!--  This breaks with Trimming  -->
+                            <controls:ColorPickerButton x:Name="Color"
+                                                        Height="28"
+                                                        Click="ColorPicker_Click"
+                                                        ColorPickerStyle="{StaticResource ColorPickerStyle}"
                                                         CornerRadius="{ThemeResource ControlCornerRadius}"
-                                                        Click="ColorPicker_Click" Tag="{Binding ElementName=Editor}"/>
+                                                        Tag="{Binding ElementName=Editor}"
+                                                        ToolTipService.ToolTip="{x:Bind strings:Resources.EditorFontColor}" />
 
                         </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Spacing="8" Grid.Column="2" HorizontalAlignment="Right" Margin="{StaticResource SmallRightMargin}">
-                            
-                            <AutoSuggestBox PlaceholderText="{x:Bind strings:Resources.EditorCharacterPlaceholder}"
-                                            ItemsSource="{x:Bind Characters}" TextBoxStyle="{StaticResource CharacterAutoSuggestBoxStyle}"
-                                            Width="160" Height="27" VerticalAlignment="Top" Margin="0,5,0,0" IsTabStop="False"
-                                            Text="{x:Bind CharacterName, Mode=TwoWay}" >
+                        <StackPanel Grid.Column="2"
+                                    Margin="{StaticResource SmallRightMargin}"
+                                    HorizontalAlignment="Right"
+                                    Orientation="Horizontal"
+                                    Spacing="8">
+
+                            <AutoSuggestBox Width="160" Height="27"
+                                            Margin="0,5,0,0"
+                                            VerticalAlignment="Top"
+                                            IsTabStop="False"
+                                            ItemsSource="{x:Bind Characters}"
+                                            PlaceholderText="{x:Bind strings:Resources.EditorCharacterPlaceholder}"
+                                            Text="{x:Bind CharacterName,
+                                                          Mode=TwoWay}"
+                                            TextBoxStyle="{StaticResource CharacterAutoSuggestBoxStyle}">
                                 <AutoSuggestBox.Resources>
                                     <ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/DensityStyles/Compact.xaml" />
                                 </AutoSuggestBox.Resources>
                             </AutoSuggestBox>
-                            
-                            <Button Command="{x:Bind RemoveCommand}" IsEnabled="{x:Bind ParentHasMultipleDialogs, Mode=OneWay}"
-                                    Height="28"
+
+                            <Button Height="28"
+                                    Command="{x:Bind RemoveCommand}"
+                                    IsEnabled="{x:Bind ParentHasMultipleDialogs,
+                                                       Mode=OneWay}"
                                     ToolTipService.ToolTip="{x:Bind strings:Resources.EditorDeleteDialogue}">
                                 <Button.Content>
-                                    <FontIcon Foreground="{ThemeResource DestructiveActionForeground}" FontFamily="Segoe Fluent Icons"
-                                              Glyph="&#xE107;" FontSize="14"/>
+                                    <FontIcon FontFamily="Segoe Fluent Icons"
+                                              FontSize="14"
+                                              Foreground="{ThemeResource DestructiveActionForeground}"
+                                              Glyph="&#xE107;" />
                                 </Button.Content>
                             </Button>
                         </StackPanel>
                     </Grid>
 
-                    <local:BindableRichEditBox x:Name="Editor" PlaceholderText="{x:Bind strings:Resources.EditorPlaceholderText}"
-                                               Height="180" CornerRadius="0,0,4,4"
-                                               SelectionFlyout="{x:Null}" Tag="{Binding ElementName=EditorControls}"
-                                               RtfText="{x:Bind RtfDialogueText, Mode=TwoWay}"
-                                               IsFocused="{x:Bind IsActive, Mode=OneWay}"
+                    <local:BindableRichEditBox x:Name="Editor"
+                                               Height="180"
+                                               CornerRadius="0,0,4,4"
+                                               IsFocused="{x:Bind IsActive,
+                                                                  Mode=OneWay}"
+                                               PlaceholderText="{x:Bind strings:Resources.EditorPlaceholderText}"
+                                               RtfText="{x:Bind RtfDialogueText,
+                                                                Mode=TwoWay}"
                                                SelectionChanged="Selection_Changed"
-                                               TextChanged="Selection_Changed"
-                                               />
+                                               SelectionFlyout="{x:Null}"
+                                               Tag="{Binding ElementName=EditorControls}"
+                                               TextChanged="Selection_Changed" />
                 </StackPanel>
             </Grid>
         </DataTemplate>
@@ -153,86 +187,95 @@
         <DataTemplate x:Key="DialogPromptTemplate" x:DataType="viewmodels:ReplyPromptViewModel">
             <Grid Style="{StaticResource CardGrid}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.9*"/>
-                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="0.9*" />
+                    <ColumnDefinition Width="120" />
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,16,0"
-                         Background="Transparent" BorderThickness="0" PlaceholderText="{x:Bind strings:Resources.EditorReplyPlaceholderText}"
-                         Text="{x:Bind ReplyText, Mode=TwoWay}" />
+                <TextBox Grid.Column="0"
+                         Margin="0,0,16,0"
+                         AcceptsReturn="True"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         PlaceholderText="{x:Bind strings:Resources.EditorReplyPlaceholderText}"
+                         Text="{x:Bind ReplyText,
+                                       Mode=TwoWay}"
+                         TextWrapping="Wrap" />
 
-                <StackPanel Orientation="Vertical" Grid.Column="1" Spacing="4">
-                    <TextBlock Text="{x:Bind strings:Resources.EditorReplyLinkedTo}"/>
+                <StackPanel Grid.Column="1" Orientation="Vertical" Spacing="4">
+                    <TextBlock Text="{x:Bind strings:Resources.EditorReplyLinkedTo}" />
                     <StackPanel Orientation="Horizontal" Spacing="8">
-                        <!-- Due to Bindings.Update in the codebehind, we can't precompile the LinkedID binding. -->
-                        <ComboBox IsEditable="True" AllowDrop="True"
-                                  DragOver="ComboBox_DragOver" Drop="ComboBox_Drop"
-                                  SelectedItem="{Binding LinkedID, Mode=TwoWay}"
-                                  ItemsSource="{x:Bind LinkableIDs, Mode=OneWay}"
-                                  />
-                        <Button ToolTipService.ToolTip="{x:Bind strings:Resources.EditorReplyCreateLinked}"
-                                Visibility="{x:Bind HasLinkedID, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}"
-                                Command="{x:Bind CreateNewLinkedDialogueCommand}">
+                        <!--  Due to Bindings.Update in the codebehind, we can't precompile the LinkedID binding.  -->
+                        <ComboBox AllowDrop="True"
+                                  DragOver="ComboBox_DragOver"
+                                  Drop="ComboBox_Drop"
+                                  IsEditable="True"
+                                  ItemsSource="{x:Bind LinkableIDs,
+                                                       Mode=OneWay}"
+                                  SelectedItem="{Binding LinkedID,
+                                                         Mode=TwoWay}" />
+                        <Button Command="{x:Bind CreateNewLinkedDialogueCommand}" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorReplyCreateLinked}" Visibility="{x:Bind HasLinkedID, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
                             <Button.Content>
-                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE710;" FontSize="18"/>
+                                <FontIcon FontFamily="Segoe Fluent Icons" FontSize="18" Glyph="&#xE710;" />
                             </Button.Content>
                         </Button>
-                        <Button ToolTipService.ToolTip="{x:Bind strings:Resources.EditorReplyGoToLinked}"
-                                Visibility="{x:Bind HasLinkedID, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
-                                Command="{x:Bind GoToLinkedDialogueCommand}" Margin="-8,0,0,0">
+                        <Button Margin="-8,0,0,0"
+                                Command="{x:Bind GoToLinkedDialogueCommand}"
+                                ToolTipService.ToolTip="{x:Bind strings:Resources.EditorReplyGoToLinked}"
+                                Visibility="{x:Bind HasLinkedID,
+                                                    Mode=OneWay,
+                                                    Converter={StaticResource BoolToVisibilityConverter}}">
                             <Button.Content>
-                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF716;" FontSize="18"/>
+                                <FontIcon FontFamily="Segoe Fluent Icons" FontSize="18" Glyph="&#xF716;" />
                             </Button.Content>
                         </Button>
                     </StackPanel>
 
-                    <Button Content="{x:Bind strings:Resources.ButtonDeleteText}" Margin="{StaticResource XSmallTopMargin}" Width="114"
-                            ToolTipService.ToolTip="{x:Bind strings:Resources.EditorDeleteReply}"
-                            Command="{x:Bind RemoveCommand}"/>
+                    <Button Width="114"
+                            Margin="{StaticResource XSmallTopMargin}"
+                            Command="{x:Bind RemoveCommand}"
+                            Content="{x:Bind strings:Resources.ButtonDeleteText}"
+                            ToolTipService.ToolTip="{x:Bind strings:Resources.EditorDeleteReply}" />
 
                 </StackPanel>
             </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="MetadataBoolTemplate" x:DataType="viewmodels:MetadataViewModel">
-            <local:SettingsBlockControl
-                        Title="{x:Bind Name}">
+            <local:SettingsBlockControl Title="{x:Bind Name}">
 
                 <local:SettingsBlockControl.Icon>
                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF19F;" />
                 </local:SettingsBlockControl.Icon>
 
                 <local:SettingsBlockControl.SettingsActionableElement>
-                    <ToggleSwitch IsOn="{x:Bind Value, Mode=TwoWay, Converter={StaticResource BoolMetadataConverter}}"
-                                  OffContent="" OnContent="" Margin="0,0,-112,0"/>
+                    <ToggleSwitch Margin="0,0,-112,0"
+                                  IsOn="{x:Bind Value,
+                                                Mode=TwoWay,
+                                                Converter={StaticResource BoolMetadataConverter}}"
+                                  OffContent="" OnContent="" />
                 </local:SettingsBlockControl.SettingsActionableElement>
 
             </local:SettingsBlockControl>
         </DataTemplate>
 
         <DataTemplate x:Key="MetadataStringTemplate" x:DataType="viewmodels:MetadataViewModel">
-            <local:SettingsBlockControl 
-                        Icon="Tag"
-                        Title="{x:Bind Name}">
+            <local:SettingsBlockControl Title="{x:Bind Name}" Icon="Tag">
 
                 <local:SettingsBlockControl.SettingsActionableElement>
-                    <TextBox Width="180" Text="{x:Bind Value, Mode=TwoWay, Converter={StaticResource StringMetadataConverter}}"/>
+                    <TextBox Width="180" Text="{x:Bind Value, Mode=TwoWay, Converter={StaticResource StringMetadataConverter}}" />
                 </local:SettingsBlockControl.SettingsActionableElement>
 
             </local:SettingsBlockControl>
         </DataTemplate>
 
         <DataTemplate x:Key="MetadataColorTemplate" x:DataType="viewmodels:MetadataViewModel">
-            <local:SettingsBlockControl 
-                        Title="{x:Bind Name}">
+            <local:SettingsBlockControl Title="{x:Bind Name}">
 
                 <local:SettingsBlockControl.Icon>
                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE790;" />
                 </local:SettingsBlockControl.Icon>
 
                 <local:SettingsBlockControl.SettingsActionableElement>
-                    <controls:ColorPickerButton SelectedColor="{x:Bind Value, Mode=TwoWay, Converter={StaticResource ColorMetadataConverter}}"
-                                                ColorPickerStyle="{StaticResource ColorPickerStyle}"
-                                                CornerRadius="{ThemeResource ControlCornerRadius}"/>
+                    <controls:ColorPickerButton ColorPickerStyle="{StaticResource ColorPickerStyle}" CornerRadius="{ThemeResource ControlCornerRadius}" SelectedColor="{x:Bind Value, Mode=TwoWay, Converter={StaticResource ColorMetadataConverter}}" />
                 </local:SettingsBlockControl.SettingsActionableElement>
 
             </local:SettingsBlockControl>
@@ -240,8 +283,8 @@
 
         <views:MetadataTemplateSelector x:Key="MetadataTemplateSelector"
                                         MetadataBoolTemplate="{StaticResource MetadataBoolTemplate}"
-                                        MetadataStringTemplate="{StaticResource MetadataStringTemplate}"
-                                        MetadataColorTemplate="{StaticResource MetadataColorTemplate}"/>
+                                        MetadataColorTemplate="{StaticResource MetadataColorTemplate}"
+                                        MetadataStringTemplate="{StaticResource MetadataStringTemplate}" />
     </Page.Resources>
 
     <Grid x:Name="ContentArea">
@@ -251,64 +294,67 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="80" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Spacing="4" Margin="12,24,0,0" >
+        <StackPanel Margin="12,24,0,0" Spacing="4">
 
-            <HyperlinkButton Margin="0,0,0,-8" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorShowInTree}"
-                             Command="{x:Bind ViewModel.ShowInTreeCommand}" >
+            <HyperlinkButton Margin="0,0,0,-8" Command="{x:Bind ViewModel.ShowInTreeCommand}" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorShowInTree}">
                 <StackPanel Orientation="Horizontal" Spacing="8">
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEC0A;" FontSize="16"/>
-                    <TextBlock Text="{x:Bind ViewModel.TreeTitle, Mode=OneWay}"/>
+                    <FontIcon FontFamily="Segoe Fluent Icons" FontSize="16" Glyph="&#xEC0A;" />
+                    <TextBlock Text="{x:Bind ViewModel.TreeTitle, Mode=OneWay}" />
                 </StackPanel>
             </HyperlinkButton>
 
-            <TextBox Text="{x:Bind ViewModel.NodeTitle, Mode=TwoWay}"
-                     FontSize="32" FontWeight="SemiBold" Margin="{StaticResource MediumRightMargin}"
-                     FontFamily="Segoe UI Variable Display" Background="Transparent" BorderThickness="0"/>
+            <TextBox Margin="{StaticResource MediumRightMargin}"
+                     Background="Transparent"
+                     BorderThickness="0"
+                     FontFamily="Segoe UI Variable Display"
+                     FontSize="32"
+                     FontWeight="SemiBold"
+                     Text="{x:Bind ViewModel.NodeTitle,
+                                   Mode=TwoWay}" />
         </StackPanel>
 
-        <AppBarButton IsCompact="True" Label="{x:Bind ViewModel.ID, Mode=OneWay}"
-                      Grid.Row="0" Grid.Column="1" Margin="0,24,8,0">
+        <AppBarButton Grid.Row="0" Grid.Column="1"
+                      Margin="0,24,8,0"
+                      IsCompact="True"
+                      Label="{x:Bind ViewModel.ID,
+                                     Mode=OneWay}">
             <AppBarButton.Icon>
-                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE10C;" FontSize="16"/>
+                <FontIcon FontFamily="Segoe Fluent Icons" FontSize="16" Glyph="&#xE10C;" />
             </AppBarButton.Icon>
             <AppBarButton.Flyout>
                 <MenuFlyout>
-                    <MenuFlyoutSubItem Text="{x:Bind strings:Resources.ContextMenuLinksTo}" Tag="links_to" x:Name="LinksToSubItem">
+                    <MenuFlyoutSubItem x:Name="LinksToSubItem" Tag="links_to" Text="{x:Bind strings:Resources.ContextMenuLinksTo}">
                         <MenuFlyoutSubItem.Icon>
                             <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEA54;" />
                         </MenuFlyoutSubItem.Icon>
                     </MenuFlyoutSubItem>
-                    <MenuFlyoutSubItem Text="{x:Bind strings:Resources.ContextMenuLinkedBy}" Tag="linked_by" x:Name="LinkedBySubItem">
+                    <MenuFlyoutSubItem x:Name="LinkedBySubItem" Tag="linked_by" Text="{x:Bind strings:Resources.ContextMenuLinkedBy}">
                         <MenuFlyoutSubItem.Icon>
                             <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE11F;" />
                         </MenuFlyoutSubItem.Icon>
                     </MenuFlyoutSubItem>
-                    <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuPin}" Command="{x:Bind ViewModel.PinDialogueCommand}"
-                                            Visibility="{x:Bind ViewModel.IsPinned, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}"  >
+                    <MenuFlyoutItem Command="{x:Bind ViewModel.PinDialogueCommand}" Text="{x:Bind strings:Resources.ContextMenuPin}" Visibility="{x:Bind ViewModel.IsPinned, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
                         <MenuFlyoutItem.Icon>
                             <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE141;" />
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuUnpin}" Command="{x:Bind ViewModel.UnpinDialogueCommand}"
-                                            Visibility="{x:Bind ViewModel.IsPinned, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"  >
+                    <MenuFlyoutItem Command="{x:Bind ViewModel.UnpinDialogueCommand}" Text="{x:Bind strings:Resources.ContextMenuUnpin}" Visibility="{x:Bind ViewModel.IsPinned, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                         <MenuFlyoutItem.Icon>
                             <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE196;" />
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuTrash}" Command="{x:Bind ViewModel.MoveToTrashCommand}"
-                                            Visibility="{x:Bind ViewModel.IsTrashed, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
+                    <MenuFlyoutItem Command="{x:Bind ViewModel.MoveToTrashCommand}" Text="{x:Bind strings:Resources.ContextMenuTrash}" Visibility="{x:Bind ViewModel.IsTrashed, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
                         <MenuFlyoutItem.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE107;" Foreground="{ThemeResource DestructiveActionForeground}" />
+                            <FontIcon FontFamily="Segoe Fluent Icons" Foreground="{ThemeResource DestructiveActionForeground}" Glyph="&#xE107;" />
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="{x:Bind strings:Resources.ContextMenuDelete}" Command="{x:Bind ViewModel.DeleteCommand}"
-                                            Visibility="{x:Bind ViewModel.IsTrashed, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <MenuFlyoutItem Command="{x:Bind ViewModel.DeleteCommand}" Text="{x:Bind strings:Resources.ContextMenuDelete}" Visibility="{x:Bind ViewModel.IsTrashed, Converter={StaticResource BoolToVisibilityConverter}}">
                         <MenuFlyoutItem.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE621;" Foreground="{ThemeResource DestructiveActionForeground}"/>
+                            <FontIcon FontFamily="Segoe Fluent Icons" Foreground="{ThemeResource DestructiveActionForeground}" Glyph="&#xE621;" />
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
                 </MenuFlyout>
@@ -318,83 +364,76 @@
 
         <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2">
 
-            <StackPanel Spacing="8" Margin="{StaticResource MediumLeftRightMargin}">
+            <StackPanel Margin="{StaticResource MediumLeftRightMargin}" Spacing="8">
 
-                <controls:HeaderedContentControl
-                                     HorizontalContentAlignment="Stretch"
-                                     VerticalContentAlignment="Stretch"
-                                     Margin="6">
+                <controls:HeaderedContentControl Margin="6" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                     <controls:HeaderedContentControl.Header>
-                        <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,8">
-                            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}"
-                                       Text="{x:Bind strings:Resources.EditorHeaderDialogue}"/>
-                            <Button Command="{x:Bind ViewModel.AddDialogCommand}"
-                                    ToolTipService.ToolTip="{x:Bind strings:Resources.EditorAddDialogue}">
-                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE109;" FontSize="16" />
+                        <StackPanel Margin="0,8" Orientation="Horizontal" Spacing="16">
+                            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind strings:Resources.EditorHeaderDialogue}" />
+                            <Button Command="{x:Bind ViewModel.AddDialogCommand}" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorAddDialogue}">
+                                <FontIcon FontFamily="Segoe Fluent Icons" FontSize="16" Glyph="&#xE109;" />
                             </Button>
                         </StackPanel>
                     </controls:HeaderedContentControl.Header>
 
-                    <ListView ItemsSource="{x:Bind ViewModel.Dialogs}" TabNavigation="Local"
-                    SelectionMode="None" ItemContainerStyle="{StaticResource ListViewItemStretchStyle}"
-                    ItemTemplate="{StaticResource DialogPartTemplate}"/>
+                    <ListView ItemContainerStyle="{StaticResource ListViewItemStretchStyle}"
+                              ItemTemplate="{StaticResource DialogPartTemplate}"
+                              ItemsSource="{x:Bind ViewModel.Dialogs}"
+                              SelectionMode="None"
+                              TabNavigation="Local" />
 
                 </controls:HeaderedContentControl>
 
-                <controls:HeaderedContentControl
-                                     HorizontalContentAlignment="Stretch"
-                                     VerticalContentAlignment="Stretch"
-                                     Margin="6">
+                <controls:HeaderedContentControl Margin="6" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                     <controls:HeaderedContentControl.Header>
-                        <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,8">
-                            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}"
-                                       Text="{x:Bind strings:Resources.EditorHeaderReply}"/>
-                            <Button Command="{x:Bind ViewModel.AddPromptCommand}"
-                                    ToolTipService.ToolTip="{x:Bind strings:Resources.EditorAddReply}">
-                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE109;" FontSize="16" />
+                        <StackPanel Margin="0,8" Orientation="Horizontal" Spacing="12">
+                            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind strings:Resources.EditorHeaderReply}" />
+                            <Button Command="{x:Bind ViewModel.AddPromptCommand}" ToolTipService.ToolTip="{x:Bind strings:Resources.EditorAddReply}">
+                                <FontIcon FontFamily="Segoe Fluent Icons" FontSize="16" Glyph="&#xE109;" />
                             </Button>
                         </StackPanel>
                     </controls:HeaderedContentControl.Header>
 
                     <Grid>
-                        <ListView ItemsSource="{x:Bind ViewModel.Prompts}"
-                    SelectionMode="None" ItemContainerStyle="{StaticResource ListViewItemStretchStyle}"
-                    ItemTemplate="{StaticResource DialogPromptTemplate}"/>
+                        <ListView ItemContainerStyle="{StaticResource ListViewItemStretchStyle}"
+                                  ItemTemplate="{StaticResource DialogPromptTemplate}"
+                                  ItemsSource="{x:Bind ViewModel.Prompts}"
+                                  SelectionMode="None" />
 
-                        <TextBlock Visibility="{x:Bind ViewModel.IsPromptsEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
-                                   Text="{x:Bind strings:Resources.EditorEmptyReplies}" Margin="{StaticResource SmallTopBottomMargin}"
-                                   TextWrapping="Wrap"/>
+                        <TextBlock Margin="{StaticResource SmallTopBottomMargin}"
+                                   Text="{x:Bind strings:Resources.EditorEmptyReplies}"
+                                   TextWrapping="Wrap"
+                                   Visibility="{x:Bind ViewModel.IsPromptsEmpty,
+                                                       Mode=OneWay,
+                                                       Converter={StaticResource BoolToVisibilityConverter}}" />
                     </Grid>
 
                 </controls:HeaderedContentControl>
 
-                <controls:HeaderedContentControl
-                                     HorizontalContentAlignment="Stretch"
-                                     VerticalContentAlignment="Stretch"
-                                     Margin="6">
+                <controls:HeaderedContentControl Margin="6" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                     <controls:HeaderedContentControl.Header>
-                        <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,8">
-                            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind strings:Resources.EditorHeaderMetadata}"/>
+                        <StackPanel Margin="0,8" Orientation="Horizontal" Spacing="16">
+                            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind strings:Resources.EditorHeaderMetadata}" />
                         </StackPanel>
                     </controls:HeaderedContentControl.Header>
 
                     <Grid>
-                        <ListView ItemsSource="{x:Bind ViewModel.MetaValues}" 
-                                  SelectionMode="None" ItemContainerStyle="{StaticResource ListViewItemStretchStyle}"
-                                  ItemTemplateSelector="{StaticResource MetadataTemplateSelector}"/>
+                        <ListView ItemContainerStyle="{StaticResource ListViewItemStretchStyle}"
+                                  ItemTemplateSelector="{StaticResource MetadataTemplateSelector}"
+                                  ItemsSource="{x:Bind ViewModel.MetaValues}"
+                                  SelectionMode="None" />
 
-                        <TextBlock Visibility="{x:Bind ViewModel.IsMetaDataEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
-                                   Margin="{StaticResource SmallTopBottomMargin}" TextWrapping="Wrap" >
-                            <Run Text="{x:Bind strings:Resources.EditorEmptyMetadata1}"/>
+                        <TextBlock Margin="{StaticResource SmallTopBottomMargin}" TextWrapping="Wrap" Visibility="{x:Bind ViewModel.IsMetaDataEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <Run Text="{x:Bind strings:Resources.EditorEmptyMetadata1}" />
                             <Hyperlink>
                                 <i:Interaction.Behaviors>
                                     <ic:EventTriggerBehavior EventName="Click">
-                                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.OpenSettingsCommand}"></ic:InvokeCommandAction>
+                                        <ic:InvokeCommandAction Command="{x:Bind ViewModel.OpenSettingsCommand}" />
                                     </ic:EventTriggerBehavior>
                                 </i:Interaction.Behaviors>
-                                <Run Text="{x:Bind strings:Resources.NavigationSettings}"/>
+                                <Run Text="{x:Bind strings:Resources.NavigationSettings}" />
                             </Hyperlink>
-                            <Run Text="{x:Bind strings:Resources.EditorEmptyMetadata2}"/>
+                            <Run Text="{x:Bind strings:Resources.EditorEmptyMetadata2}" />
                         </TextBlock>
                     </Grid>
 

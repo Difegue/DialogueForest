@@ -4,6 +4,7 @@ using Microsoft.UI.Text;
 using DialogueForest.Core;
 using System;
 using System.Linq;
+using Sentry;
 
 namespace DialogueForest.Controls
 {
@@ -56,21 +57,32 @@ namespace DialogueForest.Controls
         {
             if (!_lockChangeExecution)
             {
-                _lockChangeExecution = true;
-                string plainText;
-                Document.GetText(TextGetOptions.None, out plainText);
-                if (string.IsNullOrWhiteSpace(plainText))
+                try
                 {
-                    RtfText = "";
-                    PlainText = "";
+                    _lockChangeExecution = true;
+                    string plainText;
+                    Document.GetText(TextGetOptions.None, out plainText);
+                    if (string.IsNullOrWhiteSpace(plainText))
+                    {
+                        RtfText = "";
+                        PlainText = "";
+                    }
+                    else
+                    {
+                        Document.GetText(TextGetOptions.FormatRtf, out string text);
+                        RtfText = text;
+                        PlainText = plainText;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    Document.GetText(TextGetOptions.FormatRtf, out string text);
-                    RtfText = text;
-                    PlainText = plainText;
+                    // ArgumentExceptions can happen here, let's keep a watch on them. Might be trimming-only?
+                    SentrySdk.CaptureException(ex);
                 }
-                _lockChangeExecution = false;
+                finally
+                {
+                    _lockChangeExecution = false;
+                }
             }
         }
 
