@@ -7,6 +7,7 @@ using Windows.UI.ViewManagement;
 using Microsoft.UI.Xaml;
 using System.IO;
 using System.Reflection;
+using CommunityToolkit.WinUI.Helpers;
 
 namespace DialogueForest.Services
 {
@@ -96,11 +97,15 @@ namespace DialogueForest.Services
 
         public async Task OpenStoreReviewUrlAsync()
         {
-            // Open url
-            await Windows.System.Launcher.LaunchUriAsync(new Uri("https://difegue.itch.io/dialogueforest"));
-
-            // TODO packaged ver
-            //await _dispatcherService.ExecuteOnUIThreadAsync(() => SystemInformation.LaunchStoreForReviewAsync());
+            try
+            {
+                await _dispatcherService.ExecuteOnUIThreadAsync(() => SystemInformation.LaunchStoreForReviewAsync());
+            }
+            catch
+            {
+                // Unpackaged
+                await Windows.System.Launcher.LaunchUriAsync(new Uri("https://difegue.itch.io/dialogueforest"));
+            }
         }
 
         public void UpdateAppTitle(string title)
