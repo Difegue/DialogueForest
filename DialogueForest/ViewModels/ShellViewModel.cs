@@ -15,8 +15,8 @@ using System.Windows.Input;
 using DialogueForest.Core.Services;
 using DialogueForest.Core.Models;
 using Windows.ApplicationModel.DataTransfer;
-using CommunityToolkit.WinUI.UI.Controls;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.WinUI.Behaviors;
 using DialogueForest.Core.Messages;
 
 namespace DialogueForest.ViewModels
@@ -30,7 +30,7 @@ namespace DialogueForest.ViewModels
         private NavigationView _navigationView;
         private NavigationViewItem _treeContainer;
         private NavigationViewItem _newTreeItem;
-        private InAppNotification _notificationHolder;
+        private StackedNotificationsBehavior _notificationHolder;
 
 
         public ShellViewModel(INavigationService navigationService, INotificationService notificationService, IDialogService dialogService, IDispatcherService dispatcherService, IInteropService interopService,
@@ -39,7 +39,7 @@ namespace DialogueForest.ViewModels
         {
         }
 
-        public void Initialize(Frame frame, NavigationView navigationView, NavigationViewItem treeContainer, NavigationViewItem newTreeItem, InAppNotification notificationHolder, IList<KeyboardAccelerator> keyboardAccelerators)
+        public void Initialize(Frame frame, NavigationView navigationView, NavigationViewItem treeContainer, NavigationViewItem newTreeItem, StackedNotificationsBehavior notificationHolder, IList<KeyboardAccelerator> keyboardAccelerators)
         {
             _navigationView = navigationView;
             _treeContainer = treeContainer;

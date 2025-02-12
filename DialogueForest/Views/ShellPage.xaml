@@ -1,8 +1,8 @@
 ﻿<Page x:Class="DialogueForest.Views.ShellPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
-      xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters"
+      xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
+      xmlns:converters="using:CommunityToolkit.WinUI.Converters"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:helpers="using:DialogueForest.Helpers"
       xmlns:i="using:Microsoft.Xaml.Interactivity"
@@ -18,19 +18,8 @@
     <Page.Resources>
 
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="ms-appx:///CommunityToolkit.WinUI.UI.Controls.Core/InAppNotification/InAppNotification.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
             <converters:StringVisibilityConverter x:Key="StringToVisibilityConverter" />
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-
-            <Style x:Key="CustomInAppNotificationStyle" BasedOn="{StaticResource BaseInAppNotificationsStyle}" TargetType="controls:InAppNotification">
-
-                <Setter Property="Background" Value="{ThemeResource SystemControlAcrylicElementBrush}" />
-                <Setter Property="BorderThickness" Value="1" />
-                <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
-            </Style>
 
             <!--  This top margin is the height of the custom TitleBar  -->
             <Thickness x:Key="NavigationViewContentGridBorderThickness">0</Thickness>
@@ -239,7 +228,11 @@
                 </muxc:TwoPaneView>
 
                 <!--  InAppNotifications go here  -->
-                <controls:InAppNotification x:Name="notificationHolder" Grid.Row="1" Style="{StaticResource CustomInAppNotificationStyle}" />
+                <muxc:InfoBar Grid.Row="1">
+                    <i:Interaction.Behaviors>
+                        <behaviors:StackedNotificationsBehavior x:Name="notificationHolder" />
+                    </i:Interaction.Behaviors>
+                </muxc:InfoBar>
             </Grid>
         </muxc:NavigationView>
 

@@ -9,10 +9,11 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using DialogueForest.ViewModels;
 using Microsoft.UI.Xaml;
-using CommunityToolkit.WinUI.UI.Controls;
+using CommunityToolkit.WinUI.Controls;
 using System.Collections.ObjectModel;
 using System.Collections;
 using System.Collections.Generic;
+using CommunityToolkit.WinUI.UI.Controls;
 
 namespace DialogueForest.Views
 {

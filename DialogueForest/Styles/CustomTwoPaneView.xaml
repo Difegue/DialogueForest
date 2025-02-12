@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:contract7NotPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractNotPresent(Windows.Foundation.UniversalApiContract,7)"
                     xmlns:contract7Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,7)"
-                    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+                    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
                     xmlns:local="using:Microsoft.UI.Xaml.Controls">
 
     <Style x:Key="TwoPaneViewWithSplitterStyle" TargetType="local:TwoPaneView">
@@ -44,22 +44,7 @@
                                                Background="Transparent"
                                                FontSize="6"
                                                ResizeBehavior="BasedOnAlignment"
-                                               ResizeDirection="Auto">
-                            <controls:GridSplitter.Element>
-                                <Grid>
-                                    <TextBlock HorizontalAlignment="Left"
-                                               VerticalAlignment="Center"
-                                               FontFamily="Segoe Fluent Icons"
-                                               Foreground="{ThemeResource AccentFillColorDefaultBrush}"
-                                               IsHitTestVisible="False"
-                                               Text="&#xE784;">
-                                        <TextBlock.RenderTransform>
-                                            <CompositeTransform ScaleY="4" TranslateX="-1" />
-                                        </TextBlock.RenderTransform>
-                                    </TextBlock>
-                                </Grid>
-                            </controls:GridSplitter.Element>
-                        </controls:GridSplitter>
+                                               ResizeDirection="Auto" />
 
                         <contract7Present:ScrollViewer x:Name="PART_Pane2ScrollViewer" Grid.Column="2" VerticalScrollBarVisibility="Auto">
                             <Border Child="{TemplateBinding Pane2}" />

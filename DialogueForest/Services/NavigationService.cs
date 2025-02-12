@@ -1,6 +1,6 @@
 ﻿using DialogueForest.Core.ViewModels;
 using DialogueForest.Views;
-using CommunityToolkit.WinUI.UI.Animations;
+using CommunityToolkit.WinUI.Animations;
 using DialogueForest.Core.Interfaces;
 using System;
 using System.Collections.Generic;
