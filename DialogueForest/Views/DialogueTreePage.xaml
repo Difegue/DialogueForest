@@ -282,7 +282,9 @@
 
         <controlsv7:AdaptiveGridView Grid.Row="1"
                                      Margin="0,12,0,-16"
+                                     AllowDrop="True"
                                      CanDragItems="True"
+                                     CanReorderItems="True"
                                      DesiredWidth="270"
                                      DragItemsStarting="NodeList_DragItemsStarting"
                                      IsItemClickEnabled="True"

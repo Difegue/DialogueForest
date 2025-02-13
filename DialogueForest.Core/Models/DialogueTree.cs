@@ -9,18 +9,24 @@ namespace DialogueForest.Core.Models
         public DialogueTree(string name)
         {
             Name = name;
-            Nodes = new Dictionary<long, DialogueNode>();
+            Nodes = new OrderedDictionary<long, DialogueNode>();
         }
 
         public string Name { get; set; }
 
         public bool CannotAddNodes { get; set; }
 
-        public Dictionary<long, DialogueNode> Nodes { get; set; }
+        public OrderedDictionary<long, DialogueNode> Nodes { get; set; }
 
         internal void AddNode(DialogueNode node)
         {
             Nodes.Add(node.ID, node);
+        }
+
+        internal void MoveNode(DialogueNode node, int position)
+        {
+            Nodes.Remove(node.ID);
+            Nodes.Insert(position, node.ID, node);
         }
 
         internal void RemoveNode(DialogueNode node)

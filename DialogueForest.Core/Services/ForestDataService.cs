@@ -307,9 +307,16 @@ namespace DialogueForest.Core.Services
 
             origin.RemoveNode(node);
             destination.AddNode(node);
+            
 
             // Notify VMs (both tree and nodeVMs) with a message
             WeakReferenceMessenger.Default.Send(new NodeMovedMessage(origin, destination, node));
+        }
+
+        public void MoveNodeInTree(long id, DialogueTree tree, int position)
+        {
+            var node = tree.Nodes[id];
+            tree.MoveNode(node, position);
         }
 
         internal void SetPinnedNode(DialogueNode node, bool isPinned)

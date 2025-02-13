@@ -66,6 +66,8 @@ namespace DialogueForest.Core.ViewModels
         public FilterableObservableCollection<DialogueNodeViewModel> Nodes { get; } = new();
         public IEnumerable<DialogueNodeViewModel> ParentNodes => Nodes.Where(n => n.GetNodesLinkingToUs().Count == 0);
 
+        private long _lastDeletedID;
+
         public DialogueTreeViewModel(IDialogService dialogService, OpenedNodesViewModel openedNodes, INavigationService navigationService, INotificationService notificationService, 
             IApplicationStorageService storageService, ForestDataService forestService)
         {
@@ -84,6 +86,21 @@ namespace DialogueForest.Core.ViewModels
                 OnPropertyChanged(nameof(TotalDialogues));
                 OnPropertyChanged(nameof(TotalWords));
                 OnPropertyChanged(nameof(ParentNodes));
+
+                if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove
+                && e.OldItems[0] is DialogueNodeViewModel vmd)
+                {
+                    _lastDeletedID = vmd.ID;
+                }
+
+                // Support for moving nodes, gridview implements it as remove + add
+                if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add
+                && e.NewItems[0] is DialogueNodeViewModel vm)
+                { 
+                    if (vm.ID == _lastDeletedID)
+                        _dataService.MoveNodeInTree(vm.ID, _tree, e.NewStartingIndex);
+                    _lastDeletedID = -1;
+                }
             };
 
             WeakReferenceMessenger.Default.Register<DialogueTreeViewModel, UnsavedModificationsMessage>(this, (r, m) => r.OnPropertyChanged(nameof(TotalWords)));
