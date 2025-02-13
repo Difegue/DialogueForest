@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DialogueForest.Core.ViewModels;
+using System;
 using System.Threading.Tasks;
 
 namespace DialogueForest.Core.Interfaces
@@ -26,5 +27,6 @@ namespace DialogueForest.Core.Interfaces
 
         void UpdateAppTitle(string v);
         DateTime GetLastModifiedTime(FileAbstraction lastSavedFile);
+        void OpenDialogueNodeInNewWindow(DialogueNodeViewModel selectedItem);
     }
 }

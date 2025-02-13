@@ -4,20 +4,22 @@ using System.Linq;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using RtfPipe.Tokens;
+using DialogueForest.Core.Interfaces;
 
 namespace DialogueForest.Core.ViewModels
 {
     public partial class OpenedNodesViewModel : ObservableObject
     {
+        private readonly IInteropService _interopService;
 
         public ObservableCollection<DialogueNodeViewModel> Tabs { get; } = new ObservableCollection<DialogueNodeViewModel>();
 
         [ObservableProperty]
         private DialogueNodeViewModel _selectedItem;
 
-        public OpenedNodesViewModel()
+        public OpenedNodesViewModel(IInteropService interopService)
         {
+            _interopService = interopService;
             Tabs.CollectionChanged += (s, e) => OnPropertyChanged(nameof(NoTabsOpen));
         }
 
@@ -65,7 +67,17 @@ namespace DialogueForest.Core.ViewModels
         }
 
         [RelayCommand]
-        private void RemoveTab(DialogueNodeViewModel item) => Tabs.Remove(item);                
+        private void RemoveTab(DialogueNodeViewModel item) => Tabs.Remove(item);
+
+        [RelayCommand]
+        private void OpenCurrentTabInNewWindow()
+        {
+            _interopService.OpenDialogueNodeInNewWindow(SelectedItem);
+            CloseNode(SelectedItem);
+        }
+
+        [RelayCommand]
+        private void CloseAllTabs() => Tabs.Clear();
 
     }
 }

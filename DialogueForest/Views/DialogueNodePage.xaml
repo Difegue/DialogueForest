@@ -295,7 +295,7 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="80" />
+            <ColumnDefinition Width="120" />
         </Grid.ColumnDefinitions>
 
         <StackPanel Margin="12,24,0,0" Spacing="4">
@@ -319,50 +319,51 @@
                                    Mode=TwoWay}" />
         </StackPanel>
 
-        <AppBarButton Grid.Row="0" Grid.Column="1"
-                      Margin="0,24,8,0"
-                      IsCompact="True"
-                      Label="{x:Bind ViewModel.ID,
-                                     Mode=OneWay}">
-            <AppBarButton.Icon>
-                <FontIcon FontFamily="Segoe Fluent Icons" FontSize="16" Glyph="&#xE10C;" />
-            </AppBarButton.Icon>
-            <AppBarButton.Flyout>
-                <MenuFlyout>
-                    <MenuFlyoutSubItem x:Name="LinksToSubItem" Tag="links_to" Text="{x:Bind strings:Resources.ContextMenuLinksTo}">
-                        <MenuFlyoutSubItem.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEA54;" />
-                        </MenuFlyoutSubItem.Icon>
-                    </MenuFlyoutSubItem>
-                    <MenuFlyoutSubItem x:Name="LinkedBySubItem" Tag="linked_by" Text="{x:Bind strings:Resources.ContextMenuLinkedBy}">
-                        <MenuFlyoutSubItem.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE11F;" />
-                        </MenuFlyoutSubItem.Icon>
-                    </MenuFlyoutSubItem>
-                    <MenuFlyoutItem Command="{x:Bind ViewModel.PinDialogueCommand}" Text="{x:Bind strings:Resources.ContextMenuPin}" Visibility="{x:Bind ViewModel.IsPinned, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
-                        <MenuFlyoutItem.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE141;" />
-                        </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem Command="{x:Bind ViewModel.UnpinDialogueCommand}" Text="{x:Bind strings:Resources.ContextMenuUnpin}" Visibility="{x:Bind ViewModel.IsPinned, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <MenuFlyoutItem.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE196;" />
-                        </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem Command="{x:Bind ViewModel.MoveToTrashCommand}" Text="{x:Bind strings:Resources.ContextMenuTrash}" Visibility="{x:Bind ViewModel.IsTrashed, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
-                        <MenuFlyoutItem.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Foreground="{ThemeResource DestructiveActionForeground}" Glyph="&#xE107;" />
-                        </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>
-                    <MenuFlyoutItem Command="{x:Bind ViewModel.DeleteCommand}" Text="{x:Bind strings:Resources.ContextMenuDelete}" Visibility="{x:Bind ViewModel.IsTrashed, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <MenuFlyoutItem.Icon>
-                            <FontIcon FontFamily="Segoe Fluent Icons" Foreground="{ThemeResource DestructiveActionForeground}" Glyph="&#xE621;" />
-                        </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>
-                </MenuFlyout>
-            </AppBarButton.Flyout>
+        <StackPanel Grid.Row="0" Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
 
-        </AppBarButton>
+            <AppBarButton Width="48" Margin="0,24,24,0"
+                          Icon="GlobalNavigationButton"
+                          IsCompact="True">
+
+                <AppBarButton.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutSubItem x:Name="LinksToSubItem" Tag="links_to" Text="{x:Bind strings:Resources.ContextMenuLinksTo}">
+                            <MenuFlyoutSubItem.Icon>
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEA54;" />
+                            </MenuFlyoutSubItem.Icon>
+                        </MenuFlyoutSubItem>
+                        <MenuFlyoutSubItem x:Name="LinkedBySubItem" Tag="linked_by" Text="{x:Bind strings:Resources.ContextMenuLinkedBy}">
+                            <MenuFlyoutSubItem.Icon>
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE11F;" />
+                            </MenuFlyoutSubItem.Icon>
+                        </MenuFlyoutSubItem>
+                        <MenuFlyoutItem Command="{x:Bind ViewModel.PinDialogueCommand}" Text="{x:Bind strings:Resources.ContextMenuPin}" Visibility="{x:Bind ViewModel.IsPinned, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE141;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Command="{x:Bind ViewModel.UnpinDialogueCommand}" Text="{x:Bind strings:Resources.ContextMenuUnpin}" Visibility="{x:Bind ViewModel.IsPinned, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE196;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Command="{x:Bind ViewModel.MoveToTrashCommand}" Text="{x:Bind strings:Resources.ContextMenuTrash}" Visibility="{x:Bind ViewModel.IsTrashed, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon FontFamily="Segoe Fluent Icons" Foreground="{ThemeResource DestructiveActionForeground}" Glyph="&#xE107;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Command="{x:Bind ViewModel.DeleteCommand}" Text="{x:Bind strings:Resources.ContextMenuDelete}" Visibility="{x:Bind ViewModel.IsTrashed, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon FontFamily="Segoe Fluent Icons" Foreground="{ThemeResource DestructiveActionForeground}" Glyph="&#xE621;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
+
+            </AppBarButton>
+        </StackPanel>
 
         <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2">
 

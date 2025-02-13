@@ -1,34 +1,34 @@
-﻿<Page
-    x:Class="DialogueForest.Views.OpenedNodesPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:views="using:DialogueForest.Views"
-    xmlns:strings="using:DialogueForest.Localization.Strings"
-    xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
-    mc:Ignorable="d">
+﻿<Page x:Class="DialogueForest.Views.OpenedNodesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:i="using:Microsoft.Xaml.Interactivity"
+      xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      xmlns:strings="using:DialogueForest.Localization.Strings"
+      xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
+      xmlns:views="using:DialogueForest.Views"
+      mc:Ignorable="d">
 
     <Page.Resources>
-        <!-- Remove TabView brush as it interferes with our card strokes -->
+        <!--  Remove TabView brush as it interferes with our card strokes  -->
         <SolidColorBrush x:Key="TabViewBorderBrush" Color="Transparent" />
     </Page.Resources>
     <Grid>
 
-        <Grid Padding="{StaticResource MediumLeftTopRightBottomMargin}"
-              Margin="0,40,0,-4"
+        <Grid Margin="0,40,0,-4"
+              Padding="{StaticResource MediumLeftTopRightBottomMargin}"
               Background="{ThemeResource LayerFillColorDefaultBrush}"
               BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-              BorderThickness="1,1,0,1" CornerRadius="8,0,0,0">
+              BorderThickness="1,1,0,1"
+              CornerRadius="8,0,0,0">
 
 
-            <StackPanel Visibility="{x:Bind ViewModel.NoTabsOpen, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
-                <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg4" Width="120" Height="120">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{x:Bind ViewModel.NoTabsOpen, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        Name="svg4" Width="120"
+                        Height="120">
                     <Canvas.RenderTransform>
                         <CompositeTransform ScaleX="0.12" ScaleY="0.12" />
                     </Canvas.RenderTransform>
@@ -36,88 +36,124 @@
                         <LinearGradientBrush xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Key="linearGradient3274" MappingMode="RelativeToBoundingBox" StartPoint="0,0" EndPoint="1,1">
                             <LinearGradientBrush.GradientStops>
                                 <GradientStopCollection>
-                                    <GradientStop Color="#FF803300" Offset="0"/>
-                                    <GradientStop Color="#FFD38D5F" Offset="1"/>
+                                    <GradientStop Offset="0" Color="#FF803300" />
+                                    <GradientStop Offset="1" Color="#FFD38D5F" />
                                 </GradientStopCollection>
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
                         <LinearGradientBrush xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Key="linearGradient1427" MappingMode="RelativeToBoundingBox" StartPoint="0,0" EndPoint="1,1">
                             <LinearGradientBrush.GradientStops>
                                 <GradientStopCollection>
-                                    <GradientStop Color="#FFE7C642" Offset="0"/>
-                                    <GradientStop Color="#FFB39A33" Offset="1"/>
+                                    <GradientStop Offset="0" Color="#FFE7C642" />
+                                    <GradientStop Offset="1" Color="#FFB39A33" />
                                 </GradientStopCollection>
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
                         <LinearGradientBrush xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Key="linearGradient1429" MappingMode="Absolute" StartPoint="505,420" EndPoint="194,843">
                             <LinearGradientBrush.GradientStops>
                                 <GradientStopCollection>
-                                    <GradientStop Color="#FFE7C642" Offset="0"/>
-                                    <GradientStop Color="#FFB39A33" Offset="1"/>
+                                    <GradientStop Offset="0" Color="#FFE7C642" />
+                                    <GradientStop Offset="1" Color="#FFB39A33" />
                                 </GradientStopCollection>
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
                         <LinearGradientBrush xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Key="linearGradient3276" MappingMode="Absolute" StartPoint="210,187" EndPoint="391,-123">
                             <LinearGradientBrush.GradientStops>
                                 <GradientStopCollection>
-                                    <GradientStop Color="#FF803300" Offset="0"/>
-                                    <GradientStop Color="#FFD38D5F" Offset="1"/>
+                                    <GradientStop Offset="0" Color="#FF803300" />
+                                    <GradientStop Offset="1" Color="#FFD38D5F" />
                                 </GradientStopCollection>
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
                     </Canvas.Resources>
-                    <!--Unknown tag: sodipodi:namedview-->
-                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path979" Fill="{StaticResource linearGradient1429}" StrokeThickness="0.586483" Data="M 352.18328 747.72033 V 567.92296 l 4.2514 -2.88931 c 4.93861 -3.35635 11.54487 -9.70822 14.89951 -14.32575 12.06356 -16.60505 15.79191 -35.83003 10.74826 -55.42268 -1.75741 -6.82682 -7.35267 -17.82774 -12.00374 -23.60066 -18.3571 -22.78495 -50.82019 -30.39384 -76.97399 -18.04163 -17.77021 8.39271 -30.02181 22.98492 -35.45523 42.22878 -1.81429 6.42576 -2.13184 21.68792 -0.60403 29.03092 3.42123 16.4433 13.63927 31.60174 27.50699 40.80661 l 3.11765 2.06938 v 179.56307 c 0 150.55512 -0.12737 179.3762 -0.78844 178.40621 C 284.52595 922.29152 76.889909 567.25076 74.923851 563.3173 63.572051 540.60588 62.28511 510.56305 71.653192 486.96584 72.573319 484.64814 97.471065 431.8076 126.98152 369.54241 l 53.65536 -113.20943 139.58305 -0.013 139.58305 -0.013 53.63 113.62427 c 29.49651 62.49334 54.62869 116.45871 55.8493 119.92305 3.53114 10.02214 4.63563 16.27407 5.00022 28.30373 0.48561 16.02287 -1.80737 28.59771 -7.61671 41.77053 -1.42795 3.2379 -47.18236 81.95395 -105.09157 180.79991 -56.4094 96.28591 -104.09893 177.70318 -105.97675 180.92726 l -3.41419 5.8619 z">
+                    <!--  Unknown tag: sodipodi:namedview  -->
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          Name="path979"
+                          Data="M 352.18328 747.72033 V 567.92296 l 4.2514 -2.88931 c 4.93861 -3.35635 11.54487 -9.70822 14.89951 -14.32575 12.06356 -16.60505 15.79191 -35.83003 10.74826 -55.42268 -1.75741 -6.82682 -7.35267 -17.82774 -12.00374 -23.60066 -18.3571 -22.78495 -50.82019 -30.39384 -76.97399 -18.04163 -17.77021 8.39271 -30.02181 22.98492 -35.45523 42.22878 -1.81429 6.42576 -2.13184 21.68792 -0.60403 29.03092 3.42123 16.4433 13.63927 31.60174 27.50699 40.80661 l 3.11765 2.06938 v 179.56307 c 0 150.55512 -0.12737 179.3762 -0.78844 178.40621 C 284.52595 922.29152 76.889909 567.25076 74.923851 563.3173 63.572051 540.60588 62.28511 510.56305 71.653192 486.96584 72.573319 484.64814 97.471065 431.8076 126.98152 369.54241 l 53.65536 -113.20943 139.58305 -0.013 139.58305 -0.013 53.63 113.62427 c 29.49651 62.49334 54.62869 116.45871 55.8493 119.92305 3.53114 10.02214 4.63563 16.27407 5.00022 28.30373 0.48561 16.02287 -1.80737 28.59771 -7.61671 41.77053 -1.42795 3.2379 -47.18236 81.95395 -105.09157 180.79991 -56.4094 96.28591 -104.09893 177.70318 -105.97675 180.92726 l -3.41419 5.8619 z"
+                          Fill="{StaticResource linearGradient1429}"
+                          StrokeThickness="0.586483">
                         <Path.RenderTransform>
-                            <TranslateTransform X="192"/>
+                            <TranslateTransform X="192" />
                         </Path.RenderTransform>
                     </Path>
-                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path1900" Fill="{StaticResource linearGradient3276}" StrokeThickness="0.586483" Data="m 89.731959 191.09731 c -8.531803 -1.60478 -18.221427 -9.27308 -22.173207 -17.54771 -1.142381 -2.39202 -2.360953 -5.91514 -2.707938 -7.82913 -0.420525 -2.31965 -0.630187 -21.48389 -0.628796 -57.47538 0.155451 -47.54182 -0.725306 -53.044705 0.01272 -92.996522 0.294605 -16.7734249 -0.0961 -67.313402 0.206979 -68.943871 1.511915 -8.133543 3.036074 -11.234764 7.816135 -15.903567 2.54061 -2.481475 3.851817 -3.253109 7.210666 -4.243414 15.511274 -4.573262 54.899612 -10.583961 76.564282 -6.213198 31.87617 6.430893 55.07859 19.430911 84.91406 47.576256 35.21587 35.264215 74.46218 15.883141 116.04516 5.44195 13.72272 -3.468242 28.44235 -8.035221 47.74456 -14.813441 31.03237 -10.897424 42.98676 -13.95174 62.39746 -15.94239 26.44356 -2.7119 47.98375 1.308351 68.06107 12.70288 21.19384 12.02819 34.41481 36.9829387 40.89216 55.646928 -0.27296 111.212159 -0.68993 110.964189 -1.05801 155.781549 -2.35755 11.41334 -13.05399 22.1639 -24.45637 24.58011 -3.41222 0.72306 -35.8778 0.83355 -230.93945 0.78593 -139.01381 -0.034 -228.105438 -0.26916 -229.901481 -0.60698 z">
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          Name="path1900"
+                          Data="m 89.731959 191.09731 c -8.531803 -1.60478 -18.221427 -9.27308 -22.173207 -17.54771 -1.142381 -2.39202 -2.360953 -5.91514 -2.707938 -7.82913 -0.420525 -2.31965 -0.630187 -21.48389 -0.628796 -57.47538 0.155451 -47.54182 -0.725306 -53.044705 0.01272 -92.996522 0.294605 -16.7734249 -0.0961 -67.313402 0.206979 -68.943871 1.511915 -8.133543 3.036074 -11.234764 7.816135 -15.903567 2.54061 -2.481475 3.851817 -3.253109 7.210666 -4.243414 15.511274 -4.573262 54.899612 -10.583961 76.564282 -6.213198 31.87617 6.430893 55.07859 19.430911 84.91406 47.576256 35.21587 35.264215 74.46218 15.883141 116.04516 5.44195 13.72272 -3.468242 28.44235 -8.035221 47.74456 -14.813441 31.03237 -10.897424 42.98676 -13.95174 62.39746 -15.94239 26.44356 -2.7119 47.98375 1.308351 68.06107 12.70288 21.19384 12.02819 34.41481 36.9829387 40.89216 55.646928 -0.27296 111.212159 -0.68993 110.964189 -1.05801 155.781549 -2.35755 11.41334 -13.05399 22.1639 -24.45637 24.58011 -3.41222 0.72306 -35.8778 0.83355 -230.93945 0.78593 -139.01381 -0.034 -228.105438 -0.26916 -229.901481 -0.60698 z"
+                          Fill="{StaticResource linearGradient3276}"
+                          StrokeThickness="0.586483">
                         <Path.RenderTransform>
-                            <TranslateTransform X="192"/>
+                            <TranslateTransform X="192" />
                         </Path.RenderTransform>
                     </Path>
                 </Canvas>
-                <TextBlock
-                    Margin="{StaticResource SmallTopMargin}"
-                    HorizontalAlignment="Center"
-                    Style="{StaticResource SubtitleTextBlockStyle}"
-                    Text="{x:Bind strings:Resources.EmptyViewDocumentsTitle}" />
-                <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Margin="{StaticResource SmallTopMargin}"
-                           Text="{x:Bind strings:Resources.EmptyViewDocumentsDesc}" TextWrapping="Wrap"/>
+                <TextBlock Margin="{StaticResource SmallTopMargin}"
+                           HorizontalAlignment="Center"
+                           Style="{StaticResource SubtitleTextBlockStyle}"
+                           Text="{x:Bind strings:Resources.EmptyViewDocumentsTitle}" />
+                <TextBlock Margin="{StaticResource SmallTopMargin}"
+                           HorizontalAlignment="Center"
+                           Text="{x:Bind strings:Resources.EmptyViewDocumentsDesc}"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap" />
             </StackPanel>
-            
+
 
         </Grid>
 
-        <muxc:TabView 
-            AllowDropTabs="True"
-            IsAddTabButtonVisible="False"
-            SelectedItem="{x:Bind ViewModel.SelectedItem, Mode=TwoWay}"
-            TabItemsSource="{x:Bind ViewModel.Tabs}"
-            Margin="6,0"  
-            TabCloseRequested="TabView_TabCloseRequested">
+        <muxc:TabView Margin="2,0"
+                      AllowDropTabs="True"
+                      IsAddTabButtonVisible="False"
+                      SelectedItem="{x:Bind ViewModel.SelectedItem,
+                                            Mode=TwoWay}"
+                      TabCloseRequested="TabView_TabCloseRequested"
+                      TabItemsSource="{x:Bind ViewModel.Tabs}">
             <muxc:TabView.TabStripHeader>
-                <Grid Width="8"/>
+                <Button Width="32" Height="24"
+                        Margin="0,0,0,0" Padding="0"
+                        Command="{x:Bind ViewModel.CloseAllTabsCommand}"
+                        ToolTipService.ToolTip="{x:Bind strings:Resources.CloseAllTabsButton}"
+                        Visibility="{x:Bind ViewModel.NoTabsOpen,
+                                            Mode=OneWay,
+                                            Converter={StaticResource ReverseBoolToVisibilityConverter}}">
+                    <FontIcon FontSize="12" Glyph="&#xEA99;" />
+                </Button>
             </muxc:TabView.TabStripHeader>
             <muxc:TabView.TabStripFooter>
-                <Grid x:Name="CustomDragRegion" x:FieldModifier="Public" MinWidth="150"/>
+                <Grid x:Name="CustomDragRegion" MinWidth="150" x:FieldModifier="Public" />
             </muxc:TabView.TabStripFooter>
             <muxc:TabView.TabItemTemplate>
                 <DataTemplate x:DataType="viewmodels:DialogueNodeViewModel">
-                    <muxc:TabViewItem Margin="0,1,0,0" BorderThickness="1,1,1,0"
-                    Header="{x:Bind NodeTitle, Mode=OneWay}"
-                    AutomationProperties.Name="{x:Bind NodeTitle, Mode=OneWay}">
+                    <muxc:TabViewItem Margin="0,1,0,0"
+                                      AutomationProperties.Name="{x:Bind NodeTitle,
+                                                                         Mode=OneWay}"
+                                      BorderThickness="1,1,1,0"
+                                      Header="{x:Bind NodeTitle,
+                                                      Mode=OneWay}">
                         <muxc:TabViewItem.IconSource>
-                            <muxc:FontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE8BE;"/>
+                            <muxc:FontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE8BE;" />
                         </muxc:TabViewItem.IconSource>
                     </muxc:TabViewItem>
                 </DataTemplate>
             </muxc:TabView.TabItemTemplate>
         </muxc:TabView>
 
-        <views:DialogueNodePage Margin="{StaticResource MediumTopMargin}"
-            Visibility="{x:Bind ViewModel.NoTabsOpen, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}"
-            DataContext="{x:Bind ViewModel.SelectedItem, Mode=TwoWay}"/>
+        <AppBarSeparator Height="48" Margin="0,48,72,0"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Top"
+                         Visibility="{x:Bind ViewModel.NoTabsOpen,
+                                             Mode=OneWay,
+                                             Converter={StaticResource ReverseBoolToVisibilityConverter}}" />
+
+        <AppBarButton Width="48" Margin="0,48,77,0"
+                      HorizontalAlignment="Right"
+                      Command="{x:Bind ViewModel.OpenCurrentTabInNewWindowCommand}"
+                      Icon="NewWindow"
+                      IsCompact="True"
+                      ToolTipService.ToolTip="{x:Bind strings:Resources.OpenInNewWindowButton}"
+                      Visibility="{x:Bind ViewModel.NoTabsOpen,
+                                          Mode=OneWay,
+                                          Converter={StaticResource ReverseBoolToVisibilityConverter}}" />
+
+        <views:DialogueNodePage Margin="{StaticResource MediumTopMargin}" DataContext="{x:Bind ViewModel.SelectedItem, Mode=TwoWay}" Visibility="{x:Bind ViewModel.NoTabsOpen, Mode=OneWay, Converter={StaticResource ReverseBoolToVisibilityConverter}}" />
     </Grid>
 </Page>

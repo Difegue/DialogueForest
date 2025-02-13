@@ -8,6 +8,10 @@ using Microsoft.UI.Xaml;
 using System.IO;
 using System.Reflection;
 using CommunityToolkit.WinUI.Helpers;
+using DialogueForest.Core.ViewModels;
+using DialogueForest.Views;
+using Microsoft.UI.Xaml.Media;
+using WinUIEx;
 
 namespace DialogueForest.Services
 {
@@ -122,6 +126,27 @@ namespace DialogueForest.Services
                 return DateTime.MinValue;
             else
                 return File.GetLastWriteTime(filePath);
+        }
+
+        public void OpenDialogueNodeInNewWindow(DialogueNodeViewModel nodeVm)
+        {
+            var newPage = new DialogueNodePage
+            {
+                DataContext = nodeVm
+            };
+
+            var tearOutWindow = new WindowEx
+            {
+                ExtendsContentIntoTitleBar = true,
+                Title = newPage.ViewModel.NodeTitle,
+                Content = newPage,
+                Width = 800,
+                Height = 700,
+                SystemBackdrop = new MicaBackdrop()
+            };
+            tearOutWindow.AppWindow.SetIcon("Assets/icon.ico");
+
+            tearOutWindow.Activate();
         }
     }
 }
