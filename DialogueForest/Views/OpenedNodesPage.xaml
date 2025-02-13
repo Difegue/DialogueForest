@@ -109,7 +109,7 @@
                       TabItemsSource="{x:Bind ViewModel.Tabs}">
             <muxc:TabView.TabStripHeader>
                 <Button Width="32" Height="24"
-                        Margin="0,0,0,0" Padding="0"
+                        Margin="0,4,0,0" Padding="0"
                         Command="{x:Bind ViewModel.CloseAllTabsCommand}"
                         ToolTipService.ToolTip="{x:Bind strings:Resources.CloseAllTabsButton}"
                         Visibility="{x:Bind ViewModel.NoTabsOpen,

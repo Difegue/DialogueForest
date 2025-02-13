@@ -323,7 +323,7 @@
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
 
-            <AppBarButton Width="48" Margin="0,24,24,0"
+            <AppBarButton Width="48" Margin="0,24,28,0"
                           Icon="GlobalNavigationButton"
                           IsCompact="True">
 
