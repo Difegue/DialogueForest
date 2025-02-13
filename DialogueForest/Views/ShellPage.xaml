@@ -228,7 +228,7 @@
                 </muxc:TwoPaneView>
 
                 <!--  InAppNotifications go here  -->
-                <muxc:InfoBar Grid.Row="1">
+                <muxc:InfoBar Margin="4,0,0,0" VerticalAlignment="Bottom">
                     <i:Interaction.Behaviors>
                         <behaviors:StackedNotificationsBehavior x:Name="notificationHolder" />
                     </i:Interaction.Behaviors>
