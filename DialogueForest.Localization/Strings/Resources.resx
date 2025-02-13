@@ -711,4 +711,10 @@ Would you like to reload the file from disk?</value>
   <data name="WelcomeDeletedCount" xml:space="preserve">
     <value>{0} Deleted nodes</value>
   </data>
+  <data name="OpenInNewWindowButton" xml:space="preserve">
+    <value>Open node in new windows</value>
+  </data>
+  <data name="CloseAllTabsButton" xml:space="preserve">
+    <value>Close all tabs</value>
+  </data>
 </root>
