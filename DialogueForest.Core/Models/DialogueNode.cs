@@ -15,6 +15,8 @@ namespace DialogueForest.Core.Models
 
         public List<DialogueMetadataValue> Metadata { get; set; }
 
+        // Free-text authoring note (Comment feature). Null on legacy files; treated as "no comment".
+        public string Comment { get; set; }
         public DialogueNode() { }
 
         public DialogueNode(long nodeId)

@@ -274,29 +274,6 @@
   <data name="WelcomeFlavorText" xml:space="preserve">
     <value>"I’m always worrying 'I used to be able to write for six hours straight, but now I can’t concentrate after three hours. Is my productive power going down?' But seeing the people who have been at it ten years longer than me still creating amazing things proves to me that I can keep going another ten years." 
 - Kinoko Nasu</value>
-  </data>
-  <data name="TreeViewAddMarker" xml:space="preserve">
-    <value>Adicionar marcador</value>
-  </data>
-  <data name="MarkerNamePlaceholder" xml:space="preserve">
-    <value>Nome do marcador</value>
-  </data>
-  <data name="MarkerDefaultLabel" xml:space="preserve">
-    <value>Novo marcador</value>
-  </data>
-  <data name="MarkerDialogTitle" xml:space="preserve">
-    <value>Marcador</value>
-  </data>
-  <data name="ContextMenuRenameMarker" xml:space="preserve">
-    <value>Renomear marcador</value>
-  </data>
-  <data name="ContextMenuDeleteMarker" xml:space="preserve">
-    <value>Eliminar marcador</value>
-  </data>
-  <data name="ContextMenuMoveUp" xml:space="preserve">
-    <value>Mover para cima</value>
-  </data>
-  <data name="ContextMenuMoveDown" xml:space="preserve">
-    <value>Mover para baixo</value>
+   
   </data>
 </root>

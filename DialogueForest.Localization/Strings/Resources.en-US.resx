@@ -644,6 +644,15 @@ Would you like to reload the file from disk?</value>
   <data name="CloseAllTabsButton" xml:space="preserve">
     <value>Close all tabs</value>
   </data>
+  <data name="NodeCommentHeader" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="NodeCommentPlaceholder" xml:space="preserve">
+    <value>Add anything! Comments are not exported. </value>
+  </data>
+  <data name="NodeCommentAutomationName" xml:space="preserve">
+    <value>Node comment</value>
+  </data>
   <data name="TreeViewAddMarker" xml:space="preserve">
     <value>Add marker</value>
   </data>

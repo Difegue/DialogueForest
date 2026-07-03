@@ -147,6 +147,18 @@ namespace DialogueForest.Core.ViewModels
             });
         }
 
+        public bool HasComment => !string.IsNullOrWhiteSpace(_node.Comment);
+
+        public string CommentText
+        {
+            get => _node.Comment;
+            set => SetProperty(_node.Comment, value, _node, (u, n) =>
+            {
+                u.Comment = n;
+                OnPropertyChanged(nameof(HasComment));
+                WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage());
+            });
+        }
         public string TreeTitle => _parentVm.Title;
         public string TextSummary => Dialogs.Select(d => d.RtfDialogueText).FirstOrDefault();
 

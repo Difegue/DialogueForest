@@ -442,6 +442,21 @@
 
                 </controls:HeaderedContentControl>
 
+                <controls:HeaderedContentControl Margin="6" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                    <controls:HeaderedContentControl.Header>
+                        <StackPanel Margin="0,8" Orientation="Horizontal" Spacing="16">
+                            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind strings:Resources.NodeCommentHeader}" />
+                        </StackPanel>
+                    </controls:HeaderedContentControl.Header>
+
+                    <TextBox MinHeight="80"
+                             AcceptsReturn="True"
+                             AutomationProperties.AutomationId="NodeCommentTextBox"
+                             PlaceholderText="{x:Bind strings:Resources.NodeCommentPlaceholder}"
+                             Text="{x:Bind ViewModel.CommentText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             TextWrapping="Wrap" />
+                </controls:HeaderedContentControl>
+
                 <Border Height="64" />
             </StackPanel>
 
