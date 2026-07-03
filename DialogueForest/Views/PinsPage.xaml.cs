@@ -25,6 +25,13 @@ namespace DialogueForest.Views
         {
             InitializeComponent();
             DataContext = ((App)Application.Current).Services.GetService(typeof(PinnedNodesViewModel));
+            Unloaded += PinsPage_Unloaded;
+        }
+
+        private void PinsPage_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Unloaded -= PinsPage_Unloaded;
+            if (dataGrid != null) dataGrid.ItemsSource = null;
         }
 
         private void dg_Sorting(object sender, DataGridColumnEventArgs e)
