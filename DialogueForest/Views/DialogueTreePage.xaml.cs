@@ -4,6 +4,7 @@ using DialogueForest.Core.Services;
 using DialogueForest.Core.ViewModels;
 using System;
 using Windows.ApplicationModel.DataTransfer;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
@@ -17,6 +18,14 @@ namespace DialogueForest.Views
         public DialogueTreePage()
         {
             InitializeComponent();
+            Unloaded += DialogueTreePage_Unloaded;
+        }
+
+        private void DialogueTreePage_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Unloaded -= DialogueTreePage_Unloaded;
+            if (NodeGridView != null) NodeGridView.ItemsSource = null;
+            if (NodeTreeView != null) NodeTreeView.ItemsSource = null;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
