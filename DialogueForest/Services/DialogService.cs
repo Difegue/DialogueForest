@@ -63,15 +63,16 @@ namespace DialogueForest.Services
 
         public async Task ShowRateAppDialogIfAppropriateAsync()
         {
-            var storeContext = StoreContext.GetDefault();
+            // Don't do anything if the app isn't running in a packaged context
+            if (Package.Current == null)
+                return;
+
             await _dispatcherService.ExecuteOnUIThreadAsync(async () =>
             {
-                // Don't do anything if the app isn't running in a packaged context
-                if (Package.Current == null)
-                    return;
-
                 try
                 {
+                    var storeContext = StoreContext.GetDefault();
+
                     if (SystemInformation.Instance.LaunchCount >= 4 && !_storageService.GetValue<bool>("HasSeenRateAppPrompt"))
                     {
                         if (await ShowConfirmDialogAsync(Strings.RateAppPromptTitle, Strings.RateAppPromptText, Strings.ButtonYesText, Strings.ButtonNoText))
