@@ -643,4 +643,28 @@ Voulez-vous recharger le fichier depuis le disque ?</value>
   <data name="CloseAllTabsButton" xml:space="preserve">
     <value>Fermer tous les onglets</value>
   </data>
+  <data name="TreeViewAddMarker" xml:space="preserve">
+    <value>Ajouter un marqueur</value>
+  </data>
+  <data name="MarkerNamePlaceholder" xml:space="preserve">
+    <value>Nom du marqueur</value>
+  </data>
+  <data name="MarkerDefaultLabel" xml:space="preserve">
+    <value>Nouveau marqueur</value>
+  </data>
+  <data name="MarkerDialogTitle" xml:space="preserve">
+    <value>Marqueur</value>
+  </data>
+  <data name="ContextMenuRenameMarker" xml:space="preserve">
+    <value>Renommer le marqueur</value>
+  </data>
+  <data name="ContextMenuDeleteMarker" xml:space="preserve">
+    <value>Supprimer le marqueur</value>
+  </data>
+  <data name="ContextMenuMoveUp" xml:space="preserve">
+    <value>Monter</value>
+  </data>
+  <data name="ContextMenuMoveDown" xml:space="preserve">
+    <value>Descendre</value>
+  </data>
 </root>

@@ -28,7 +28,8 @@ namespace DialogueForest.Core.ViewModels
         private ForestDataService _dataService;
 
         private DialogueTree _tree;
-
+        private readonly Dictionary<string, MarkerViewModel> _markerVmCache = new();
+        private ITreeListItem _lastRemovedItem;
 
         public static DialogueTreeViewModel Create(DialogueTree tree, bool canBeRenamed = false)
         {
@@ -50,8 +51,8 @@ namespace DialogueForest.Core.ViewModels
                 // Check if there isn't already a VM for this node to recycle
                 if (_openedNodes.Tabs.FirstOrDefault(vm => vm.ID == node.ID) is DialogueNodeViewModel existingVm)
                 {
-                    nodeVm = existingVm;  
-                } 
+                    nodeVm = existingVm;
+                }
                 else
                 {
                     nodeVm = DialogueNodeViewModel.Create(node, this);
@@ -66,9 +67,10 @@ namespace DialogueForest.Core.ViewModels
         public FilterableObservableCollection<DialogueNodeViewModel> Nodes { get; } = new();
         public IEnumerable<DialogueNodeViewModel> ParentNodes => Nodes.Where(n => n.GetNodesLinkingToUs().Count == 0);
 
-        private long _lastDeletedID;
+        // Merged, ordered display collection (nodes + markers) that drives the List pane.
+        public ObservableCollection<ITreeListItem> TreeItems { get; } = new();
 
-        public DialogueTreeViewModel(IDialogService dialogService, OpenedNodesViewModel openedNodes, INavigationService navigationService, INotificationService notificationService, 
+        public DialogueTreeViewModel(IDialogService dialogService, OpenedNodesViewModel openedNodes, INavigationService navigationService, INotificationService notificationService,
             IApplicationStorageService storageService, ForestDataService forestService)
         {
             _dialogService = dialogService;
@@ -87,19 +89,43 @@ namespace DialogueForest.Core.ViewModels
                 OnPropertyChanged(nameof(TotalWords));
                 OnPropertyChanged(nameof(ParentNodes));
 
+                RebuildTreeItems();
+            };
+
+            // GridView drag-reorder operates on the merged TreeItems collection (nodes + markers),
+            // implemented by the control as Remove + Add of the same item.
+            TreeItems.CollectionChanged += (s, e) =>
+            {
                 if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove
-                && e.OldItems[0] is DialogueNodeViewModel vmd)
+                && e.OldItems?[0] is ITreeListItem removed)
                 {
-                    _lastDeletedID = vmd.ID;
+                    _lastRemovedItem = removed;
                 }
 
-                // Support for moving nodes, gridview implements it as remove + add
+                // Support for moving nodes and markers, gridview implements it as remove + add
                 if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add
-                && e.NewItems[0] is DialogueNodeViewModel vm)
-                { 
-                    if (vm.ID == _lastDeletedID)
-                        _dataService.MoveNodeInTree(vm.ID, _tree, e.NewStartingIndex);
-                    _lastDeletedID = -1;
+                && e.NewItems?[0] is ITreeListItem added && ReferenceEquals(added, _lastRemovedItem))
+                {
+                    var displayIndex = e.NewStartingIndex;
+
+                    if (added is DialogueNodeViewModel nodeVm)
+                    {
+                        // Translate the display index into a true node index (count nodes before the drop).
+                        int nodeIndex = 0;
+                        for (int i = 0; i < displayIndex && i < TreeItems.Count; i++)
+                            if (TreeItems[i] is DialogueNodeViewModel) nodeIndex++;
+                        _dataService.MoveNodeInTree(nodeVm.ID, _tree, nodeIndex);
+                    }
+                    else if (added is MarkerViewModel markerVm)
+                    {
+                        // Anchor the marker before the next node after its new slot (0 => trailing).
+                        long newAnchor = 0;
+                        for (int i = displayIndex + 1; i < TreeItems.Count; i++)
+                            if (TreeItems[i] is DialogueNodeViewModel n) { newAnchor = n.ID; break; }
+                        _dataService.MoveMarker(markerVm.Model, newAnchor);
+                    }
+
+                    _lastRemovedItem = null;
                 }
             };
 
@@ -115,8 +141,8 @@ namespace DialogueForest.Core.ViewModels
             {
                 // Remove Node 
                 Nodes.Remove(Nodes.Where(vm => vm.ID == node.ID).FirstOrDefault());
-            } 
-            
+            }
+
             if (_tree == message.DestinationTree)
             {
                 // Add Node
@@ -129,6 +155,7 @@ namespace DialogueForest.Core.ViewModels
                     Nodes.Add(DialogueNodeViewModel.Create(node, this));
                 }
             }
+
         }
 
         public bool IsNodesEmpty => Nodes.Count == 0;
@@ -180,9 +207,89 @@ namespace DialogueForest.Core.ViewModels
         public int TotalWords => Nodes.Sum(n => n.WordCount);
 
         [RelayCommand]
-        private void ShowNode(DialogueNodeViewModel vm)
+        private void ShowNode(ITreeListItem item)
         {
-            _navigationService.OpenDialogueNode(vm);
+            // Markers are click-inert in the list; only real nodes open.
+            if (item is DialogueNodeViewModel vm)
+                _navigationService.OpenDialogueNode(vm);
+        }
+
+        // Rebuild the merged (nodes + markers) display collection in persisted node order.
+        internal void RebuildTreeItems()
+        {
+            TreeItems.Clear();
+
+            var markersByAnchor = _tree.Markers
+                .Where(m => m.BeforeNodeId != 0)
+                .ToLookup(m => m.BeforeNodeId);
+
+            // Only node VMs currently present in Nodes are visible (respects the active filter).
+            var visible = new Dictionary<long, DialogueNodeViewModel>();
+            foreach (var vm in Nodes)
+                visible[vm.ID] = vm;
+
+            foreach (var id in _tree.Nodes.Keys) 
+            {
+                foreach (var marker in markersByAnchor[id])
+                    TreeItems.Add(GetOrCreateMarkerVm(marker));
+
+                if (visible.TryGetValue(id, out var nodeVm))
+                    TreeItems.Add(nodeVm);
+            }
+
+            // Trailing markers (BeforeNodeId == 0) and orphaned markers render at the end.
+            foreach (var marker in _tree.Markers.Where(m => m.BeforeNodeId == 0 || !_tree.Nodes.ContainsKey(m.BeforeNodeId)))
+                TreeItems.Add(GetOrCreateMarkerVm(marker));
+        }
+
+        private MarkerViewModel GetOrCreateMarkerVm(DialogueMarker marker)
+        {
+            if (!_markerVmCache.TryGetValue(marker.Id, out var vm))
+            {
+                vm = new MarkerViewModel(marker, this);
+                _markerVmCache[marker.Id] = vm;
+            }
+            return vm;
+        }
+
+        [RelayCommand]
+        private void AddMarker()
+        {
+            // New marker sits before the first node (top of the list); user renames it inline.
+            var anchor = _tree.Nodes.Keys.FirstOrDefault(); // 0 (trailing) when the tree is empty
+            var marker = new DialogueMarker
+            {
+                Id = System.Guid.NewGuid().ToString(),
+                Label = Resources.MarkerDefaultLabel,
+                BeforeNodeId = anchor
+            };
+            _dataService.AddMarker(_tree, marker);
+            RebuildTreeItems();
+        }
+
+        internal void DeleteMarker(MarkerViewModel vm)
+        {
+            _dataService.RemoveMarker(_tree, vm.Model);
+            _markerVmCache.Remove(vm.Model.Id);
+            RebuildTreeItems();
+        }
+
+        // Move a marker by re-anchoring it. 
+        internal void MoveMarkerRelative(MarkerViewModel vm, int dir)
+        {
+            var order = _tree.Nodes.Keys.ToList();
+            var marker = vm.Model;
+
+            int anchorIdx = marker.BeforeNodeId != 0 ? order.IndexOf(marker.BeforeNodeId) : order.Count;
+            if (anchorIdx < 0) anchorIdx = order.Count; // orphaned => treat as trailing
+
+            int newIdx = anchorIdx + dir;
+            if (newIdx < 0) newIdx = 0;
+            if (newIdx > order.Count) newIdx = order.Count;
+
+            long newAnchor = newIdx < order.Count ? order[newIdx] : 0;
+            _dataService.MoveMarker(marker, newAnchor);
+            RebuildTreeItems();
         }
 
         [RelayCommand]
@@ -225,7 +332,6 @@ namespace DialogueForest.Core.ViewModels
         [RelayCommand]
         private async Task Delete()
         {
-
             if (await _dialogService.ShowConfirmDialogAsync(Resources.ContentDialogDeleteTree, Resources.ContentDialogDeleteTreeDesc,
                        Resources.ButtonYesText, Resources.ButtonCancelText))
             {
@@ -233,7 +339,6 @@ namespace DialogueForest.Core.ViewModels
                 _notificationService.ShowInAppNotification(Resources.NotificationTrashed);
                 _navigationService.Navigate<DialogueTreeViewModel>("trash");
             }
-               
         }
 
         [RelayCommand]
@@ -248,7 +353,7 @@ namespace DialogueForest.Core.ViewModels
                     // Slightly roundabout way but easier since nodeVm will give us the node model
                     nodeVm.DeleteNode();
                 }
-                
+
                 _notificationService.ShowInAppNotification(Resources.NotificationTrashEmptied);
             }
 

@@ -11,6 +11,19 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace DialogueForest.Views
 {
+   
+    public sealed partial class TreeListItemTemplateSelector : DataTemplateSelector
+    {
+        public DataTemplate NodeTemplate { get; set; }
+        public DataTemplate MarkerTemplate { get; set; }
+
+        protected override DataTemplate SelectTemplateCore(object item)
+            => (item is ITreeListItem t && t.IsMarker) ? MarkerTemplate : NodeTemplate;
+
+        protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+            => SelectTemplateCore(item);
+    }
+
     public sealed partial class DialogueTreePage : Page
     {
         public DialogueTreeViewModel ViewModel => (DialogueTreeViewModel)DataContext;

@@ -14,6 +14,7 @@
       xmlns:strings="using:DialogueForest.Localization.Strings"
       xmlns:ui="using:CommunityToolkit.WinUI"
       xmlns:viewmodels="using:DialogueForest.Core.ViewModels"
+      xmlns:views="using:DialogueForest.Views"
       mc:Ignorable="d">
 
     <Page.Resources>
@@ -169,6 +170,71 @@
                                            TextWrapping="Wrap" />
             </Grid>
         </DataTemplate>
+
+        <DataTemplate x:Key="MarkerCardTemplate" x:DataType="viewmodels:MarkerViewModel">
+            <Grid Margin="-1" 
+                  ColumnSpacing="8"
+                  AutomationProperties.Name="{x:Bind Label, Mode=OneWay}"
+                  Style="{StaticResource CardGrid}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Width="4"
+                        Background="{ThemeResource SystemAccentColor}"
+                        CornerRadius="2" />
+
+                <muxc:FontIcon Grid.Column="1"
+                               VerticalAlignment="Center"
+                               FontFamily="Segoe Fluent Icons" FontSize="16"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Glyph="&#xE8EC;" />
+
+                <TextBox Grid.Column="2"
+                         VerticalAlignment="Center"
+                         AutomationProperties.AutomationId="MarkerLabelBox"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         FontWeight="SemiBold"
+                         PlaceholderText="{x:Bind strings:Resources.MarkerNamePlaceholder}"
+                         Text="{x:Bind Label, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Button Grid.Column="3"
+                        VerticalAlignment="Center"
+                        AutomationProperties.Name="{x:Bind Label, Mode=OneWay}"
+                        Background="Transparent"
+                        BorderThickness="0">
+                    <FontIcon FontFamily="Segoe Fluent Icons" FontSize="14" Glyph="&#xE712;" />
+                    <Button.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Command="{x:Bind MoveUpCommand}" Text="{x:Bind strings:Resources.ContextMenuMoveUp}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74A;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Command="{x:Bind MoveDownCommand}" Text="{x:Bind strings:Resources.ContextMenuMoveDown}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74B;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutSeparator />
+                            <MenuFlyoutItem Command="{x:Bind DeleteCommand}" Text="{x:Bind strings:Resources.ContextMenuDeleteMarker}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Foreground="{ThemeResource DestructiveActionForeground}" Glyph="&#xE107;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
+            </Grid>
+        </DataTemplate>
+
+        <views:TreeListItemTemplateSelector x:Key="TreeListItemSelector"
+                                            MarkerTemplate="{StaticResource MarkerCardTemplate}"
+                                            NodeTemplate="{StaticResource NodeCardTemplate}" />
     </Page.Resources>
 
     <Grid x:Name="ContentArea">
@@ -204,28 +270,34 @@
             <Grid HorizontalAlignment="Stretch">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="128" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="128" />
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0"
-                        Command="{x:Bind ViewModel.AddNodeCommand}"
-                        Style="{ThemeResource AccentButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewAddNode}"
-                        Visibility="{x:Bind ViewModel.CannotAddNodes,
-                                            Converter={StaticResource ReverseBoolToVisibilityConverter}}">
-                    <StackPanel Orientation="Horizontal" Spacing="4">
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8">
+                    <Button Command="{x:Bind ViewModel.AddNodeCommand}"
+                            Style="{ThemeResource AccentButtonStyle}"
+                            ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewAddNode}"
+                            Visibility="{x:Bind ViewModel.CannotAddNodes,
+                                                Converter={StaticResource ReverseBoolToVisibilityConverter}}">
                         <FontIcon FontFamily="Segoe Fluent Icons" FontSize="18" Glyph="&#xE109;" />
-                    </StackPanel>
+                    </Button>
 
-                </Button>
+                    <Button AutomationProperties.AutomationId="AddMarkerButton"
+                            Command="{x:Bind ViewModel.AddMarkerCommand}"
+                            ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewAddMarker}"
+                            Visibility="{x:Bind ViewModel.CannotAddNodes,
+                                                Converter={StaticResource ReverseBoolToVisibilityConverter}}">
+                        <FontIcon FontFamily="Segoe Fluent Icons" FontSize="18" Glyph="&#xE8EC;" />
+                    </Button>
+                </StackPanel>
 
                 <StackPanel Grid.Column="2"
                             HorizontalAlignment="Right"
                             Orientation="Horizontal"
                             Spacing="8">
-                    <ToggleButton Margin="0,0,-8,0" IsChecked="{x:Bind ViewModel.ShowTreeView, Mode=TwoWay}" ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewToggleButton}">
+                    <ToggleButton IsChecked="{x:Bind ViewModel.ShowTreeView, Mode=TwoWay}" ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewToggleButton}">
                         <FontIcon FontFamily="Segoe Fluent Icons" FontSize="18" Glyph="&#xE8A4;" />
                     </ToggleButton>
 
@@ -291,8 +363,8 @@
                                      IsItemClickEnabled="True"
                                      ItemClickCommand="{x:Bind ViewModel.ShowNodeCommand}"
                                      ItemHeight="96"
-                                     ItemTemplate="{StaticResource NodeCardTemplate}"
-                                     ItemsSource="{x:Bind ViewModel.Nodes}"
+                                     ItemTemplateSelector="{StaticResource TreeListItemSelector}"
+                                     ItemsSource="{x:Bind ViewModel.TreeItems}"
                                      SelectedItem="{x:Bind ViewModel.SelectedNode,
                                                            Mode=TwoWay}"
                                      SelectionMode="None"

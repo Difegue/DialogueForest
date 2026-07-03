@@ -233,7 +233,11 @@ namespace DialogueForest.Core.Services
         public long GetLastID() => _currentForest?.LastID ?? 0;
 
         internal bool IsNodeTrashed(DialogueNode node) => GetTrash().Nodes.ContainsValue(node);
-        internal void DeleteNode(DialogueNode node) => GetTrash().RemoveNode(node);
+        internal void DeleteNode(DialogueNode node)
+        {
+            GetTrash().RemoveNode(node);
+            GetTrash().NormalizeMarkers();
+        }
         internal void DeleteTree(DialogueTree tree)
         {
             var nodeList = tree.Nodes.Values;
@@ -307,7 +311,9 @@ namespace DialogueForest.Core.Services
 
             origin.RemoveNode(node);
             destination.AddNode(node);
-            
+
+            // The node left the origin tree, so re-anchor any of the origin's markers that pointed at it.
+            origin.NormalizeMarkers();
 
             // Notify VMs (both tree and nodeVMs) with a message
             WeakReferenceMessenger.Default.Send(new NodeMovedMessage(origin, destination, node));
@@ -317,6 +323,26 @@ namespace DialogueForest.Core.Services
         {
             var node = tree.Nodes[id];
             tree.MoveNode(node, position);
+            tree.NormalizeMarkers();
+            WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage());
+        }
+
+        internal void AddMarker(DialogueTree tree, DialogueMarker marker)
+        {
+            tree.AddMarker(marker);
+            WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage());
+        }
+
+        internal void RemoveMarker(DialogueTree tree, DialogueMarker marker)
+        {
+            tree.RemoveMarker(marker);
+            WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage());
+        }
+
+        internal void MoveMarker(DialogueMarker marker, long beforeNodeId)
+        {
+            marker.BeforeNodeId = beforeNodeId;
+            WeakReferenceMessenger.Default.Send(new UnsavedModificationsMessage());
         }
 
         internal void SetPinnedNode(DialogueNode node, bool isPinned)

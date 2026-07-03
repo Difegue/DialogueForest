@@ -17,7 +17,7 @@ using DialogueForest.Localization.Strings;
 namespace DialogueForest.Core.ViewModels
 {
 
-    public partial class DialogueNodeViewModel : ObservableObject
+    public partial class DialogueNodeViewModel : ObservableObject, ITreeListItem
     {
         private IDialogService _dialogService;
         private INavigationService _navigationService;
@@ -126,6 +126,7 @@ namespace DialogueForest.Core.ViewModels
 
         public long ID => _node.ID;
 
+        public bool IsMarker => false;
         public int WordCount => _node.CalculateWordCount();
 
         public bool IsPromptsEmpty => Prompts.Count == 0;

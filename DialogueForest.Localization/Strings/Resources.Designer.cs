@@ -1569,5 +1569,76 @@ namespace DialogueForest.Localization.Strings {
                 return ResourceManager.GetString("WelcomeWhatsNew", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Looks up a localized string similar to Add marker.
+        /// </summary>
+        public static string TreeViewAddMarker {
+            get {
+                return ResourceManager.GetString("TreeViewAddMarker", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Marker name.
+        /// </summary>
+        public static string MarkerNamePlaceholder {
+            get {
+                return ResourceManager.GetString("MarkerNamePlaceholder", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to New marker.
+        /// </summary>
+        public static string MarkerDefaultLabel {
+            get {
+                return ResourceManager.GetString("MarkerDefaultLabel", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Marker.
+        /// </summary>
+        public static string MarkerDialogTitle {
+            get {
+                return ResourceManager.GetString("MarkerDialogTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Rename marker.
+        /// </summary>
+        public static string ContextMenuRenameMarker {
+            get {
+                return ResourceManager.GetString("ContextMenuRenameMarker", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Delete marker.
+        /// </summary>
+        public static string ContextMenuDeleteMarker {
+            get {
+                return ResourceManager.GetString("ContextMenuDeleteMarker", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Move up.
+        /// </summary>
+        public static string ContextMenuMoveUp {
+            get {
+                return ResourceManager.GetString("ContextMenuMoveUp", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Move down.
+        /// </summary>
+        public static string ContextMenuMoveDown {
+            get {
+                return ResourceManager.GetString("ContextMenuMoveDown", resourceCulture);
+            }
+        }
     }
 }
