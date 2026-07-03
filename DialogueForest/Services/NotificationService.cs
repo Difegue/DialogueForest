@@ -30,32 +30,44 @@ namespace DialogueForest.Services
                 return;
             }
 
-            new ToastContentBuilder()
-                //.AddArgument("action", "viewItemsDueToday")
-                .AddInlineImage(new Uri("file:///" + assetUri + "/Icon_Exclamation.png"))
-                .AddText(title)
-                .AddText(text)
-                //.AddProgressBar()
-                .Schedule(day.Add(notificationTime), toast =>
-                {
-                    toast.Id = day.ToString("yyyy-MM-dd");
-                });
+            try
+            {
+                new ToastContentBuilder()
+                    //.AddArgument("action", "viewItemsDueToday")
+                    .AddInlineImage(new Uri("file:///" + assetUri + "/Icon_Exclamation.png"))
+                    .AddText(title)
+                    .AddText(text)
+                    //.AddProgressBar()
+                    .Schedule(day.Add(notificationTime), toast =>
+                    {
+                        toast.Id = day.ToString("yyyy-MM-dd");
+                    });
+            }
+            catch (Exception)
+            {
+            }
         }
 
         public override void RemoveScheduledNotifications(bool onlyRemoveToday = false)
         {
-            // Create the toast notifier
-            ToastNotifierCompat notifier = ToastNotificationManagerCompat.CreateToastNotifier();
+            try
+            {
+                // Create the toast notifier
+                ToastNotifierCompat notifier = ToastNotificationManagerCompat.CreateToastNotifier();
 
-            // Get the list of scheduled toasts that haven't appeared yet
-            IReadOnlyList<ScheduledToastNotification> scheduledToasts = notifier.GetScheduledToastNotifications();
+                // Get the list of scheduled toasts that haven't appeared yet
+                IReadOnlyList<ScheduledToastNotification> scheduledToasts = notifier.GetScheduledToastNotifications();
 
-            foreach (var toRemove in scheduledToasts) {
+                foreach (var toRemove in scheduledToasts) {
 
-                if (!onlyRemoveToday || toRemove.Id == DateTime.Now.ToString("yyyy-MM-dd"))
-                {
-                    notifier.RemoveFromSchedule(toRemove);
+                    if (!onlyRemoveToday || toRemove.Id == DateTime.Now.ToString("yyyy-MM-dd"))
+                    {
+                        notifier.RemoveFromSchedule(toRemove);
+                    }
                 }
+            }
+            catch (Exception)
+            {
             }
         }
 
@@ -63,11 +75,17 @@ namespace DialogueForest.Services
         {
             var assetUri = AppDomain.CurrentDomain.BaseDirectory + "Assets";
 
-            new ToastContentBuilder()
-                .AddInlineImage(new Uri("file:///" + assetUri + "/Icon_Nice.png"))
-                .AddText(title)
-                .AddText(description)
-                .Show();
+            try
+            {
+                new ToastContentBuilder()
+                    .AddInlineImage(new Uri("file:///" + assetUri + "/Icon_Nice.png"))
+                    .AddText(title)
+                    .AddText(description)
+                    .Show();
+            }
+            catch (Exception)
+            {
+            }
         }
 
     }
