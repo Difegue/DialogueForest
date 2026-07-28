@@ -125,18 +125,18 @@
         </MenuFlyout>
 
         <MenuFlyout x:Key="MarkerContextMenu">
-            <MenuFlyoutItem Command="{x:Bind MoveUpCommand}" Text="{x:Bind strings:Resources.ContextMenuMoveUp}">
+            <MenuFlyoutItem Command="{Binding MoveUpCommand}" Text="{x:Bind strings:Resources.ContextMenuMoveUp}">
                 <MenuFlyoutItem.Icon>
                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74A;" />
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
-            <MenuFlyoutItem Command="{x:Bind MoveDownCommand}" Text="{x:Bind strings:Resources.ContextMenuMoveDown}">
+            <MenuFlyoutItem Command="{Binding MoveDownCommand}" Text="{x:Bind strings:Resources.ContextMenuMoveDown}">
                 <MenuFlyoutItem.Icon>
                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74B;" />
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
             <MenuFlyoutSeparator />
-            <MenuFlyoutItem Command="{x:Bind DeleteCommand}" Text="{x:Bind strings:Resources.ContextMenuDeleteMarker}">
+            <MenuFlyoutItem Command="{Binding DeleteCommand}" Text="{x:Bind strings:Resources.ContextMenuDeleteMarker}">
                 <MenuFlyoutItem.Icon>
                     <FontIcon FontFamily="Segoe Fluent Icons" Foreground="{ThemeResource DestructiveActionForeground}" Glyph="&#xE107;" />
                 </MenuFlyoutItem.Icon>
