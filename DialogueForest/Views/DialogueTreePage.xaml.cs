@@ -11,7 +11,6 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace DialogueForest.Views
 {
-   
     public sealed partial class TreeListItemTemplateSelector : DataTemplateSelector
     {
         public DataTemplate NodeTemplate { get; set; }
@@ -37,7 +36,7 @@ namespace DialogueForest.Views
         private void DialogueTreePage_Unloaded(object sender, RoutedEventArgs e)
         {
             Unloaded -= DialogueTreePage_Unloaded;
-            if (NodeGridView != null) NodeGridView.ItemsSource = null;
+            if (NodeListView != null) NodeListView.ItemsSource = null;
             if (NodeTreeView != null) NodeTreeView.ItemsSource = null;
         }
 
@@ -69,17 +68,22 @@ namespace DialogueForest.Views
 
                 DataContext = DialogueTreeViewModel.Create(tree);
             }
-                
         }
 
-        private void NodeList_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
+        // Clicking (not dragging) a node card opens it. Markers are edited inline, so a click does nothing.
+        private void NodeListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (e.ClickedItem is DialogueNodeViewModel vm)
+                ViewModel?.ShowNodeCommand.Execute(vm);
+        }
+
+        // ListView performs the in-list reorder itself. We just publish the node ID here so the
+        // cross-target drops (other trees, Pins, reply links) work when a node is dragged out.
+        private void NodeListView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
         {
             if (e.Items.Count == 1 && e.Items[0] is DialogueNodeViewModel vm)
             {
-                // Set the content of the DataPackage to the ID of the node we're dragging
                 e.Data.SetText(vm.ID.ToString());
-
-                // We can either Link (when dragging to a Reply Prompt or pinning) or Move (when dragging to another Tree)
                 e.Data.RequestedOperation = DataPackageOperation.Link | DataPackageOperation.Move;
             }
         }

@@ -2,7 +2,6 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:controls="using:CommunityToolkit.WinUI.Controls"
-      xmlns:controlsv7="using:CommunityToolkit.WinUI.UI.Controls"
       xmlns:converters="using:CommunityToolkit.WinUI.Converters"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:helpers="using:DialogueForest.Helpers"
@@ -19,6 +18,15 @@
 
     <Page.Resources>
         <converters:StringFormatConverter x:Key="StringFormatConverter" />
+
+        <!--  Style that nukes Padding in ListViewItems - The cards are enough on their own  -->
+        <Style x:Key="TreeListViewItemStyle" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="Margin" Value="0,0,0,8" />
+        </Style>
 
         <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -116,8 +124,29 @@
             </MenuFlyoutItem>
         </MenuFlyout>
 
+        <MenuFlyout x:Key="MarkerContextMenu">
+            <MenuFlyoutItem Command="{x:Bind MoveUpCommand}" Text="{x:Bind strings:Resources.ContextMenuMoveUp}">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74A;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem Command="{x:Bind MoveDownCommand}" Text="{x:Bind strings:Resources.ContextMenuMoveDown}">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74B;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutSeparator />
+            <MenuFlyoutItem Command="{x:Bind DeleteCommand}" Text="{x:Bind strings:Resources.ContextMenuDeleteMarker}">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Foreground="{ThemeResource DestructiveActionForeground}" Glyph="&#xE107;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+        </MenuFlyout>
+
         <DataTemplate x:Key="NodeCardTemplate" x:DataType="viewmodels:DialogueNodeViewModel">
-            <Grid Margin="-1" ContextFlyout="{StaticResource NodeContextMenu}" Style="{StaticResource CardGrid}">
+            <Grid Height="96" Margin="-1"
+                  ContextFlyout="{StaticResource NodeContextMenu}"
+                  Style="{StaticResource CardGrid}">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="24" />
@@ -165,6 +194,7 @@
                                            Background="Transparent"
                                            BorderThickness="0"
                                            IsHitTestVisible="False"
+                                           IsTabStop="False"
                                            RtfText="{x:Bind TextSummary,
                                                             Mode=OneWay}"
                                            TextWrapping="Wrap" />
@@ -172,63 +202,40 @@
         </DataTemplate>
 
         <DataTemplate x:Key="MarkerCardTemplate" x:DataType="viewmodels:MarkerViewModel">
-            <Grid Margin="-1" 
-                  ColumnSpacing="8"
+            <Grid Height="24" Padding="0,0"
+                  ContextFlyout="{StaticResource MarkerContextMenu}"
                   AutomationProperties.Name="{x:Bind Label, Mode=OneWay}"
-                  Style="{StaticResource CardGrid}">
+                  Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}"
+                  ColumnSpacing="6"
+                  CornerRadius="4">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4" />
+                    <ColumnDefinition Width="3" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <Border Grid.Column="0" Width="4"
+                <Border Grid.Column="0" Width="3" Height="24" 
+                        VerticalAlignment="Center"
                         Background="{ThemeResource SystemAccentColor}"
                         CornerRadius="2" />
 
                 <muxc:FontIcon Grid.Column="1"
                                VerticalAlignment="Center"
-                               FontFamily="Segoe Fluent Icons" FontSize="16"
+                               FontFamily="Segoe Fluent Icons" FontSize="12"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                Glyph="&#xE8EC;" />
 
                 <TextBox Grid.Column="2"
-                         VerticalAlignment="Center"
+                         MinHeight="0" Height="24" Padding="4,4" MaxWidth="300"
+                         HorizontalAlignment="Left"
                          AutomationProperties.AutomationId="MarkerLabelBox"
                          Background="Transparent"
                          BorderThickness="0"
+                         FontSize="12"
                          FontWeight="SemiBold"
                          PlaceholderText="{x:Bind strings:Resources.MarkerNamePlaceholder}"
                          Text="{x:Bind Label, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
-                <Button Grid.Column="3"
-                        VerticalAlignment="Center"
-                        AutomationProperties.Name="{x:Bind Label, Mode=OneWay}"
-                        Background="Transparent"
-                        BorderThickness="0">
-                    <FontIcon FontFamily="Segoe Fluent Icons" FontSize="14" Glyph="&#xE712;" />
-                    <Button.Flyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem Command="{x:Bind MoveUpCommand}" Text="{x:Bind strings:Resources.ContextMenuMoveUp}">
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74A;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-                            <MenuFlyoutItem Command="{x:Bind MoveDownCommand}" Text="{x:Bind strings:Resources.ContextMenuMoveDown}">
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74B;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-                            <MenuFlyoutSeparator />
-                            <MenuFlyoutItem Command="{x:Bind DeleteCommand}" Text="{x:Bind strings:Resources.ContextMenuDeleteMarker}">
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon FontFamily="Segoe Fluent Icons" Foreground="{ThemeResource DestructiveActionForeground}" Glyph="&#xE107;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-                        </MenuFlyout>
-                    </Button.Flyout>
-                </Button>
             </Grid>
         </DataTemplate>
 
@@ -289,7 +296,7 @@
                             ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewAddMarker}"
                             Visibility="{x:Bind ViewModel.CannotAddNodes,
                                                 Converter={StaticResource ReverseBoolToVisibilityConverter}}">
-                        <FontIcon FontFamily="Segoe Fluent Icons" FontSize="18" Glyph="&#xE8EC;" />
+                        <FontIcon FontFamily="Segoe Fluent Icons" FontSize="18" Glyph="&#xF5A0;" />
                     </Button>
                 </StackPanel>
 
@@ -301,7 +308,7 @@
                         <FontIcon FontFamily="Segoe Fluent Icons" FontSize="18" Glyph="&#xE8A4;" />
                     </ToggleButton>
 
-                    <!--  TODO  -->
+                    <!--  TODO (also graph view, glyph &#xEABB; -->
                     <muxc:DropDownButton ToolTipService.ToolTip="{x:Bind strings:Resources.TreeViewSortBy}" Visibility="Collapsed">
                         <muxc:DropDownButton.Content>
                             <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="18" Glyph="&#xE174;" />
@@ -351,31 +358,23 @@
 
         </StackPanel>
 
-
-        <controlsv7:AdaptiveGridView x:Name="NodeGridView"
-                                     Grid.Row="1"
-                                     Margin="0,12,0,-16"
-                                     AllowDrop="True"
-                                     CanDragItems="True"
-                                     CanReorderItems="True"
-                                     DesiredWidth="270"
-                                     DragItemsStarting="NodeList_DragItemsStarting"
-                                     IsItemClickEnabled="True"
-                                     ItemClickCommand="{x:Bind ViewModel.ShowNodeCommand}"
-                                     ItemHeight="96"
-                                     ItemTemplateSelector="{StaticResource TreeListItemSelector}"
-                                     ItemsSource="{x:Bind ViewModel.TreeItems}"
-                                     SelectedItem="{x:Bind ViewModel.SelectedNode,
-                                                           Mode=TwoWay}"
-                                     SelectionMode="None"
-                                     StretchContentForSingleRow="True"
-                                     Visibility="{x:Bind ViewModel.ShowTreeView,
-                                                         Mode=OneWay,
-                                                         Converter={StaticResource ReverseBoolToVisibilityConverter}}">
-            <i:Interaction.Behaviors>
-                <helpers:ScrollSelectedItemIntoViewBehavior />
-            </i:Interaction.Behaviors>
-        </controlsv7:AdaptiveGridView>
+        <ListView x:Name="NodeListView"
+                  Grid.Row="1"
+                  Margin="12,12,0,-16"
+                  Padding="0,0,12,16"
+                  AllowDrop="True"
+                  CanDragItems="True"
+                  CanReorderItems="True"
+                  DragItemsStarting="NodeListView_DragItemsStarting"
+                  IsItemClickEnabled="True"
+                  ItemClick="NodeListView_ItemClick"
+                  ItemContainerStyle="{StaticResource TreeListViewItemStyle}"
+                  ItemTemplateSelector="{StaticResource TreeListItemSelector}"
+                  ItemsSource="{x:Bind ViewModel.TreeItems}"
+                  SelectionMode="None"
+                  Visibility="{x:Bind ViewModel.ShowTreeView,
+                                      Mode=OneWay,
+                                      Converter={StaticResource ReverseBoolToVisibilityConverter}}" />
 
         <Border Grid.Row="1" Margin="10,12,10,24" Visibility="{x:Bind ViewModel.ShowTreeView, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid Padding="0,8" Style="{StaticResource CardGrid}">
